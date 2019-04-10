@@ -1,5 +1,7 @@
 [package]
 name = "fermium"
+description = "An opinionated crate of sdl2 bindings."
+repository = "https://github.com/Lokathor/fermium"
 version = "0.0.1"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
