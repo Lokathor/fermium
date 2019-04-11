@@ -1,5 +1,0 @@
-We might want to some day add in more SDL2 related stuff.
-
-It can all be found in their "projects" directory on the website:
-
-https://www.libsdl.org/projects/

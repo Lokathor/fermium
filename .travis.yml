@@ -14,16 +14,13 @@ cache:
   cargo
 
 before_script:
-  # On linux and mac we presume that the user has already installed SDL2 to the
-  # appropriate location on the system, either via the public download page
-  # http://libsdl.org/download-2.0.php or from having built from source. Here we
-  # will build it from source for simplicity.
-  - cd c_bits/SDL2-2.0.9
-  - chmod a+x ./configure
-  - ./configure
-  - make
-  - sudo make install
-  - cd ../..
+  - | # the package managers have very old versions, just build sdl2 from source
+    travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
+    cd SDL2-2.0.9
+    ./configure
+    make
+    sudo make install
+    cd ..
 
 script:
   - cargo build
