@@ -6,32 +6,31 @@ git:
 rust:
   - stable
 
-matrix:
-  - os: linux
-    before_script: 
-      - | # the package managers have very old versions, just build sdl2 from source
-        travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
-        cd SDL2-2.0.9
-        ./configure
-        make
-        sudo make install
-        cd ..
-  - os: osx
-    before_script:
-      - | # the package managers have very old versions, just build sdl2 from source
-        travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
-        mv gcc-fat.sh SDL2-2.0.9/gcc-fat.sh
-        cd SDL2-2.0.9
-        ./configure CC="sh gcc-fat.sh" && make && rm -rf x86 x64
-        make
-        sudo make install
-        cd ..
+cache:
+  cargo
 
 env:
   - LD_LIBRARY_PATH: "/usr/local/lib"
 
-cache:
-  cargo
+os:
+  - linux
+  - osx
+
+before_script: 
+  - | # the package managers have very old versions, just build sdl2 from source
+    travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
+    if [[ $TRAVIS_OS == "osx" ]]
+    then
+      mv gcc-fat.sh SDL2-2.0.9/gcc-fat.sh
+      cd SDL2-2.0.9
+      ./configure CC="sh gcc-fat.sh" && make && rm -rf x86 x64
+    else
+      cd SDL2-2.0.9
+      ./configure
+    fi
+    make
+    sudo make install
+    cd ..
 
 script:
   - cargo build
