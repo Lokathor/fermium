@@ -15,7 +15,7 @@ install:
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
   - rustup-init -y --default-toolchain %channel% --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
-  - cp %dllpath% .
+  - cp %dllpath% . # this is for some of our tests to run
   - rustc -vV
   - cargo -vV
 
@@ -23,4 +23,8 @@ build: false
 
 test_script:
   - cargo build
-  - cargo test
+  # We cannot run doctests because rustdoc is silly and tries to interpret too
+  # much stuff as code blocks and then dies when the "code blocks" don't contain
+  # valid rust. https://github.com/rust-lang/rust/issues/59867 We should still
+  # run all the other tests of course.
+  - cargo test --lib --tests
