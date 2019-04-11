@@ -4,6 +4,15 @@ use std::path::{PathBuf, Path};
 
 fn main() {
   let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
+  generate_bindings_file(&out_dir);
+  declare_linking();
+}
+
+fn generate_bindings_file(out_dir: &Path) {
+  /// Say if a file is missing from the disk
+  fn file_missing(name: &Path) -> bool {
+    std::fs::File::open(name).is_err()
+  }
   let bindings_filename = out_dir.join("bindings.rs");
   if cfg!(feature = "force_bindgen") || file_missing(&bindings_filename) {
     let bindings = bindgen::builder()
@@ -22,7 +31,21 @@ fn main() {
   }
 }
 
-/// Say if a file is missing from the disk
-fn file_missing(name: &Path) -> bool {
-  std::fs::File::open(name).is_err()
+fn declare_linking() {
+  #[cfg(windows)]
+  {
+    if cfg!(target_pointer_width = "32") {
+      println!("cargo:rustc-link-search=native=lib/x86");
+    } else if cfg!(target_pointer_width = "64") {
+      println!("cargo:rustc-link-search=native=lib/x64");
+    } else {
+      panic!("What on earth is the size of a pointer on this device?");
+    }
+    println!("cargo:rustc-link-lib=SDL2");
+    return;
+  }
+  #[allow(unreachable_code)]
+  {
+    panic!("I don't know how to declare the linking for this system!");
+  }
 }

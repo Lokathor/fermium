@@ -1,0 +1,26 @@
+
+os: Visual Studio 2015
+
+environment:
+  # The pre-built SDL2 files that we have are for MSVC only.
+  matrix:
+    - channel: stable
+      target: x86_64-pc-windows-msvc
+      dllpath: lib/x64/SDL2.dll
+    - channel: stable
+      target: i686-pc-windows-msvc
+      dllpath: lib/x86/SDL2.dll
+
+install:
+  - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
+  - rustup-init -y --default-toolchain %channel% --default-host %target%
+  - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+  - cp %dllpath% .
+  - rustc -vV
+  - cargo -vV
+
+build: false
+
+test_script:
+  - cargo build
+  - cargo test
