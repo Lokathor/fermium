@@ -1,6 +1,15 @@
+use std::{
+  env,
+  path::{Path, PathBuf},
+};
 
-use std::env;
-use std::path::{PathBuf, Path};
+const WRAPPER_DOT_H: &str = r##"
+  #if defined(__APPLE__)
+  #define MAC_OS_X_VERSION_MIN_REQUIRED 1060
+  #endif
+
+  #include "include/SDL.h"
+  "##;
 
 fn main() {
   let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
@@ -9,32 +18,27 @@ fn main() {
 }
 
 fn generate_bindings_file(out_dir: &Path) {
-  /// Say if a file is missing from the disk
-  fn file_missing(name: &Path) -> bool {
-    std::fs::File::open(name).is_err()
-  }
   let bindings_filename = out_dir.join("bindings.rs");
-  if cfg!(feature = "force_bindgen") || file_missing(&bindings_filename) {
-    let bindings = bindgen::builder()
-      .header_contents("wrapper.h",r##"
-        #if defined(__APPLE__)
-        #define MAC_OS_X_VERSION_MIN_REQUIRED 1060
-        #endif
-
-        #include "include/SDL.h"
-        "##)
+  let bindings = bindgen::builder()
+      .header_contents("wrapper.h",WRAPPER_DOT_H)
       .use_core()
-      .ctypes_prefix("libc")
+      .ctypes_prefix(if cfg!(windows) {
+          "winapi::ctypes"
+        } else {
+          "libc"
+        })
       .default_enum_style(bindgen::EnumVariation::Consts)
-      // TODO: various whitelist and blacklist stuff goes here
-      // TODO: filter what types get what impls
+      .impl_debug(true)
+      .derive_default(true)
+      .derive_partialeq(true)
       .time_phases(true) // Note(Lokathor): just for fun!
       .rustfmt_bindings(true)
       .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")))
       .generate()
       .expect("Couldn't generate the bindings.");
-    bindings.write_to_file(&bindings_filename).expect("Couldn't write the bindings file.");
-  }
+  bindings
+    .write_to_file(&bindings_filename)
+    .expect("Couldn't write the bindings file.");
 }
 
 fn declare_linking() {
