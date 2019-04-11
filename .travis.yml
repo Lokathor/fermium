@@ -19,6 +19,7 @@ before_script:
   # http://libsdl.org/download-2.0.php or from having built from source. Here we
   # will build it from source for simplicity.
   - cd c_bits/SDL2-2.0.9
+  - chmod a+x ./configure
   - ./configure
   - make
   - sudo make install
