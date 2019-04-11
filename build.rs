@@ -16,7 +16,13 @@ fn generate_bindings_file(out_dir: &Path) {
   let bindings_filename = out_dir.join("bindings.rs");
   if cfg!(feature = "force_bindgen") || file_missing(&bindings_filename) {
     let bindings = bindgen::builder()
-      .header_contents("wrapper.h",r##"#include "include/SDL.h""##)
+      .header_contents("wrapper.h",r##"
+        #if defined(__APPLE__)
+        #define MAC_OS_X_VERSION_MIN_REQUIRED 1060
+        #endif
+
+        #include "include/SDL.h"
+        "##)
       .use_core()
       .ctypes_prefix("libc")
       .default_enum_style(bindgen::EnumVariation::Consts)
