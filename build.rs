@@ -32,6 +32,7 @@ fn generate_bindings_file(out_dir: &Path) {
 }
 
 fn declare_linking() {
+  println!("cargo:rustc-link-lib=SDL2");
   #[cfg(windows)]
   {
     if cfg!(target_pointer_width = "32") {
@@ -39,13 +40,7 @@ fn declare_linking() {
     } else if cfg!(target_pointer_width = "64") {
       println!("cargo:rustc-link-search=native=lib/x64");
     } else {
-      panic!("What on earth is the size of a pointer on this device?");
+      panic!("What on earth is the size of a pointer on this device!?");
     }
-    println!("cargo:rustc-link-lib=SDL2");
-    return;
-  }
-  #[allow(unreachable_code)]
-  {
-    panic!("I don't know how to declare the linking for this system!");
   }
 }

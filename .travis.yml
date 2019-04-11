@@ -1,0 +1,30 @@
+
+language: rust
+git:
+  quiet: true
+
+rust:
+  - stable
+
+os:
+  - linux
+  - osx
+
+cache:
+  cargo
+
+before_script:
+  # On linux and mac we presume that the user has already installed SDL2 to the
+  # appropriate location on the system, either via the public download page
+  # http://libsdl.org/download-2.0.php or from having built from source. Here we
+  # will build it from source for simplicity.
+  - cd c_bits/SDL2-2.0.9
+  - ./configure
+  - make
+  - sudo make install
+  - cd ../..
+
+script:
+  - cargo build
+  # there's a doctest difficulty here, see the appveyor file
+  - cargo test --lib --tests
