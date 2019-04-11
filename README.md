@@ -1,6 +1,6 @@
 [![License:Zlib](https://img.shields.io/badge/License-Zlib-brightgreen.svg)](https://opensource.org/licenses/Zlib)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/lqvi8qbjayf35v8m/branch/master?svg=true)](https://ci.appveyor.com/project/Lokathor/fermium/branch/master)
-[![TravisCI](https://travis-ci.org/Lokathor/fermium.svg?branch=master](https://travis-ci.org/Lokathor/fermium)
+[![TravisCI](https://travis-ci.org/Lokathor/fermium.svg?branch=master)](https://travis-ci.org/Lokathor/fermium)
 
 # fermium
 
