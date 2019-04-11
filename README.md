@@ -4,6 +4,11 @@
 
 # fermium
 
+This is always `no_std`.
+
+To define the C types involved, the bindings use `winapi` on Windows and `libc`
+elsewhere.
+
 ## Setup
 
 * This library uses
@@ -52,9 +57,3 @@ SDL2 (necessary on some platforms), but you should avoid a static link if
 possible. Using a dynamic link lets users get a newer versions of SDL2 with bug
 fixes and patches and it'll "Just Work" with the copy of your program they
 already have.
-
-## Features
-
-* `force_bindgen`: By default, the crate will check for a `bindings.rs` output
-  already being on disk in its output folder, and not run if it sees one. If you
-  need to force the issue for whatever reason, use this feature.
