@@ -7,7 +7,7 @@
 This is always `no_std`. To define the C types involved, the bindings use
 `winapi` on Windows and `libc` elsewhere.
 
-## Setup Details
+## How To Use This Crate
 
 * **Before Building:** Since this crate is about SDL2 bindings, it obviously
   requires SDL2. You will need the latest stable version of SDL2 (currently
