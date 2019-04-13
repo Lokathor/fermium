@@ -117,7 +117,11 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
 }
 
 fn declare_linking() {
-  println!("cargo:rustc-link-lib=SDL2");
+  if cfg!(feature = "static_link_sdl2_use_with_caution") {
+    println!("cargo:rustc-link-lib=static=SDL2");
+  } else {
+    println!("cargo:rustc-link-lib=SDL2");
+  }
   #[cfg(windows)]
   {
     if cfg!(target_pointer_width = "32") {

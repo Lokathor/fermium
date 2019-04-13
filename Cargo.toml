@@ -13,6 +13,7 @@ build = "build.rs"
 [features]
 default = []
 use_bindgen_lib = ["bindgen"]
+static_link_sdl2_use_with_caution = []
 
 [build-dependencies]
 fs_extra = "1.1"

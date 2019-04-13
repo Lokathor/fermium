@@ -28,6 +28,11 @@ test_script:
   # First we verify the default mode (cli mode)
   - cargo build
   - cargo test --lib --tests
+
   # Now we try a second time with the "use_bindgen_lib" feature
   - cargo build --features="use_bindgen_lib"
   - cargo test --lib --tests --features="use_bindgen_lib"
+  
+  # Now we double check that things go well with the "static" feature
+  - cargo build --features="static_link_sdl2_use_with_caution"
+  - cargo test --lib --tests --features="static_link_sdl2_use_with_caution"
