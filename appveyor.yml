@@ -13,15 +13,21 @@ install:
   - rustup-init -y --default-toolchain %channel% --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
   - cp %dllpath% . # this is for some of our tests to run
+  - cargo install bindgen
   - rustc -vV
   - cargo -vV
 
 build: false
 
 test_script:
-  - cargo build
   # We cannot run doctests because rustdoc is silly and tries to interpret too
   # much stuff as code blocks and then dies when the "code blocks" don't contain
   # valid rust. https://github.com/rust-lang/rust/issues/59867 We should still
   # run all the other tests of course.
+
+  # First we verify the default mode (cli mode)
+  - cargo build
   - cargo test --lib --tests
+  # Now we try a second time with the "use_bindgen_lib" feature
+  - cargo build --features="use_bindgen_lib"
+  - cargo test --lib --tests --features="use_bindgen_lib"

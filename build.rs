@@ -13,29 +13,104 @@ const WRAPPER_DOT_H: &str = r##"
 
 fn main() {
   let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
-  generate_bindings_file(&out_dir);
+  #[cfg(feature = "use_bindgen_lib")]
+  {
+    generate_bindings_file_via_lib(&out_dir);
+  }
+  #[cfg(not(feature = "use_bindgen_lib"))]
+  {
+    generate_bindings_file_via_cli(&out_dir);
+  }
   declare_linking();
 }
 
-fn generate_bindings_file(out_dir: &Path) {
+#[cfg(not(feature = "use_bindgen_lib"))]
+fn generate_bindings_file_via_cli(out_dir: &Path) {
+  let current_dir = std::env::current_dir().expect("Couldn't read the current dir.");
+  let mut copy_options = fs_extra::dir::CopyOptions::new();
+  copy_options.copy_inside = true;
+  copy_options.skip_exist = true;
+  fs_extra::copy_items(&vec![current_dir.join("include")], out_dir, &copy_options)
+    .expect("Couldn't copy the 'include' directory.");
+  let bindings_filename = out_dir.join("bindings.rs");
+  let bindings_filename_str = bindings_filename
+    .to_str()
+    .expect("output file path isn't valid utf8, stop that");
+  let wrapper_filename = out_dir.join("wrapper.h");
+  let mut wrapper_dot_h_file =
+    std::fs::File::create(&wrapper_filename).expect("Couldn't make a temporary 'wrapper.h' file.");
+  use std::io::prelude::*;
+  wrapper_dot_h_file
+    .write_all(WRAPPER_DOT_H.as_bytes())
+    .expect("Couldn't write the wrapper file content.");
+  let mut bindings_command = std::process::Command::new("bindgen");
+  // flags
+  bindings_command.arg("--impl-debug");
+  bindings_command.arg("--impl-partialeq");
+  bindings_command.arg("--use-core");
+  bindings_command.arg("--with-derive-default");
+  bindings_command.arg("--with-derive-partialeq");
+  // options
+  bindings_command
+    .arg("--ctypes-prefix")
+    .arg(if cfg!(windows) {
+      "winapi::ctypes"
+    } else {
+      "libc"
+    });
+  bindings_command.arg("--default-enum-style").arg("consts");
+  bindings_command.arg("--output").arg(&bindings_filename_str);
+  bindings_command.arg("--rust-target").arg("1.33");
+  bindings_command.arg("--rustfmt-configuration-file").arg(
+    std::env::current_dir()
+      .expect("couldn't get current directory!")
+      .join("rustfmt.toml")
+      .to_str()
+      .expect("rustfmt.toml file path isn't valid utf8, stop that"),
+  );
+  // header
+  bindings_command.arg(&wrapper_filename);
+
+  println!("EXECUTING:{:?}", bindings_command);
+  let bindings_command_output = bindings_command
+    .output()
+    .expect("Couldn't run the 'bindgen' command.");
+  if bindings_command_output.status.success() {
+    println!("SUCCESS!")
+  } else {
+    println!("FAILURE!")
+  }
+  for line in String::from_utf8_lossy(&bindings_command_output.stdout).lines() {
+    println!("OUT:{}", line);
+  }
+  for line in String::from_utf8_lossy(&bindings_command_output.stderr).lines() {
+    println!("ERR:{}", line);
+  }
+  if !bindings_command_output.status.success() {
+    panic!("The 'bindgen' process FAILED! (see output log for details)");
+  }
+}
+
+#[cfg(feature = "use_bindgen_lib")]
+fn generate_bindings_file_via_lib(out_dir: &Path) {
   let bindings_filename = out_dir.join("bindings.rs");
   let bindings = bindgen::builder()
-      .header_contents("wrapper.h",WRAPPER_DOT_H)
-      .use_core()
-      .ctypes_prefix(if cfg!(windows) {
-          "winapi::ctypes"
-        } else {
-          "libc"
-        })
-      .default_enum_style(bindgen::EnumVariation::Consts)
-      .impl_debug(true)
-      .derive_default(true)
-      .derive_partialeq(true)
-      .time_phases(true) // Note(Lokathor): just for fun!
-      .rustfmt_bindings(true)
-      .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")))
-      .generate()
-      .expect("Couldn't generate the bindings.");
+    .header_contents("wrapper.h",WRAPPER_DOT_H)
+    .use_core()
+    .ctypes_prefix(if cfg!(windows) {
+        "winapi::ctypes"
+      } else {
+        "libc"
+      })
+    .default_enum_style(bindgen::EnumVariation::Consts)
+    .impl_debug(true)
+    .derive_default(true)
+    .derive_partialeq(true)
+    .time_phases(true) // Note(Lokathor): just for fun!
+    .rustfmt_bindings(true)
+    .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")))
+    .generate()
+    .expect("Couldn't generate the bindings.");
   bindings
     .write_to_file(&bindings_filename)
     .expect("Couldn't write the bindings file.");

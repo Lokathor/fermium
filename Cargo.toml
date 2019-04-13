@@ -10,11 +10,16 @@ license = "Zlib"
 links = "SDL2"
 build = "build.rs"
 
-[build-dependencies]
-bindgen = "0.49"
+[features]
+default = []
+use_bindgen_lib = ["bindgen"]
 
-[target."cfg(windows)".dependencies]
+[build-dependencies]
+fs_extra = "1.1"
+bindgen = { version = "0.49", optional = true }
+
+[target.'cfg(windows)'.dependencies]
 winapi = "0.3"
 
-[target."cfg(not(windows))".dependencies]
+[target.'cfg(not(windows))'.dependencies]
 libc = "0.2"
