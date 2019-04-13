@@ -37,7 +37,7 @@ This is always `no_std`. To define the C types involved, the bindings use
     that has `libclang.dll` (eg: `D:\programs\LLVM\bin`)
 
 * **Running:** Once you've compiled your program using this library, you'll need
-  to have the SDL2 dynamic library somewhere that the OS can find it for your
+  to have the SDL2 dynamic library somewhere that the OS can find for your
   program to run.
   * For Windows, the SDL2 download page has both a [32-bit
     version](https://www.libsdl.org/release/SDL2-2.0.9-win32-x86.zip) and
