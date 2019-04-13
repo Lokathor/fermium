@@ -7,6 +7,8 @@
 This is always `no_std`. To define the C types involved, the bindings use
 `winapi` on Windows and `libc` elsewhere.
 
+Currently only supports the desktop platforms: Windows, Mac, and Linux.
+
 ## How To Use This Crate
 
 * **Before Building:** Since this crate is about SDL2 bindings, it obviously
@@ -27,14 +29,21 @@ This is always `no_std`. To define the C types involved, the bindings use
     script to make things build properly.
 
 * **Building:** This library uses
-  [bindgen](https://github.com/rust-lang/rust-bindgen) as a `build-dependency`
-  to create the actual bindings via a `build.rs` script. This requires a working
-  copy of `clang` (3.9 or later) to be installed. The `bindgen` [requirements
+  [bindgen](https://github.com/rust-lang/rust-bindgen) as a `build-dependency`.
+  By default it will attempt to invoke the CLI version of the program, but if
+  you enable the `use_bindgen_lib` feature then it will build `bindgen` as a
+  library and use it that way. Either as a cli program or as a library,
+  `bindgen` requires a working copy of `clang` (3.9 or later) to be installed.
+  The `bindgen` [requirements
   page](https://rust-lang.github.io/rust-bindgen/requirements.html) has
-  instructions for installing clang for each major OS.
-  * _Note For Windows Users:_ after installing LLVM you must manually make an
-    environment variable for `LIBCLANG_PATH` pointing to the install directory
-    that has `libclang.dll` (eg: `D:\programs\LLVM\bin`)
+  instructions for installing clang for each major OS. **Windows Users:** after
+  installing LLVM you must manually make an environment variable for
+  `LIBCLANG_PATH` pointing to the install directory that has `libclang.dll` (eg:
+  `D:\programs\LLVM\bin`)
+  * When building you can also activate the `static_link_sdl2_use_with_caution`
+    feature if you would like to staticly link SDL2 instead of the normal
+    dynamic link. As the name implies, you should generally _not_ statically link
+    SDL2, unless your target platform absolutely requires it.
 
 * **Running:** Once you've compiled your program using this library, you'll need
   to have the SDL2 dynamic library somewhere that the OS can find for your
