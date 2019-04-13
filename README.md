@@ -57,9 +57,9 @@ This is always `no_std`. To define the C types involved, the bindings use
     really needs to they can replace the DLL later. Having one copy of
     `SDL2.dll` per program isn't a huge deal, it's only about 1.4 megabytes.
   * For Mac and Linux you _could_ ship a copy of the SDL2 shared library with
-    your program, but it's honestly better to assume that the user has it
-    correctly installed they way that they want it already, and just give them
-    instructions to install it if they somehow don't have SDL2 at all.
+    your program, but it's honestly better to assume that the user already has
+    it correctly installed they way that they want things setup, and just give
+    them instructions to install it if they somehow don't have SDL2 at all.
   * For Steam OS you literally aren't allowed to ship your own version of SDL2,
     they keep the latest version installed as part of the OS setup, and you're
     not allowed to mess with it.
