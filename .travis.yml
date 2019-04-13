@@ -16,6 +16,12 @@ os:
   - linux
   - osx
 
+
+before_script:
+  - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
+  - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
+  - cargo install-update -a
+
 before_script: 
   - | # the package managers have very old versions, just build sdl2 from source
     travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
