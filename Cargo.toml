@@ -19,10 +19,7 @@ static_link_sdl2_use_with_caution = []
 fs_extra = "1.1"
 bindgen = { version = "0.49", optional = true }
 
-[target.'cfg(windows)'.dependencies]
-winapi = "0.3"
-
-[target.'cfg(not(windows))'.dependencies]
+[dependencies]
 libc = "0.2"
 
 [package.metadata.docs.rs]

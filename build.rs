@@ -53,11 +53,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   // options
   bindings_command
     .arg("--ctypes-prefix")
-    .arg(if cfg!(windows) {
-      "winapi::ctypes"
-    } else {
-      "libc"
-    });
+    .arg("libc");
   bindings_command.arg("--default-enum-style").arg("consts");
   bindings_command.arg("--output").arg(&bindings_filename_str);
   bindings_command.arg("--rust-target").arg("1.33");
@@ -97,11 +93,7 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
   let bindings = bindgen::builder()
     .header_contents("wrapper.h",WRAPPER_DOT_H)
     .use_core()
-    .ctypes_prefix(if cfg!(windows) {
-        "winapi::ctypes"
-      } else {
-        "libc"
-      })
+    .ctypes_prefix("libc")
     .default_enum_style(bindgen::EnumVariation::Consts)
     .impl_debug(true)
     .derive_default(true)
