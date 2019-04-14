@@ -12,6 +12,7 @@ install:
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
   - rustup-init -y --default-toolchain %channel% --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+  - cargo install bindgen
   - cp %dllpath% . # this is for some of our tests to run
   - rustc -vV
   - cargo -vV
