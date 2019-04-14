@@ -117,6 +117,25 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
 }
 
 fn declare_linking() {
+  // WHAT TO LINK
+  if cfg!(feature = "static_link_sdl2_use_with_caution") {
+    println!("cargo:rustc-link-lib=static=SDL2");
+    if cfg!(target_os = "macos") {
+      println!("cargo:rustc-link-lib=framework=CoreAudio");
+      println!("cargo:rustc-link-lib=framework=AudioToolbox");
+      println!("cargo:rustc-link-lib=framework=ForceFeedback");
+      println!("cargo:rustc-link-lib=framework=CoreVideo");
+      println!("cargo:rustc-link-lib=framework=Cocoa");
+      println!("cargo:rustc-link-lib=framework=Carbon");
+      println!("cargo:rustc-link-lib=framework=IOKit");
+      println!("cargo:rustc-link-lib=framework=QuartzCore");
+      println!("cargo:rustc-link-lib=framework=Metal");
+    }
+  } else {
+    println!("cargo:rustc-link-lib=SDL2");
+  }
+
+  // WHERE TO LOOK
   #[cfg(windows)]
   {
     if cfg!(target_pointer_width = "32") {
@@ -133,21 +152,5 @@ fn declare_linking() {
     for dir in ld_library_path.split(":") {
       println!("cargo:rustc-link-search=native={}", dir);
     }
-  }
-  if cfg!(feature = "static_link_sdl2_use_with_caution") {
-    println!("cargo:rustc-link-lib=static=SDL2");
-    if cfg!(mac) {
-      println!("cargo:rustc-link-lib=framework=CoreAudio");
-      println!("cargo:rustc-link-lib=framework=AudioToolbox");
-      println!("cargo:rustc-link-lib=framework=ForceFeedback");
-      println!("cargo:rustc-link-lib=framework=CoreVideo");
-      println!("cargo:rustc-link-lib=framework=Cocoa");
-      println!("cargo:rustc-link-lib=framework=Carbon");
-      println!("cargo:rustc-link-lib=framework=IOKit");
-      println!("cargo:rustc-link-lib=framework=QuartzCore");
-      println!("cargo:rustc-link-lib=framework=Metal");
-    }
-  } else {
-    println!("cargo:rustc-link-lib=SDL2");
   }
 }
