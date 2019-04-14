@@ -42,10 +42,14 @@ Currently only supports the desktop platforms: Windows, Mac, and Linux.
   `D:\programs\LLVM\bin`)
   * When building you can also activate the `static_link_sdl2_use_with_caution`
     feature if you would like to staticly link SDL2 instead of the normal
-    dynamic link. On non-Windows platforms this feature will add every directory
-    in the `LD_LIBRARY_PATH` list to be searched for the static lib files (which
-    _should_ find SDL2 just fine). As the name implies, you should generally _not_
-    statically link SDL2, unless your target platform absolutely requires it.
+    dynamic link.
+  * On non-Windows platforms, this feature requires that your copy of SDL2 was
+    compiled wih the `-fPIC` flag.
+  * On non-Windows platforms this feature will add every directory in the
+    `LD_LIBRARY_PATH` list to be searched for the static lib files (which
+    _should_ find SDL2 just fine).
+  * As the name implies, you should generally _not_ statically link SDL2, unless
+    your target platform absolutely requires it.
 
 * **Running:** Once you've compiled your program using this library, you'll need
   to have the SDL2 dynamic library somewhere that the OS can find for your
