@@ -136,6 +136,17 @@ fn declare_linking() {
   }
   if cfg!(feature = "static_link_sdl2_use_with_caution") {
     println!("cargo:rustc-link-lib=static=SDL2");
+    if cfg!(mac) {
+      println!("cargo:rustc-link-lib=framework=CoreAudio");
+      println!("cargo:rustc-link-lib=framework=AudioToolbox");
+      println!("cargo:rustc-link-lib=framework=ForceFeedback");
+      println!("cargo:rustc-link-lib=framework=CoreVideo");
+      println!("cargo:rustc-link-lib=framework=Cocoa");
+      println!("cargo:rustc-link-lib=framework=Carbon");
+      println!("cargo:rustc-link-lib=framework=IOKit");
+      println!("cargo:rustc-link-lib=framework=QuartzCore");
+      println!("cargo:rustc-link-lib=framework=Metal");
+    }
   } else {
     println!("cargo:rustc-link-lib=SDL2");
   }
