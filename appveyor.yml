@@ -2,7 +2,7 @@
 os: Visual Studio 2015
 
 cache:
-  - '%USERPROFILE%\.cargo\bin' -> appveyor.yml
+  - '%USERPROFILE%\.cargo\bin -> appveyor.yml'
 
 environment:
   # The pre-built SDL2 files that we have are for MSVC only.
