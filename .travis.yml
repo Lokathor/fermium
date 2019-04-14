@@ -37,6 +37,7 @@ before_script:
     make
     sudo make install
     cd ..
+  - sdl2-config --static-libs
 
 script:
   # We cannot run doctests because rustdoc is silly and tries to interpret too

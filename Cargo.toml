@@ -24,3 +24,6 @@ winapi = "0.3"
 
 [target.'cfg(not(windows))'.dependencies]
 libc = "0.2"
+
+[package.metadata.docs.rs]
+features = ["use_bindgen_lib"]

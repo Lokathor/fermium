@@ -135,7 +135,7 @@ fn declare_linking() {
     }
   }
   if cfg!(feature = "static_link_sdl2_use_with_caution") {
-    let ld_library_path = println!("cargo:rustc-link-lib=static=SDL2");
+    println!("cargo:rustc-link-lib=static=SDL2");
   } else {
     println!("cargo:rustc-link-lib=SDL2");
   }
