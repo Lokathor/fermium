@@ -9,7 +9,7 @@ const WRAPPER_DOT_H: &str = r##"
   #endif
 
   #include "include/SDL.h"
-  "##;
+"##;
 
 fn main() {
   let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
