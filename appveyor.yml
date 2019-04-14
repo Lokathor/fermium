@@ -18,7 +18,7 @@ install:
   - rustup component add rustfmt
   - if not exist %USERPROFILE%\.cargo\bin\cargo-install-update.exe cargo install cargo-update
   - if not exist %USERPROFILE%\.cargo\bin\bindgen.exe cargo install bindgen
-  - cargo install-update -a
+  - cargo install-update install-update bindgen
   - cp %dllpath% . # this is for some of our tests to run
   - rustc -vV
   - cargo -vV
