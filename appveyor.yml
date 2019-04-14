@@ -1,9 +1,6 @@
 
 os: Visual Studio 2015
 
-cache:
-  - '%USERPROFILE%\.cargo\bin -> appveyor.yml'
-
 environment:
   # The pre-built SDL2 files that we have are for MSVC only.
   matrix:
@@ -15,10 +12,6 @@ install:
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
   - rustup-init -y --default-toolchain %channel% --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
-  - rustup component add rustfmt
-  - if not exist %USERPROFILE%\.cargo\bin\cargo-install-update.exe cargo install cargo-update
-  - if not exist %USERPROFILE%\.cargo\bin\bindgen.exe cargo install bindgen
-  - cargo install-update install-update bindgen
   - cp %dllpath% . # this is for some of our tests to run
   - rustc -vV
   - cargo -vV
