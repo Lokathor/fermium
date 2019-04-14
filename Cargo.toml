@@ -2,16 +2,28 @@
 name = "fermium"
 description = "An opinionated crate of sdl2 bindings."
 repository = "https://github.com/Lokathor/fermium"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
 license = "Zlib"
 
-[target."cfg(windows)".dependencies]
-winapi = "0.3"
+links = "SDL2"
+build = "build.rs"
 
-[target."cfg(not(windows))".dependencies]
-libc = "0.2"
+[features]
+default = []
+use_bindgen_lib = ["bindgen"]
+static_link_sdl2_use_with_caution = []
 
 [build-dependencies]
-bindgen = "0.49"
+fs_extra = "1.1"
+bindgen = { version = "0.49", optional = true }
+
+[target.'cfg(windows)'.dependencies]
+winapi = "0.3"
+
+[target.'cfg(not(windows))'.dependencies]
+libc = "0.2"
+
+[package.metadata.docs.rs]
+features = ["use_bindgen_lib"]

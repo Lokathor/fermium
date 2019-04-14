@@ -4,56 +4,95 @@
 
 # fermium
 
-This is always `no_std`.
+This is always `no_std`. To define the C types involved, the bindings use
+`winapi` on Windows and `libc` elsewhere.
 
-To define the C types involved, the bindings use `winapi` on Windows and `libc`
-elsewhere.
+Currently only supports the desktop platforms: Windows, Mac, and Linux.
 
-## Setup
+## Why Not Use `sdl2-sys`?
 
-* This library uses
-  [bindgen](https://rust-lang.github.io/rust-bindgen/requirements.html), which
-  requires a working copy of `clang` (3.9 or later). Their page has instructions
-  for installing clang, based on your system.
-  * Win32 note: after installing LLVM you must make an environment variable for
-    `LIBCLANG_PATH` pointing to the install directory that has `libclang.dll`
-    (eg: `D:\programs\LLVM\bin`)
-* To **build the library** you need the SDL2 libraries to link against.
-  * On Window this is provided for you by the build script.
-  * On Mac and Linux it's assumed that you've already installed them via some
-    appropriate method (make sure you have `2.0.9` or later). There's a Mac
-    installer file on [the SDL2 download
-    page](https://www.libsdl.org/download-2.0.php) if you like. It's also fairly
-    trivial to build from source in the normal style for a C project:
+Fair question. I'd say that between that crate and this crate there's two
+notable differences:
 
-```sh
-curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
-cd SDL2-2.0.9
-./configure
-make
-sudo make install
-```
+* A change they could easily make (at the flip of a switch): `Debug` and
+  `PartialEq` impls for all the types.
+* A change that would probably require a long fiddly refactor for their higher
+  level wrapper crate: All the SDL2 enums are just `const` values, instead of
+  Rust `enum` types.
 
-* To **run a program** using this library you'll also need the appropriate SDL2
-  runtime files in a place the OS can find them. These are available for Windows
-  and Mac on [the SDL2 download page](http://libsdl.org/download-2.0.php), and
-  on Linux it's trivial to build from source.
-  * On Windows, you should generally ship the `SDL2.dll` along side your
-    `program.exe` file. The dynamic library lookup starts in the same folder the
-    exe lives in, so you shipping a copy of SDL2.dll won't get mixed up with any
-    other SDL2.dll they have installed from anywhere else. If a user needs to
-    override your version they can just replace the file, but they probably
-    won't even need to.
-  * On Mac and Linux you should generally _not_ attempt to ship an SDL2 library
-    along with your game. Assume that the user already has an appropriate
-    library configured and installed with the best settings for their particular
-    system (there's just too many fiddly different systems out there). Simply be
-    clear that your program requires SDL2-2.0.9 (or later) and direct them to
-    the SDL2 download page (Mac users) or remind them how to build it from
-    source (Linux users).
+If those don't sound like a good enough reason to switch to this crate, keep
+using `sdl2-sys`.
 
-In the future the crate will likely have a feature to enable a static link with
-SDL2 (necessary on some platforms), but you should avoid a static link if
-possible. Using a dynamic link lets users get a newer versions of SDL2 with bug
-fixes and patches and it'll "Just Work" with the copy of your program they
-already have.
+## How To Use This Crate
+
+* **Before Building:** Since this crate is about SDL2 bindings, it obviously
+  requires SDL2. You will need the latest stable version of SDL2 (currently
+  `2.0.9`).
+  * For Windows, the crate packages the MSVC development libraries from the
+    [SDL2 download page](https://www.libsdl.org/download-2.0.php)
+  * For Linux, there are no provided downloads, they tell you to just install
+    using your package manager. However, the version that's usually in package
+    managers is often not up to date, so honestly just build it from source. The
+    [travis file](.travis.yml) of this repository has an example.
+  * For Mac you can [download the
+    dmg](https://www.libsdl.org/release/SDL2-2.0.9.dmg) installer from the SDL2
+    website, or use [Homebrew](https://formulae.brew.sh/formula/sdl2#default),
+    or build from source. Note that if you build from source yourself there's a
+    few special flags you need to use or you'll get build errors. The [travis
+    file](.travis.yml) has an example of how to use the [gcc-fat.sh](gcc-fat.sh)
+    script to make things build properly.
+
+* **Building:** This library uses
+  [bindgen](https://github.com/rust-lang/rust-bindgen) as a `build-dependency`.
+  By default it will attempt to invoke the CLI version of the program, but if
+  you enable the `use_bindgen_lib` feature then it will build `bindgen` as a
+  library and use it that way. Either as a cli program or as a library,
+  `bindgen` requires a working copy of `clang` (3.9 or later) to be installed.
+  The `bindgen` [requirements
+  page](https://rust-lang.github.io/rust-bindgen/requirements.html) has
+  instructions for installing clang for each major OS. **Windows Users:** after
+  installing LLVM you must manually make an environment variable for
+  `LIBCLANG_PATH` pointing to the install directory that has `libclang.dll` (eg:
+  `D:\programs\LLVM\bin`)
+  * When building you can also activate the `static_link_sdl2_use_with_caution`
+    feature if you would like to staticly link SDL2 instead of the normal
+    dynamic link.
+  * On non-Windows platforms, this feature requires that your copy of SDL2 was
+    compiled wih the `-fPIC` flag.
+  * On non-Windows platforms this feature will add every directory in the
+    `LD_LIBRARY_PATH` list to be searched for the static lib files (which
+    _should_ find SDL2 just fine).
+  * As the name implies, you should generally _not_ statically link SDL2, unless
+    your target platform absolutely requires it.
+
+* **Running:** Once you've compiled your program using this library, you'll need
+  to have the SDL2 dynamic library somewhere that the OS can find for your
+  program to run.
+  * For Windows, the SDL2 download page has both a [32-bit
+    version](https://www.libsdl.org/release/SDL2-2.0.9-win32-x86.zip) and
+    [64-bit version](https://www.libsdl.org/release/SDL2-2.0.9-win32-x86.zip) of
+    `SDL2.dll` available. It's also in the [lib directory](lib/) of this
+    repository.
+  * On Mac and Linux, generally whatever you used to install SDL2 will have
+    placed the shared library in the correct system directory for all the shared
+    libraries to go. If this is somehow not the case, you can set
+    `LD_LIBRARY_PATH` to point to an appropriate directory.
+
+* **Shipping:** When you're ready to send a program out the door, how should you
+  package SDL2 along with your program? Well, it depends.
+  * For Windows, you should probably just send your `SDL2.dll` file along side
+    your `program.exe`. DLL loading starts by checking the same directory as the
+    executable, so it's sure to find the correct DLL that way. If the user
+    really needs to they can replace the DLL later. Having one copy of
+    `SDL2.dll` per program isn't a huge deal, it's only about 1.4 megabytes.
+  * For Mac and Linux you _could_ ship a copy of the SDL2 shared library with
+    your program, but it's honestly better to assume that the user already has
+    it correctly installed they way that they want things setup, and just give
+    them instructions to install it if they somehow don't have SDL2 at all.
+  * For Steam OS you literally aren't allowed to ship your own version of SDL2,
+    they keep the latest version installed as part of the OS setup, and you're
+    not allowed to mess with it.
+
+## License
+
+This crate uses the Zlib license (the same license as SDL2 itself uses).

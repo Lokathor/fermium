@@ -16,23 +16,43 @@ os:
   - linux
   - osx
 
-before_script: 
-  - | # the package managers have very old versions, just build sdl2 from source
+before_script:
+  # Make sure we have the bindgen cli program up to date
+  - rustup component add rustfmt
+  - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
+  - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
+  - cargo install-update -a
+  # the package managers have very old versions of SDL2, we just build from source
+  - |
     travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
     if [[ $TRAVIS_OS == "osx" ]]
     then
       mv gcc-fat.sh SDL2-2.0.9/gcc-fat.sh
       cd SDL2-2.0.9
-      ./configure CC="sh gcc-fat.sh" && make && rm -rf x86 x64
+      CC="sh gcc-fat.sh" CFLAGS="-fPIC" ./configure --enable-shared --enable-static && make && rm -rf x86 x64
     else
       cd SDL2-2.0.9
-      ./configure
+      CFLAGS="-fPIC" ./configure --enable-shared --enable-static
     fi
     make
     sudo make install
     cd ..
+  - sdl2-config --static-libs
 
 script:
+  # We cannot run doctests because rustdoc is silly and tries to interpret too
+  # much stuff as code blocks and then dies when the "code blocks" don't contain
+  # valid rust. https://github.com/rust-lang/rust/issues/59867 We should still
+  # run all the other tests of course.
+
+  # First we verify the default mode (cli mode)
   - cargo build
-  # there's a doctest difficulty here, see the appveyor file
   - cargo test --lib --tests
+
+  # Now we try a second time with the "use_bindgen_lib" feature
+  - cargo build --features="use_bindgen_lib"
+  - cargo test --lib --tests --features="use_bindgen_lib"
+  
+  # Now we double check that things go well with the "static" feature
+  - cargo build --features="static_link_sdl2_use_with_caution"
+  - cargo test --lib --tests --features="static_link_sdl2_use_with_caution"
