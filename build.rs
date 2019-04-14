@@ -9,7 +9,7 @@ const WRAPPER_DOT_H: &str = r##"
   #endif
 
   #include "include/SDL.h"
-  "##;
+"##;
 
 fn main() {
   let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
@@ -53,12 +53,8 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   // options
   bindings_command
     .arg("--ctypes-prefix")
-    .arg(if cfg!(windows) {
-      "winapi::ctypes"
-    } else {
-      "libc"
-    });
-  bindings_command.arg("--default-enum-style").arg("consts");
+    .arg("libc");
+  bindings_command.arg("--default-enum-style").arg("moduleconsts");
   bindings_command.arg("--output").arg(&bindings_filename_str);
   bindings_command.arg("--rust-target").arg("1.33");
   bindings_command.arg("--rustfmt-configuration-file").arg(
@@ -97,12 +93,8 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
   let bindings = bindgen::builder()
     .header_contents("wrapper.h",WRAPPER_DOT_H)
     .use_core()
-    .ctypes_prefix(if cfg!(windows) {
-        "winapi::ctypes"
-      } else {
-        "libc"
-      })
-    .default_enum_style(bindgen::EnumVariation::Consts)
+    .ctypes_prefix("libc")
+    .default_enum_style(bindgen::EnumVariation::ModuleConsts)
     .impl_debug(true)
     .derive_default(true)
     .derive_partialeq(true)

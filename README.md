@@ -4,8 +4,7 @@
 
 # fermium
 
-This is always `no_std`. To define the C types involved, the bindings use
-`winapi` on Windows and `libc` elsewhere.
+This is always `no_std`.The bindings use `libc` for the C type declarations.
 
 Currently only supports the desktop platforms: Windows, Mac, and Linux.
 
