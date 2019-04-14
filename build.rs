@@ -121,6 +121,7 @@ fn declare_linking() {
   if cfg!(feature = "static_link_sdl2_use_with_caution") {
     println!("cargo:rustc-link-lib=static=SDL2");
     if cfg!(target_os = "macos") {
+      println!("cargo:rustc-link-lib=iconv");
       println!("cargo:rustc-link-lib=framework=CoreAudio");
       println!("cargo:rustc-link-lib=framework=AudioToolbox");
       println!("cargo:rustc-link-lib=framework=ForceFeedback");
@@ -130,7 +131,6 @@ fn declare_linking() {
       println!("cargo:rustc-link-lib=framework=IOKit");
       println!("cargo:rustc-link-lib=framework=QuartzCore");
       println!("cargo:rustc-link-lib=framework=Metal");
-      println!("cargo:rustc-link-lib=framework=iconv");
     }
   } else {
     println!("cargo:rustc-link-lib=SDL2");
