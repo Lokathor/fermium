@@ -95,4 +95,4 @@ using `sdl2-sys`.
 
 ## License
 
-This crate uses the Zlib license (the same license as SDL2 itself uses).
+This crate uses the Zlib license (the same license that SDL2 itself uses).
