@@ -20,7 +20,6 @@ install:
   - test -x $HOME/.cargo/bin/bindgen || cargo install bindgen
   - cargo install-update -a
   - cp %dllpath% . # this is for some of our tests to run
-  - cargo install bindgen
   - rustc -vV
   - cargo -vV
 
