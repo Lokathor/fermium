@@ -130,6 +130,7 @@ fn declare_linking() {
       println!("cargo:rustc-link-lib=framework=IOKit");
       println!("cargo:rustc-link-lib=framework=QuartzCore");
       println!("cargo:rustc-link-lib=framework=Metal");
+      println!("cargo:rustc-link-lib=framework=iconv");
     }
   } else {
     println!("cargo:rustc-link-lib=SDL2");
