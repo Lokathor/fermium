@@ -129,10 +129,10 @@ fn declare_linking() {
   }
   #[cfg(not(windows))]
   {
-    println!(
-      "cargo:rustc-link-search=native={}",
-      env::var("LD_LIBRARY_PATH").expect("Couldn't read LD_LIBRARY_PATH")
-    );
+    let ld_library_path = env::var("LD_LIBRARY_PATH").expect("Couldn't read LD_LIBRARY_PATH");
+    for dir in ld_library_path.split(":") {
+      println!("cargo:rustc-link-search=native={}", dir);
+    }
   }
   if cfg!(feature = "static_link_sdl2_use_with_caution") {
     let ld_library_path = println!("cargo:rustc-link-lib=static=SDL2");
