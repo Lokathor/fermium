@@ -54,7 +54,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   bindings_command
     .arg("--ctypes-prefix")
     .arg("libc");
-  bindings_command.arg("--default-enum-style").arg("consts");
+  bindings_command.arg("--default-enum-style").arg("moduleconsts");
   bindings_command.arg("--output").arg(&bindings_filename_str);
   bindings_command.arg("--rust-target").arg("1.33");
   bindings_command.arg("--rustfmt-configuration-file").arg(
@@ -94,7 +94,7 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
     .header_contents("wrapper.h",WRAPPER_DOT_H)
     .use_core()
     .ctypes_prefix("libc")
-    .default_enum_style(bindgen::EnumVariation::Consts)
+    .default_enum_style(bindgen::EnumVariation::ModuleConsts)
     .impl_debug(true)
     .derive_default(true)
     .derive_partialeq(true)
