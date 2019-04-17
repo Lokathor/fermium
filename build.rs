@@ -131,19 +131,24 @@ fn declare_linking() {
   // WHERE TO LOOK
   #[cfg(windows)]
   {
-    if cfg!(target_pointer_width = "32") {
-      println!("cargo:rustc-link-search=native=lib/x86");
+    let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read CARGO_MANIFEST_DIR."));
+    let subdirectory = if cfg!(target_pointer_width = "32") {
+      "lib\\x86"
     } else if cfg!(target_pointer_width = "64") {
-      println!("cargo:rustc-link-search=native=lib/x64");
+      "lib\\x64"
     } else {
       panic!("What on earth is the size of a pointer on this device!?");
-    }
+    };
+    println!("cargo:rustc-link-search=native={}", manifest_dir.join(subdirectory).display());
   }
   #[cfg(not(windows))]
   {
-    let ld_library_path = env::var("LD_LIBRARY_PATH").expect("Couldn't read LD_LIBRARY_PATH");
-    for dir in ld_library_path.split(":") {
-      println!("cargo:rustc-link-search=native={}", dir);
+    if let Ok(ld_library_path) = env::var("LD_LIBRARY_PATH") {
+      for dir in ld_library_path.split(":") {
+        println!("cargo:rustc-link-search=native={}", dir);
+      }
+    } else {
+      eprintln!("Couldn't read LD_LIBRARY_PATH, but will attempt to build anyway...");
     }
   }
 }
