@@ -22,7 +22,7 @@ notable differences:
 If those don't sound like a good enough reason to switch to this crate, keep
 using `sdl2-sys`.
 
-## How To Use This Crate
+## Using This Crate
 
 * **Before Building:** Since this crate is about SDL2 bindings, it obviously
   requires SDL2. You will need the latest stable version of SDL2 (currently
@@ -41,18 +41,18 @@ using `sdl2-sys`.
     file](.travis.yml) has an example of how to use the [gcc-fat.sh](gcc-fat.sh)
     script to make things build properly.
 
-* **Building:** This library uses
-  [bindgen](https://github.com/rust-lang/rust-bindgen) as a `build-dependency`.
-  By default it will attempt to invoke the CLI version of the program, but if
-  you enable the `use_bindgen_lib` feature then it will build `bindgen` as a
-  library and use it that way. Either as a cli program or as a library,
-  `bindgen` requires a working copy of `clang` (3.9 or later) to be installed.
-  The `bindgen` [requirements
-  page](https://rust-lang.github.io/rust-bindgen/requirements.html) has
-  instructions for installing clang for each major OS. **Windows Users:** after
-  installing LLVM you must manually make an environment variable for
-  `LIBCLANG_PATH` pointing to the install directory that has `libclang.dll` (eg:
-  `D:\programs\LLVM\bin`)
+* **Building:** There are pre-generated bindings files for common platforms. By
+  default, with no features enabled, it will pull in the pre-generated bindings
+  file of the current platform and use that. If this fails, you will need to
+  generated some bindings yourself using `bindgen`.
+  * If you need to make your own bindings, you can install the `bindgen` binary
+    and have this crate run it as a CLI tool, or you can have this crate build
+    it as a library and run it that way. Either way please see the [requirements
+    page](https://rust-lang.github.io/rust-bindgen/requirements.html) for
+    information on how to setup bindgen if you don't already have it. **Windows
+    Users:** after installing LLVM as instructed you must manually make an
+    environment variable for `LIBCLANG_PATH` pointing to the install directory
+    that has `libclang.dll` (eg: `D:\programs\LLVM\bin`).
   * When building you can also activate the `static_link_sdl2_use_with_caution`
     feature if you would like to staticly link SDL2 instead of the normal
     dynamic link.
@@ -66,7 +66,7 @@ using `sdl2-sys`.
 
 * **Running:** Once you've compiled your program using this library, you'll need
   to have the SDL2 dynamic library somewhere that the OS can find for your
-  program to run.
+  program to run (unless you went with a static link).
   * For Windows, the SDL2 download page has both a [32-bit
     version](https://www.libsdl.org/release/SDL2-2.0.9-win32-x86.zip) and
     [64-bit version](https://www.libsdl.org/release/SDL2-2.0.9-win32-x86.zip) of
