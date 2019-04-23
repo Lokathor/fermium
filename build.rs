@@ -1,11 +1,17 @@
-#![cfg_attr(not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib")), allow(unused_imports))]
+#![cfg_attr(
+  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib")),
+  allow(unused_imports)
+)]
 
 use std::{
   env,
   path::{Path, PathBuf},
 };
 
-#[cfg_attr(not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib")), allow(dead_code))]
+#[cfg_attr(
+  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib")),
+  allow(dead_code)
+)]
 const WRAPPER_DOT_H: &str = r##"
   #if defined(__APPLE__)
   #define MAC_OS_X_VERSION_MIN_REQUIRED 1060
@@ -59,10 +65,10 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   bindings_command.arg("--with-derive-default");
   bindings_command.arg("--with-derive-partialeq");
   // options
+  bindings_command.arg("--ctypes-prefix").arg("libc");
   bindings_command
-    .arg("--ctypes-prefix")
-    .arg("libc");
-  bindings_command.arg("--default-enum-style").arg("moduleconsts");
+    .arg("--default-enum-style")
+    .arg("moduleconsts");
   bindings_command.arg("--output").arg(&bindings_filename_str);
   bindings_command.arg("--rust-target").arg("1.33");
   bindings_command.arg("--rustfmt-configuration-file").arg(
@@ -139,7 +145,8 @@ fn declare_linking() {
   // WHERE TO LOOK
   #[cfg(windows)]
   {
-    let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read CARGO_MANIFEST_DIR."));
+    let manifest_dir =
+      PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read CARGO_MANIFEST_DIR."));
     let subdirectory = if cfg!(target_pointer_width = "32") {
       "lib\\x86"
     } else if cfg!(target_pointer_width = "64") {
@@ -147,7 +154,10 @@ fn declare_linking() {
     } else {
       panic!("What on earth is the size of a pointer on this device!?");
     };
-    println!("cargo:rustc-link-search=native={}", manifest_dir.join(subdirectory).display());
+    println!(
+      "cargo:rustc-link-search=native={}",
+      manifest_dir.join(subdirectory).display()
+    );
   }
   #[cfg(not(windows))]
   {
