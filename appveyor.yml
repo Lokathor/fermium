@@ -25,14 +25,21 @@ test_script:
   # valid rust. https://github.com/rust-lang/rust/issues/59867 We should still
   # run all the other tests of course.
 
-  # First we verify the default mode (cli mode)
+  # First we verify the pre-generated bindings.
   - cargo build
   - cargo test --lib --tests
 
-  # Now we try a second time with the "use_bindgen_lib" feature
+  # Next we attempt with `use_bindgen_bin`
+  - cargo clean
+  - cargo build --features="use_bindgen_bin"
+  - cargo test  --features="use_bindgen_bin" --lib --tests
+
+  # Next we attempt with `use_bindgen_lib`
+  - cargo clean
   - cargo build --features="use_bindgen_lib"
-  - cargo test --lib --tests --features="use_bindgen_lib"
+  - cargo test  --features="use_bindgen_lib" --lib --tests
   
-  # Now we double check that things go well with the "static" feature
+  # Next we attempt with `static_link_sdl2_use_with_caution` (using builtin bindings)
+  - cargo clean
   - cargo build --features="static_link_sdl2_use_with_caution"
-  - cargo test --lib --tests --features="static_link_sdl2_use_with_caution"
+  - cargo test  --features="static_link_sdl2_use_with_caution" --lib --tests
