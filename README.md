@@ -12,7 +12,8 @@ Currently only supports the desktop platforms: Windows, Mac, and Linux.
 
 * **Before Building:** Since this crate is about SDL2 bindings, it obviously
   requires SDL2. You will need the latest stable version of SDL2 (currently
-  `2.0.9`).
+  `2.0.9`). Theoretically this crate could be configured for an older version
+  with minimal effort, but this has not been tested.
   * For Windows, the crate packages the MSVC development libraries from the
     [SDL2 download page](https://www.libsdl.org/download-2.0.php)
   * For Linux, there are no provided downloads, they tell you to just install
