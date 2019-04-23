@@ -31,7 +31,7 @@ include!("bindings_linux_x64.rs");
 include!("bindings_linux_arm32.rs");
 
 #[cfg(all(
-  all(target_os = "mac", target_arch = "x86_64"),
+  all(target_os = "macos", target_arch = "x86_64"),
   not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
 ))]
 include!("bindings_mac_x86.rs");
