@@ -6,6 +6,9 @@
 // https://github.com/rust-lang/rust-bindgen/issues/1549
 #![allow(improper_ctypes)]
 
+// Note(Lokathor): Only one of the following `include!` directives should end up
+// being used in any given build.
+
 #[cfg(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))]
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
