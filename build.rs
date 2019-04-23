@@ -1,8 +1,11 @@
+#![cfg_attr(not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib")), allow(unused_imports))]
+
 use std::{
   env,
   path::{Path, PathBuf},
 };
 
+#[cfg_attr(not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib")), allow(dead_code))]
 const WRAPPER_DOT_H: &str = r##"
   #if defined(__APPLE__)
   #define MAC_OS_X_VERSION_MIN_REQUIRED 1060
@@ -12,19 +15,24 @@ const WRAPPER_DOT_H: &str = r##"
 "##;
 
 fn main() {
-  let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
+  #[cfg(all(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))]
+  {
+    compile_error!("Please enable `use_bindgen_bin` OR `use_bindgen_lib`, but NOT both.");
+  }
+  #[cfg(feature = "use_bindgen_bin")]
+  {
+    let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
+    generate_bindings_file_via_cli(&out_dir);
+  }
   #[cfg(feature = "use_bindgen_lib")]
   {
+    let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
     generate_bindings_file_via_lib(&out_dir);
-  }
-  #[cfg(not(feature = "use_bindgen_lib"))]
-  {
-    generate_bindings_file_via_cli(&out_dir);
   }
   declare_linking();
 }
 
-#[cfg(not(feature = "use_bindgen_lib"))]
+#[cfg(feature = "use_bindgen_bin")]
 fn generate_bindings_file_via_cli(out_dir: &Path) {
   let current_dir = std::env::current_dir().expect("Couldn't read the current dir.");
   let mut copy_options = fs_extra::dir::CopyOptions::new();

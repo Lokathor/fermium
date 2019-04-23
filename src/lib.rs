@@ -7,4 +7,11 @@
 // https://github.com/rust-lang/rust-bindgen/issues/1549
 #![allow(improper_ctypes)]
 
+#[cfg(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))]
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+
+#[cfg(all(
+  all(windows, target_arch = "x86_64"),
+  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
+))]
+include!("bindings_win32_x64.rs");
