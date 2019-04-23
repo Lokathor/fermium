@@ -8,20 +8,6 @@ This is always `no_std`.The bindings use `libc` for the C type declarations.
 
 Currently only supports the desktop platforms: Windows, Mac, and Linux.
 
-## Why Not Use `sdl2-sys`?
-
-Fair question. I'd say that between that crate and this crate there's two
-notable differences:
-
-* A change they could easily make (at the flip of a switch): `Debug` and
-  `PartialEq` impls for all the types.
-* A change that would probably require a long fiddly refactor for their higher
-  level wrapper crate: All the SDL2 enums are just `const` values, instead of
-  Rust `enum` types.
-
-If those don't sound like a good enough reason to switch to this crate, keep
-using `sdl2-sys`.
-
 ## Using This Crate
 
 * **Before Building:** Since this crate is about SDL2 bindings, it obviously
