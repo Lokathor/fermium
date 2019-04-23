@@ -34,4 +34,4 @@ include!("bindings_linux_arm32.rs");
   all(target_os = "macos", target_arch = "x86_64"),
   not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
 ))]
-include!("bindings_mac_x86.rs");
+include!("bindings_mac_x64.rs");
