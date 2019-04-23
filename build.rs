@@ -23,7 +23,7 @@ const WRAPPER_DOT_H: &str = r##"
 fn main() {
   #[cfg(all(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))]
   {
-    compile_error!("Please enable `use_bindgen_bin` OR `use_bindgen_lib`, but NOT both.");
+    compile_error!("If you want to build fresh bindings please enable `use_bindgen_bin` or `use_bindgen_lib`, but NOT both.");
   }
   #[cfg(feature = "use_bindgen_bin")]
   {
