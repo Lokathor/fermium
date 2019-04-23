@@ -20,3 +20,9 @@ include!("bindings_win32_x64.rs");
   not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
 ))]
 include!("bindings_linux_x64.rs");
+
+#[cfg(all(
+  all(target_os = "linux", target_arch = "arm", target_pointer_width = "32"),
+  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
+))]
+include!("bindings_linux_arm32.rs");
