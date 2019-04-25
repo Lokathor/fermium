@@ -39,7 +39,6 @@ use_bindgen_lib = ["bindgen","fs_extra"]
 static_link_sdl2_use_with_caution = []
 
 [build-dependencies]
-fs_extra = { version = "1.1", optional = true }
 bindgen = { version = "0.49", optional = true }
 
 [dependencies]
