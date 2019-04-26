@@ -6,7 +6,7 @@
 
 This is always `no_std`.The bindings use `libc` for the C type declarations.
 
-Currently only supports the desktop platforms: Windows, Mac, and Linux.
+Currently only supports the desktop platforms: Windows (MSVC), Mac, and Linux.
 
 ## Using This Crate
 

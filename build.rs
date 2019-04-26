@@ -8,18 +8,6 @@ use std::{
   path::{Path, PathBuf},
 };
 
-#[cfg_attr(
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib")),
-  allow(dead_code)
-)]
-const WRAPPER_DOT_H: &str = r##"
-  #if defined(__APPLE__)
-  #define MAC_OS_X_VERSION_MIN_REQUIRED 1060
-  #endif
-
-  #include "include/SDL.h"
-"##;
-
 fn main() {
   #[cfg(all(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))]
   {
@@ -40,23 +28,11 @@ fn main() {
 
 #[cfg(feature = "use_bindgen_bin")]
 fn generate_bindings_file_via_cli(out_dir: &Path) {
+  // where from
   let current_dir = std::env::current_dir().expect("Couldn't read the current dir.");
-  let mut copy_options = fs_extra::dir::CopyOptions::new();
-  copy_options.copy_inside = true;
-  copy_options.skip_exist = true;
-  fs_extra::copy_items(&vec![current_dir.join("include")], out_dir, &copy_options)
-    .expect("Couldn't copy the 'include' directory.");
+  let wrapper_filename = current_dir.join("wrapper.h");
+  // where to
   let bindings_filename = out_dir.join("bindings.rs");
-  let bindings_filename_str = bindings_filename
-    .to_str()
-    .expect("output file path isn't valid utf8, stop that");
-  let wrapper_filename = out_dir.join("wrapper.h");
-  let mut wrapper_dot_h_file =
-    std::fs::File::create(&wrapper_filename).expect("Couldn't make a temporary 'wrapper.h' file.");
-  use std::io::prelude::*;
-  wrapper_dot_h_file
-    .write_all(WRAPPER_DOT_H.as_bytes())
-    .expect("Couldn't write the wrapper file content.");
   let mut bindings_command = std::process::Command::new("bindgen");
   // flags
   bindings_command.arg("--impl-debug");
@@ -69,7 +45,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   bindings_command
     .arg("--default-enum-style")
     .arg("moduleconsts");
-  bindings_command.arg("--output").arg(&bindings_filename_str);
+  bindings_command.arg("--output").arg(&format!("{}",bindings_filename.display()));
   bindings_command.arg("--rust-target").arg("1.33");
   bindings_command.arg("--rustfmt-configuration-file").arg(
     std::env::current_dir()
@@ -105,7 +81,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
 fn generate_bindings_file_via_lib(out_dir: &Path) {
   let bindings_filename = out_dir.join("bindings.rs");
   let bindings = bindgen::builder()
-    .header_contents("wrapper.h",WRAPPER_DOT_H)
+    .header("wrapper.h")
     .use_core()
     .ctypes_prefix("libc")
     .default_enum_style(bindgen::EnumVariation::ModuleConsts)
@@ -147,12 +123,16 @@ fn declare_linking() {
   {
     let manifest_dir =
       PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read CARGO_MANIFEST_DIR."));
-    let subdirectory = if cfg!(target_pointer_width = "32") {
-      "lib\\x86"
-    } else if cfg!(target_pointer_width = "64") {
-      "lib\\x64"
+    let subdirectory = if cfg!(target_env="msvc") {
+      if cfg!(target_pointer_width = "32") {
+        "lib-msvc\\x86"
+      } else if cfg!(target_pointer_width = "64") {
+        "lib-msvc\\x64"
+      } else {
+        panic!("What on earth is the size of a pointer on this device!?");
+      }
     } else {
-      panic!("What on earth is the size of a pointer on this device!?");
+      panic!("This crate doesn't support the GNU toolchain on windows, file a PR I guess.");
     };
     println!(
       "cargo:rustc-link-search=native={}",
