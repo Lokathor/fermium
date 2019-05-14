@@ -98,13 +98,26 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
     .expect("Couldn't write the bindings file.");
 }
 
-
 fn declare_linking() {
   // WHAT TO LINK
   if cfg!(feature = "dynamic_link") {
     println!("cargo:rustc-link-lib=SDL2");
   } else {
     println!("cargo:rustc-link-lib=static=SDL2");
+    if cfg!(windows) {
+      println!("cargo:rustc-link-lib=shell32");
+      println!("cargo:rustc-link-lib=user32");
+      println!("cargo:rustc-link-lib=gdi32");
+      println!("cargo:rustc-link-lib=winmm");
+      println!("cargo:rustc-link-lib=imm32");
+      println!("cargo:rustc-link-lib=ole32");
+      println!("cargo:rustc-link-lib=oleaut32");
+      println!("cargo:rustc-link-lib=version");
+      println!("cargo:rustc-link-lib=uuid");
+      println!("cargo:rustc-link-lib=dinput8");
+      println!("cargo:rustc-link-lib=dxguid");
+      println!("cargo:rustc-link-lib=setupapi");
+    }
     if cfg!(target_os = "macos") {
       println!("cargo:rustc-link-lib=iconv");
       println!("cargo:rustc-link-lib=framework=CoreAudio");
@@ -135,12 +148,18 @@ fn declare_linking() {
     let manifest_dir =
       PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read CARGO_MANIFEST_DIR."));
     let subdirectory = if cfg!(target_env="msvc") {
-      if cfg!(target_pointer_width = "32") {
-        "lib-msvc\\x86"
-      } else if cfg!(target_pointer_width = "64") {
-        "lib-msvc\\x64"
+      if cfg!(feature = "dynamic_link") {
+        if cfg!(target_pointer_width = "64") {
+          "lib\\msvc-x64-dynamic"
+        } else {
+          panic!("We only support 64-bit builds, file a PR.");
+        }
       } else {
-        panic!("What on earth is the size of a pointer on this device!?");
+        if cfg!(target_pointer_width = "64") {
+          "lib\\msvc-x64-static"
+        } else {
+          panic!("We only support 64-bit builds, file a PR.");
+        }
       }
     } else {
       panic!("This crate doesn't support the GNU toolchain on windows, file a PR I guess.");
