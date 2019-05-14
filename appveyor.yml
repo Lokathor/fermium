@@ -39,7 +39,7 @@ test_script:
   - cargo build --features="use_bindgen_lib"
   - cargo test  --features="use_bindgen_lib" --lib --tests
   
-  # Next we attempt with `static_link_sdl2_use_with_caution` (using builtin bindings)
+  # Next we attempt with `dynamic_link` (using builtin bindings)
   - cargo clean
-  - cargo build --features="static_link_sdl2_use_with_caution"
-  - cargo test  --features="static_link_sdl2_use_with_caution" --lib --tests
+  - cargo build --features="dynamic_link"
+  - cargo test  --features="dynamic_link" --lib --tests
