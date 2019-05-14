@@ -62,3 +62,7 @@ program at all.
 ## License
 
 This crate uses the Zlib license (the same license that SDL2 itself uses).
+
+## Project Logo
+
+[![birth of fermium](https://upload.wikimedia.org/wikipedia/commons/5/58/Ivy_Mike_-_mushroom_cloud.jpg)](https://en.wikipedia.org/wiki/Fermium)
