@@ -13,7 +13,6 @@ install:
   - rustup-init -y --default-toolchain %channel% --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
   - cargo install bindgen
-  - cp %dllpath% .
   - rustc -vV
   - cargo -vV
 
@@ -41,5 +40,6 @@ test_script:
   
   # Next we attempt with `dynamic_link` (using builtin bindings)
   - cargo clean
+  - cp %dllpath% .
   - cargo build --features="dynamic_link"
   - cargo test  --features="dynamic_link" --lib --tests
