@@ -25,8 +25,8 @@ system. [Homebrew has SDL2-2.0.9](https://formulae.brew.sh/formula/sdl2), but
 most linux package managers have an older version of SDL2 and you'll have to
 build from source. You can look in the [travis file](.travis.yml) to see how you
 might install SDL2-2.0.9 from source if you decide to go that route. Please note
-that you must use `-fPIC` if you're statically linking to SDL2 (the default
-mode for this crate).
+that you must use `-fPIC` when building SDL2 if you're planning to statically
+link to SDL2 (the default mode for this crate).
 
 If you want to run bindgen yourself you'll of course have to [install
 bindgen](https://rust-lang.github.io/rust-bindgen/requirements.html). This crate
