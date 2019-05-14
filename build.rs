@@ -98,6 +98,7 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
     .expect("Couldn't write the bindings file.");
 }
 
+
 fn declare_linking() {
   // WHAT TO LINK
   if cfg!(feature = "dynamic_link") {
@@ -119,6 +120,16 @@ fn declare_linking() {
   }
 
   // WHERE TO LOOK
+
+  // If the user points us to a specific directory, follow their advice.
+  println!("cargo:rerun-if-env-changed=FERMIUM_SDL2_DIR");
+  if let Ok(path) = env::var("FERMIUM_SDL2_DIR") {
+    println!(
+      "cargo:rustc-link-search={}",
+      path
+    );
+    return;
+  }
   #[cfg(windows)]
   {
     let manifest_dir =
@@ -141,6 +152,14 @@ fn declare_linking() {
   }
   #[cfg(not(windows))]
   {
+    if pkg_config::Config::new()
+        .statik(!cfg!(feature = "dynamic_link"))
+        .probe("SDL2")
+        .is_ok() {
+      // pkg-config will have printed the various info
+      return;
+    }
+    // Fall back to LD_LIBRARY_PATH, as a last resort.
     if let Ok(ld_library_path) = env::var("LD_LIBRARY_PATH") {
       for dir in ld_library_path.split(":") {
         println!("cargo:rustc-link-search=native={}", dir);
