@@ -60,7 +60,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   println!("EXECUTING:{:?}", bindings_command);
   let bindings_command_output = bindings_command
     .output()
-    .expect("Couldn't run the 'bindgen' command.");
+    .expect("Couldn't run the 'bindgen' command, perhaps you need to 'cargo install bindgen'?");
   if bindings_command_output.status.success() {
     println!("SUCCESS!")
   } else {
@@ -100,7 +100,9 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
 
 fn declare_linking() {
   // WHAT TO LINK
-  if cfg!(feature = "static_link_sdl2_use_with_caution") {
+  if cfg!(feature = "dynamic_link") {
+    println!("cargo:rustc-link-lib=SDL2");
+  } else {
     println!("cargo:rustc-link-lib=static=SDL2");
     if cfg!(target_os = "macos") {
       println!("cargo:rustc-link-lib=iconv");
@@ -114,8 +116,6 @@ fn declare_linking() {
       println!("cargo:rustc-link-lib=framework=QuartzCore");
       println!("cargo:rustc-link-lib=framework=Metal");
     }
-  } else {
-    println!("cargo:rustc-link-lib=SDL2");
   }
 
   // WHERE TO LOOK

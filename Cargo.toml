@@ -26,17 +26,10 @@ use_bindgen_bin = []
 # slow, and it's not really advised, but do what you want I guess.
 use_bindgen_lib = ["bindgen"]
 
-# You can, if you want, static link SDL2 into your program. You are _strongly_
-# advised to please not do this ever. Particularly on Linux and Mac you should
-# not do this, because those platforms change bits frequently enough and users
-# need to be able to update the SDL2 that they're using with your program. SDL2
-# has never broken backwards compatibility since moving to version 2.0. It is an
-# entirely irrational fear that some future update would be a breaking change,
-# they follow semver and worry about compatibility as much as any Rust crate
-# you've ever used. You should generally only static link to SDL2 if you are
-# building on windows and trying to ship a single-file program. Even then, you
-# should strongly consider not static linking to SDL2.
-static_link_sdl2_use_with_caution = []
+# This will build with a dynamic link instead of a static link. The SDL2
+# "dynamic API" is enabled either way, so using actual dynamic linking is not
+# particularly necessary.
+dynamic_link = []
 
 [build-dependencies]
 bindgen = { version = "0.49", optional = true }
