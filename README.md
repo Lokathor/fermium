@@ -14,6 +14,12 @@
   in some other platform. If you do run bindgen for some other platform, PRs are
   welcome (I don't have any Android or iOS expertise).
 
+## Differences From `sdl2-sys`
+
+* Static linking by default (cargo feature for `dynamic_link`)
+* Bindings use "scoped constants" instead of "rustified enums".
+* I actually pretty much understand the whole build process.
+
 ## Using This Crate
 
 ### Before Building
@@ -31,6 +37,11 @@ link to SDL2 (the default mode for this crate).
 If you want to run bindgen yourself you'll of course have to [install
 bindgen](https://rust-lang.github.io/rust-bindgen/requirements.html). This crate
 supports both using bindgen as a library or using bindgen as a CLI application.
+
+If you are not on a platform with a pre-generated file and you don't run bindgen
+yourself the build will complete but the crate will be empty. If all the
+functions appear to be missing you're probably on an unusual platform and you
+didn't run bindgen.
 
 ### After Building
 
