@@ -39,3 +39,7 @@ libc = "0.2"
 
 [package.metadata.docs.rs]
 features = ["use_bindgen_lib"]
+
+[badges]
+appveyor = { repository = "Lokathor/fermium" }
+travis-ci = { repository = "Lokathor/fermium" }
