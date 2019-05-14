@@ -1,8 +1,8 @@
 [package]
 name = "fermium"
-description = "An opinionated crate of sdl2 bindings."
+description = "An opinionated crate of SDL2 bindings."
 repository = "https://github.com/Lokathor/fermium"
-version = "0.0.7"
+version = "0.0.8"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
 license = "Zlib"
@@ -28,7 +28,7 @@ use_bindgen_lib = ["bindgen"]
 
 # This will build with a dynamic link instead of a static link. The SDL2
 # "dynamic API" is enabled either way, so using actual dynamic linking is not
-# particularly necessary.
+# particularly necessary these days.
 dynamic_link = []
 
 [build-dependencies]
