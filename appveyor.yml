@@ -6,7 +6,7 @@ environment:
   matrix:
     - channel: stable
       target: x86_64-pc-windows-msvc
-      dllpath: lib-msvc/x64/SDL2.dll
+      dllpath: lib/msvc-x64-dynamic/SDL2.dll
 
 install:
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
