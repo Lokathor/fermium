@@ -27,7 +27,7 @@
 The crate supplies the necessary files to build on Windows MSVC without any
 previous installation. However, at the moment, it expects that SDL2 developer
 files have already been installed to the system if you're building for any other
-system. [Homebrew has SDL2-2.0.9](https://formulae.brew.sh/formula/sdl2), but
+platform. [Homebrew has SDL2-2.0.9](https://formulae.brew.sh/formula/sdl2), but
 most linux package managers have an older version of SDL2 and you'll have to
 build from source. You can look in the [travis file](.travis.yml) to see how you
 might install SDL2-2.0.9 from source if you decide to go that route. Please note
