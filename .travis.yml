@@ -22,22 +22,19 @@ before_script:
   - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
   - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
   - cargo install-update -a
-  # the package managers have very old versions of SDL2, we just build from source
+  # For now we'll build from source.
   - |
-    travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
     if [[ $TRAVIS_OS == "osx" ]]
     then
+      travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
       mv gcc-fat.sh SDL2-2.0.9/gcc-fat.sh
       cd SDL2-2.0.9
-      CC="sh gcc-fat.sh" CFLAGS="-fPIC" ./configure --enable-shared --enable-static && make && rm -rf x86 x64
-    else
-      cd SDL2-2.0.9
-      CFLAGS="-fPIC" ./configure --enable-shared --enable-static
+      CC="sh gcc-fat.sh" CFLAGS="-fPIC" ./configure --enable-shared --enable-static && make
+      rm -rf x86 x64
+      sudo make install
+      cd ..
+      sdl2-config --static-libs
     fi
-    make
-    sudo make install
-    cd ..
-  - sdl2-config --static-libs
 
 script:
   # We cannot run doctests because rustdoc is silly and tries to interpret too

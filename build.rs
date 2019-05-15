@@ -169,7 +169,7 @@ fn declare_linking() {
       manifest_dir.join(subdirectory).display()
     );
   }
-  #[cfg(not(windows))]
+  #[cfg(target_os = "macos")]
   {
     if pkg_config::Config::new()
         .statik(!cfg!(feature = "dynamic_link"))
@@ -186,5 +186,19 @@ fn declare_linking() {
     } else {
       eprintln!("Couldn't read LD_LIBRARY_PATH, but will attempt to build anyway...");
     }
+  }
+  #[cfg(target_os = "linux")]
+  {
+    let manifest_dir =
+      PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read CARGO_MANIFEST_DIR."));
+    let subdirectory = if cfg!(target_arch="x86_64") {
+      "lib/linux-x64"
+    } else {
+      panic!("Unsupported arch, file a PR I guess?");
+    };
+    println!(
+      "cargo:rustc-link-search=native={}",
+      manifest_dir.join(subdirectory).display()
+    );
   }
 }
