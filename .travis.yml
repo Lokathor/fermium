@@ -9,9 +9,6 @@ rust:
 cache:
   cargo
 
-env:
-  - LD_LIBRARY_PATH: "/usr/local/lib"
-
 os:
   - linux
   - osx
