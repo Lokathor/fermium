@@ -37,6 +37,8 @@ before_script:
       sudo make install
       cd ..
     fi
+  - sdl2-config --cflags
+  - sdl2-config --libs
   - sdl2-config --static-libs
 
 script:

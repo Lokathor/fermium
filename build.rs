@@ -6,6 +6,7 @@
 use std::{
   env,
   path::{Path, PathBuf},
+  process::Command,
 };
 
 fn main() {
@@ -33,7 +34,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   let wrapper_filename = current_dir.join("wrapper.h");
   // where to
   let bindings_filename = out_dir.join("bindings.rs");
-  let mut bindings_command = std::process::Command::new("bindgen");
+  let mut bindings_command = Command::new("bindgen");
   // flags
   bindings_command.arg("--impl-debug");
   bindings_command.arg("--impl-partialeq");
@@ -45,7 +46,9 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   bindings_command
     .arg("--default-enum-style")
     .arg("moduleconsts");
-  bindings_command.arg("--output").arg(&format!("{}",bindings_filename.display()));
+  bindings_command
+    .arg("--output")
+    .arg(&format!("{}", bindings_filename.display()));
   bindings_command.arg("--rust-target").arg("1.33");
   bindings_command.arg("--rustfmt-configuration-file").arg(
     std::env::current_dir()
@@ -100,21 +103,19 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
     .whitelist_type("SDL_.*")
     .whitelist_var("SDL_.*")
     .whitelist_var("AUDIO_.*");
-  let bindings = builder
-    .generate()
-    .expect("Couldn't generate the bindings.");
+  let bindings = builder.generate().expect("Couldn't generate the bindings.");
   bindings
     .write_to_file(&bindings_filename)
     .expect("Couldn't write the bindings file.");
 }
 
 fn declare_linking() {
-  // WHAT TO LINK
-  if cfg!(feature = "dynamic_link") {
-    println!("cargo:rustc-link-lib=SDL2");
-  } else {
-    println!("cargo:rustc-link-lib=static=SDL2");
-    if cfg!(windows) {
+  if cfg!(windows) {
+    // WHAT TO LINK
+    if cfg!(feature = "dynamic_link") {
+      println!("cargo:rustc-link-lib=SDL2");
+    } else {
+      println!("cargo:rustc-link-lib=static=SDL2");
       println!("cargo:rustc-link-lib=shell32");
       println!("cargo:rustc-link-lib=user32");
       println!("cargo:rustc-link-lib=gdi32");
@@ -128,36 +129,10 @@ fn declare_linking() {
       println!("cargo:rustc-link-lib=dxguid");
       println!("cargo:rustc-link-lib=setupapi");
     }
-    if cfg!(target_os = "macos") {
-      println!("cargo:rustc-link-lib=iconv");
-      println!("cargo:rustc-link-lib=framework=CoreAudio");
-      println!("cargo:rustc-link-lib=framework=AudioToolbox");
-      println!("cargo:rustc-link-lib=framework=ForceFeedback");
-      println!("cargo:rustc-link-lib=framework=CoreVideo");
-      println!("cargo:rustc-link-lib=framework=Cocoa");
-      println!("cargo:rustc-link-lib=framework=Carbon");
-      println!("cargo:rustc-link-lib=framework=IOKit");
-      println!("cargo:rustc-link-lib=framework=QuartzCore");
-      println!("cargo:rustc-link-lib=framework=Metal");
-    }
-  }
-
-  // WHERE TO LOOK
-
-  // If the user points us to a specific directory, follow their advice.
-  println!("cargo:rerun-if-env-changed=FERMIUM_SDL2_DIR");
-  if let Ok(path) = env::var("FERMIUM_SDL2_DIR") {
-    println!(
-      "cargo:rustc-link-search={}",
-      path
-    );
-    return;
-  }
-  #[cfg(windows)]
-  {
+    // WHERE TO LOOK
     let manifest_dir =
       PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read CARGO_MANIFEST_DIR."));
-    let subdirectory = if cfg!(target_env="msvc") {
+    let subdirectory = if cfg!(target_env = "msvc") {
       if cfg!(feature = "dynamic_link") {
         if cfg!(target_pointer_width = "64") {
           "lib\\msvc-x64-dynamic"
@@ -175,28 +150,37 @@ fn declare_linking() {
       panic!("This crate doesn't support the GNU toolchain on windows, file a PR I guess.");
     };
     println!(
-      "cargo:rustc-link-search=native={}",
+      "cargo:rustc-link-search={}",
       manifest_dir.join(subdirectory).display()
     );
-  }
-  #[cfg(not(windows))]
-  {
-    if pkg_config::Config::new()
-        .statik(!cfg!(feature = "dynamic_link"))
-        .probe("SDL2")
-        .is_ok() {
-      // pkg-config will have printed the various info
-      return;
-    } else {
-      eprintln!("Could not configure link search directories via pkg-config...");
-    }
-    // Fall back to LD_LIBRARY_PATH, as a last resort.
-    if let Ok(ld_library_path) = env::var("LD_LIBRARY_PATH") {
-      for dir in ld_library_path.split(":") {
-        println!("cargo:rustc-link-search=native={}", dir);
+  } else {
+    let sd2_config_output = Command::new("sdl2-config")
+      .arg(if cfg!(feature = "dynamic_link") {
+        "--libs"
+      } else {
+        "--static-libs"
+      })
+      .output()
+      .expect("Couldn't run `sdl2-config`.");
+    for term in String::from_utf8_lossy(&sd2_config_output.stdout).split_whitespace() {
+      if term.starts_with("-L") {
+        println!("cargo:rustc-link-search={}", &term[2..]);
+      } else if term.starts_with("-lSDL2") {
+        println!(
+          "cargo:rustc-link-lib={}=SDL2",
+          if cfg!(feature = "dynamic_link") {
+            "dylib"
+          } else {
+            "static"
+          }
+        );
+      } else if term.starts_with("-l") {
+        println!("cargo:rustc-link-lib={}", &term[2..]);
+      } else if term.starts_with("-Wl,-framework,") {
+        println!("cargo:rustc-link-lib=framework={}", &term[15..]);
+      } else if term.starts_with("-Wl,-weak_framework,") {
+        println!("cargo:rustc-link-lib=framework={}", &term[20..]);
       }
-    } else {
-      eprintln!("Couldn't read LD_LIBRARY_PATH, but will attempt to build anyway...");
     }
   }
 }
