@@ -54,11 +54,10 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
       .to_str()
       .expect("rustfmt.toml file path isn't valid utf8, stop that"),
   );
-  // OS specific type handling because of `SDL_syswm.h`
-  if cfg!(windows) {
-    bindings_command.arg("--opaque-type").arg("_IMAGE.*");
-    bindings_command.arg("--opaque-type").arg("tagMONITORINFOEXA");
-  }
+  bindings_command.arg("--whitelist-function").arg("SDL_.*");
+  bindings_command.arg("--whitelist-type").arg("SDL_.*");
+  bindings_command.arg("--whitelist-var").arg("SDL_.*");
+  bindings_command.arg("--whitelist-var").arg("AUDIO_.*");
   // header
   bindings_command.arg(&wrapper_filename);
 
@@ -96,12 +95,11 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
     .derive_partialeq(true)
     .time_phases(true) // Note(Lokathor): just for fun!
     .rustfmt_bindings(true)
-    .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")));
-  if cfg!(windows) {
-    builder = builder
-      .opaque_type("_IMAGE.*")
-      .opaque_type("tagMONITORINFOEXA");
-  }
+    .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")))
+    .whitelist_function("SDL_.*")
+    .whitelist_type("SDL_.*")
+    .whitelist_var("SDL_.*")
+    .whitelist_var("AUDIO_.*");
   let bindings = builder
     .generate()
     .expect("Couldn't generate the bindings.");
