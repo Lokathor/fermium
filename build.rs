@@ -54,6 +54,11 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
       .to_str()
       .expect("rustfmt.toml file path isn't valid utf8, stop that"),
   );
+  // OS specific type handling because of `SDL_syswm.h`
+  if cfg!(windows) {
+    bindings_command.arg("--opaque-type").arg("_IMAGE.*");
+    bindings_command.arg("--opaque-type").arg("tagMONITORINFOEXA");
+  }
   // header
   bindings_command.arg(&wrapper_filename);
 
@@ -80,7 +85,8 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
 #[cfg(feature = "use_bindgen_lib")]
 fn generate_bindings_file_via_lib(out_dir: &Path) {
   let bindings_filename = out_dir.join("bindings.rs");
-  let bindings = bindgen::builder()
+  #[allow(unnecessary_mut)]
+  let mut bindings = bindgen::builder()
     .header("wrapper.h")
     .use_core()
     .ctypes_prefix("libc")
@@ -90,7 +96,13 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
     .derive_partialeq(true)
     .time_phases(true) // Note(Lokathor): just for fun!
     .rustfmt_bindings(true)
-    .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")))
+    .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")));
+  if cfg!(windows) {
+    bindings = bindings
+      .opaque_type("_IMAGE.*")
+      .opaque_type("tagMONITORINFOEXA");
+  }
+  bindings
     .generate()
     .expect("Couldn't generate the bindings.");
   bindings

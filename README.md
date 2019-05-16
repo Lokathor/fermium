@@ -25,8 +25,6 @@
     sure to build with `PIC` enabled!).
 * `no_std` of course.
 * The bindings use `libc` for the C type declarations.
-  * Once `winapi` updates to use the same `c_void` that `core` does it will be
-    used for C type declarations on windows instead.
 
 ## Major Differences From `sdl2-sys`
 
