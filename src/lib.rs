@@ -38,7 +38,7 @@ include!("bindings_win32_msvc_x64.rs");
 include!("bindings_linux_x64.rs");
 
 #[cfg(all(
-  all(target_os = "linux", target_arch = "arm", target_env = "gnueabihf"),
+  all(target_os = "linux", target_arch = "arm", target_env = "gnu"),
   not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
 ))]
 include!("bindings_rpi3.rs");
