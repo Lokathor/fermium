@@ -86,7 +86,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
 fn generate_bindings_file_via_lib(out_dir: &Path) {
   let bindings_filename = out_dir.join("bindings.rs");
   #[allow(unused_mut)]
-  let mut bindings = bindgen::builder()
+  let mut builder = bindgen::builder()
     .header("wrapper.h")
     .use_core()
     .ctypes_prefix("libc")
@@ -98,11 +98,11 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
     .rustfmt_bindings(true)
     .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")));
   if cfg!(windows) {
-    bindings = bindings
+    builder = builder
       .opaque_type("_IMAGE.*")
       .opaque_type("tagMONITORINFOEXA");
   }
-  bindings
+  let bindings = builder
     .generate()
     .expect("Couldn't generate the bindings.");
   bindings
