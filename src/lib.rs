@@ -16,7 +16,7 @@ include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
   all(target_os = "windows", target_arch = "x86_64"),
   not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
 ))]
-include!("bindings_base_win32_x64.rs");
+include!("bindings_win32_x64.rs");
 
 #[cfg(all(
   all(target_os = "linux", target_arch = "x86_64"),
