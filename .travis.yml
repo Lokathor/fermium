@@ -22,12 +22,14 @@ before_script:
   - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
   - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
   - cargo install-update -a
-  # the package managers have very old versions of SDL2, we just build from source
   - |
     if [[ $TRAVIS_OS == "osx" ]]
     then
+      # https://formulae.brew.sh/formula/sdl2#default
       brew install sdl2
     else
+      # the package managers often have very old versions of SDL2, we just build
+      # the correct version from source
       travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
       cd SDL2-2.0.9
       CFLAGS="-fPIC" ./configure --enable-shared --enable-static

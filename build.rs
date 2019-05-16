@@ -177,6 +177,8 @@ fn declare_linking() {
         .is_ok() {
       // pkg-config will have printed the various info
       return;
+    } else {
+      eprintln!("Could not configure link search directories via pkg-config...");
     }
     // Fall back to LD_LIBRARY_PATH, as a last resort.
     if let Ok(ld_library_path) = env::var("LD_LIBRARY_PATH") {

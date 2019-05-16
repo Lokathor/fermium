@@ -6,62 +6,37 @@
 
 # fermium
 
-* This crate is always `no_std`.
+* Has pre-generated bindings files for major platforms
+  * win32-msvc-x86_64, linux-x86_64, linux-arm32 (rpi3), mac-x86_64,
+  * You can build with either the `use_bindgen_bin` or `use_bindgen_lib`
+    features to make your own bindings if you need to. PRs are accepted if you
+    generate bindings for a new platform!
+* Performs static linking to SDL2 by default, with the [Dynamic
+  API](https://www.reddit.com/r/linux_gaming/comments/1upn39/sdl2_adds_dynamic_api_magic_to_allow_updating_it/)
+  enabled.
+  * There is a `dynamic_link` cargo feature if you really want.
+* Does not attempt to set up SDL2 itself on non-Windows platforms.
+  * On win32-msvc-x86_64 there are provided build artifacts for both a static
+    link and dynamic link build.
+  * On Mac you should use Homebrew: `brew install sdl2`
+  * On Linux you should install SDL2-2.0.9 or later using any desired method.
+    This version is not currently available in many package managers, see the
+    [travis file](.travis.yml) for a suggested script to build from source (be
+    sure to build with `PIC` enabled!).
+* `no_std` of course.
 * The bindings use `libc` for the C type declarations.
-* There are pre-generated bindings files included for the major platforms
-  (Windows MSVC, Mac OS, Linux x86_64, Linux ARM rpi3), and presumably you could
-  also run bindgen (via cargo feature) to generate bindings if you're building
-  in some other platform. If you do run bindgen for some other platform, PRs are
-  welcome (I don't have any Android or iOS expertise).
+  * Once `winapi` updates to use the same `c_void` that `core` does it will be
+    used for C type declarations on windows instead.
 
-## Differences From `sdl2-sys`
+## Major Differences From `sdl2-sys`
 
 * Static linking by default (cargo feature for `dynamic_link`)
 * Bindings use "scoped constants" instead of "rustified enums".
-* I actually pretty much understand the whole build process.
-
-## Using This Crate
-
-### Before Building
-
-The crate supplies the necessary files to build on Windows MSVC without any
-previous installation. However, at the moment, it expects that SDL2 developer
-files have already been installed to the system if you're building for any other
-platform. [Homebrew has SDL2-2.0.9](https://formulae.brew.sh/formula/sdl2), but
-most linux package managers have an older version of SDL2 and you'll have to
-build from source. You can look in the [travis file](.travis.yml) to see how you
-might install SDL2-2.0.9 from source if you decide to go that route. Please note
-that you must use `-fPIC` when building SDL2 if you're planning to statically
-link to SDL2 (the default mode for this crate).
-
-If you want to run bindgen yourself you'll of course have to [install
-bindgen](https://rust-lang.github.io/rust-bindgen/requirements.html). This crate
-supports both using bindgen as a library or using bindgen as a CLI application.
-
-If you are not on a platform with a pre-generated file and you don't run bindgen
-yourself the build will complete but the crate will be empty. If all the
-functions appear to be missing you're probably on an unusual platform and you
-didn't run bindgen.
-
-### After Building
-
-By default, `fermium` generates programs that are statically linked to SDL2 with
-the [dynamic
-API](https://www.reddit.com/r/linux_gaming/comments/1upn39/sdl2_adds_dynamic_api_magic_to_allow_updating_it/)
-enabled. This means that the generated binary won't depend on any external SDL2
-files. Just send your binary to the user and they can play it out of the box.
-However, the user will be able to use the `SDL_DYNAMIC_API` environment variable
-to run the program using an alternate SDL2 implementation that they have on
-their system (v2.0.9 or later), if they desire.
-
-If you'd link to only have a dynamic link, you can enable the `dynamic_link`
-cargo feature. This makes the binary a little smaller (~1.4mb) but then if the
-end user doesn't have SDL2 already installed they won't be able to run the
-program at all.
+* The `build.rs` file is simple and easy to understand.
 
 ## License
 
-This crate uses the Zlib license (the same license that SDL2 itself uses).
+This crate uses the Zlib license, the same license that SDL2 itself uses.
 
 ## Project Logo
 
