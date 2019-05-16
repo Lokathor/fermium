@@ -15,15 +15,15 @@
   API](https://www.reddit.com/r/linux_gaming/comments/1upn39/sdl2_adds_dynamic_api_magic_to_allow_updating_it/)
   enabled.
   * There is a `dynamic_link` cargo feature if you really want.
-* Does not attempt to set up SDL2 itself on non-Windows platforms.
+* Does not attempt to automatically set up SDL2 itself on non-Windows platforms.
   * On win32-msvc-x86_64 there are provided build artifacts for both a static
     link and dynamic link build.
   * On Mac you should use Homebrew: `brew install sdl2`
   * On Linux you should install SDL2-2.0.9 or later using any desired method.
-    This version is not currently available in many package managers, see the
-    [travis file](.travis.yml) for a suggested script to build from source (be
-    sure to build with `PIC` enabled!).
-* `no_std` of course.
+    This version is not currently available in many package managers, so you
+    might have to build from source. There's a [shell script](install-sdl2.sh)
+    that I use for the CI builds, if you'd like to use that.
+* The whole crate is `no_std` of course.
 * The bindings use `libc` for the C type declarations.
 
 ## Major Differences From `sdl2-sys`
