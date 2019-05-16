@@ -85,7 +85,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
 #[cfg(feature = "use_bindgen_lib")]
 fn generate_bindings_file_via_lib(out_dir: &Path) {
   let bindings_filename = out_dir.join("bindings.rs");
-  #[allow(unnecessary_mut)]
+  #[allow(unused_mut)]
   let mut bindings = bindgen::builder()
     .header("wrapper.h")
     .use_core()
