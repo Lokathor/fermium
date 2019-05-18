@@ -9,9 +9,6 @@ rust:
 cache:
   cargo
 
-env:
-  - LD_LIBRARY_PATH: "/usr/local/lib"
-
 os:
   - linux
   - osx
@@ -22,21 +19,18 @@ before_script:
   - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
   - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
   - cargo install-update -a
-  # the package managers have very old versions of SDL2, we just build from source
   - |
-    travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.9.tar.gz | tar xz
     if [[ $TRAVIS_OS == "osx" ]]
     then
-      mv gcc-fat.sh SDL2-2.0.9/gcc-fat.sh
-      cd SDL2-2.0.9
-      CC="sh gcc-fat.sh" CFLAGS="-fPIC" ./configure --enable-shared --enable-static && make && rm -rf x86 x64
+      # https://formulae.brew.sh/formula/sdl2#default
+      brew install sdl2
     else
-      cd SDL2-2.0.9
-      CFLAGS="-fPIC" ./configure --enable-shared --enable-static
+      # the package managers often have very old versions of SDL2, we just build
+      # the correct version from source
+      sudo ./install-sdl2.sh
     fi
-    make
-    sudo make install
-    cd ..
+  - sdl2-config --cflags
+  - sdl2-config --libs
   - sdl2-config --static-libs
 
 script:

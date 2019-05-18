@@ -6,6 +6,7 @@
 use std::{
   env,
   path::{Path, PathBuf},
+  process::Command,
 };
 
 fn main() {
@@ -33,7 +34,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   let wrapper_filename = current_dir.join("wrapper.h");
   // where to
   let bindings_filename = out_dir.join("bindings.rs");
-  let mut bindings_command = std::process::Command::new("bindgen");
+  let mut bindings_command = Command::new("bindgen");
   // flags
   bindings_command.arg("--impl-debug");
   bindings_command.arg("--impl-partialeq");
@@ -45,7 +46,9 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   bindings_command
     .arg("--default-enum-style")
     .arg("moduleconsts");
-  bindings_command.arg("--output").arg(&format!("{}",bindings_filename.display()));
+  bindings_command
+    .arg("--output")
+    .arg(&format!("{}", bindings_filename.display()));
   bindings_command.arg("--rust-target").arg("1.33");
   bindings_command.arg("--rustfmt-configuration-file").arg(
     std::env::current_dir()
@@ -54,6 +57,10 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
       .to_str()
       .expect("rustfmt.toml file path isn't valid utf8, stop that"),
   );
+  bindings_command.arg("--whitelist-function").arg("SDL_.*");
+  bindings_command.arg("--whitelist-type").arg("SDL_.*");
+  bindings_command.arg("--whitelist-var").arg("SDL_.*");
+  bindings_command.arg("--whitelist-var").arg("AUDIO_.*");
   // header
   bindings_command.arg(&wrapper_filename);
 
@@ -80,7 +87,8 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
 #[cfg(feature = "use_bindgen_lib")]
 fn generate_bindings_file_via_lib(out_dir: &Path) {
   let bindings_filename = out_dir.join("bindings.rs");
-  let bindings = bindgen::builder()
+  #[allow(unused_mut)]
+  let mut builder = bindgen::builder()
     .header("wrapper.h")
     .use_core()
     .ctypes_prefix("libc")
@@ -91,20 +99,23 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
     .time_phases(true) // Note(Lokathor): just for fun!
     .rustfmt_bindings(true)
     .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")))
-    .generate()
-    .expect("Couldn't generate the bindings.");
+    .whitelist_function("SDL_.*")
+    .whitelist_type("SDL_.*")
+    .whitelist_var("SDL_.*")
+    .whitelist_var("AUDIO_.*");
+  let bindings = builder.generate().expect("Couldn't generate the bindings.");
   bindings
     .write_to_file(&bindings_filename)
     .expect("Couldn't write the bindings file.");
 }
 
 fn declare_linking() {
-  // WHAT TO LINK
-  if cfg!(feature = "dynamic_link") {
-    println!("cargo:rustc-link-lib=SDL2");
-  } else {
-    println!("cargo:rustc-link-lib=static=SDL2");
-    if cfg!(windows) {
+  if cfg!(windows) {
+    // WHAT TO LINK
+    if cfg!(feature = "dynamic_link") {
+      println!("cargo:rustc-link-lib=SDL2");
+    } else {
+      println!("cargo:rustc-link-lib=static=SDL2");
       println!("cargo:rustc-link-lib=shell32");
       println!("cargo:rustc-link-lib=user32");
       println!("cargo:rustc-link-lib=gdi32");
@@ -118,36 +129,10 @@ fn declare_linking() {
       println!("cargo:rustc-link-lib=dxguid");
       println!("cargo:rustc-link-lib=setupapi");
     }
-    if cfg!(target_os = "macos") {
-      println!("cargo:rustc-link-lib=iconv");
-      println!("cargo:rustc-link-lib=framework=CoreAudio");
-      println!("cargo:rustc-link-lib=framework=AudioToolbox");
-      println!("cargo:rustc-link-lib=framework=ForceFeedback");
-      println!("cargo:rustc-link-lib=framework=CoreVideo");
-      println!("cargo:rustc-link-lib=framework=Cocoa");
-      println!("cargo:rustc-link-lib=framework=Carbon");
-      println!("cargo:rustc-link-lib=framework=IOKit");
-      println!("cargo:rustc-link-lib=framework=QuartzCore");
-      println!("cargo:rustc-link-lib=framework=Metal");
-    }
-  }
-
-  // WHERE TO LOOK
-
-  // If the user points us to a specific directory, follow their advice.
-  println!("cargo:rerun-if-env-changed=FERMIUM_SDL2_DIR");
-  if let Ok(path) = env::var("FERMIUM_SDL2_DIR") {
-    println!(
-      "cargo:rustc-link-search={}",
-      path
-    );
-    return;
-  }
-  #[cfg(windows)]
-  {
+    // WHERE TO LOOK
     let manifest_dir =
       PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read CARGO_MANIFEST_DIR."));
-    let subdirectory = if cfg!(target_env="msvc") {
+    let subdirectory = if cfg!(target_env = "msvc") {
       if cfg!(feature = "dynamic_link") {
         if cfg!(target_pointer_width = "64") {
           "lib\\msvc-x64-dynamic"
@@ -168,23 +153,45 @@ fn declare_linking() {
       "cargo:rustc-link-search=native={}",
       manifest_dir.join(subdirectory).display()
     );
-  }
-  #[cfg(not(windows))]
-  {
-    if pkg_config::Config::new()
-        .statik(!cfg!(feature = "dynamic_link"))
-        .probe("SDL2")
-        .is_ok() {
-      // pkg-config will have printed the various info
-      return;
-    }
-    // Fall back to LD_LIBRARY_PATH, as a last resort.
-    if let Ok(ld_library_path) = env::var("LD_LIBRARY_PATH") {
-      for dir in ld_library_path.split(":") {
-        println!("cargo:rustc-link-search=native={}", dir);
+  } else {
+    // Note(Lokathor): `pkg-config` will often enough not find SDL2 at all for
+    // whatever reason. Instead, SDL2 happens to provide its own tool to help
+    // you get the correct linker args, so we'll call that and do whatever it
+    // says to do.
+    let sd2_config_output = Command::new("sdl2-config")
+      .arg(if cfg!(feature = "dynamic_link") {
+        "--libs"
+      } else {
+        "--static-libs"
+      })
+      .output()
+      .expect("Couldn't run `sdl2-config`.");
+    // The output is space separated, of course
+    for term in String::from_utf8_lossy(&sd2_config_output.stdout).split_whitespace() {
+      if term.starts_with("-L") {
+        println!("cargo:rustc-link-search=native={}", &term[2..]);
+      } else if term.starts_with("-lSDL2") {
+        if cfg!(feature = "dynamic_link") {
+          println!("cargo:rustc-link-lib=SDL2")
+        } else {
+          println!("cargo:rustc-link-lib=static=SDL2")
+        };
+      } else if term.starts_with("-l") {
+        // normal link
+        println!("cargo:rustc-link-lib={}", &term[2..]);
+      } else if term.starts_with("-Wl,-framework,") {
+        // macOS framework link
+        println!("cargo:rustc-link-lib=framework={}", &term[15..]);
+      } else if term.starts_with("-Wl,-weak_framework,") {
+        // rust doesn't seem to have "weak" framework linking so we just declare
+        // a normal framework link.
+        println!("cargo:rustc-link-lib=framework={}", &term[20..]);
+      } else if term.starts_with("-Wl,-rpath,") {
+        // I don't know why this works, but it does seem to?
+        println!("cargo:rustc-env=LD_LIBRARY_PATH={}", &term[11..]);
       }
-    } else {
-      eprintln!("Couldn't read LD_LIBRARY_PATH, but will attempt to build anyway...");
+      // Note(Lokathor): There's other terms that might be generated by
+      // `sdl2-config`, but they're not useful to us so we ignore them.
     }
   }
 }

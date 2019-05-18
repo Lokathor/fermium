@@ -2,7 +2,7 @@
 name = "fermium"
 description = "An opinionated crate of SDL2 bindings."
 repository = "https://github.com/Lokathor/fermium"
-version = "0.0.9"
+version = "0.0.10"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
 license = "Zlib"
@@ -33,9 +33,6 @@ dynamic_link = []
 
 [build-dependencies]
 bindgen = { version = "0.49", optional = true }
-
-[target.'cfg(not(windows))'.build-dependencies]
-pkg-config = { version = "0.3" }
 
 [dependencies]
 libc = "0.2"
