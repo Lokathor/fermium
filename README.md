@@ -23,6 +23,9 @@
     This version is not currently available in many package managers, so you
     might have to build from source. There's a [shell script](install-sdl2.sh)
     that I use for the CI builds, if you'd like to use that.
+  * Non-Windows platforms require `sdl2-config` to be in the `PATH` during the
+    build to get the proper linking info, but this is part of a normal SDL2
+    install on both macOS and Linux so it shouldn't be a problem.
 * The whole crate is `no_std` of course.
 * The bindings use `libc` for the C type declarations.
 
