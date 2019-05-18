@@ -1,6 +1,5 @@
-// This line makes your release build not have a dummy terminal attached to it
-// on Win32. It has no effect on the other operating systems. I advise you to
-// use it.
+// This line makes your release build program not have a dummy terminal attached
+// to it on Win32. It has no effect on the other operating systems.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 //! This is an "Opening a window" demo using only the raw SDL2 calls.
