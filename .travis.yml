@@ -41,19 +41,24 @@ script:
 
   # First we verify the pre-generated bindings.
   - cargo build
+  - cargo build --examples
   - cargo test --lib --tests
 
   # Next we attempt with `use_bindgen_bin`
   - cargo clean
   - cargo build --features="use_bindgen_bin"
+  - cargo build --features="use_bindgen_bin" --examples
   - cargo test  --features="use_bindgen_bin" --lib --tests
 
   # Next we attempt with `use_bindgen_lib`
   - cargo clean
   - cargo build --features="use_bindgen_lib"
+  - cargo build --features="use_bindgen_lib" --examples
   - cargo test  --features="use_bindgen_lib" --lib --tests
   
   # Next we attempt with `dynamic_link` (using builtin bindings)
   - cargo clean
+  - cp %dllpath% .
   - cargo build --features="dynamic_link"
+  - cargo build --features="dynamic_link" --examples
   - cargo test  --features="dynamic_link" --lib --tests
