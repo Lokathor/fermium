@@ -58,18 +58,23 @@ fn main() {
       } else {
         // Main loop of the program, I'm sure you're all familiar.
         'game_loop: loop {
-          // This is a union of a tag and also a bunch of types that always have a
-          // tag as the first field. In other words, we can always safely check
-          // the value of the tag. https://wiki.libsdl.org/SDL_Event
+          // This is a union of all possible event types as well as a tag field.
+          // https://wiki.libsdl.org/SDL_Event
           let mut event = SDL_Event::default();
-          // Polls for one event out of the window's event queue. It's 1 on
-          // success and 0 on failure, https://wiki.libsdl.org/SDL_PollEvent
+          // This polls for one event out of the window's event queue and writes
+          // it to the event pointer we give it (if there's an event to write). It
+          // returns 1 on success and 0 on failure,
+          // https://wiki.libsdl.org/SDL_PollEvent
           while SDL_PollEvent(&mut event) != 0 {
+            // Every possible union variant also starts with the tag field as
+            // its first field. In other words, you can _always_ check the tag
+            // field to see what other fields you should look at. It's as good
+            // as a Rust enum from a data compactness standpoint, just not at
+            // all type safe.
             match event.type_ as SDL_EventType::Type {
               SDL_QUIT => {
-                // Every union variant has a different set of payload data of
-                // course. In this case, the quit event has a timestamp, so we
-                // might as well print it.
+                // In this case, the quit event has a timestamp as its only
+                // field besides the tag, so we might as well print it.
                 println!("Quit after {} milliseconds.", event.quit.timestamp);
                 break 'game_loop;
               }
