@@ -150,7 +150,7 @@ fn declare_linking() {
       panic!("This crate doesn't support the GNU toolchain on windows, file a PR I guess.");
     };
     println!(
-      "cargo:rustc-link-search={}",
+      "cargo:rustc-link-search=native={}",
       manifest_dir.join(subdirectory).display()
     );
   } else {
@@ -169,16 +169,13 @@ fn declare_linking() {
     // The output is space separated, of course
     for term in String::from_utf8_lossy(&sd2_config_output.stdout).split_whitespace() {
       if term.starts_with("-L") {
-        println!("cargo:rustc-link-search={}", &term[2..]);
+        println!("cargo:rustc-link-search=native={}", &term[2..]);
       } else if term.starts_with("-lSDL2") {
-        println!(
-          "cargo:rustc-link-lib={}=SDL2",
-          if cfg!(feature = "dynamic_link") {
-            "dylib"
-          } else {
-            "static"
-          }
-        );
+        if cfg!(feature = "dynamic_link") {
+          println!("cargo:rustc-link-lib=SDL2")
+        } else {
+          println!("cargo:rustc-link-lib=static=SDL2")
+        };
       } else if term.starts_with("-l") {
         println!("cargo:rustc-link-lib={}", &term[2..]);
       } else if term.starts_with("-Wl,-framework,") {
