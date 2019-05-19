@@ -58,7 +58,6 @@ script:
   
   # Next we attempt with `dynamic_link` (using builtin bindings)
   - cargo clean
-  - cp %dllpath% .
   - cargo build --features="dynamic_link"
   - cargo build --features="dynamic_link" --examples
   - cargo test  --features="dynamic_link" --lib --tests
