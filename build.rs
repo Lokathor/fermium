@@ -61,6 +61,7 @@ fn generate_bindings_file_via_cli(out_dir: &Path) {
   bindings_command.arg("--whitelist-type").arg("SDL_.*");
   bindings_command.arg("--whitelist-var").arg("SDL_.*");
   bindings_command.arg("--whitelist-var").arg("AUDIO_.*");
+  bindings_command.arg("--whitelist-var").arg("SDLK_.*");
   // header
   bindings_command.arg(&wrapper_filename);
 
@@ -102,7 +103,8 @@ fn generate_bindings_file_via_lib(out_dir: &Path) {
     .whitelist_function("SDL_.*")
     .whitelist_type("SDL_.*")
     .whitelist_var("SDL_.*")
-    .whitelist_var("AUDIO_.*");
+    .whitelist_var("AUDIO_.*")
+    .whitelist_var("SDLK_.*");
   let bindings = builder.generate().expect("Couldn't generate the bindings.");
   bindings
     .write_to_file(&bindings_filename)

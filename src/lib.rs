@@ -12,11 +12,15 @@
 //! * `SDL_syswm.h`
 //!
 //! However, `SDL_syswm.h` in particular pulls in a bunch of extra code and it
-//! overwhelms the generated bindings. To avoid this, we whitelist for only
-//! things that start with `SDL_` or `AUDIO_` (as well as anything they
-//! recursively depend on). It is thought that this will expose all needed
-//! functionality, but if you think something's missing that should be added to
-//! the whitelist please [submit an
+//! overwhelms the generated bindings. To avoid this, we only keep the following
+//! whitelist of items:
+//!
+//! * `SDL_` (functions, types, and vars)
+//! * `SDLK_` (vars)
+//! * `AUDIO_` (vars)
+//!
+//! It is thought that this will expose all needed functionality, but if you
+//! think something should be added to the whitelist please [submit an
 //! issue](https://github.com/Lokathor/fermium/issues).
 
 // Note(Lokathor): Only one of the following `include!` directives should end up
