@@ -52,3 +52,11 @@ include!("bindings_rpi3.rs");
   not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
 ))]
 include!("bindings_mac_x64.rs");
+
+// Note(Lokathor): Bindgen doesn't parse all things properly on its own, so we
+// define a few more things here "by hand".
+
+/// Used as the device ID for mouse events simulated with touch input
+///
+/// `SDL_touch.h`, line 53
+pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
