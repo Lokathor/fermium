@@ -285,7 +285,6 @@ pub const SDL_INIT_NOPARACHUTE: u32 = 1048576;
 pub const SDL_INIT_EVERYTHING: u32 = 62001;
 extern "C" {
   #[doc = "  \\brief Gets the name of the platform."]
-  #[link_name = "\u{1}_SDL_GetPlatform"]
   pub fn SDL_GetPlatform() -> *const libc::c_char;
 }
 pub type __int64_t = libc::c_longlong;
@@ -628,19 +627,15 @@ pub mod SDL_DUMMY_ENUM {
 }
 pub type SDL_compile_time_assert_enum = [libc::c_int; 1usize];
 extern "C" {
-  #[link_name = "\u{1}_SDL_malloc"]
   pub fn SDL_malloc(size: usize) -> *mut libc::c_void;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_calloc"]
   pub fn SDL_calloc(nmemb: usize, size: usize) -> *mut libc::c_void;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_realloc"]
   pub fn SDL_realloc(mem: *mut libc::c_void, size: usize) -> *mut libc::c_void;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_free"]
   pub fn SDL_free(mem: *mut libc::c_void);
 }
 pub type SDL_malloc_func =
@@ -653,7 +648,6 @@ pub type SDL_realloc_func = ::core::option::Option<
 pub type SDL_free_func = ::core::option::Option<unsafe extern "C" fn(mem: *mut libc::c_void)>;
 extern "C" {
   #[doc = "  \\brief Get the current set of SDL memory functions"]
-  #[link_name = "\u{1}_SDL_GetMemoryFunctions"]
   pub fn SDL_GetMemoryFunctions(
     malloc_func: *mut SDL_malloc_func,
     calloc_func: *mut SDL_calloc_func,
@@ -668,7 +662,6 @@ extern "C" {
   #[doc = "        SDL_GetNumAllocations() and be very careful if it returns non-zero."]
   #[doc = "        That means that your free function will be called with memory"]
   #[doc = "        allocated by the previous memory allocation functions."]
-  #[link_name = "\u{1}_SDL_SetMemoryFunctions"]
   pub fn SDL_SetMemoryFunctions(
     malloc_func: SDL_malloc_func,
     calloc_func: SDL_calloc_func,
@@ -678,15 +671,12 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Get the number of outstanding (unfreed) allocations"]
-  #[link_name = "\u{1}_SDL_GetNumAllocations"]
   pub fn SDL_GetNumAllocations() -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_getenv"]
   pub fn SDL_getenv(name: *const libc::c_char) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_setenv"]
   pub fn SDL_setenv(
     name: *const libc::c_char,
     value: *const libc::c_char,
@@ -694,7 +684,6 @@ extern "C" {
   ) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_qsort"]
   pub fn SDL_qsort(
     base: *mut libc::c_void,
     nmemb: usize,
@@ -705,31 +694,24 @@ extern "C" {
   );
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_abs"]
   pub fn SDL_abs(x: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_isdigit"]
   pub fn SDL_isdigit(x: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_isspace"]
   pub fn SDL_isspace(x: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_toupper"]
   pub fn SDL_toupper(x: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_tolower"]
   pub fn SDL_tolower(x: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_memset"]
   pub fn SDL_memset(dst: *mut libc::c_void, c: libc::c_int, len: usize) -> *mut libc::c_void;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_memcpy"]
   pub fn SDL_memcpy(
     dst: *mut libc::c_void,
     src: *const libc::c_void,
@@ -737,7 +719,6 @@ extern "C" {
   ) -> *mut libc::c_void;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_memmove"]
   pub fn SDL_memmove(
     dst: *mut libc::c_void,
     src: *const libc::c_void,
@@ -745,39 +726,30 @@ extern "C" {
   ) -> *mut libc::c_void;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_memcmp"]
   pub fn SDL_memcmp(s1: *const libc::c_void, s2: *const libc::c_void, len: usize) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_wcsdup"]
   pub fn SDL_wcsdup(wstr: *const wchar_t) -> *mut wchar_t;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_wcslen"]
   pub fn SDL_wcslen(wstr: *const wchar_t) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_wcslcpy"]
   pub fn SDL_wcslcpy(dst: *mut wchar_t, src: *const wchar_t, maxlen: usize) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_wcslcat"]
   pub fn SDL_wcslcat(dst: *mut wchar_t, src: *const wchar_t, maxlen: usize) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_wcscmp"]
   pub fn SDL_wcscmp(str1: *const wchar_t, str2: *const wchar_t) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strlen"]
   pub fn SDL_strlen(str: *const libc::c_char) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strlcpy"]
   pub fn SDL_strlcpy(dst: *mut libc::c_char, src: *const libc::c_char, maxlen: usize) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_utf8strlcpy"]
   pub fn SDL_utf8strlcpy(
     dst: *mut libc::c_char,
     src: *const libc::c_char,
@@ -785,46 +757,36 @@ extern "C" {
   ) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strlcat"]
   pub fn SDL_strlcat(dst: *mut libc::c_char, src: *const libc::c_char, maxlen: usize) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strdup"]
   pub fn SDL_strdup(str: *const libc::c_char) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strrev"]
   pub fn SDL_strrev(str: *mut libc::c_char) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strupr"]
   pub fn SDL_strupr(str: *mut libc::c_char) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strlwr"]
   pub fn SDL_strlwr(str: *mut libc::c_char) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strchr"]
   pub fn SDL_strchr(str: *const libc::c_char, c: libc::c_int) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strrchr"]
   pub fn SDL_strrchr(str: *const libc::c_char, c: libc::c_int) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strstr"]
   pub fn SDL_strstr(
     haystack: *const libc::c_char,
     needle: *const libc::c_char,
   ) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_utf8strlen"]
   pub fn SDL_utf8strlen(str: *const libc::c_char) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_itoa"]
   pub fn SDL_itoa(
     value: libc::c_int,
     str: *mut libc::c_char,
@@ -832,7 +794,6 @@ extern "C" {
   ) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_uitoa"]
   pub fn SDL_uitoa(
     value: libc::c_uint,
     str: *mut libc::c_char,
@@ -840,7 +801,6 @@ extern "C" {
   ) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ltoa"]
   pub fn SDL_ltoa(
     value: libc::c_long,
     str: *mut libc::c_char,
@@ -848,7 +808,6 @@ extern "C" {
   ) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ultoa"]
   pub fn SDL_ultoa(
     value: libc::c_ulong,
     str: *mut libc::c_char,
@@ -856,24 +815,19 @@ extern "C" {
   ) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_lltoa"]
   pub fn SDL_lltoa(value: Sint64, str: *mut libc::c_char, radix: libc::c_int) -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ulltoa"]
   pub fn SDL_ulltoa(value: Uint64, str: *mut libc::c_char, radix: libc::c_int)
     -> *mut libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_atoi"]
   pub fn SDL_atoi(str: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_atof"]
   pub fn SDL_atof(str: *const libc::c_char) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strtol"]
   pub fn SDL_strtol(
     str: *const libc::c_char,
     endp: *mut *mut libc::c_char,
@@ -881,7 +835,6 @@ extern "C" {
   ) -> libc::c_long;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strtoul"]
   pub fn SDL_strtoul(
     str: *const libc::c_char,
     endp: *mut *mut libc::c_char,
@@ -889,7 +842,6 @@ extern "C" {
   ) -> libc::c_ulong;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strtoll"]
   pub fn SDL_strtoll(
     str: *const libc::c_char,
     endp: *mut *mut libc::c_char,
@@ -897,7 +849,6 @@ extern "C" {
   ) -> Sint64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strtoull"]
   pub fn SDL_strtoull(
     str: *const libc::c_char,
     endp: *mut *mut libc::c_char,
@@ -905,15 +856,12 @@ extern "C" {
   ) -> Uint64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strtod"]
   pub fn SDL_strtod(str: *const libc::c_char, endp: *mut *mut libc::c_char) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strcmp"]
   pub fn SDL_strcmp(str1: *const libc::c_char, str2: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strncmp"]
   pub fn SDL_strncmp(
     str1: *const libc::c_char,
     str2: *const libc::c_char,
@@ -921,11 +869,9 @@ extern "C" {
   ) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strcasecmp"]
   pub fn SDL_strcasecmp(str1: *const libc::c_char, str2: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_strncasecmp"]
   pub fn SDL_strncasecmp(
     str1: *const libc::c_char,
     str2: *const libc::c_char,
@@ -933,11 +879,9 @@ extern "C" {
   ) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_sscanf"]
   pub fn SDL_sscanf(text: *const libc::c_char, fmt: *const libc::c_char, ...) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_vsscanf"]
   pub fn SDL_vsscanf(
     text: *const libc::c_char,
     fmt: *const libc::c_char,
@@ -945,7 +889,6 @@ extern "C" {
   ) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_snprintf"]
   pub fn SDL_snprintf(
     text: *mut libc::c_char,
     maxlen: usize,
@@ -954,7 +897,6 @@ extern "C" {
   ) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_vsnprintf"]
   pub fn SDL_vsnprintf(
     text: *mut libc::c_char,
     maxlen: usize,
@@ -963,147 +905,111 @@ extern "C" {
   ) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_acos"]
   pub fn SDL_acos(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_acosf"]
   pub fn SDL_acosf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_asin"]
   pub fn SDL_asin(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_asinf"]
   pub fn SDL_asinf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_atan"]
   pub fn SDL_atan(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_atanf"]
   pub fn SDL_atanf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_atan2"]
   pub fn SDL_atan2(x: f64, y: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_atan2f"]
   pub fn SDL_atan2f(x: f32, y: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ceil"]
   pub fn SDL_ceil(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ceilf"]
   pub fn SDL_ceilf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_copysign"]
   pub fn SDL_copysign(x: f64, y: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_copysignf"]
   pub fn SDL_copysignf(x: f32, y: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_cos"]
   pub fn SDL_cos(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_cosf"]
   pub fn SDL_cosf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_exp"]
   pub fn SDL_exp(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_expf"]
   pub fn SDL_expf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_fabs"]
   pub fn SDL_fabs(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_fabsf"]
   pub fn SDL_fabsf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_floor"]
   pub fn SDL_floor(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_floorf"]
   pub fn SDL_floorf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_fmod"]
   pub fn SDL_fmod(x: f64, y: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_fmodf"]
   pub fn SDL_fmodf(x: f32, y: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_log"]
   pub fn SDL_log(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_logf"]
   pub fn SDL_logf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_log10"]
   pub fn SDL_log10(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_log10f"]
   pub fn SDL_log10f(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_pow"]
   pub fn SDL_pow(x: f64, y: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_powf"]
   pub fn SDL_powf(x: f32, y: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_scalbn"]
   pub fn SDL_scalbn(x: f64, n: libc::c_int) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_scalbnf"]
   pub fn SDL_scalbnf(x: f32, n: libc::c_int) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_sin"]
   pub fn SDL_sin(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_sinf"]
   pub fn SDL_sinf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_sqrt"]
   pub fn SDL_sqrt(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_sqrtf"]
   pub fn SDL_sqrtf(x: f32) -> f32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_tan"]
   pub fn SDL_tan(x: f64) -> f64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_tanf"]
   pub fn SDL_tanf(x: f32) -> f32;
 }
 #[repr(C)]
@@ -1113,15 +1019,12 @@ pub struct _SDL_iconv_t {
 }
 pub type SDL_iconv_t = *mut _SDL_iconv_t;
 extern "C" {
-  #[link_name = "\u{1}_SDL_iconv_open"]
   pub fn SDL_iconv_open(tocode: *const libc::c_char, fromcode: *const libc::c_char) -> SDL_iconv_t;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_iconv_close"]
   pub fn SDL_iconv_close(cd: SDL_iconv_t) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_iconv"]
   pub fn SDL_iconv(
     cd: SDL_iconv_t,
     inbuf: *mut *const libc::c_char,
@@ -1133,7 +1036,6 @@ extern "C" {
 extern "C" {
   #[doc = "  This function converts a string between encodings in one pass, returning a"]
   #[doc = "  string that must be freed with SDL_free() or NULL on error."]
-  #[link_name = "\u{1}_SDL_iconv_string"]
   pub fn SDL_iconv_string(
     tocode: *const libc::c_char,
     fromcode: *const libc::c_char,
@@ -1143,7 +1045,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  The prototype for the application's main() function"]
-  #[link_name = "\u{1}_SDL_main"]
   pub fn SDL_main(argc: libc::c_int, argv: *mut *mut libc::c_char) -> libc::c_int;
 }
 extern "C" {
@@ -1152,7 +1053,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  Calling this yourself without knowing what you're doing can cause"]
   #[doc = "  crashes and hard to diagnose problems with your application."]
-  #[link_name = "\u{1}_SDL_SetMainReady"]
   pub fn SDL_SetMainReady();
 }
 pub mod SDL_AssertState {
@@ -1268,7 +1168,6 @@ impl Default for SDL_AssertData {
   }
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ReportAssertion"]
   pub fn SDL_ReportAssertion(
     arg1: *mut SDL_AssertData,
     arg2: *const libc::c_char,
@@ -1301,7 +1200,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\param handler Callback function, called when an assertion fails."]
   #[doc = "  \\param userdata A pointer passed to the callback as-is."]
-  #[link_name = "\u{1}_SDL_SetAssertionHandler"]
   pub fn SDL_SetAssertionHandler(handler: SDL_AssertionHandler, userdata: *mut libc::c_void);
 }
 extern "C" {
@@ -1313,7 +1211,6 @@ extern "C" {
   #[doc = "   used to provide a different function."]
   #[doc = ""]
   #[doc = "  \\return The default SDL_AssertionHandler that is called when an assert triggers."]
-  #[link_name = "\u{1}_SDL_GetDefaultAssertionHandler"]
   pub fn SDL_GetDefaultAssertionHandler() -> SDL_AssertionHandler;
 }
 extern "C" {
@@ -1330,7 +1227,6 @@ extern "C" {
   #[doc = "                    If you don't care about this data, it is safe to pass"]
   #[doc = "                    a NULL pointer to this function to ignore it."]
   #[doc = "  \\return The SDL_AssertionHandler that is called when an assert triggers."]
-  #[link_name = "\u{1}_SDL_GetAssertionHandler"]
   pub fn SDL_GetAssertionHandler(puserdata: *mut *mut libc::c_void) -> SDL_AssertionHandler;
 }
 extern "C" {
@@ -1354,7 +1250,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\return List of all assertions."]
   #[doc = "  \\sa SDL_ResetAssertionReport"]
-  #[link_name = "\u{1}_SDL_GetAssertionReport"]
   pub fn SDL_GetAssertionReport() -> *const SDL_AssertData;
 }
 extern "C" {
@@ -1363,7 +1258,6 @@ extern "C" {
   #[doc = "  Reset list of all assertions triggered."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetAssertionReport"]
-  #[link_name = "\u{1}_SDL_ResetAssertionReport"]
   pub fn SDL_ResetAssertionReport();
 }
 pub type SDL_SpinLock = libc::c_int;
@@ -1373,21 +1267,18 @@ extern "C" {
   #[doc = " \\param lock Points to the lock."]
   #[doc = ""]
   #[doc = " \\return SDL_TRUE if the lock succeeded, SDL_FALSE if the lock is already held."]
-  #[link_name = "\u{1}_SDL_AtomicTryLock"]
   pub fn SDL_AtomicTryLock(lock: *mut SDL_SpinLock) -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = " \\brief Lock a spin lock by setting it to a non-zero value."]
   #[doc = ""]
   #[doc = " \\param lock Points to the lock."]
-  #[link_name = "\u{1}_SDL_AtomicLock"]
   pub fn SDL_AtomicLock(lock: *mut SDL_SpinLock);
 }
 extern "C" {
   #[doc = " \\brief Unlock a spin lock by setting it to 0. Always returns immediately"]
   #[doc = ""]
   #[doc = " \\param lock Points to the lock."]
-  #[link_name = "\u{1}_SDL_AtomicUnlock"]
   pub fn SDL_AtomicUnlock(lock: *mut SDL_SpinLock);
 }
 extern "C" {
@@ -1408,11 +1299,9 @@ extern "C" {
   #[doc = ""]
   #[doc = " For more information on these semantics, take a look at the blog post:"]
   #[doc = " http://preshing.com/20120913/acquire-and-release-semantics"]
-  #[link_name = "\u{1}_SDL_MemoryBarrierReleaseFunction"]
   pub fn SDL_MemoryBarrierReleaseFunction();
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_MemoryBarrierAcquireFunction"]
   pub fn SDL_MemoryBarrierAcquireFunction();
 }
 #[doc = " \\brief A type representing an atomic integer value.  It is a struct"]
@@ -1451,7 +1340,6 @@ extern "C" {
   #[doc = " \\return SDL_TRUE if the atomic variable was set, SDL_FALSE otherwise."]
   #[doc = ""]
   #[doc = " \\note If you don't know what this function is for, you shouldn't use it!"]
-  #[link_name = "\u{1}_SDL_AtomicCAS"]
   pub fn SDL_AtomicCAS(
     a: *mut SDL_atomic_t,
     oldval: libc::c_int,
@@ -1462,12 +1350,10 @@ extern "C" {
   #[doc = " \\brief Set an atomic variable to a value."]
   #[doc = ""]
   #[doc = " \\return The previous value of the atomic variable."]
-  #[link_name = "\u{1}_SDL_AtomicSet"]
   pub fn SDL_AtomicSet(a: *mut SDL_atomic_t, v: libc::c_int) -> libc::c_int;
 }
 extern "C" {
   #[doc = " \\brief Get the value of an atomic variable"]
-  #[link_name = "\u{1}_SDL_AtomicGet"]
   pub fn SDL_AtomicGet(a: *mut SDL_atomic_t) -> libc::c_int;
 }
 extern "C" {
@@ -1476,7 +1362,6 @@ extern "C" {
   #[doc = " \\return The previous value of the atomic variable."]
   #[doc = ""]
   #[doc = " \\note This same style can be used for any number operation"]
-  #[link_name = "\u{1}_SDL_AtomicAdd"]
   pub fn SDL_AtomicAdd(a: *mut SDL_atomic_t, v: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -1485,7 +1370,6 @@ extern "C" {
   #[doc = " \\return SDL_TRUE if the pointer was set, SDL_FALSE otherwise."]
   #[doc = ""]
   #[doc = " \\note If you don't know what this function is for, you shouldn't use it!"]
-  #[link_name = "\u{1}_SDL_AtomicCASPtr"]
   pub fn SDL_AtomicCASPtr(
     a: *mut *mut libc::c_void,
     oldval: *mut libc::c_void,
@@ -1496,24 +1380,19 @@ extern "C" {
   #[doc = " \\brief Set a pointer to a value atomically."]
   #[doc = ""]
   #[doc = " \\return The previous value of the pointer."]
-  #[link_name = "\u{1}_SDL_AtomicSetPtr"]
   pub fn SDL_AtomicSetPtr(a: *mut *mut libc::c_void, v: *mut libc::c_void) -> *mut libc::c_void;
 }
 extern "C" {
   #[doc = " \\brief Get the value of a pointer atomically."]
-  #[link_name = "\u{1}_SDL_AtomicGetPtr"]
   pub fn SDL_AtomicGetPtr(a: *mut *mut libc::c_void) -> *mut libc::c_void;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_SetError"]
   pub fn SDL_SetError(fmt: *const libc::c_char, ...) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_GetError"]
   pub fn SDL_GetError() -> *const libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ClearError"]
   pub fn SDL_ClearError();
 }
 pub mod SDL_errorcode {
@@ -1526,7 +1405,6 @@ pub mod SDL_errorcode {
   pub const SDL_LASTERROR: Type = 5;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_Error"]
   pub fn SDL_Error(code: SDL_errorcode::Type) -> libc::c_int;
 }
 #[repr(C)]
@@ -1536,27 +1414,22 @@ pub struct SDL_mutex {
 }
 extern "C" {
   #[doc = "  Create a mutex, initialized unlocked."]
-  #[link_name = "\u{1}_SDL_CreateMutex"]
   pub fn SDL_CreateMutex() -> *mut SDL_mutex;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_LockMutex"]
   pub fn SDL_LockMutex(mutex: *mut SDL_mutex) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Try to lock the mutex"]
   #[doc = ""]
   #[doc = "  \\return 0, SDL_MUTEX_TIMEDOUT, or -1 on error"]
-  #[link_name = "\u{1}_SDL_TryLockMutex"]
   pub fn SDL_TryLockMutex(mutex: *mut SDL_mutex) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_UnlockMutex"]
   pub fn SDL_UnlockMutex(mutex: *mut SDL_mutex) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Destroy a mutex."]
-  #[link_name = "\u{1}_SDL_DestroyMutex"]
   pub fn SDL_DestroyMutex(mutex: *mut SDL_mutex);
 }
 #[repr(C)]
@@ -1567,19 +1440,16 @@ pub struct SDL_semaphore {
 pub type SDL_sem = SDL_semaphore;
 extern "C" {
   #[doc = "  Create a semaphore, initialized with value, returns NULL on failure."]
-  #[link_name = "\u{1}_SDL_CreateSemaphore"]
   pub fn SDL_CreateSemaphore(initial_value: Uint32) -> *mut SDL_sem;
 }
 extern "C" {
   #[doc = "  Destroy a semaphore."]
-  #[link_name = "\u{1}_SDL_DestroySemaphore"]
   pub fn SDL_DestroySemaphore(sem: *mut SDL_sem);
 }
 extern "C" {
   #[doc = "  This function suspends the calling thread until the semaphore pointed"]
   #[doc = "  to by \\c sem has a positive count. It then atomically decreases the"]
   #[doc = "  semaphore count."]
-  #[link_name = "\u{1}_SDL_SemWait"]
   pub fn SDL_SemWait(sem: *mut SDL_sem) -> libc::c_int;
 }
 extern "C" {
@@ -1587,7 +1457,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\return 0 if the wait succeeds, ::SDL_MUTEX_TIMEDOUT if the wait would"]
   #[doc = "          block, and -1 on error."]
-  #[link_name = "\u{1}_SDL_SemTryWait"]
   pub fn SDL_SemTryWait(sem: *mut SDL_sem) -> libc::c_int;
 }
 extern "C" {
@@ -1598,19 +1467,16 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\warning On some platforms this function is implemented by looping with a"]
   #[doc = "           delay of 1 ms, and so should be avoided if possible."]
-  #[link_name = "\u{1}_SDL_SemWaitTimeout"]
   pub fn SDL_SemWaitTimeout(sem: *mut SDL_sem, ms: Uint32) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Atomically increases the semaphore's count (not blocking)."]
   #[doc = ""]
   #[doc = "  \\return 0, or -1 on error."]
-  #[link_name = "\u{1}_SDL_SemPost"]
   pub fn SDL_SemPost(sem: *mut SDL_sem) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Returns the current count of the semaphore."]
-  #[link_name = "\u{1}_SDL_SemValue"]
   pub fn SDL_SemValue(sem: *mut SDL_sem) -> Uint32;
 }
 #[repr(C)]
@@ -1645,26 +1511,22 @@ extern "C" {
   #[doc = ""]
   #[doc = "  In general it's safer to signal the condition variable while the"]
   #[doc = "  mutex is locked."]
-  #[link_name = "\u{1}_SDL_CreateCond"]
   pub fn SDL_CreateCond() -> *mut SDL_cond;
 }
 extern "C" {
   #[doc = "  Destroy a condition variable."]
-  #[link_name = "\u{1}_SDL_DestroyCond"]
   pub fn SDL_DestroyCond(cond: *mut SDL_cond);
 }
 extern "C" {
   #[doc = "  Restart one of the threads that are waiting on the condition variable."]
   #[doc = ""]
   #[doc = "  \\return 0 or -1 on error."]
-  #[link_name = "\u{1}_SDL_CondSignal"]
   pub fn SDL_CondSignal(cond: *mut SDL_cond) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Restart all threads that are waiting on the condition variable."]
   #[doc = ""]
   #[doc = "  \\return 0 or -1 on error."]
-  #[link_name = "\u{1}_SDL_CondBroadcast"]
   pub fn SDL_CondBroadcast(cond: *mut SDL_cond) -> libc::c_int;
 }
 extern "C" {
@@ -1675,7 +1537,6 @@ extern "C" {
   #[doc = "  The mutex is re-locked once the condition variable is signaled."]
   #[doc = ""]
   #[doc = "  \\return 0 when it is signaled, or -1 on error."]
-  #[link_name = "\u{1}_SDL_CondWait"]
   pub fn SDL_CondWait(cond: *mut SDL_cond, mutex: *mut SDL_mutex) -> libc::c_int;
 }
 extern "C" {
@@ -1685,7 +1546,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\warning On some platforms this function is implemented by looping with a"]
   #[doc = "           delay of 1 ms, and so should be avoided if possible."]
-  #[link_name = "\u{1}_SDL_CondWaitTimeout"]
   pub fn SDL_CondWaitTimeout(cond: *mut SDL_cond, mutex: *mut SDL_mutex, ms: Uint32)
     -> libc::c_int;
 }
@@ -1715,7 +1575,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  This is equivalent to calling:"]
   #[doc = "  SDL_CreateThreadWithStackSize(fn, name, 0, data);"]
-  #[link_name = "\u{1}_SDL_CreateThread"]
   pub fn SDL_CreateThread(
     fn_: SDL_ThreadFunction,
     name: *const libc::c_char,
@@ -1747,7 +1606,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "   In SDL 2.1, stacksize will be folded into the original SDL_CreateThread"]
   #[doc = "    function."]
-  #[link_name = "\u{1}_SDL_CreateThreadWithStackSize"]
   pub fn SDL_CreateThreadWithStackSize(
     fn_: SDL_ThreadFunction,
     name: *const libc::c_char,
@@ -1761,24 +1619,20 @@ extern "C" {
   #[doc = "  specified thread, or NULL if it doesn't have a name. This is internal"]
   #[doc = "  memory, not to be free()'d by the caller, and remains valid until the"]
   #[doc = "  specified thread is cleaned up by SDL_WaitThread()."]
-  #[link_name = "\u{1}_SDL_GetThreadName"]
   pub fn SDL_GetThreadName(thread: *mut SDL_Thread) -> *const libc::c_char;
 }
 extern "C" {
   #[doc = "  Get the thread identifier for the current thread."]
-  #[link_name = "\u{1}_SDL_ThreadID"]
   pub fn SDL_ThreadID() -> SDL_threadID;
 }
 extern "C" {
   #[doc = "  Get the thread identifier for the specified thread."]
   #[doc = ""]
   #[doc = "  Equivalent to SDL_ThreadID() if the specified thread is NULL."]
-  #[link_name = "\u{1}_SDL_GetThreadID"]
   pub fn SDL_GetThreadID(thread: *mut SDL_Thread) -> SDL_threadID;
 }
 extern "C" {
   #[doc = "  Set the priority for the current thread"]
-  #[link_name = "\u{1}_SDL_SetThreadPriority"]
   pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority::Type) -> libc::c_int;
 }
 extern "C" {
@@ -1798,7 +1652,6 @@ extern "C" {
   #[doc = "  both, or behavior is undefined."]
   #[doc = ""]
   #[doc = "  It is safe to pass NULL to this function; it is a no-op."]
-  #[link_name = "\u{1}_SDL_WaitThread"]
   pub fn SDL_WaitThread(thread: *mut SDL_Thread, status: *mut libc::c_int);
 }
 extern "C" {
@@ -1826,7 +1679,6 @@ extern "C" {
   #[doc = "  undefined."]
   #[doc = ""]
   #[doc = "  It is safe to pass NULL to this function; it is a no-op."]
-  #[link_name = "\u{1}_SDL_DetachThread"]
   pub fn SDL_DetachThread(thread: *mut SDL_Thread);
 }
 extern "C" {
@@ -1858,7 +1710,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_TLSGet()"]
   #[doc = "  \\sa SDL_TLSSet()"]
-  #[link_name = "\u{1}_SDL_TLSCreate"]
   pub fn SDL_TLSCreate() -> SDL_TLSID;
 }
 extern "C" {
@@ -1870,7 +1721,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_TLSCreate()"]
   #[doc = "  \\sa SDL_TLSSet()"]
-  #[link_name = "\u{1}_SDL_TLSGet"]
   pub fn SDL_TLSGet(id: SDL_TLSID) -> *mut libc::c_void;
 }
 extern "C" {
@@ -1884,7 +1734,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_TLSCreate()"]
   #[doc = "  \\sa SDL_TLSGet()"]
-  #[link_name = "\u{1}_SDL_TLSSet"]
   pub fn SDL_TLSSet(
     id: SDL_TLSID,
     value: *const libc::c_void,
@@ -2266,27 +2115,21 @@ impl ::core::fmt::Debug for SDL_RWops {
   }
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_RWFromFile"]
   pub fn SDL_RWFromFile(file: *const libc::c_char, mode: *const libc::c_char) -> *mut SDL_RWops;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_RWFromFP"]
   pub fn SDL_RWFromFP(fp: *mut FILE, autoclose: SDL_bool::Type) -> *mut SDL_RWops;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_RWFromMem"]
   pub fn SDL_RWFromMem(mem: *mut libc::c_void, size: libc::c_int) -> *mut SDL_RWops;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_RWFromConstMem"]
   pub fn SDL_RWFromConstMem(mem: *const libc::c_void, size: libc::c_int) -> *mut SDL_RWops;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_AllocRW"]
   pub fn SDL_AllocRW() -> *mut SDL_RWops;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_FreeRW"]
   pub fn SDL_FreeRW(area: *mut SDL_RWops);
 }
 extern "C" {
@@ -2301,7 +2144,6 @@ extern "C" {
   #[doc = "  The data should be freed with SDL_free()."]
   #[doc = ""]
   #[doc = "  \\return the data, or NULL if there was an error."]
-  #[link_name = "\u{1}_SDL_LoadFile_RW"]
   pub fn SDL_LoadFile_RW(
     src: *mut SDL_RWops,
     datasize: *mut usize,
@@ -2309,59 +2151,45 @@ extern "C" {
   ) -> *mut libc::c_void;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ReadU8"]
   pub fn SDL_ReadU8(src: *mut SDL_RWops) -> Uint8;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ReadLE16"]
   pub fn SDL_ReadLE16(src: *mut SDL_RWops) -> Uint16;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ReadBE16"]
   pub fn SDL_ReadBE16(src: *mut SDL_RWops) -> Uint16;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ReadLE32"]
   pub fn SDL_ReadLE32(src: *mut SDL_RWops) -> Uint32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ReadBE32"]
   pub fn SDL_ReadBE32(src: *mut SDL_RWops) -> Uint32;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ReadLE64"]
   pub fn SDL_ReadLE64(src: *mut SDL_RWops) -> Uint64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ReadBE64"]
   pub fn SDL_ReadBE64(src: *mut SDL_RWops) -> Uint64;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_WriteU8"]
   pub fn SDL_WriteU8(dst: *mut SDL_RWops, value: Uint8) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_WriteLE16"]
   pub fn SDL_WriteLE16(dst: *mut SDL_RWops, value: Uint16) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_WriteBE16"]
   pub fn SDL_WriteBE16(dst: *mut SDL_RWops, value: Uint16) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_WriteLE32"]
   pub fn SDL_WriteLE32(dst: *mut SDL_RWops, value: Uint32) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_WriteBE32"]
   pub fn SDL_WriteBE32(dst: *mut SDL_RWops, value: Uint32) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_WriteLE64"]
   pub fn SDL_WriteLE64(dst: *mut SDL_RWops, value: Uint64) -> usize;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_WriteBE64"]
   pub fn SDL_WriteBE64(dst: *mut SDL_RWops, value: Uint64) -> usize;
 }
 #[doc = "  \\brief Audio format flags."]
@@ -2695,25 +2523,20 @@ impl Default for SDL_AudioCVT {
   }
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_GetNumAudioDrivers"]
   pub fn SDL_GetNumAudioDrivers() -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_GetAudioDriver"]
   pub fn SDL_GetAudioDriver(index: libc::c_int) -> *const libc::c_char;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_AudioInit"]
   pub fn SDL_AudioInit(driver_name: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_AudioQuit"]
   pub fn SDL_AudioQuit();
 }
 extern "C" {
   #[doc = "  This function returns the name of the current audio driver, or NULL"]
   #[doc = "  if no driver has been initialized."]
-  #[link_name = "\u{1}_SDL_GetCurrentAudioDriver"]
   pub fn SDL_GetCurrentAudioDriver() -> *const libc::c_char;
 }
 extern "C" {
@@ -2760,7 +2583,6 @@ extern "C" {
   #[doc = "  for your audio callback function to be called.  Since the audio driver"]
   #[doc = "  may modify the requested size of the audio buffer, you should allocate"]
   #[doc = "  any local mixing buffers after you open the audio device."]
-  #[link_name = "\u{1}_SDL_OpenAudio"]
   pub fn SDL_OpenAudio(desired: *mut SDL_AudioSpec, obtained: *mut SDL_AudioSpec) -> libc::c_int;
 }
 #[doc = "  SDL Audio Device IDs."]
@@ -2782,7 +2604,6 @@ extern "C" {
   #[doc = "  In many common cases, when this function returns a value <= 0, it can still"]
   #[doc = "  successfully open the default device (NULL for first argument of"]
   #[doc = "  SDL_OpenAudioDevice())."]
-  #[link_name = "\u{1}_SDL_GetNumAudioDevices"]
   pub fn SDL_GetNumAudioDevices(iscapture: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -2797,7 +2618,6 @@ extern "C" {
   #[doc = "  managed internally. You are not to free it. If you need to keep the"]
   #[doc = "  string for any length of time, you should make your own copy of it, as it"]
   #[doc = "  will be invalid next time any of several other SDL functions is called."]
-  #[link_name = "\u{1}_SDL_GetAudioDeviceName"]
   pub fn SDL_GetAudioDeviceName(index: libc::c_int, iscapture: libc::c_int) -> *const libc::c_char;
 }
 extern "C" {
@@ -2812,7 +2632,6 @@ extern "C" {
   #[doc = "  \\return 0 on error, a valid device ID that is >= 2 on success."]
   #[doc = ""]
   #[doc = "  SDL_OpenAudio(), unlike this function, always acts on device ID 1."]
-  #[link_name = "\u{1}_SDL_OpenAudioDevice"]
   pub fn SDL_OpenAudioDevice(
     device: *const libc::c_char,
     iscapture: libc::c_int,
@@ -2828,19 +2647,15 @@ pub mod SDL_AudioStatus {
   pub const SDL_AUDIO_PAUSED: Type = 2;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_GetAudioStatus"]
   pub fn SDL_GetAudioStatus() -> SDL_AudioStatus::Type;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_GetAudioDeviceStatus"]
   pub fn SDL_GetAudioDeviceStatus(dev: SDL_AudioDeviceID) -> SDL_AudioStatus::Type;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_PauseAudio"]
   pub fn SDL_PauseAudio(pause_on: libc::c_int);
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_PauseAudioDevice"]
   pub fn SDL_PauseAudioDevice(dev: SDL_AudioDeviceID, pause_on: libc::c_int);
 }
 extern "C" {
@@ -2861,7 +2676,6 @@ extern "C" {
   #[doc = "  This function returns NULL and sets the SDL error message if the"]
   #[doc = "  wave file cannot be opened, uses an unknown data format, or is"]
   #[doc = "  corrupt.  Currently raw and MS-ADPCM WAVE files are supported."]
-  #[link_name = "\u{1}_SDL_LoadWAV_RW"]
   pub fn SDL_LoadWAV_RW(
     src: *mut SDL_RWops,
     freesrc: libc::c_int,
@@ -2872,7 +2686,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  This function frees data previously allocated with SDL_LoadWAV_RW()"]
-  #[link_name = "\u{1}_SDL_FreeWAV"]
   pub fn SDL_FreeWAV(audio_buf: *mut Uint8);
 }
 extern "C" {
@@ -2883,7 +2696,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\return 0 if no conversion is needed, 1 if the audio filter is set up,"]
   #[doc = "  or -1 on error."]
-  #[link_name = "\u{1}_SDL_BuildAudioCVT"]
   pub fn SDL_BuildAudioCVT(
     cvt: *mut SDL_AudioCVT,
     src_format: SDL_AudioFormat,
@@ -2905,7 +2717,6 @@ extern "C" {
   #[doc = "  SDL_BuildAudioCVT(), and should be \\c cvt->len*cvt->len_mult bytes long."]
   #[doc = ""]
   #[doc = "  \\return 0 on success or -1 if \\c cvt->buf is NULL."]
-  #[link_name = "\u{1}_SDL_ConvertAudio"]
   pub fn SDL_ConvertAudio(cvt: *mut SDL_AudioCVT) -> libc::c_int;
 }
 #[repr(C)]
@@ -2931,7 +2742,6 @@ extern "C" {
   #[doc = "  \\sa SDL_AudioStreamFlush"]
   #[doc = "  \\sa SDL_AudioStreamClear"]
   #[doc = "  \\sa SDL_FreeAudioStream"]
-  #[link_name = "\u{1}_SDL_NewAudioStream"]
   pub fn SDL_NewAudioStream(
     src_format: SDL_AudioFormat,
     src_channels: Uint8,
@@ -2955,7 +2765,6 @@ extern "C" {
   #[doc = "  \\sa SDL_AudioStreamFlush"]
   #[doc = "  \\sa SDL_AudioStreamClear"]
   #[doc = "  \\sa SDL_FreeAudioStream"]
-  #[link_name = "\u{1}_SDL_AudioStreamPut"]
   pub fn SDL_AudioStreamPut(
     stream: *mut SDL_AudioStream,
     buf: *const libc::c_void,
@@ -2976,7 +2785,6 @@ extern "C" {
   #[doc = "  \\sa SDL_AudioStreamFlush"]
   #[doc = "  \\sa SDL_AudioStreamClear"]
   #[doc = "  \\sa SDL_FreeAudioStream"]
-  #[link_name = "\u{1}_SDL_AudioStreamGet"]
   pub fn SDL_AudioStreamGet(
     stream: *mut SDL_AudioStream,
     buf: *mut libc::c_void,
@@ -2995,7 +2803,6 @@ extern "C" {
   #[doc = "  \\sa SDL_AudioStreamFlush"]
   #[doc = "  \\sa SDL_AudioStreamClear"]
   #[doc = "  \\sa SDL_FreeAudioStream"]
-  #[link_name = "\u{1}_SDL_AudioStreamAvailable"]
   pub fn SDL_AudioStreamAvailable(stream: *mut SDL_AudioStream) -> libc::c_int;
 }
 extern "C" {
@@ -3012,7 +2819,6 @@ extern "C" {
   #[doc = "  \\sa SDL_AudioStreamAvailable"]
   #[doc = "  \\sa SDL_AudioStreamClear"]
   #[doc = "  \\sa SDL_FreeAudioStream"]
-  #[link_name = "\u{1}_SDL_AudioStreamFlush"]
   pub fn SDL_AudioStreamFlush(stream: *mut SDL_AudioStream) -> libc::c_int;
 }
 extern "C" {
@@ -3024,7 +2830,6 @@ extern "C" {
   #[doc = "  \\sa SDL_AudioStreamAvailable"]
   #[doc = "  \\sa SDL_AudioStreamFlush"]
   #[doc = "  \\sa SDL_FreeAudioStream"]
-  #[link_name = "\u{1}_SDL_AudioStreamClear"]
   pub fn SDL_AudioStreamClear(stream: *mut SDL_AudioStream);
 }
 extern "C" {
@@ -3036,7 +2841,6 @@ extern "C" {
   #[doc = "  \\sa SDL_AudioStreamAvailable"]
   #[doc = "  \\sa SDL_AudioStreamFlush"]
   #[doc = "  \\sa SDL_AudioStreamClear"]
-  #[link_name = "\u{1}_SDL_FreeAudioStream"]
   pub fn SDL_FreeAudioStream(stream: *mut SDL_AudioStream);
 }
 extern "C" {
@@ -3045,14 +2849,12 @@ extern "C" {
   #[doc = "  The volume ranges from 0 - 128, and should be set to ::SDL_MIX_MAXVOLUME"]
   #[doc = "  for full audio volume.  Note this does not change hardware volume."]
   #[doc = "  This is provided for convenience -- you can mix your own audio data."]
-  #[link_name = "\u{1}_SDL_MixAudio"]
   pub fn SDL_MixAudio(dst: *mut Uint8, src: *const Uint8, len: Uint32, volume: libc::c_int);
 }
 extern "C" {
   #[doc = "  This works like SDL_MixAudio(), but you specify the audio format instead of"]
   #[doc = "  using the format of audio device 1. Thus it can be used when no audio"]
   #[doc = "  device is open at all."]
-  #[link_name = "\u{1}_SDL_MixAudioFormat"]
   pub fn SDL_MixAudioFormat(
     dst: *mut Uint8,
     src: *const Uint8,
@@ -3099,7 +2901,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetQueuedAudioSize"]
   #[doc = "  \\sa SDL_ClearQueuedAudio"]
-  #[link_name = "\u{1}_SDL_QueueAudio"]
   pub fn SDL_QueueAudio(
     dev: SDL_AudioDeviceID,
     data: *const libc::c_void,
@@ -3149,7 +2950,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetQueuedAudioSize"]
   #[doc = "  \\sa SDL_ClearQueuedAudio"]
-  #[link_name = "\u{1}_SDL_DequeueAudio"]
   pub fn SDL_DequeueAudio(dev: SDL_AudioDeviceID, data: *mut libc::c_void, len: Uint32) -> Uint32;
 }
 extern "C" {
@@ -3185,7 +2985,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_QueueAudio"]
   #[doc = "  \\sa SDL_ClearQueuedAudio"]
-  #[link_name = "\u{1}_SDL_GetQueuedAudioSize"]
   pub fn SDL_GetQueuedAudioSize(dev: SDL_AudioDeviceID) -> Uint32;
 }
 extern "C" {
@@ -3221,58 +3020,47 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_QueueAudio"]
   #[doc = "  \\sa SDL_GetQueuedAudioSize"]
-  #[link_name = "\u{1}_SDL_ClearQueuedAudio"]
   pub fn SDL_ClearQueuedAudio(dev: SDL_AudioDeviceID);
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_LockAudio"]
   pub fn SDL_LockAudio();
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_LockAudioDevice"]
   pub fn SDL_LockAudioDevice(dev: SDL_AudioDeviceID);
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_UnlockAudio"]
   pub fn SDL_UnlockAudio();
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_UnlockAudioDevice"]
   pub fn SDL_UnlockAudioDevice(dev: SDL_AudioDeviceID);
 }
 extern "C" {
   #[doc = "  This function shuts down audio processing and closes the audio device."]
-  #[link_name = "\u{1}_SDL_CloseAudio"]
   pub fn SDL_CloseAudio();
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_CloseAudioDevice"]
   pub fn SDL_CloseAudioDevice(dev: SDL_AudioDeviceID);
 }
 extern "C" {
   #[doc = " \\brief Put UTF-8 text into the clipboard"]
   #[doc = ""]
   #[doc = " \\sa SDL_GetClipboardText()"]
-  #[link_name = "\u{1}_SDL_SetClipboardText"]
   pub fn SDL_SetClipboardText(text: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
   #[doc = " \\brief Get UTF-8 text from the clipboard, which must be freed with SDL_free()"]
   #[doc = ""]
   #[doc = " \\sa SDL_SetClipboardText()"]
-  #[link_name = "\u{1}_SDL_GetClipboardText"]
   pub fn SDL_GetClipboardText() -> *mut libc::c_char;
 }
 extern "C" {
   #[doc = " \\brief Returns a flag indicating whether the clipboard exists and contains a text string that is non-empty"]
   #[doc = ""]
   #[doc = " \\sa SDL_GetClipboardText()"]
-  #[link_name = "\u{1}_SDL_HasClipboardText"]
   pub fn SDL_HasClipboardText() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns the number of CPU cores available."]
-  #[link_name = "\u{1}_SDL_GetCPUCount"]
   pub fn SDL_GetCPUCount() -> libc::c_int;
 }
 extern "C" {
@@ -3280,77 +3068,62 @@ extern "C" {
   #[doc = ""]
   #[doc = "  This is useful for determining multi-threaded structure padding"]
   #[doc = "  or SIMD prefetch sizes."]
-  #[link_name = "\u{1}_SDL_GetCPUCacheLineSize"]
   pub fn SDL_GetCPUCacheLineSize() -> libc::c_int;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has the RDTSC instruction."]
-  #[link_name = "\u{1}_SDL_HasRDTSC"]
   pub fn SDL_HasRDTSC() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has AltiVec features."]
-  #[link_name = "\u{1}_SDL_HasAltiVec"]
   pub fn SDL_HasAltiVec() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has MMX features."]
-  #[link_name = "\u{1}_SDL_HasMMX"]
   pub fn SDL_HasMMX() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has 3DNow! features."]
-  #[link_name = "\u{1}_SDL_Has3DNow"]
   pub fn SDL_Has3DNow() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has SSE features."]
-  #[link_name = "\u{1}_SDL_HasSSE"]
   pub fn SDL_HasSSE() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has SSE2 features."]
-  #[link_name = "\u{1}_SDL_HasSSE2"]
   pub fn SDL_HasSSE2() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has SSE3 features."]
-  #[link_name = "\u{1}_SDL_HasSSE3"]
   pub fn SDL_HasSSE3() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has SSE4.1 features."]
-  #[link_name = "\u{1}_SDL_HasSSE41"]
   pub fn SDL_HasSSE41() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has SSE4.2 features."]
-  #[link_name = "\u{1}_SDL_HasSSE42"]
   pub fn SDL_HasSSE42() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has AVX features."]
-  #[link_name = "\u{1}_SDL_HasAVX"]
   pub fn SDL_HasAVX() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has AVX2 features."]
-  #[link_name = "\u{1}_SDL_HasAVX2"]
   pub fn SDL_HasAVX2() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has AVX-512F (foundation) features."]
-  #[link_name = "\u{1}_SDL_HasAVX512F"]
   pub fn SDL_HasAVX512F() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns true if the CPU has NEON (ARM SIMD) features."]
-  #[link_name = "\u{1}_SDL_HasNEON"]
   pub fn SDL_HasNEON() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  This function returns the amount of RAM configured in the system, in MB."]
-  #[link_name = "\u{1}_SDL_GetSystemRAM"]
   pub fn SDL_GetSystemRAM() -> libc::c_int;
 }
 pub mod _bindgen_ty_1 {
@@ -3828,7 +3601,6 @@ impl Default for SDL_PixelFormat {
 }
 extern "C" {
   #[doc = " \\brief Get the human readable name of a pixel format"]
-  #[link_name = "\u{1}_SDL_GetPixelFormatName"]
   pub fn SDL_GetPixelFormatName(format: Uint32) -> *const libc::c_char;
 }
 extern "C" {
@@ -3837,7 +3609,6 @@ extern "C" {
   #[doc = "  \\return SDL_TRUE, or SDL_FALSE if the conversion wasn't possible."]
   #[doc = ""]
   #[doc = "  \\sa SDL_MasksToPixelFormatEnum()"]
-  #[link_name = "\u{1}_SDL_PixelFormatEnumToMasks"]
   pub fn SDL_PixelFormatEnumToMasks(
     format: Uint32,
     bpp: *mut libc::c_int,
@@ -3854,7 +3625,6 @@ extern "C" {
   #[doc = "          wasn't possible."]
   #[doc = ""]
   #[doc = "  \\sa SDL_PixelFormatEnumToMasks()"]
-  #[link_name = "\u{1}_SDL_MasksToPixelFormatEnum"]
   pub fn SDL_MasksToPixelFormatEnum(
     bpp: libc::c_int,
     Rmask: Uint32,
@@ -3865,12 +3635,10 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Create an SDL_PixelFormat structure from a pixel format enum."]
-  #[link_name = "\u{1}_SDL_AllocFormat"]
   pub fn SDL_AllocFormat(pixel_format: Uint32) -> *mut SDL_PixelFormat;
 }
 extern "C" {
   #[doc = "  \\brief Free an SDL_PixelFormat structure."]
-  #[link_name = "\u{1}_SDL_FreeFormat"]
   pub fn SDL_FreeFormat(format: *mut SDL_PixelFormat);
 }
 extern "C" {
@@ -3882,12 +3650,10 @@ extern "C" {
   #[doc = "  \\note The palette entries are initialized to white."]
   #[doc = ""]
   #[doc = "  \\sa SDL_FreePalette()"]
-  #[link_name = "\u{1}_SDL_AllocPalette"]
   pub fn SDL_AllocPalette(ncolors: libc::c_int) -> *mut SDL_Palette;
 }
 extern "C" {
   #[doc = "  \\brief Set the palette for a pixel format structure."]
-  #[link_name = "\u{1}_SDL_SetPixelFormatPalette"]
   pub fn SDL_SetPixelFormatPalette(
     format: *mut SDL_PixelFormat,
     palette: *mut SDL_Palette,
@@ -3902,7 +3668,6 @@ extern "C" {
   #[doc = "  \\param ncolors    The number of entries to modify."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 if not all of the colors could be set."]
-  #[link_name = "\u{1}_SDL_SetPaletteColors"]
   pub fn SDL_SetPaletteColors(
     palette: *mut SDL_Palette,
     colors: *const SDL_Color,
@@ -3914,21 +3679,18 @@ extern "C" {
   #[doc = "  \\brief Free a palette created with SDL_AllocPalette()."]
   #[doc = ""]
   #[doc = "  \\sa SDL_AllocPalette()"]
-  #[link_name = "\u{1}_SDL_FreePalette"]
   pub fn SDL_FreePalette(palette: *mut SDL_Palette);
 }
 extern "C" {
   #[doc = "  \\brief Maps an RGB triple to an opaque pixel value for a given pixel format."]
   #[doc = ""]
   #[doc = "  \\sa SDL_MapRGBA"]
-  #[link_name = "\u{1}_SDL_MapRGB"]
   pub fn SDL_MapRGB(format: *const SDL_PixelFormat, r: Uint8, g: Uint8, b: Uint8) -> Uint32;
 }
 extern "C" {
   #[doc = "  \\brief Maps an RGBA quadruple to a pixel value for a given pixel format."]
   #[doc = ""]
   #[doc = "  \\sa SDL_MapRGB"]
-  #[link_name = "\u{1}_SDL_MapRGBA"]
   pub fn SDL_MapRGBA(
     format: *const SDL_PixelFormat,
     r: Uint8,
@@ -3941,7 +3703,6 @@ extern "C" {
   #[doc = "  \\brief Get the RGB components from a pixel of the specified format."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetRGBA"]
-  #[link_name = "\u{1}_SDL_GetRGB"]
   pub fn SDL_GetRGB(
     pixel: Uint32,
     format: *const SDL_PixelFormat,
@@ -3954,7 +3715,6 @@ extern "C" {
   #[doc = "  \\brief Get the RGBA components from a pixel of the specified format."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetRGB"]
-  #[link_name = "\u{1}_SDL_GetRGBA"]
   pub fn SDL_GetRGBA(
     pixel: Uint32,
     format: *const SDL_PixelFormat,
@@ -3966,7 +3726,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Calculate a 256 entry gamma ramp for a gamma value."]
-  #[link_name = "\u{1}_SDL_CalculateGammaRamp"]
   pub fn SDL_CalculateGammaRamp(gamma: f32, ramp: *mut Uint16);
 }
 #[doc = "  \\brief  The structure that defines a point"]
@@ -4085,14 +3844,12 @@ extern "C" {
   #[doc = "  \\brief Determine whether two rectangles intersect."]
   #[doc = ""]
   #[doc = "  \\return SDL_TRUE if there is an intersection, SDL_FALSE otherwise."]
-  #[link_name = "\u{1}_SDL_HasIntersection"]
   pub fn SDL_HasIntersection(A: *const SDL_Rect, B: *const SDL_Rect) -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  \\brief Calculate the intersection of two rectangles."]
   #[doc = ""]
   #[doc = "  \\return SDL_TRUE if there is an intersection, SDL_FALSE otherwise."]
-  #[link_name = "\u{1}_SDL_IntersectRect"]
   pub fn SDL_IntersectRect(
     A: *const SDL_Rect,
     B: *const SDL_Rect,
@@ -4101,14 +3858,12 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Calculate the union of two rectangles."]
-  #[link_name = "\u{1}_SDL_UnionRect"]
   pub fn SDL_UnionRect(A: *const SDL_Rect, B: *const SDL_Rect, result: *mut SDL_Rect);
 }
 extern "C" {
   #[doc = "  \\brief Calculate a minimal rectangle enclosing a set of points"]
   #[doc = ""]
   #[doc = "  \\return SDL_TRUE if any points were within the clipping rect"]
-  #[link_name = "\u{1}_SDL_EnclosePoints"]
   pub fn SDL_EnclosePoints(
     points: *const SDL_Point,
     count: libc::c_int,
@@ -4120,7 +3875,6 @@ extern "C" {
   #[doc = "  \\brief Calculate the intersection of a rectangle and line segment."]
   #[doc = ""]
   #[doc = "  \\return SDL_TRUE if there is an intersection, SDL_FALSE otherwise."]
-  #[link_name = "\u{1}_SDL_IntersectRectAndLine"]
   pub fn SDL_IntersectRectAndLine(
     rect: *const SDL_Rect,
     X1: *mut libc::c_int,
@@ -4201,7 +3955,6 @@ extern "C" {
   #[doc = "      dstRGB = dstRGB * dstColorFactor colorOperation srcRGB * srcColorFactor"]
   #[doc = "  and"]
   #[doc = "      dstA = dstA * dstAlphaFactor alphaOperation srcA * srcAlphaFactor"]
-  #[link_name = "\u{1}_SDL_ComposeCustomBlendMode"]
   pub fn SDL_ComposeCustomBlendMode(
     srcColorFactor: SDL_BlendFactor::Type,
     dstColorFactor: SDL_BlendFactor::Type,
@@ -4419,7 +4172,6 @@ extern "C" {
   #[doc = "  \\param Gmask The green mask of the surface to create."]
   #[doc = "  \\param Bmask The blue mask of the surface to create."]
   #[doc = "  \\param Amask The alpha mask of the surface to create."]
-  #[link_name = "\u{1}_SDL_CreateRGBSurface"]
   pub fn SDL_CreateRGBSurface(
     flags: Uint32,
     width: libc::c_int,
@@ -4432,7 +4184,6 @@ extern "C" {
   ) -> *mut SDL_Surface;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_CreateRGBSurfaceWithFormat"]
   pub fn SDL_CreateRGBSurfaceWithFormat(
     flags: Uint32,
     width: libc::c_int,
@@ -4442,7 +4193,6 @@ extern "C" {
   ) -> *mut SDL_Surface;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_CreateRGBSurfaceFrom"]
   pub fn SDL_CreateRGBSurfaceFrom(
     pixels: *mut libc::c_void,
     width: libc::c_int,
@@ -4456,7 +4206,6 @@ extern "C" {
   ) -> *mut SDL_Surface;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_CreateRGBSurfaceWithFormatFrom"]
   pub fn SDL_CreateRGBSurfaceWithFormatFrom(
     pixels: *mut libc::c_void,
     width: libc::c_int,
@@ -4467,7 +4216,6 @@ extern "C" {
   ) -> *mut SDL_Surface;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_FreeSurface"]
   pub fn SDL_FreeSurface(surface: *mut SDL_Surface);
 }
 extern "C" {
@@ -4476,7 +4224,6 @@ extern "C" {
   #[doc = "  \\return 0, or -1 if the surface format doesn't use a palette."]
   #[doc = ""]
   #[doc = "  \\note A single palette can be shared with many surfaces."]
-  #[link_name = "\u{1}_SDL_SetSurfacePalette"]
   pub fn SDL_SetSurfacePalette(surface: *mut SDL_Surface, palette: *mut SDL_Palette)
     -> libc::c_int;
 }
@@ -4498,12 +4245,10 @@ extern "C" {
   #[doc = "  SDL_LockSurface() returns 0, or -1 if the surface couldn't be locked."]
   #[doc = ""]
   #[doc = "  \\sa SDL_UnlockSurface()"]
-  #[link_name = "\u{1}_SDL_LockSurface"]
   pub fn SDL_LockSurface(surface: *mut SDL_Surface) -> libc::c_int;
 }
 extern "C" {
   #[doc = " \\sa SDL_LockSurface()"]
-  #[link_name = "\u{1}_SDL_UnlockSurface"]
   pub fn SDL_UnlockSurface(surface: *mut SDL_Surface);
 }
 extern "C" {
@@ -4514,7 +4259,6 @@ extern "C" {
   #[doc = "  The new surface should be freed with SDL_FreeSurface()."]
   #[doc = ""]
   #[doc = "  \\return the new surface, or NULL if there was an error."]
-  #[link_name = "\u{1}_SDL_LoadBMP_RW"]
   pub fn SDL_LoadBMP_RW(src: *mut SDL_RWops, freesrc: libc::c_int) -> *mut SDL_Surface;
 }
 extern "C" {
@@ -4529,7 +4273,6 @@ extern "C" {
   #[doc = "  If \\c freedst is non-zero, the stream will be closed after being written."]
   #[doc = ""]
   #[doc = "  \\return 0 if successful or -1 if there was an error."]
-  #[link_name = "\u{1}_SDL_SaveBMP_RW"]
   pub fn SDL_SaveBMP_RW(
     surface: *mut SDL_Surface,
     dst: *mut SDL_RWops,
@@ -4543,7 +4286,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\note If RLE is enabled, colorkey and alpha blending blits are much faster,"]
   #[doc = "        but the surface must be locked before directly accessing the pixels."]
-  #[link_name = "\u{1}_SDL_SetSurfaceRLE"]
   pub fn SDL_SetSurfaceRLE(surface: *mut SDL_Surface, flag: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -4556,14 +4298,12 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the surface is not valid"]
   #[doc = ""]
   #[doc = "  You can pass SDL_RLEACCEL to enable RLE accelerated blits."]
-  #[link_name = "\u{1}_SDL_SetColorKey"]
   pub fn SDL_SetColorKey(surface: *mut SDL_Surface, flag: libc::c_int, key: Uint32) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Returns whether the surface has a color key"]
   #[doc = ""]
   #[doc = "  \\return SDL_TRUE if the surface has a color key, or SDL_FALSE if the surface is NULL or has no color key"]
-  #[link_name = "\u{1}_SDL_HasColorKey"]
   pub fn SDL_HasColorKey(surface: *mut SDL_Surface) -> SDL_bool::Type;
 }
 extern "C" {
@@ -4575,7 +4315,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 if the surface is not valid or colorkey is not"]
   #[doc = "          enabled."]
-  #[link_name = "\u{1}_SDL_GetColorKey"]
   pub fn SDL_GetColorKey(surface: *mut SDL_Surface, key: *mut Uint32) -> libc::c_int;
 }
 extern "C" {
@@ -4589,7 +4328,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the surface is not valid."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetSurfaceColorMod()"]
-  #[link_name = "\u{1}_SDL_SetSurfaceColorMod"]
   pub fn SDL_SetSurfaceColorMod(
     surface: *mut SDL_Surface,
     r: Uint8,
@@ -4608,7 +4346,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the surface is not valid."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetSurfaceColorMod()"]
-  #[link_name = "\u{1}_SDL_GetSurfaceColorMod"]
   pub fn SDL_GetSurfaceColorMod(
     surface: *mut SDL_Surface,
     r: *mut Uint8,
@@ -4625,7 +4362,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the surface is not valid."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetSurfaceAlphaMod()"]
-  #[link_name = "\u{1}_SDL_SetSurfaceAlphaMod"]
   pub fn SDL_SetSurfaceAlphaMod(surface: *mut SDL_Surface, alpha: Uint8) -> libc::c_int;
 }
 extern "C" {
@@ -4637,7 +4373,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the surface is not valid."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetSurfaceAlphaMod()"]
-  #[link_name = "\u{1}_SDL_GetSurfaceAlphaMod"]
   pub fn SDL_GetSurfaceAlphaMod(surface: *mut SDL_Surface, alpha: *mut Uint8) -> libc::c_int;
 }
 extern "C" {
@@ -4649,7 +4384,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the parameters are not valid."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetSurfaceBlendMode()"]
-  #[link_name = "\u{1}_SDL_SetSurfaceBlendMode"]
   pub fn SDL_SetSurfaceBlendMode(
     surface: *mut SDL_Surface,
     blendMode: SDL_BlendMode::Type,
@@ -4664,7 +4398,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the surface is not valid."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetSurfaceBlendMode()"]
-  #[link_name = "\u{1}_SDL_GetSurfaceBlendMode"]
   pub fn SDL_GetSurfaceBlendMode(
     surface: *mut SDL_Surface,
     blendMode: *mut SDL_BlendMode::Type,
@@ -4682,7 +4415,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  Note that blits are automatically clipped to the edges of the source"]
   #[doc = "  and destination surfaces."]
-  #[link_name = "\u{1}_SDL_SetClipRect"]
   pub fn SDL_SetClipRect(surface: *mut SDL_Surface, rect: *const SDL_Rect) -> SDL_bool::Type;
 }
 extern "C" {
@@ -4690,11 +4422,9 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\c rect must be a pointer to a valid rectangle which will be filled"]
   #[doc = "  with the correct values."]
-  #[link_name = "\u{1}_SDL_GetClipRect"]
   pub fn SDL_GetClipRect(surface: *mut SDL_Surface, rect: *mut SDL_Rect);
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_DuplicateSurface"]
   pub fn SDL_DuplicateSurface(surface: *mut SDL_Surface) -> *mut SDL_Surface;
 }
 extern "C" {
@@ -4706,7 +4436,6 @@ extern "C" {
   #[doc = "  semantics.  You can also pass ::SDL_RLEACCEL in the flags parameter and"]
   #[doc = "  SDL will try to RLE accelerate colorkey and alpha blits in the resulting"]
   #[doc = "  surface."]
-  #[link_name = "\u{1}_SDL_ConvertSurface"]
   pub fn SDL_ConvertSurface(
     src: *mut SDL_Surface,
     fmt: *const SDL_PixelFormat,
@@ -4714,7 +4443,6 @@ extern "C" {
   ) -> *mut SDL_Surface;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_ConvertSurfaceFormat"]
   pub fn SDL_ConvertSurfaceFormat(
     src: *mut SDL_Surface,
     pixel_format: Uint32,
@@ -4725,7 +4453,6 @@ extern "C" {
   #[doc = " \\brief Copy a block of pixels of one format to another format"]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 if there was an error"]
-  #[link_name = "\u{1}_SDL_ConvertPixels"]
   pub fn SDL_ConvertPixels(
     width: libc::c_int,
     height: libc::c_int,
@@ -4746,11 +4473,9 @@ extern "C" {
   #[doc = "  can be generated by the SDL_MapRGB() function."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error."]
-  #[link_name = "\u{1}_SDL_FillRect"]
   pub fn SDL_FillRect(dst: *mut SDL_Surface, rect: *const SDL_Rect, color: Uint32) -> libc::c_int;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_FillRects"]
   pub fn SDL_FillRects(
     dst: *mut SDL_Surface,
     rects: *const SDL_Rect,
@@ -4761,7 +4486,6 @@ extern "C" {
 extern "C" {
   #[doc = "  This is the public blit function, SDL_BlitSurface(), and it performs"]
   #[doc = "  rectangle validation and clipping before passing it to SDL_LowerBlit()"]
-  #[link_name = "\u{1}_SDL_UpperBlit"]
   pub fn SDL_UpperBlit(
     src: *mut SDL_Surface,
     srcrect: *const SDL_Rect,
@@ -4772,7 +4496,6 @@ extern "C" {
 extern "C" {
   #[doc = "  This is a semi-private blit function and it performs low-level surface"]
   #[doc = "  blitting only."]
-  #[link_name = "\u{1}_SDL_LowerBlit"]
   pub fn SDL_LowerBlit(
     src: *mut SDL_Surface,
     srcrect: *mut SDL_Rect,
@@ -4785,7 +4508,6 @@ extern "C" {
   #[doc = "         same pixel format."]
   #[doc = ""]
   #[doc = "  \\note This function uses a static buffer, and is not thread-safe."]
-  #[link_name = "\u{1}_SDL_SoftStretch"]
   pub fn SDL_SoftStretch(
     src: *mut SDL_Surface,
     srcrect: *const SDL_Rect,
@@ -4796,7 +4518,6 @@ extern "C" {
 extern "C" {
   #[doc = "  This is the public scaled blit function, SDL_BlitScaled(), and it performs"]
   #[doc = "  rectangle validation and clipping before passing it to SDL_LowerBlitScaled()"]
-  #[link_name = "\u{1}_SDL_UpperBlitScaled"]
   pub fn SDL_UpperBlitScaled(
     src: *mut SDL_Surface,
     srcrect: *const SDL_Rect,
@@ -4807,7 +4528,6 @@ extern "C" {
 extern "C" {
   #[doc = "  This is a semi-private blit function and it performs low-level surface"]
   #[doc = "  scaled blitting only."]
-  #[link_name = "\u{1}_SDL_LowerBlitScaled"]
   pub fn SDL_LowerBlitScaled(
     src: *mut SDL_Surface,
     srcrect: *mut SDL_Rect,
@@ -4817,17 +4537,14 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Set the YUV conversion mode"]
-  #[link_name = "\u{1}_SDL_SetYUVConversionMode"]
   pub fn SDL_SetYUVConversionMode(mode: SDL_YUV_CONVERSION_MODE::Type);
 }
 extern "C" {
   #[doc = "  \\brief Get the YUV conversion mode"]
-  #[link_name = "\u{1}_SDL_GetYUVConversionMode"]
   pub fn SDL_GetYUVConversionMode() -> SDL_YUV_CONVERSION_MODE::Type;
 }
 extern "C" {
   #[doc = "  \\brief Get the YUV conversion mode, returning the correct mode for the resolution when the current conversion mode is SDL_YUV_CONVERSION_AUTOMATIC"]
-  #[link_name = "\u{1}_SDL_GetYUVConversionModeForResolution"]
   pub fn SDL_GetYUVConversionModeForResolution(
     width: libc::c_int,
     height: libc::c_int,
@@ -5102,7 +4819,6 @@ extern "C" {
   #[doc = "  \\brief Get the number of video drivers compiled into SDL"]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetVideoDriver()"]
-  #[link_name = "\u{1}_SDL_GetNumVideoDrivers"]
   pub fn SDL_GetNumVideoDrivers() -> libc::c_int;
 }
 extern "C" {
@@ -5112,7 +4828,6 @@ extern "C" {
   #[doc = "        normally checked during initialization."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetNumVideoDrivers()"]
-  #[link_name = "\u{1}_SDL_GetVideoDriver"]
   pub fn SDL_GetVideoDriver(index: libc::c_int) -> *const libc::c_char;
 }
 extern "C" {
@@ -5128,7 +4843,6 @@ extern "C" {
   #[doc = "  and pixel formats, but does not initialize a window or graphics mode."]
   #[doc = ""]
   #[doc = "  \\sa SDL_VideoQuit()"]
-  #[link_name = "\u{1}_SDL_VideoInit"]
   pub fn SDL_VideoInit(driver_name: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
@@ -5137,7 +4851,6 @@ extern "C" {
   #[doc = "  This function closes all windows, and restores the original video mode."]
   #[doc = ""]
   #[doc = "  \\sa SDL_VideoInit()"]
-  #[link_name = "\u{1}_SDL_VideoQuit"]
   pub fn SDL_VideoQuit();
 }
 extern "C" {
@@ -5148,14 +4861,12 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetNumVideoDrivers()"]
   #[doc = "  \\sa SDL_GetVideoDriver()"]
-  #[link_name = "\u{1}_SDL_GetCurrentVideoDriver"]
   pub fn SDL_GetCurrentVideoDriver() -> *const libc::c_char;
 }
 extern "C" {
   #[doc = "  \\brief Returns the number of available video displays."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetDisplayBounds()"]
-  #[link_name = "\u{1}_SDL_GetNumVideoDisplays"]
   pub fn SDL_GetNumVideoDisplays() -> libc::c_int;
 }
 extern "C" {
@@ -5164,7 +4875,6 @@ extern "C" {
   #[doc = "  \\return The name of a display, or NULL for an invalid display index."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetNumVideoDisplays()"]
-  #[link_name = "\u{1}_SDL_GetDisplayName"]
   pub fn SDL_GetDisplayName(displayIndex: libc::c_int) -> *const libc::c_char;
 }
 extern "C" {
@@ -5174,7 +4884,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the index is out of range."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetNumVideoDisplays()"]
-  #[link_name = "\u{1}_SDL_GetDisplayBounds"]
   pub fn SDL_GetDisplayBounds(displayIndex: libc::c_int, rect: *mut SDL_Rect) -> libc::c_int;
 }
 extern "C" {
@@ -5193,7 +4902,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetDisplayBounds()"]
   #[doc = "  \\sa SDL_GetNumVideoDisplays()"]
-  #[link_name = "\u{1}_SDL_GetDisplayUsableBounds"]
   pub fn SDL_GetDisplayUsableBounds(displayIndex: libc::c_int, rect: *mut SDL_Rect) -> libc::c_int;
 }
 extern "C" {
@@ -5205,7 +4913,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if no DPI information is available or the index is out of range."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetNumVideoDisplays()"]
-  #[link_name = "\u{1}_SDL_GetDisplayDPI"]
   pub fn SDL_GetDisplayDPI(
     displayIndex: libc::c_int,
     ddpi: *mut f32,
@@ -5219,14 +4926,12 @@ extern "C" {
   #[doc = "  \\return The orientation of the display, or SDL_ORIENTATION_UNKNOWN if it isn't available."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetNumVideoDisplays()"]
-  #[link_name = "\u{1}_SDL_GetDisplayOrientation"]
   pub fn SDL_GetDisplayOrientation(displayIndex: libc::c_int) -> SDL_DisplayOrientation::Type;
 }
 extern "C" {
   #[doc = "  \\brief Returns the number of available display modes."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetDisplayMode()"]
-  #[link_name = "\u{1}_SDL_GetNumDisplayModes"]
   pub fn SDL_GetNumDisplayModes(displayIndex: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -5239,7 +4944,6 @@ extern "C" {
   #[doc = "        \\li refresh rate -> highest to lowest"]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetNumDisplayModes()"]
-  #[link_name = "\u{1}_SDL_GetDisplayMode"]
   pub fn SDL_GetDisplayMode(
     displayIndex: libc::c_int,
     modeIndex: libc::c_int,
@@ -5248,7 +4952,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Fill in information about the desktop display mode."]
-  #[link_name = "\u{1}_SDL_GetDesktopDisplayMode"]
   pub fn SDL_GetDesktopDisplayMode(
     displayIndex: libc::c_int,
     mode: *mut SDL_DisplayMode,
@@ -5256,7 +4959,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Fill in information about the current display mode."]
-  #[link_name = "\u{1}_SDL_GetCurrentDisplayMode"]
   pub fn SDL_GetCurrentDisplayMode(
     displayIndex: libc::c_int,
     mode: *mut SDL_DisplayMode,
@@ -5282,7 +4984,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetNumDisplayModes()"]
   #[doc = "  \\sa SDL_GetDisplayMode()"]
-  #[link_name = "\u{1}_SDL_GetClosestDisplayMode"]
   pub fn SDL_GetClosestDisplayMode(
     displayIndex: libc::c_int,
     mode: *const SDL_DisplayMode,
@@ -5294,7 +4995,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\return the display index of the display containing the center of the"]
   #[doc = "          window, or -1 on error."]
-  #[link_name = "\u{1}_SDL_GetWindowDisplayIndex"]
   pub fn SDL_GetWindowDisplayIndex(window: *mut SDL_Window) -> libc::c_int;
 }
 extern "C" {
@@ -5310,7 +5010,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowDisplayMode()"]
   #[doc = "  \\sa SDL_SetWindowFullscreen()"]
-  #[link_name = "\u{1}_SDL_SetWindowDisplayMode"]
   pub fn SDL_SetWindowDisplayMode(
     window: *mut SDL_Window,
     mode: *const SDL_DisplayMode,
@@ -5322,7 +5021,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowDisplayMode()"]
   #[doc = "  \\sa SDL_SetWindowFullscreen()"]
-  #[link_name = "\u{1}_SDL_GetWindowDisplayMode"]
   pub fn SDL_GetWindowDisplayMode(
     window: *mut SDL_Window,
     mode: *mut SDL_DisplayMode,
@@ -5330,7 +5028,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Get the pixel format associated with the window."]
-  #[link_name = "\u{1}_SDL_GetWindowPixelFormat"]
   pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> Uint32;
 }
 extern "C" {
@@ -5374,7 +5071,6 @@ extern "C" {
   #[doc = "  \\sa SDL_DestroyWindow()"]
   #[doc = "  \\sa SDL_GL_LoadLibrary()"]
   #[doc = "  \\sa SDL_Vulkan_LoadLibrary()"]
-  #[link_name = "\u{1}_SDL_CreateWindow"]
   pub fn SDL_CreateWindow(
     title: *const libc::c_char,
     x: libc::c_int,
@@ -5392,36 +5088,30 @@ extern "C" {
   #[doc = "  \\return The created window, or NULL if window creation failed."]
   #[doc = ""]
   #[doc = "  \\sa SDL_DestroyWindow()"]
-  #[link_name = "\u{1}_SDL_CreateWindowFrom"]
   pub fn SDL_CreateWindowFrom(data: *const libc::c_void) -> *mut SDL_Window;
 }
 extern "C" {
   #[doc = "  \\brief Get the numeric ID of a window, for logging purposes."]
-  #[link_name = "\u{1}_SDL_GetWindowID"]
   pub fn SDL_GetWindowID(window: *mut SDL_Window) -> Uint32;
 }
 extern "C" {
   #[doc = "  \\brief Get a window from a stored ID, or NULL if it doesn't exist."]
-  #[link_name = "\u{1}_SDL_GetWindowFromID"]
   pub fn SDL_GetWindowFromID(id: Uint32) -> *mut SDL_Window;
 }
 extern "C" {
   #[doc = "  \\brief Get the window flags."]
-  #[link_name = "\u{1}_SDL_GetWindowFlags"]
   pub fn SDL_GetWindowFlags(window: *mut SDL_Window) -> Uint32;
 }
 extern "C" {
   #[doc = "  \\brief Set the title of a window, in UTF-8 format."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowTitle()"]
-  #[link_name = "\u{1}_SDL_SetWindowTitle"]
   pub fn SDL_SetWindowTitle(window: *mut SDL_Window, title: *const libc::c_char);
 }
 extern "C" {
   #[doc = "  \\brief Get the title of a window, in UTF-8 format."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowTitle()"]
-  #[link_name = "\u{1}_SDL_GetWindowTitle"]
   pub fn SDL_GetWindowTitle(window: *mut SDL_Window) -> *const libc::c_char;
 }
 extern "C" {
@@ -5429,7 +5119,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\param window The window for which the icon should be set."]
   #[doc = "  \\param icon The icon for the window."]
-  #[link_name = "\u{1}_SDL_SetWindowIcon"]
   pub fn SDL_SetWindowIcon(window: *mut SDL_Window, icon: *mut SDL_Surface);
 }
 extern "C" {
@@ -5444,7 +5133,6 @@ extern "C" {
   #[doc = "  \\note The name is case-sensitive."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowData()"]
-  #[link_name = "\u{1}_SDL_SetWindowData"]
   pub fn SDL_SetWindowData(
     window: *mut SDL_Window,
     name: *const libc::c_char,
@@ -5460,7 +5148,6 @@ extern "C" {
   #[doc = "  \\return The value associated with 'name'"]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowData()"]
-  #[link_name = "\u{1}_SDL_GetWindowData"]
   pub fn SDL_GetWindowData(window: *mut SDL_Window, name: *const libc::c_char)
     -> *mut libc::c_void;
 }
@@ -5476,7 +5163,6 @@ extern "C" {
   #[doc = "  \\note The window coordinate origin is the upper left of the display."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowPosition()"]
-  #[link_name = "\u{1}_SDL_SetWindowPosition"]
   pub fn SDL_SetWindowPosition(window: *mut SDL_Window, x: libc::c_int, y: libc::c_int);
 }
 extern "C" {
@@ -5489,7 +5175,6 @@ extern "C" {
   #[doc = "                  coordinates. May be NULL."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowPosition()"]
-  #[link_name = "\u{1}_SDL_GetWindowPosition"]
   pub fn SDL_GetWindowPosition(window: *mut SDL_Window, x: *mut libc::c_int, y: *mut libc::c_int);
 }
 extern "C" {
@@ -5509,7 +5194,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowSize()"]
   #[doc = "  \\sa SDL_SetWindowDisplayMode()"]
-  #[link_name = "\u{1}_SDL_SetWindowSize"]
   pub fn SDL_SetWindowSize(window: *mut SDL_Window, w: libc::c_int, h: libc::c_int);
 }
 extern "C" {
@@ -5527,7 +5211,6 @@ extern "C" {
   #[doc = "  SDL_GetRendererOutputSize() to get the real client area size in pixels."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowSize()"]
-  #[link_name = "\u{1}_SDL_GetWindowSize"]
   pub fn SDL_GetWindowSize(window: *mut SDL_Window, w: *mut libc::c_int, h: *mut libc::c_int);
 }
 extern "C" {
@@ -5544,7 +5227,6 @@ extern "C" {
   #[doc = "  \\note if this function fails (returns -1), the size values will be"]
   #[doc = "        initialized to 0, 0, 0, 0 (if a non-NULL pointer is provided), as"]
   #[doc = "        if the window in question was borderless."]
-  #[link_name = "\u{1}_SDL_GetWindowBordersSize"]
   pub fn SDL_GetWindowBordersSize(
     window: *mut SDL_Window,
     top: *mut libc::c_int,
@@ -5565,7 +5247,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowMinimumSize()"]
   #[doc = "  \\sa SDL_SetWindowMaximumSize()"]
-  #[link_name = "\u{1}_SDL_SetWindowMinimumSize"]
   pub fn SDL_SetWindowMinimumSize(window: *mut SDL_Window, min_w: libc::c_int, min_h: libc::c_int);
 }
 extern "C" {
@@ -5577,7 +5258,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowMaximumSize()"]
   #[doc = "  \\sa SDL_SetWindowMinimumSize()"]
-  #[link_name = "\u{1}_SDL_GetWindowMinimumSize"]
   pub fn SDL_GetWindowMinimumSize(
     window: *mut SDL_Window,
     w: *mut libc::c_int,
@@ -5596,7 +5276,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowMaximumSize()"]
   #[doc = "  \\sa SDL_SetWindowMinimumSize()"]
-  #[link_name = "\u{1}_SDL_SetWindowMaximumSize"]
   pub fn SDL_SetWindowMaximumSize(window: *mut SDL_Window, max_w: libc::c_int, max_h: libc::c_int);
 }
 extern "C" {
@@ -5608,7 +5287,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowMinimumSize()"]
   #[doc = "  \\sa SDL_SetWindowMaximumSize()"]
-  #[link_name = "\u{1}_SDL_GetWindowMaximumSize"]
   pub fn SDL_GetWindowMaximumSize(
     window: *mut SDL_Window,
     w: *mut libc::c_int,
@@ -5628,7 +5306,6 @@ extern "C" {
   #[doc = "  \\note You can't change the border state of a fullscreen window."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowFlags()"]
-  #[link_name = "\u{1}_SDL_SetWindowBordered"]
   pub fn SDL_SetWindowBordered(window: *mut SDL_Window, bordered: SDL_bool::Type);
 }
 extern "C" {
@@ -5644,40 +5321,34 @@ extern "C" {
   #[doc = "  \\note You can't change the resizable state of a fullscreen window."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowFlags()"]
-  #[link_name = "\u{1}_SDL_SetWindowResizable"]
   pub fn SDL_SetWindowResizable(window: *mut SDL_Window, resizable: SDL_bool::Type);
 }
 extern "C" {
   #[doc = "  \\brief Show a window."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HideWindow()"]
-  #[link_name = "\u{1}_SDL_ShowWindow"]
   pub fn SDL_ShowWindow(window: *mut SDL_Window);
 }
 extern "C" {
   #[doc = "  \\brief Hide a window."]
   #[doc = ""]
   #[doc = "  \\sa SDL_ShowWindow()"]
-  #[link_name = "\u{1}_SDL_HideWindow"]
   pub fn SDL_HideWindow(window: *mut SDL_Window);
 }
 extern "C" {
   #[doc = "  \\brief Raise a window above other windows and set the input focus."]
-  #[link_name = "\u{1}_SDL_RaiseWindow"]
   pub fn SDL_RaiseWindow(window: *mut SDL_Window);
 }
 extern "C" {
   #[doc = "  \\brief Make a window as large as possible."]
   #[doc = ""]
   #[doc = "  \\sa SDL_RestoreWindow()"]
-  #[link_name = "\u{1}_SDL_MaximizeWindow"]
   pub fn SDL_MaximizeWindow(window: *mut SDL_Window);
 }
 extern "C" {
   #[doc = "  \\brief Minimize a window to an iconic representation."]
   #[doc = ""]
   #[doc = "  \\sa SDL_RestoreWindow()"]
-  #[link_name = "\u{1}_SDL_MinimizeWindow"]
   pub fn SDL_MinimizeWindow(window: *mut SDL_Window);
 }
 extern "C" {
@@ -5685,7 +5356,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_MaximizeWindow()"]
   #[doc = "  \\sa SDL_MinimizeWindow()"]
-  #[link_name = "\u{1}_SDL_RestoreWindow"]
   pub fn SDL_RestoreWindow(window: *mut SDL_Window);
 }
 extern "C" {
@@ -5695,7 +5365,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowDisplayMode()"]
   #[doc = "  \\sa SDL_GetWindowDisplayMode()"]
-  #[link_name = "\u{1}_SDL_SetWindowFullscreen"]
   pub fn SDL_SetWindowFullscreen(window: *mut SDL_Window, flags: Uint32) -> libc::c_int;
 }
 extern "C" {
@@ -5710,7 +5379,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_UpdateWindowSurface()"]
   #[doc = "  \\sa SDL_UpdateWindowSurfaceRects()"]
-  #[link_name = "\u{1}_SDL_GetWindowSurface"]
   pub fn SDL_GetWindowSurface(window: *mut SDL_Window) -> *mut SDL_Surface;
 }
 extern "C" {
@@ -5720,7 +5388,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowSurface()"]
   #[doc = "  \\sa SDL_UpdateWindowSurfaceRects()"]
-  #[link_name = "\u{1}_SDL_UpdateWindowSurface"]
   pub fn SDL_UpdateWindowSurface(window: *mut SDL_Window) -> libc::c_int;
 }
 extern "C" {
@@ -5730,7 +5397,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowSurface()"]
   #[doc = "  \\sa SDL_UpdateWindowSurface()"]
-  #[link_name = "\u{1}_SDL_UpdateWindowSurfaceRects"]
   pub fn SDL_UpdateWindowSurfaceRects(
     window: *mut SDL_Window,
     rects: *const SDL_Rect,
@@ -5747,7 +5413,6 @@ extern "C" {
   #[doc = "  the other window loses its grab in favor of the caller's window."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowGrab()"]
-  #[link_name = "\u{1}_SDL_SetWindowGrab"]
   pub fn SDL_SetWindowGrab(window: *mut SDL_Window, grabbed: SDL_bool::Type);
 }
 extern "C" {
@@ -5756,7 +5421,6 @@ extern "C" {
   #[doc = "  \\return This returns SDL_TRUE if input is grabbed, and SDL_FALSE otherwise."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowGrab()"]
-  #[link_name = "\u{1}_SDL_GetWindowGrab"]
   pub fn SDL_GetWindowGrab(window: *mut SDL_Window) -> SDL_bool::Type;
 }
 extern "C" {
@@ -5765,7 +5429,6 @@ extern "C" {
   #[doc = "  \\return This returns the window if input is grabbed, and NULL otherwise."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowGrab()"]
-  #[link_name = "\u{1}_SDL_GetGrabbedWindow"]
   pub fn SDL_GetGrabbedWindow() -> *mut SDL_Window;
 }
 extern "C" {
@@ -5775,7 +5438,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowBrightness()"]
   #[doc = "  \\sa SDL_SetWindowGammaRamp()"]
-  #[link_name = "\u{1}_SDL_SetWindowBrightness"]
   pub fn SDL_SetWindowBrightness(window: *mut SDL_Window, brightness: f32) -> libc::c_int;
 }
 extern "C" {
@@ -5784,7 +5446,6 @@ extern "C" {
   #[doc = "  \\return The last brightness value passed to SDL_SetWindowBrightness()"]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowBrightness()"]
-  #[link_name = "\u{1}_SDL_GetWindowBrightness"]
   pub fn SDL_GetWindowBrightness(window: *mut SDL_Window) -> f32;
 }
 extern "C" {
@@ -5797,7 +5458,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if setting the opacity isn't supported."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowOpacity()"]
-  #[link_name = "\u{1}_SDL_SetWindowOpacity"]
   pub fn SDL_SetWindowOpacity(window: *mut SDL_Window, opacity: f32) -> libc::c_int;
 }
 extern "C" {
@@ -5812,7 +5472,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 on error (invalid window, etc)."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowOpacity()"]
-  #[link_name = "\u{1}_SDL_GetWindowOpacity"]
   pub fn SDL_GetWindowOpacity(window: *mut SDL_Window, out_opacity: *mut f32) -> libc::c_int;
 }
 extern "C" {
@@ -5822,7 +5481,6 @@ extern "C" {
   #[doc = "  \\param parent_window The parent window"]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 otherwise."]
-  #[link_name = "\u{1}_SDL_SetWindowModalFor"]
   pub fn SDL_SetWindowModalFor(
     modal_window: *mut SDL_Window,
     parent_window: *mut SDL_Window,
@@ -5839,7 +5497,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 otherwise."]
   #[doc = "  \\sa SDL_RaiseWindow()"]
-  #[link_name = "\u{1}_SDL_SetWindowInputFocus"]
   pub fn SDL_SetWindowInputFocus(window: *mut SDL_Window) -> libc::c_int;
 }
 extern "C" {
@@ -5859,7 +5516,6 @@ extern "C" {
   #[doc = "  gamma value at that index, scaled to the output color precision."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowGammaRamp()"]
-  #[link_name = "\u{1}_SDL_SetWindowGammaRamp"]
   pub fn SDL_SetWindowGammaRamp(
     window: *mut SDL_Window,
     red: *const Uint16,
@@ -5881,7 +5537,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if gamma ramps are unsupported."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetWindowGammaRamp()"]
-  #[link_name = "\u{1}_SDL_GetWindowGammaRamp"]
   pub fn SDL_GetWindowGammaRamp(
     window: *mut SDL_Window,
     red: *mut Uint16,
@@ -5953,7 +5608,6 @@ extern "C" {
   #[doc = "  \\param callback The callback to call when doing a hit-test."]
   #[doc = "  \\param callback_data An app-defined void pointer passed to the callback."]
   #[doc = "  \\return 0 on success, -1 on error (including unsupported)."]
-  #[link_name = "\u{1}_SDL_SetWindowHitTest"]
   pub fn SDL_SetWindowHitTest(
     window: *mut SDL_Window,
     callback: SDL_HitTest,
@@ -5962,7 +5616,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Destroy a window."]
-  #[link_name = "\u{1}_SDL_DestroyWindow"]
   pub fn SDL_DestroyWindow(window: *mut SDL_Window);
 }
 extern "C" {
@@ -5970,7 +5623,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_EnableScreenSaver()"]
   #[doc = "  \\sa SDL_DisableScreenSaver()"]
-  #[link_name = "\u{1}_SDL_IsScreenSaverEnabled"]
   pub fn SDL_IsScreenSaverEnabled() -> SDL_bool::Type;
 }
 extern "C" {
@@ -5978,7 +5630,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_IsScreenSaverEnabled()"]
   #[doc = "  \\sa SDL_DisableScreenSaver()"]
-  #[link_name = "\u{1}_SDL_EnableScreenSaver"]
   pub fn SDL_EnableScreenSaver();
 }
 extern "C" {
@@ -5986,7 +5637,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_IsScreenSaverEnabled()"]
   #[doc = "  \\sa SDL_EnableScreenSaver()"]
-  #[link_name = "\u{1}_SDL_DisableScreenSaver"]
   pub fn SDL_DisableScreenSaver();
 }
 extern "C" {
@@ -6006,37 +5656,31 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GL_GetProcAddress()"]
   #[doc = "  \\sa SDL_GL_UnloadLibrary()"]
-  #[link_name = "\u{1}_SDL_GL_LoadLibrary"]
   pub fn SDL_GL_LoadLibrary(path: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Get the address of an OpenGL function."]
-  #[link_name = "\u{1}_SDL_GL_GetProcAddress"]
   pub fn SDL_GL_GetProcAddress(proc_: *const libc::c_char) -> *mut libc::c_void;
 }
 extern "C" {
   #[doc = "  \\brief Unload the OpenGL library previously loaded by SDL_GL_LoadLibrary()."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GL_LoadLibrary()"]
-  #[link_name = "\u{1}_SDL_GL_UnloadLibrary"]
   pub fn SDL_GL_UnloadLibrary();
 }
 extern "C" {
   #[doc = "  \\brief Return true if an OpenGL extension is supported for the current"]
   #[doc = "         context."]
-  #[link_name = "\u{1}_SDL_GL_ExtensionSupported"]
   pub fn SDL_GL_ExtensionSupported(extension: *const libc::c_char) -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  \\brief Reset all previously set OpenGL context attributes to their default values"]
-  #[link_name = "\u{1}_SDL_GL_ResetAttributes"]
   pub fn SDL_GL_ResetAttributes();
 }
 extern "C" {
   #[doc = "  \\brief Set an OpenGL window attribute before window creation."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 if the attribute could not be set."]
-  #[link_name = "\u{1}_SDL_GL_SetAttribute"]
   pub fn SDL_GL_SetAttribute(attr: SDL_GLattr::Type, value: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -6044,7 +5688,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 if the attribute could not be retrieved."]
   #[doc = "          The integer at \\c value will be modified in either case."]
-  #[link_name = "\u{1}_SDL_GL_GetAttribute"]
   pub fn SDL_GL_GetAttribute(attr: SDL_GLattr::Type, value: *mut libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -6052,24 +5695,20 @@ extern "C" {
   #[doc = "         current."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GL_DeleteContext()"]
-  #[link_name = "\u{1}_SDL_GL_CreateContext"]
   pub fn SDL_GL_CreateContext(window: *mut SDL_Window) -> SDL_GLContext;
 }
 extern "C" {
   #[doc = "  \\brief Set up an OpenGL context for rendering into an OpenGL window."]
   #[doc = ""]
   #[doc = "  \\note The context must have been created with a compatible window."]
-  #[link_name = "\u{1}_SDL_GL_MakeCurrent"]
   pub fn SDL_GL_MakeCurrent(window: *mut SDL_Window, context: SDL_GLContext) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Get the currently active OpenGL window."]
-  #[link_name = "\u{1}_SDL_GL_GetCurrentWindow"]
   pub fn SDL_GL_GetCurrentWindow() -> *mut SDL_Window;
 }
 extern "C" {
   #[doc = "  \\brief Get the currently active OpenGL context."]
-  #[link_name = "\u{1}_SDL_GL_GetCurrentContext"]
   pub fn SDL_GL_GetCurrentContext() -> SDL_GLContext;
 }
 extern "C" {
@@ -6087,7 +5726,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetWindowSize()"]
   #[doc = "  \\sa SDL_CreateWindow()"]
-  #[link_name = "\u{1}_SDL_GL_GetDrawableSize"]
   pub fn SDL_GL_GetDrawableSize(window: *mut SDL_Window, w: *mut libc::c_int, h: *mut libc::c_int);
 }
 extern "C" {
@@ -6101,7 +5739,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if setting the swap interval is not supported."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GL_GetSwapInterval()"]
-  #[link_name = "\u{1}_SDL_GL_SetSwapInterval"]
   pub fn SDL_GL_SetSwapInterval(interval: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -6114,20 +5751,17 @@ extern "C" {
   #[doc = "          valid current context, this will return 0 as a safe default."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GL_SetSwapInterval()"]
-  #[link_name = "\u{1}_SDL_GL_GetSwapInterval"]
   pub fn SDL_GL_GetSwapInterval() -> libc::c_int;
 }
 extern "C" {
   #[doc = " \\brief Swap the OpenGL buffers for a window, if double-buffering is"]
   #[doc = "        supported."]
-  #[link_name = "\u{1}_SDL_GL_SwapWindow"]
   pub fn SDL_GL_SwapWindow(window: *mut SDL_Window);
 }
 extern "C" {
   #[doc = "  \\brief Delete an OpenGL context."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GL_CreateContext()"]
-  #[link_name = "\u{1}_SDL_GL_DeleteContext"]
   pub fn SDL_GL_DeleteContext(context: SDL_GLContext);
 }
 pub mod SDL_Scancode {
@@ -6811,7 +6445,6 @@ impl Default for SDL_Keysym {
 }
 extern "C" {
   #[doc = "  \\brief Get the window which currently has keyboard focus."]
-  #[link_name = "\u{1}_SDL_GetKeyboardFocus"]
   pub fn SDL_GetKeyboardFocus() -> *mut SDL_Window;
 }
 extern "C" {
@@ -6828,19 +6461,16 @@ extern "C" {
   #[doc = "      printf(\"<RETURN> is pressed.\\n\");"]
   #[doc = "  }"]
   #[doc = "  \\endcode"]
-  #[link_name = "\u{1}_SDL_GetKeyboardState"]
   pub fn SDL_GetKeyboardState(numkeys: *mut libc::c_int) -> *const Uint8;
 }
 extern "C" {
   #[doc = "  \\brief Get the current key modifier state for the keyboard."]
-  #[link_name = "\u{1}_SDL_GetModState"]
   pub fn SDL_GetModState() -> SDL_Keymod::Type;
 }
 extern "C" {
   #[doc = "  \\brief Set the current key modifier state for the keyboard."]
   #[doc = ""]
   #[doc = "  \\note This does not change the keyboard state, only the key modifier flags."]
-  #[link_name = "\u{1}_SDL_SetModState"]
   pub fn SDL_SetModState(modstate: SDL_Keymod::Type);
 }
 extern "C" {
@@ -6850,7 +6480,6 @@ extern "C" {
   #[doc = "  See ::SDL_Keycode for details."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetKeyName()"]
-  #[link_name = "\u{1}_SDL_GetKeyFromScancode"]
   pub fn SDL_GetKeyFromScancode(scancode: SDL_Scancode::Type) -> SDL_Keycode;
 }
 extern "C" {
@@ -6860,7 +6489,6 @@ extern "C" {
   #[doc = "  See ::SDL_Scancode for details."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetScancodeName()"]
-  #[link_name = "\u{1}_SDL_GetScancodeFromKey"]
   pub fn SDL_GetScancodeFromKey(key: SDL_Keycode) -> SDL_Scancode::Type;
 }
 extern "C" {
@@ -6871,7 +6499,6 @@ extern "C" {
   #[doc = "          an empty string (\"\")."]
   #[doc = ""]
   #[doc = "  \\sa SDL_Scancode"]
-  #[link_name = "\u{1}_SDL_GetScancodeName"]
   pub fn SDL_GetScancodeName(scancode: SDL_Scancode::Type) -> *const libc::c_char;
 }
 extern "C" {
@@ -6880,7 +6507,6 @@ extern "C" {
   #[doc = "  \\return scancode, or SDL_SCANCODE_UNKNOWN if the name wasn't recognized"]
   #[doc = ""]
   #[doc = "  \\sa SDL_Scancode"]
-  #[link_name = "\u{1}_SDL_GetScancodeFromName"]
   pub fn SDL_GetScancodeFromName(name: *const libc::c_char) -> SDL_Scancode::Type;
 }
 extern "C" {
@@ -6892,7 +6518,6 @@ extern "C" {
   #[doc = "          empty string (\"\")."]
   #[doc = ""]
   #[doc = "  \\sa SDL_Keycode"]
-  #[link_name = "\u{1}_SDL_GetKeyName"]
   pub fn SDL_GetKeyName(key: SDL_Keycode) -> *const libc::c_char;
 }
 extern "C" {
@@ -6901,7 +6526,6 @@ extern "C" {
   #[doc = "  \\return key code, or SDLK_UNKNOWN if the name wasn't recognized"]
   #[doc = ""]
   #[doc = "  \\sa SDL_Keycode"]
-  #[link_name = "\u{1}_SDL_GetKeyFromName"]
   pub fn SDL_GetKeyFromName(name: *const libc::c_char) -> SDL_Keycode;
 }
 extern "C" {
@@ -6911,7 +6535,6 @@ extern "C" {
   #[doc = "  \\sa SDL_StopTextInput()"]
   #[doc = "  \\sa SDL_SetTextInputRect()"]
   #[doc = "  \\sa SDL_HasScreenKeyboardSupport()"]
-  #[link_name = "\u{1}_SDL_StartTextInput"]
   pub fn SDL_StartTextInput();
 }
 extern "C" {
@@ -6919,7 +6542,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_StartTextInput()"]
   #[doc = "  \\sa SDL_StopTextInput()"]
-  #[link_name = "\u{1}_SDL_IsTextInputActive"]
   pub fn SDL_IsTextInputActive() -> SDL_bool::Type;
 }
 extern "C" {
@@ -6928,7 +6550,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_StartTextInput()"]
   #[doc = "  \\sa SDL_HasScreenKeyboardSupport()"]
-  #[link_name = "\u{1}_SDL_StopTextInput"]
   pub fn SDL_StopTextInput();
 }
 extern "C" {
@@ -6936,7 +6557,6 @@ extern "C" {
   #[doc = "         This is used as a hint for IME and on-screen keyboard placement."]
   #[doc = ""]
   #[doc = "  \\sa SDL_StartTextInput()"]
-  #[link_name = "\u{1}_SDL_SetTextInputRect"]
   pub fn SDL_SetTextInputRect(rect: *mut SDL_Rect);
 }
 extern "C" {
@@ -6947,7 +6567,6 @@ extern "C" {
   #[doc = "  \\note Not all screen keyboard functions are supported on all platforms."]
   #[doc = ""]
   #[doc = "  \\sa SDL_IsScreenKeyboardShown()"]
-  #[link_name = "\u{1}_SDL_HasScreenKeyboardSupport"]
   pub fn SDL_HasScreenKeyboardSupport() -> SDL_bool::Type;
 }
 extern "C" {
@@ -6958,7 +6577,6 @@ extern "C" {
   #[doc = "  \\return SDL_TRUE if screen keyboard is shown else SDL_FALSE."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HasScreenKeyboardSupport()"]
-  #[link_name = "\u{1}_SDL_IsScreenKeyboardShown"]
   pub fn SDL_IsScreenKeyboardShown(window: *mut SDL_Window) -> SDL_bool::Type;
 }
 #[repr(C)]
@@ -7005,7 +6623,6 @@ pub mod SDL_MouseWheelDirection {
 }
 extern "C" {
   #[doc = "  \\brief Get the window which currently has mouse focus."]
-  #[link_name = "\u{1}_SDL_GetMouseFocus"]
   pub fn SDL_GetMouseFocus() -> *mut SDL_Window;
 }
 extern "C" {
@@ -7015,7 +6632,6 @@ extern "C" {
   #[doc = "  be tested using the SDL_BUTTON(X) macros, and x and y are set to the"]
   #[doc = "  mouse cursor position relative to the focus window for the currently"]
   #[doc = "  selected mouse.  You can pass NULL for either x or y."]
-  #[link_name = "\u{1}_SDL_GetMouseState"]
   pub fn SDL_GetMouseState(x: *mut libc::c_int, y: *mut libc::c_int) -> Uint32;
 }
 extern "C" {
@@ -7040,7 +6656,6 @@ extern "C" {
   #[doc = "  \\return The current button state as a bitmask, which can be tested using the SDL_BUTTON(X) macros."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetMouseState"]
-  #[link_name = "\u{1}_SDL_GetGlobalMouseState"]
   pub fn SDL_GetGlobalMouseState(x: *mut libc::c_int, y: *mut libc::c_int) -> Uint32;
 }
 extern "C" {
@@ -7049,7 +6664,6 @@ extern "C" {
   #[doc = "  The current button state is returned as a button bitmask, which can"]
   #[doc = "  be tested using the SDL_BUTTON(X) macros, and x and y are set to the"]
   #[doc = "  mouse deltas since the last call to SDL_GetRelativeMouseState()."]
-  #[link_name = "\u{1}_SDL_GetRelativeMouseState"]
   pub fn SDL_GetRelativeMouseState(x: *mut libc::c_int, y: *mut libc::c_int) -> Uint32;
 }
 extern "C" {
@@ -7060,7 +6674,6 @@ extern "C" {
   #[doc = "  \\param y The y coordinate within the window"]
   #[doc = ""]
   #[doc = "  \\note This function generates a mouse motion event"]
-  #[link_name = "\u{1}_SDL_WarpMouseInWindow"]
   pub fn SDL_WarpMouseInWindow(window: *mut SDL_Window, x: libc::c_int, y: libc::c_int);
 }
 extern "C" {
@@ -7071,7 +6684,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, -1 on error (usually: unsupported by a platform)."]
   #[doc = ""]
   #[doc = "  \\note This function generates a mouse motion event"]
-  #[link_name = "\u{1}_SDL_WarpMouseGlobal"]
   pub fn SDL_WarpMouseGlobal(x: libc::c_int, y: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -7089,7 +6701,6 @@ extern "C" {
   #[doc = "  \\note This function will flush any pending mouse motion."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetRelativeMouseMode()"]
-  #[link_name = "\u{1}_SDL_SetRelativeMouseMode"]
   pub fn SDL_SetRelativeMouseMode(enabled: SDL_bool::Type) -> libc::c_int;
 }
 extern "C" {
@@ -7120,14 +6731,12 @@ extern "C" {
   #[doc = "  SDL_WINDOW_MOUSE_CAPTURE flag set."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 if not supported."]
-  #[link_name = "\u{1}_SDL_CaptureMouse"]
   pub fn SDL_CaptureMouse(enabled: SDL_bool::Type) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Query whether relative mouse mode is enabled."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetRelativeMouseMode()"]
-  #[link_name = "\u{1}_SDL_GetRelativeMouseMode"]
   pub fn SDL_GetRelativeMouseMode() -> SDL_bool::Type;
 }
 extern "C" {
@@ -7147,7 +6756,6 @@ extern "C" {
   #[doc = "  </table>"]
   #[doc = ""]
   #[doc = "  \\sa SDL_FreeCursor()"]
-  #[link_name = "\u{1}_SDL_CreateCursor"]
   pub fn SDL_CreateCursor(
     data: *const Uint8,
     mask: *const Uint8,
@@ -7161,7 +6769,6 @@ extern "C" {
   #[doc = "  \\brief Create a color cursor."]
   #[doc = ""]
   #[doc = "  \\sa SDL_FreeCursor()"]
-  #[link_name = "\u{1}_SDL_CreateColorCursor"]
   pub fn SDL_CreateColorCursor(
     surface: *mut SDL_Surface,
     hot_x: libc::c_int,
@@ -7172,22 +6779,18 @@ extern "C" {
   #[doc = "  \\brief Create a system cursor."]
   #[doc = ""]
   #[doc = "  \\sa SDL_FreeCursor()"]
-  #[link_name = "\u{1}_SDL_CreateSystemCursor"]
   pub fn SDL_CreateSystemCursor(id: SDL_SystemCursor::Type) -> *mut SDL_Cursor;
 }
 extern "C" {
   #[doc = "  \\brief Set the active cursor."]
-  #[link_name = "\u{1}_SDL_SetCursor"]
   pub fn SDL_SetCursor(cursor: *mut SDL_Cursor);
 }
 extern "C" {
   #[doc = "  \\brief Return the active cursor."]
-  #[link_name = "\u{1}_SDL_GetCursor"]
   pub fn SDL_GetCursor() -> *mut SDL_Cursor;
 }
 extern "C" {
   #[doc = "  \\brief Return the default cursor."]
-  #[link_name = "\u{1}_SDL_GetDefaultCursor"]
   pub fn SDL_GetDefaultCursor() -> *mut SDL_Cursor;
 }
 extern "C" {
@@ -7196,7 +6799,6 @@ extern "C" {
   #[doc = "  \\sa SDL_CreateCursor()"]
   #[doc = "  \\sa SDL_CreateColorCursor()"]
   #[doc = "  \\sa SDL_CreateSystemCursor()"]
-  #[link_name = "\u{1}_SDL_FreeCursor"]
   pub fn SDL_FreeCursor(cursor: *mut SDL_Cursor);
 }
 extern "C" {
@@ -7206,7 +6808,6 @@ extern "C" {
   #[doc = "                state."]
   #[doc = ""]
   #[doc = "  \\return 1 if the cursor is shown, or 0 if the cursor is hidden."]
-  #[link_name = "\u{1}_SDL_ShowCursor"]
   pub fn SDL_ShowCursor(toggle: libc::c_int) -> libc::c_int;
 }
 #[doc = " The joystick structure used to identify an SDL joystick"]
@@ -7282,69 +6883,58 @@ extern "C" {
   #[doc = " In particular, you are guaranteed that the joystick list won't change, so"]
   #[doc = " the API functions that take a joystick index will be valid, and joystick"]
   #[doc = " and game controller events will not be delivered."]
-  #[link_name = "\u{1}_SDL_LockJoysticks"]
   pub fn SDL_LockJoysticks();
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_UnlockJoysticks"]
   pub fn SDL_UnlockJoysticks();
 }
 extern "C" {
   #[doc = "  Count the number of joysticks attached to the system right now"]
-  #[link_name = "\u{1}_SDL_NumJoysticks"]
   pub fn SDL_NumJoysticks() -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Get the implementation dependent name of a joystick."]
   #[doc = "  This can be called before any joysticks are opened."]
   #[doc = "  If no name can be found, this function returns NULL."]
-  #[link_name = "\u{1}_SDL_JoystickNameForIndex"]
   pub fn SDL_JoystickNameForIndex(device_index: libc::c_int) -> *const libc::c_char;
 }
 extern "C" {
   #[doc = "  Get the player index of a joystick, or -1 if it's not available"]
   #[doc = "  This can be called before any joysticks are opened."]
-  #[link_name = "\u{1}_SDL_JoystickGetDevicePlayerIndex"]
   pub fn SDL_JoystickGetDevicePlayerIndex(device_index: libc::c_int) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Return the GUID for the joystick at this index"]
   #[doc = "  This can be called before any joysticks are opened."]
-  #[link_name = "\u{1}_SDL_JoystickGetDeviceGUID"]
   pub fn SDL_JoystickGetDeviceGUID(device_index: libc::c_int) -> SDL_JoystickGUID;
 }
 extern "C" {
   #[doc = "  Get the USB vendor ID of a joystick, if available."]
   #[doc = "  This can be called before any joysticks are opened."]
   #[doc = "  If the vendor ID isn't available this function returns 0."]
-  #[link_name = "\u{1}_SDL_JoystickGetDeviceVendor"]
   pub fn SDL_JoystickGetDeviceVendor(device_index: libc::c_int) -> Uint16;
 }
 extern "C" {
   #[doc = "  Get the USB product ID of a joystick, if available."]
   #[doc = "  This can be called before any joysticks are opened."]
   #[doc = "  If the product ID isn't available this function returns 0."]
-  #[link_name = "\u{1}_SDL_JoystickGetDeviceProduct"]
   pub fn SDL_JoystickGetDeviceProduct(device_index: libc::c_int) -> Uint16;
 }
 extern "C" {
   #[doc = "  Get the product version of a joystick, if available."]
   #[doc = "  This can be called before any joysticks are opened."]
   #[doc = "  If the product version isn't available this function returns 0."]
-  #[link_name = "\u{1}_SDL_JoystickGetDeviceProductVersion"]
   pub fn SDL_JoystickGetDeviceProductVersion(device_index: libc::c_int) -> Uint16;
 }
 extern "C" {
   #[doc = "  Get the type of a joystick, if available."]
   #[doc = "  This can be called before any joysticks are opened."]
-  #[link_name = "\u{1}_SDL_JoystickGetDeviceType"]
   pub fn SDL_JoystickGetDeviceType(device_index: libc::c_int) -> SDL_JoystickType::Type;
 }
 extern "C" {
   #[doc = "  Get the instance ID of a joystick."]
   #[doc = "  This can be called before any joysticks are opened."]
   #[doc = "  If the index is out of range, this function will return -1."]
-  #[link_name = "\u{1}_SDL_JoystickGetDeviceInstanceID"]
   pub fn SDL_JoystickGetDeviceInstanceID(device_index: libc::c_int) -> SDL_JoystickID;
 }
 extern "C" {
@@ -7355,59 +6945,49 @@ extern "C" {
   #[doc = "  there instead."]
   #[doc = ""]
   #[doc = "  \\return A joystick identifier, or NULL if an error occurred."]
-  #[link_name = "\u{1}_SDL_JoystickOpen"]
   pub fn SDL_JoystickOpen(device_index: libc::c_int) -> *mut SDL_Joystick;
 }
 extern "C" {
   #[doc = " Return the SDL_Joystick associated with an instance id."]
-  #[link_name = "\u{1}_SDL_JoystickFromInstanceID"]
   pub fn SDL_JoystickFromInstanceID(joyid: SDL_JoystickID) -> *mut SDL_Joystick;
 }
 extern "C" {
   #[doc = "  Return the name for this currently opened joystick."]
   #[doc = "  If no name can be found, this function returns NULL."]
-  #[link_name = "\u{1}_SDL_JoystickName"]
   pub fn SDL_JoystickName(joystick: *mut SDL_Joystick) -> *const libc::c_char;
 }
 extern "C" {
   #[doc = "  Get the player index of an opened joystick, or -1 if it's not available"]
   #[doc = ""]
   #[doc = "  For XInput controllers this returns the XInput user index."]
-  #[link_name = "\u{1}_SDL_JoystickGetPlayerIndex"]
   pub fn SDL_JoystickGetPlayerIndex(joystick: *mut SDL_Joystick) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Return the GUID for this opened joystick"]
-  #[link_name = "\u{1}_SDL_JoystickGetGUID"]
   pub fn SDL_JoystickGetGUID(joystick: *mut SDL_Joystick) -> SDL_JoystickGUID;
 }
 extern "C" {
   #[doc = "  Get the USB vendor ID of an opened joystick, if available."]
   #[doc = "  If the vendor ID isn't available this function returns 0."]
-  #[link_name = "\u{1}_SDL_JoystickGetVendor"]
   pub fn SDL_JoystickGetVendor(joystick: *mut SDL_Joystick) -> Uint16;
 }
 extern "C" {
   #[doc = "  Get the USB product ID of an opened joystick, if available."]
   #[doc = "  If the product ID isn't available this function returns 0."]
-  #[link_name = "\u{1}_SDL_JoystickGetProduct"]
   pub fn SDL_JoystickGetProduct(joystick: *mut SDL_Joystick) -> Uint16;
 }
 extern "C" {
   #[doc = "  Get the product version of an opened joystick, if available."]
   #[doc = "  If the product version isn't available this function returns 0."]
-  #[link_name = "\u{1}_SDL_JoystickGetProductVersion"]
   pub fn SDL_JoystickGetProductVersion(joystick: *mut SDL_Joystick) -> Uint16;
 }
 extern "C" {
   #[doc = "  Get the type of an opened joystick."]
-  #[link_name = "\u{1}_SDL_JoystickGetType"]
   pub fn SDL_JoystickGetType(joystick: *mut SDL_Joystick) -> SDL_JoystickType::Type;
 }
 extern "C" {
   #[doc = "  Return a string representation for this guid. pszGUID must point to at least 33 bytes"]
   #[doc = "  (32 for the string plus a NULL terminator)."]
-  #[link_name = "\u{1}_SDL_JoystickGetGUIDString"]
   pub fn SDL_JoystickGetGUIDString(
     guid: SDL_JoystickGUID,
     pszGUID: *mut libc::c_char,
@@ -7416,22 +6996,18 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  Convert a string into a joystick guid"]
-  #[link_name = "\u{1}_SDL_JoystickGetGUIDFromString"]
   pub fn SDL_JoystickGetGUIDFromString(pchGUID: *const libc::c_char) -> SDL_JoystickGUID;
 }
 extern "C" {
   #[doc = "  Returns SDL_TRUE if the joystick has been opened and currently connected, or SDL_FALSE if it has not."]
-  #[link_name = "\u{1}_SDL_JoystickGetAttached"]
   pub fn SDL_JoystickGetAttached(joystick: *mut SDL_Joystick) -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  Get the instance ID of an opened joystick or -1 if the joystick is invalid."]
-  #[link_name = "\u{1}_SDL_JoystickInstanceID"]
   pub fn SDL_JoystickInstanceID(joystick: *mut SDL_Joystick) -> SDL_JoystickID;
 }
 extern "C" {
   #[doc = "  Get the number of general axis controls on a joystick."]
-  #[link_name = "\u{1}_SDL_JoystickNumAxes"]
   pub fn SDL_JoystickNumAxes(joystick: *mut SDL_Joystick) -> libc::c_int;
 }
 extern "C" {
@@ -7439,17 +7015,14 @@ extern "C" {
   #[doc = ""]
   #[doc = "  Joystick trackballs have only relative motion events associated"]
   #[doc = "  with them and their state cannot be polled."]
-  #[link_name = "\u{1}_SDL_JoystickNumBalls"]
   pub fn SDL_JoystickNumBalls(joystick: *mut SDL_Joystick) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Get the number of POV hats on a joystick."]
-  #[link_name = "\u{1}_SDL_JoystickNumHats"]
   pub fn SDL_JoystickNumHats(joystick: *mut SDL_Joystick) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Get the number of buttons on a joystick."]
-  #[link_name = "\u{1}_SDL_JoystickNumButtons"]
   pub fn SDL_JoystickNumButtons(joystick: *mut SDL_Joystick) -> libc::c_int;
 }
 extern "C" {
@@ -7457,7 +7030,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  This is called automatically by the event loop if any joystick"]
   #[doc = "  events are enabled."]
-  #[link_name = "\u{1}_SDL_JoystickUpdate"]
   pub fn SDL_JoystickUpdate();
 }
 extern "C" {
@@ -7468,7 +7040,6 @@ extern "C" {
   #[doc = "  information."]
   #[doc = ""]
   #[doc = "  The state can be one of ::SDL_QUERY, ::SDL_ENABLE or ::SDL_IGNORE."]
-  #[link_name = "\u{1}_SDL_JoystickEventState"]
   pub fn SDL_JoystickEventState(state: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -7477,7 +7048,6 @@ extern "C" {
   #[doc = "  The state is a value ranging from -32768 to 32767."]
   #[doc = ""]
   #[doc = "  The axis indices start at index 0."]
-  #[link_name = "\u{1}_SDL_JoystickGetAxis"]
   pub fn SDL_JoystickGetAxis(joystick: *mut SDL_Joystick, axis: libc::c_int) -> Sint16;
 }
 extern "C" {
@@ -7488,7 +7058,6 @@ extern "C" {
   #[doc = "  The axis indices start at index 0."]
   #[doc = ""]
   #[doc = "  \\return SDL_TRUE if this axis has any initial value, or SDL_FALSE if not."]
-  #[link_name = "\u{1}_SDL_JoystickGetAxisInitialState"]
   pub fn SDL_JoystickGetAxisInitialState(
     joystick: *mut SDL_Joystick,
     axis: libc::c_int,
@@ -7510,7 +7079,6 @@ extern "C" {
   #[doc = "           - ::SDL_HAT_RIGHTDOWN"]
   #[doc = "           - ::SDL_HAT_LEFTUP"]
   #[doc = "           - ::SDL_HAT_LEFTDOWN"]
-  #[link_name = "\u{1}_SDL_JoystickGetHat"]
   pub fn SDL_JoystickGetHat(joystick: *mut SDL_Joystick, hat: libc::c_int) -> Uint8;
 }
 extern "C" {
@@ -7519,7 +7087,6 @@ extern "C" {
   #[doc = "  \\return 0, or -1 if you passed it invalid parameters."]
   #[doc = ""]
   #[doc = "  The ball indices start at index 0."]
-  #[link_name = "\u{1}_SDL_JoystickGetBall"]
   pub fn SDL_JoystickGetBall(
     joystick: *mut SDL_Joystick,
     ball: libc::c_int,
@@ -7531,7 +7098,6 @@ extern "C" {
   #[doc = "  Get the current state of a button on a joystick."]
   #[doc = ""]
   #[doc = "  The button indices start at index 0."]
-  #[link_name = "\u{1}_SDL_JoystickGetButton"]
   pub fn SDL_JoystickGetButton(joystick: *mut SDL_Joystick, button: libc::c_int) -> Uint8;
 }
 extern "C" {
@@ -7544,7 +7110,6 @@ extern "C" {
   #[doc = "  \\param duration_ms The duration of the rumble effect, in milliseconds"]
   #[doc = ""]
   #[doc = "  \\return 0, or -1 if rumble isn't supported on this joystick"]
-  #[link_name = "\u{1}_SDL_JoystickRumble"]
   pub fn SDL_JoystickRumble(
     joystick: *mut SDL_Joystick,
     low_frequency_rumble: Uint16,
@@ -7554,12 +7119,10 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  Close a joystick previously opened with SDL_JoystickOpen()."]
-  #[link_name = "\u{1}_SDL_JoystickClose"]
   pub fn SDL_JoystickClose(joystick: *mut SDL_Joystick);
 }
 extern "C" {
   #[doc = "  Return the battery level of this joystick"]
-  #[link_name = "\u{1}_SDL_JoystickCurrentPowerLevel"]
   pub fn SDL_JoystickCurrentPowerLevel(joystick: *mut SDL_Joystick)
     -> SDL_JoystickPowerLevel::Type;
 }
@@ -7767,7 +7330,6 @@ extern "C" {
   #[doc = "  If \\c freerw is non-zero, the stream will be closed after being read."]
   #[doc = ""]
   #[doc = " \\return number of mappings added, -1 on error"]
-  #[link_name = "\u{1}_SDL_GameControllerAddMappingsFromRW"]
   pub fn SDL_GameControllerAddMappingsFromRW(
     rw: *mut SDL_RWops,
     freerw: libc::c_int,
@@ -7777,47 +7339,40 @@ extern "C" {
   #[doc = "  Add or update an existing mapping configuration"]
   #[doc = ""]
   #[doc = " \\return 1 if mapping is added, 0 if updated, -1 on error"]
-  #[link_name = "\u{1}_SDL_GameControllerAddMapping"]
   pub fn SDL_GameControllerAddMapping(mappingString: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Get the number of mappings installed"]
   #[doc = ""]
   #[doc = "  \\return the number of mappings"]
-  #[link_name = "\u{1}_SDL_GameControllerNumMappings"]
   pub fn SDL_GameControllerNumMappings() -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Get the mapping at a particular index."]
   #[doc = ""]
   #[doc = "  \\return the mapping string.  Must be freed with SDL_free().  Returns NULL if the index is out of range."]
-  #[link_name = "\u{1}_SDL_GameControllerMappingForIndex"]
   pub fn SDL_GameControllerMappingForIndex(mapping_index: libc::c_int) -> *mut libc::c_char;
 }
 extern "C" {
   #[doc = "  Get a mapping string for a GUID"]
   #[doc = ""]
   #[doc = "  \\return the mapping string.  Must be freed with SDL_free().  Returns NULL if no mapping is available"]
-  #[link_name = "\u{1}_SDL_GameControllerMappingForGUID"]
   pub fn SDL_GameControllerMappingForGUID(guid: SDL_JoystickGUID) -> *mut libc::c_char;
 }
 extern "C" {
   #[doc = "  Get a mapping string for an open GameController"]
   #[doc = ""]
   #[doc = "  \\return the mapping string.  Must be freed with SDL_free().  Returns NULL if no mapping is available"]
-  #[link_name = "\u{1}_SDL_GameControllerMapping"]
   pub fn SDL_GameControllerMapping(gamecontroller: *mut SDL_GameController) -> *mut libc::c_char;
 }
 extern "C" {
   #[doc = "  Is the joystick on this index supported by the game controller interface?"]
-  #[link_name = "\u{1}_SDL_IsGameController"]
   pub fn SDL_IsGameController(joystick_index: libc::c_int) -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  Get the implementation dependent name of a game controller."]
   #[doc = "  This can be called before any controllers are opened."]
   #[doc = "  If no name can be found, this function returns NULL."]
-  #[link_name = "\u{1}_SDL_GameControllerNameForIndex"]
   pub fn SDL_GameControllerNameForIndex(joystick_index: libc::c_int) -> *const libc::c_char;
 }
 extern "C" {
@@ -7825,7 +7380,6 @@ extern "C" {
   #[doc = "  This can be called before any controllers are opened."]
   #[doc = ""]
   #[doc = "  \\return the mapping string.  Must be freed with SDL_free().  Returns NULL if no mapping is available"]
-  #[link_name = "\u{1}_SDL_GameControllerMappingForDeviceIndex"]
   pub fn SDL_GameControllerMappingForDeviceIndex(joystick_index: libc::c_int) -> *mut libc::c_char;
 }
 extern "C" {
@@ -7836,53 +7390,44 @@ extern "C" {
   #[doc = "  used there instead."]
   #[doc = ""]
   #[doc = "  \\return A controller identifier, or NULL if an error occurred."]
-  #[link_name = "\u{1}_SDL_GameControllerOpen"]
   pub fn SDL_GameControllerOpen(joystick_index: libc::c_int) -> *mut SDL_GameController;
 }
 extern "C" {
   #[doc = " Return the SDL_GameController associated with an instance id."]
-  #[link_name = "\u{1}_SDL_GameControllerFromInstanceID"]
   pub fn SDL_GameControllerFromInstanceID(joyid: SDL_JoystickID) -> *mut SDL_GameController;
 }
 extern "C" {
   #[doc = "  Return the name for this currently opened controller"]
-  #[link_name = "\u{1}_SDL_GameControllerName"]
   pub fn SDL_GameControllerName(gamecontroller: *mut SDL_GameController) -> *const libc::c_char;
 }
 extern "C" {
   #[doc = "  Get the player index of an opened game controller, or -1 if it's not available"]
   #[doc = ""]
   #[doc = "  For XInput controllers this returns the XInput user index."]
-  #[link_name = "\u{1}_SDL_GameControllerGetPlayerIndex"]
   pub fn SDL_GameControllerGetPlayerIndex(gamecontroller: *mut SDL_GameController) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  Get the USB vendor ID of an opened controller, if available."]
   #[doc = "  If the vendor ID isn't available this function returns 0."]
-  #[link_name = "\u{1}_SDL_GameControllerGetVendor"]
   pub fn SDL_GameControllerGetVendor(gamecontroller: *mut SDL_GameController) -> Uint16;
 }
 extern "C" {
   #[doc = "  Get the USB product ID of an opened controller, if available."]
   #[doc = "  If the product ID isn't available this function returns 0."]
-  #[link_name = "\u{1}_SDL_GameControllerGetProduct"]
   pub fn SDL_GameControllerGetProduct(gamecontroller: *mut SDL_GameController) -> Uint16;
 }
 extern "C" {
   #[doc = "  Get the product version of an opened controller, if available."]
   #[doc = "  If the product version isn't available this function returns 0."]
-  #[link_name = "\u{1}_SDL_GameControllerGetProductVersion"]
   pub fn SDL_GameControllerGetProductVersion(gamecontroller: *mut SDL_GameController) -> Uint16;
 }
 extern "C" {
   #[doc = "  Returns SDL_TRUE if the controller has been opened and currently connected,"]
   #[doc = "  or SDL_FALSE if it has not."]
-  #[link_name = "\u{1}_SDL_GameControllerGetAttached"]
   pub fn SDL_GameControllerGetAttached(gamecontroller: *mut SDL_GameController) -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  Get the underlying joystick object used by a controller"]
-  #[link_name = "\u{1}_SDL_GameControllerGetJoystick"]
   pub fn SDL_GameControllerGetJoystick(
     gamecontroller: *mut SDL_GameController,
   ) -> *mut SDL_Joystick;
@@ -7895,7 +7440,6 @@ extern "C" {
   #[doc = "  information."]
   #[doc = ""]
   #[doc = "  The state can be one of ::SDL_QUERY, ::SDL_ENABLE or ::SDL_IGNORE."]
-  #[link_name = "\u{1}_SDL_GameControllerEventState"]
   pub fn SDL_GameControllerEventState(state: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -7903,7 +7447,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  This is called automatically by the event loop if any game controller"]
   #[doc = "  events are enabled."]
-  #[link_name = "\u{1}_SDL_GameControllerUpdate"]
   pub fn SDL_GameControllerUpdate();
 }
 pub mod SDL_GameControllerAxis {
@@ -7926,21 +7469,18 @@ pub mod SDL_GameControllerAxis {
 }
 extern "C" {
   #[doc = "  turn this string into a axis mapping"]
-  #[link_name = "\u{1}_SDL_GameControllerGetAxisFromString"]
   pub fn SDL_GameControllerGetAxisFromString(
     pchString: *const libc::c_char,
   ) -> SDL_GameControllerAxis::Type;
 }
 extern "C" {
   #[doc = "  turn this axis enum into a string mapping"]
-  #[link_name = "\u{1}_SDL_GameControllerGetStringForAxis"]
   pub fn SDL_GameControllerGetStringForAxis(
     axis: SDL_GameControllerAxis::Type,
   ) -> *const libc::c_char;
 }
 extern "C" {
   #[doc = "  Get the SDL joystick layer binding for this controller button mapping"]
-  #[link_name = "\u{1}_SDL_GameControllerGetBindForAxis"]
   pub fn SDL_GameControllerGetBindForAxis(
     gamecontroller: *mut SDL_GameController,
     axis: SDL_GameControllerAxis::Type,
@@ -7953,7 +7493,6 @@ extern "C" {
   #[doc = "  which range from 0 to 32767)."]
   #[doc = ""]
   #[doc = "  The axis indices start at index 0."]
-  #[link_name = "\u{1}_SDL_GameControllerGetAxis"]
   pub fn SDL_GameControllerGetAxis(
     gamecontroller: *mut SDL_GameController,
     axis: SDL_GameControllerAxis::Type,
@@ -7982,21 +7521,18 @@ pub mod SDL_GameControllerButton {
 }
 extern "C" {
   #[doc = "  turn this string into a button mapping"]
-  #[link_name = "\u{1}_SDL_GameControllerGetButtonFromString"]
   pub fn SDL_GameControllerGetButtonFromString(
     pchString: *const libc::c_char,
   ) -> SDL_GameControllerButton::Type;
 }
 extern "C" {
   #[doc = "  turn this button enum into a string mapping"]
-  #[link_name = "\u{1}_SDL_GameControllerGetStringForButton"]
   pub fn SDL_GameControllerGetStringForButton(
     button: SDL_GameControllerButton::Type,
   ) -> *const libc::c_char;
 }
 extern "C" {
   #[doc = "  Get the SDL joystick layer binding for this controller button mapping"]
-  #[link_name = "\u{1}_SDL_GameControllerGetBindForButton"]
   pub fn SDL_GameControllerGetBindForButton(
     gamecontroller: *mut SDL_GameController,
     button: SDL_GameControllerButton::Type,
@@ -8006,7 +7542,6 @@ extern "C" {
   #[doc = "  Get the current state of a button on a game controller."]
   #[doc = ""]
   #[doc = "  The button indices start at index 0."]
-  #[link_name = "\u{1}_SDL_GameControllerGetButton"]
   pub fn SDL_GameControllerGetButton(
     gamecontroller: *mut SDL_GameController,
     button: SDL_GameControllerButton::Type,
@@ -8022,7 +7557,6 @@ extern "C" {
   #[doc = "  \\param duration_ms The duration of the rumble effect, in milliseconds"]
   #[doc = ""]
   #[doc = "  \\return 0, or -1 if rumble isn't supported on this joystick"]
-  #[link_name = "\u{1}_SDL_GameControllerRumble"]
   pub fn SDL_GameControllerRumble(
     gamecontroller: *mut SDL_GameController,
     low_frequency_rumble: Uint16,
@@ -8032,7 +7566,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  Close a controller previously opened with SDL_GameControllerOpen()."]
-  #[link_name = "\u{1}_SDL_GameControllerClose"]
   pub fn SDL_GameControllerClose(gamecontroller: *mut SDL_GameController);
 }
 pub type SDL_TouchID = Sint64;
@@ -8100,22 +7633,18 @@ fn bindgen_test_layout_SDL_Finger() {
 }
 extern "C" {
   #[doc = "  \\brief Get the number of registered touch devices."]
-  #[link_name = "\u{1}_SDL_GetNumTouchDevices"]
   pub fn SDL_GetNumTouchDevices() -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Get the touch ID with the given index, or 0 if the index is invalid."]
-  #[link_name = "\u{1}_SDL_GetTouchDevice"]
   pub fn SDL_GetTouchDevice(index: libc::c_int) -> SDL_TouchID;
 }
 extern "C" {
   #[doc = "  \\brief Get the number of active fingers for a given touch device."]
-  #[link_name = "\u{1}_SDL_GetNumTouchFingers"]
   pub fn SDL_GetNumTouchFingers(touchID: SDL_TouchID) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Get the finger object of the given touch, with the given index."]
-  #[link_name = "\u{1}_SDL_GetTouchFinger"]
   pub fn SDL_GetTouchFinger(touchID: SDL_TouchID, index: libc::c_int) -> *mut SDL_Finger;
 }
 pub type SDL_GestureID = Sint64;
@@ -8123,28 +7652,24 @@ extern "C" {
   #[doc = "  \\brief Begin Recording a gesture on the specified touch, or all touches (-1)"]
   #[doc = ""]
   #[doc = ""]
-  #[link_name = "\u{1}_SDL_RecordGesture"]
   pub fn SDL_RecordGesture(touchId: SDL_TouchID) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Save all currently loaded Dollar Gesture templates"]
   #[doc = ""]
   #[doc = ""]
-  #[link_name = "\u{1}_SDL_SaveAllDollarTemplates"]
   pub fn SDL_SaveAllDollarTemplates(dst: *mut SDL_RWops) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Save a currently loaded Dollar Gesture template"]
   #[doc = ""]
   #[doc = ""]
-  #[link_name = "\u{1}_SDL_SaveDollarTemplate"]
   pub fn SDL_SaveDollarTemplate(gestureId: SDL_GestureID, dst: *mut SDL_RWops) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Load Dollar Gesture templates from a file"]
   #[doc = ""]
   #[doc = ""]
-  #[link_name = "\u{1}_SDL_LoadDollarTemplates"]
   pub fn SDL_LoadDollarTemplates(touchId: SDL_TouchID, src: *mut SDL_RWops) -> libc::c_int;
 }
 pub mod SDL_EventType {
@@ -11163,7 +10688,6 @@ extern "C" {
   #[doc = "  This function updates the event queue and internal input device state."]
   #[doc = ""]
   #[doc = "  This should only be run in the thread that sets the video mode."]
-  #[link_name = "\u{1}_SDL_PumpEvents"]
   pub fn SDL_PumpEvents();
 }
 pub mod SDL_eventaction {
@@ -11189,7 +10713,6 @@ extern "C" {
   #[doc = "  \\return The number of events actually stored, or -1 if there was an error."]
   #[doc = ""]
   #[doc = "  This function is thread-safe."]
-  #[link_name = "\u{1}_SDL_PeepEvents"]
   pub fn SDL_PeepEvents(
     events: *mut SDL_Event,
     numevents: libc::c_int,
@@ -11200,11 +10723,9 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  Checks to see if certain event types are in the event queue."]
-  #[link_name = "\u{1}_SDL_HasEvent"]
   pub fn SDL_HasEvent(type_: Uint32) -> SDL_bool::Type;
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_HasEvents"]
   pub fn SDL_HasEvents(minType: Uint32, maxType: Uint32) -> SDL_bool::Type;
 }
 extern "C" {
@@ -11212,11 +10733,9 @@ extern "C" {
   #[doc = "  This function only affects currently queued events. If you want to make"]
   #[doc = "  sure that all pending OS events are flushed, you can call SDL_PumpEvents()"]
   #[doc = "  on the main thread immediately before the flush call."]
-  #[link_name = "\u{1}_SDL_FlushEvent"]
   pub fn SDL_FlushEvent(type_: Uint32);
 }
 extern "C" {
-  #[link_name = "\u{1}_SDL_FlushEvents"]
   pub fn SDL_FlushEvents(minType: Uint32, maxType: Uint32);
 }
 extern "C" {
@@ -11226,7 +10745,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\param event If not NULL, the next event is removed from the queue and"]
   #[doc = "               stored in that area."]
-  #[link_name = "\u{1}_SDL_PollEvent"]
   pub fn SDL_PollEvent(event: *mut SDL_Event) -> libc::c_int;
 }
 extern "C" {
@@ -11236,7 +10754,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\param event If not NULL, the next event is removed from the queue and"]
   #[doc = "               stored in that area."]
-  #[link_name = "\u{1}_SDL_WaitEvent"]
   pub fn SDL_WaitEvent(event: *mut SDL_Event) -> libc::c_int;
 }
 extern "C" {
@@ -11248,7 +10765,6 @@ extern "C" {
   #[doc = "  \\param event If not NULL, the next event is removed from the queue and"]
   #[doc = "               stored in that area."]
   #[doc = "  \\param timeout The timeout (in milliseconds) to wait for next event."]
-  #[link_name = "\u{1}_SDL_WaitEventTimeout"]
   pub fn SDL_WaitEventTimeout(event: *mut SDL_Event, timeout: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -11256,7 +10772,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\return 1 on success, 0 if the event was filtered, or -1 if the event queue"]
   #[doc = "          was full or there was some other error."]
-  #[link_name = "\u{1}_SDL_PushEvent"]
   pub fn SDL_PushEvent(event: *mut SDL_Event) -> libc::c_int;
 }
 pub type SDL_EventFilter = ::core::option::Option<
@@ -11286,13 +10801,11 @@ extern "C" {
   #[doc = ""]
   #[doc = "  If the quit event is generated by an interrupt signal, it will bypass the"]
   #[doc = "  internal queue and be delivered to the application at the next event poll."]
-  #[link_name = "\u{1}_SDL_SetEventFilter"]
   pub fn SDL_SetEventFilter(filter: SDL_EventFilter, userdata: *mut libc::c_void);
 }
 extern "C" {
   #[doc = "  Return the current event filter - can be used to \"chain\" filters."]
   #[doc = "  If there is no event filter set, this function returns SDL_FALSE."]
-  #[link_name = "\u{1}_SDL_GetEventFilter"]
   pub fn SDL_GetEventFilter(
     filter: *mut SDL_EventFilter,
     userdata: *mut *mut libc::c_void,
@@ -11300,18 +10813,15 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  Add a function which is called when an event is added to the queue."]
-  #[link_name = "\u{1}_SDL_AddEventWatch"]
   pub fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: *mut libc::c_void);
 }
 extern "C" {
   #[doc = "  Remove an event watch function added with SDL_AddEventWatch()"]
-  #[link_name = "\u{1}_SDL_DelEventWatch"]
   pub fn SDL_DelEventWatch(filter: SDL_EventFilter, userdata: *mut libc::c_void);
 }
 extern "C" {
   #[doc = "  Run the filter function on the current event queue, removing any"]
   #[doc = "  events for which the filter returns 0."]
-  #[link_name = "\u{1}_SDL_FilterEvents"]
   pub fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: *mut libc::c_void);
 }
 extern "C" {
@@ -11322,7 +10832,6 @@ extern "C" {
   #[doc = "     normally."]
   #[doc = "   - If \\c state is set to ::SDL_QUERY, SDL_EventState() will return the"]
   #[doc = "     current processing state of the specified event."]
-  #[link_name = "\u{1}_SDL_EventState"]
   pub fn SDL_EventState(type_: Uint32, state: libc::c_int) -> Uint8;
 }
 extern "C" {
@@ -11331,7 +10840,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  If there aren't enough user-defined events left, this function"]
   #[doc = "  returns (Uint32)-1"]
-  #[link_name = "\u{1}_SDL_RegisterEvents"]
   pub fn SDL_RegisterEvents(numevents: libc::c_int) -> Uint32;
 }
 extern "C" {
@@ -11356,7 +10864,6 @@ extern "C" {
   #[doc = "  \\return String of base dir in UTF-8 encoding, or NULL on error."]
   #[doc = ""]
   #[doc = " \\sa SDL_GetPrefPath"]
-  #[link_name = "\u{1}_SDL_GetBasePath"]
   pub fn SDL_GetBasePath() -> *mut libc::c_char;
 }
 extern "C" {
@@ -11419,7 +10926,6 @@ extern "C" {
   #[doc = "          if there's a problem (creating directory failed, etc)."]
   #[doc = ""]
   #[doc = " \\sa SDL_GetBasePath"]
-  #[link_name = "\u{1}_SDL_GetPrefPath"]
   pub fn SDL_GetPrefPath(org: *const libc::c_char, app: *const libc::c_char) -> *mut libc::c_char;
 }
 #[doc = "  \\typedef SDL_Haptic"]
@@ -12782,7 +12288,6 @@ extern "C" {
   #[doc = "  \\brief Count the number of haptic devices attached to the system."]
   #[doc = ""]
   #[doc = "  \\return Number of haptic devices detected on the system."]
-  #[link_name = "\u{1}_SDL_NumHaptics"]
   pub fn SDL_NumHaptics() -> libc::c_int;
 }
 extern "C" {
@@ -12795,7 +12300,6 @@ extern "C" {
   #[doc = "  \\return Name of the device or NULL on error."]
   #[doc = ""]
   #[doc = "  \\sa SDL_NumHaptics"]
-  #[link_name = "\u{1}_SDL_HapticName"]
   pub fn SDL_HapticName(device_index: libc::c_int) -> *const libc::c_char;
 }
 extern "C" {
@@ -12819,7 +12323,6 @@ extern "C" {
   #[doc = "  \\sa SDL_HapticSetAutocenter"]
   #[doc = "  \\sa SDL_HapticPause"]
   #[doc = "  \\sa SDL_HapticStopAll"]
-  #[link_name = "\u{1}_SDL_HapticOpen"]
   pub fn SDL_HapticOpen(device_index: libc::c_int) -> *mut SDL_Haptic;
 }
 extern "C" {
@@ -12830,7 +12333,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticOpen"]
   #[doc = "  \\sa SDL_HapticIndex"]
-  #[link_name = "\u{1}_SDL_HapticOpened"]
   pub fn SDL_HapticOpened(device_index: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -12841,7 +12343,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticOpen"]
   #[doc = "  \\sa SDL_HapticOpened"]
-  #[link_name = "\u{1}_SDL_HapticIndex"]
   pub fn SDL_HapticIndex(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 extern "C" {
@@ -12850,7 +12351,6 @@ extern "C" {
   #[doc = "  \\return SDL_TRUE if the mouse is haptic, SDL_FALSE if it isn't."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticOpenFromMouse"]
-  #[link_name = "\u{1}_SDL_MouseIsHaptic"]
   pub fn SDL_MouseIsHaptic() -> libc::c_int;
 }
 extern "C" {
@@ -12860,7 +12360,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_MouseIsHaptic"]
   #[doc = "  \\sa SDL_HapticOpen"]
-  #[link_name = "\u{1}_SDL_HapticOpenFromMouse"]
   pub fn SDL_HapticOpenFromMouse() -> *mut SDL_Haptic;
 }
 extern "C" {
@@ -12871,7 +12370,6 @@ extern "C" {
   #[doc = "          or -1 if an error occurred."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticOpenFromJoystick"]
-  #[link_name = "\u{1}_SDL_JoystickIsHaptic"]
   pub fn SDL_JoystickIsHaptic(joystick: *mut SDL_Joystick) -> libc::c_int;
 }
 extern "C" {
@@ -12890,14 +12388,12 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticOpen"]
   #[doc = "  \\sa SDL_HapticClose"]
-  #[link_name = "\u{1}_SDL_HapticOpenFromJoystick"]
   pub fn SDL_HapticOpenFromJoystick(joystick: *mut SDL_Joystick) -> *mut SDL_Haptic;
 }
 extern "C" {
   #[doc = "  \\brief Closes a haptic device previously opened with SDL_HapticOpen()."]
   #[doc = ""]
   #[doc = "  \\param haptic Haptic device to close."]
-  #[link_name = "\u{1}_SDL_HapticClose"]
   pub fn SDL_HapticClose(haptic: *mut SDL_Haptic);
 }
 extern "C" {
@@ -12913,7 +12409,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticNumEffectsPlaying"]
   #[doc = "  \\sa SDL_HapticQuery"]
-  #[link_name = "\u{1}_SDL_HapticNumEffects"]
   pub fn SDL_HapticNumEffects(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 extern "C" {
@@ -12929,7 +12424,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticNumEffects"]
   #[doc = "  \\sa SDL_HapticQuery"]
-  #[link_name = "\u{1}_SDL_HapticNumEffectsPlaying"]
   pub fn SDL_HapticNumEffectsPlaying(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 extern "C" {
@@ -12947,14 +12441,12 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticNumEffects"]
   #[doc = "  \\sa SDL_HapticEffectSupported"]
-  #[link_name = "\u{1}_SDL_HapticQuery"]
   pub fn SDL_HapticQuery(haptic: *mut SDL_Haptic) -> libc::c_uint;
 }
 extern "C" {
   #[doc = "  \\brief Gets the number of haptic axes the device has."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticDirection"]
-  #[link_name = "\u{1}_SDL_HapticNumAxes"]
   pub fn SDL_HapticNumAxes(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 extern "C" {
@@ -12966,7 +12458,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticQuery"]
   #[doc = "  \\sa SDL_HapticNewEffect"]
-  #[link_name = "\u{1}_SDL_HapticEffectSupported"]
   pub fn SDL_HapticEffectSupported(
     haptic: *mut SDL_Haptic,
     effect: *mut SDL_HapticEffect,
@@ -12982,7 +12473,6 @@ extern "C" {
   #[doc = "  \\sa SDL_HapticUpdateEffect"]
   #[doc = "  \\sa SDL_HapticRunEffect"]
   #[doc = "  \\sa SDL_HapticDestroyEffect"]
-  #[link_name = "\u{1}_SDL_HapticNewEffect"]
   pub fn SDL_HapticNewEffect(haptic: *mut SDL_Haptic, effect: *mut SDL_HapticEffect)
     -> libc::c_int;
 }
@@ -13002,7 +12492,6 @@ extern "C" {
   #[doc = "  \\sa SDL_HapticNewEffect"]
   #[doc = "  \\sa SDL_HapticRunEffect"]
   #[doc = "  \\sa SDL_HapticDestroyEffect"]
-  #[link_name = "\u{1}_SDL_HapticUpdateEffect"]
   pub fn SDL_HapticUpdateEffect(
     haptic: *mut SDL_Haptic,
     effect: libc::c_int,
@@ -13026,7 +12515,6 @@ extern "C" {
   #[doc = "  \\sa SDL_HapticStopEffect"]
   #[doc = "  \\sa SDL_HapticDestroyEffect"]
   #[doc = "  \\sa SDL_HapticGetEffectStatus"]
-  #[link_name = "\u{1}_SDL_HapticRunEffect"]
   pub fn SDL_HapticRunEffect(
     haptic: *mut SDL_Haptic,
     effect: libc::c_int,
@@ -13042,7 +12530,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticRunEffect"]
   #[doc = "  \\sa SDL_HapticDestroyEffect"]
-  #[link_name = "\u{1}_SDL_HapticStopEffect"]
   pub fn SDL_HapticStopEffect(haptic: *mut SDL_Haptic, effect: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -13055,7 +12542,6 @@ extern "C" {
   #[doc = "  \\param effect Identifier of the effect to destroy."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticNewEffect"]
-  #[link_name = "\u{1}_SDL_HapticDestroyEffect"]
   pub fn SDL_HapticDestroyEffect(haptic: *mut SDL_Haptic, effect: libc::c_int);
 }
 extern "C" {
@@ -13069,7 +12555,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticRunEffect"]
   #[doc = "  \\sa SDL_HapticStopEffect"]
-  #[link_name = "\u{1}_SDL_HapticGetEffectStatus"]
   pub fn SDL_HapticGetEffectStatus(haptic: *mut SDL_Haptic, effect: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -13087,7 +12572,6 @@ extern "C" {
   #[doc = "  \\return 0 on success or -1 on error."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticQuery"]
-  #[link_name = "\u{1}_SDL_HapticSetGain"]
   pub fn SDL_HapticSetGain(haptic: *mut SDL_Haptic, gain: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -13103,7 +12587,6 @@ extern "C" {
   #[doc = "  \\return 0 on success or -1 on error."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticQuery"]
-  #[link_name = "\u{1}_SDL_HapticSetAutocenter"]
   pub fn SDL_HapticSetAutocenter(haptic: *mut SDL_Haptic, autocenter: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -13119,7 +12602,6 @@ extern "C" {
   #[doc = "  \\return 0 on success or -1 on error."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticUnpause"]
-  #[link_name = "\u{1}_SDL_HapticPause"]
   pub fn SDL_HapticPause(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 extern "C" {
@@ -13131,7 +12613,6 @@ extern "C" {
   #[doc = "  \\return 0 on success or -1 on error."]
   #[doc = ""]
   #[doc = "  \\sa SDL_HapticPause"]
-  #[link_name = "\u{1}_SDL_HapticUnpause"]
   pub fn SDL_HapticUnpause(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 extern "C" {
@@ -13139,7 +12620,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\param haptic Haptic device to stop."]
   #[doc = "  \\return 0 on success or -1 on error."]
-  #[link_name = "\u{1}_SDL_HapticStopAll"]
   pub fn SDL_HapticStopAll(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 extern "C" {
@@ -13151,7 +12631,6 @@ extern "C" {
   #[doc = "  \\sa SDL_HapticRumbleInit"]
   #[doc = "  \\sa SDL_HapticRumblePlay"]
   #[doc = "  \\sa SDL_HapticRumbleStop"]
-  #[link_name = "\u{1}_SDL_HapticRumbleSupported"]
   pub fn SDL_HapticRumbleSupported(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 extern "C" {
@@ -13164,7 +12643,6 @@ extern "C" {
   #[doc = "  \\sa SDL_HapticRumbleSupported"]
   #[doc = "  \\sa SDL_HapticRumblePlay"]
   #[doc = "  \\sa SDL_HapticRumbleStop"]
-  #[link_name = "\u{1}_SDL_HapticRumbleInit"]
   pub fn SDL_HapticRumbleInit(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 extern "C" {
@@ -13178,7 +12656,6 @@ extern "C" {
   #[doc = "  \\sa SDL_HapticRumbleSupported"]
   #[doc = "  \\sa SDL_HapticRumbleInit"]
   #[doc = "  \\sa SDL_HapticRumbleStop"]
-  #[link_name = "\u{1}_SDL_HapticRumblePlay"]
   pub fn SDL_HapticRumblePlay(
     haptic: *mut SDL_Haptic,
     strength: f32,
@@ -13194,7 +12671,6 @@ extern "C" {
   #[doc = "  \\sa SDL_HapticRumbleSupported"]
   #[doc = "  \\sa SDL_HapticRumbleInit"]
   #[doc = "  \\sa SDL_HapticRumblePlay"]
-  #[link_name = "\u{1}_SDL_HapticRumbleStop"]
   pub fn SDL_HapticRumbleStop(haptic: *mut SDL_Haptic) -> libc::c_int;
 }
 pub mod SDL_HintPriority {
@@ -13212,7 +12688,6 @@ extern "C" {
   #[doc = "  lower.  Environment variables are considered to have override priority."]
   #[doc = ""]
   #[doc = "  \\return SDL_TRUE if the hint was set, SDL_FALSE otherwise"]
-  #[link_name = "\u{1}_SDL_SetHintWithPriority"]
   pub fn SDL_SetHintWithPriority(
     name: *const libc::c_char,
     value: *const libc::c_char,
@@ -13223,21 +12698,18 @@ extern "C" {
   #[doc = "  \\brief Set a hint with normal priority"]
   #[doc = ""]
   #[doc = "  \\return SDL_TRUE if the hint was set, SDL_FALSE otherwise"]
-  #[link_name = "\u{1}_SDL_SetHint"]
   pub fn SDL_SetHint(name: *const libc::c_char, value: *const libc::c_char) -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = "  \\brief Get a hint"]
   #[doc = ""]
   #[doc = "  \\return The string value of a hint variable."]
-  #[link_name = "\u{1}_SDL_GetHint"]
   pub fn SDL_GetHint(name: *const libc::c_char) -> *const libc::c_char;
 }
 extern "C" {
   #[doc = "  \\brief Get a hint"]
   #[doc = ""]
   #[doc = "  \\return The boolean value of a hint variable."]
-  #[link_name = "\u{1}_SDL_GetHintBoolean"]
   pub fn SDL_GetHintBoolean(
     name: *const libc::c_char,
     default_value: SDL_bool::Type,
@@ -13258,7 +12730,6 @@ extern "C" {
   #[doc = "  \\param name The hint to watch"]
   #[doc = "  \\param callback The function to call when the hint value changes"]
   #[doc = "  \\param userdata A pointer to pass to the callback function"]
-  #[link_name = "\u{1}_SDL_AddHintCallback"]
   pub fn SDL_AddHintCallback(
     name: *const libc::c_char,
     callback: SDL_HintCallback,
@@ -13271,7 +12742,6 @@ extern "C" {
   #[doc = "  \\param name The hint being watched"]
   #[doc = "  \\param callback The function being called when the hint value changes"]
   #[doc = "  \\param userdata A pointer being passed to the callback function"]
-  #[link_name = "\u{1}_SDL_DelHintCallback"]
   pub fn SDL_DelHintCallback(
     name: *const libc::c_char,
     callback: SDL_HintCallback,
@@ -13282,21 +12752,18 @@ extern "C" {
   #[doc = "  \\brief  Clear all hints"]
   #[doc = ""]
   #[doc = "  This function is called during SDL_Quit() to free stored hints."]
-  #[link_name = "\u{1}_SDL_ClearHints"]
   pub fn SDL_ClearHints();
 }
 extern "C" {
   #[doc = "  This function dynamically loads a shared object and returns a pointer"]
   #[doc = "  to the object handle (or NULL if there was an error)."]
   #[doc = "  The 'sofile' parameter is a system dependent name of the object file."]
-  #[link_name = "\u{1}_SDL_LoadObject"]
   pub fn SDL_LoadObject(sofile: *const libc::c_char) -> *mut libc::c_void;
 }
 extern "C" {
   #[doc = "  Given an object handle, this function looks up the address of the"]
   #[doc = "  named function in the shared object and returns it.  This address"]
   #[doc = "  is no longer valid after calling SDL_UnloadObject()."]
-  #[link_name = "\u{1}_SDL_LoadFunction"]
   pub fn SDL_LoadFunction(
     handle: *mut libc::c_void,
     name: *const libc::c_char,
@@ -13304,7 +12771,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  Unload a shared object from memory."]
-  #[link_name = "\u{1}_SDL_UnloadObject"]
   pub fn SDL_UnloadObject(handle: *mut libc::c_void);
 }
 pub mod _bindgen_ty_8 {
@@ -13349,64 +12815,52 @@ pub mod SDL_LogPriority {
 }
 extern "C" {
   #[doc = "  \\brief Set the priority of all log categories"]
-  #[link_name = "\u{1}_SDL_LogSetAllPriority"]
   pub fn SDL_LogSetAllPriority(priority: SDL_LogPriority::Type);
 }
 extern "C" {
   #[doc = "  \\brief Set the priority of a particular log category"]
-  #[link_name = "\u{1}_SDL_LogSetPriority"]
   pub fn SDL_LogSetPriority(category: libc::c_int, priority: SDL_LogPriority::Type);
 }
 extern "C" {
   #[doc = "  \\brief Get the priority of a particular log category"]
-  #[link_name = "\u{1}_SDL_LogGetPriority"]
   pub fn SDL_LogGetPriority(category: libc::c_int) -> SDL_LogPriority::Type;
 }
 extern "C" {
   #[doc = "  \\brief Reset all priorities to default."]
   #[doc = ""]
   #[doc = "  \\note This is called in SDL_Quit()."]
-  #[link_name = "\u{1}_SDL_LogResetPriorities"]
   pub fn SDL_LogResetPriorities();
 }
 extern "C" {
   #[doc = "  \\brief Log a message with SDL_LOG_CATEGORY_APPLICATION and SDL_LOG_PRIORITY_INFO"]
-  #[link_name = "\u{1}_SDL_Log"]
   pub fn SDL_Log(fmt: *const libc::c_char, ...);
 }
 extern "C" {
   #[doc = "  \\brief Log a message with SDL_LOG_PRIORITY_VERBOSE"]
-  #[link_name = "\u{1}_SDL_LogVerbose"]
   pub fn SDL_LogVerbose(category: libc::c_int, fmt: *const libc::c_char, ...);
 }
 extern "C" {
   #[doc = "  \\brief Log a message with SDL_LOG_PRIORITY_DEBUG"]
-  #[link_name = "\u{1}_SDL_LogDebug"]
   pub fn SDL_LogDebug(category: libc::c_int, fmt: *const libc::c_char, ...);
 }
 extern "C" {
   #[doc = "  \\brief Log a message with SDL_LOG_PRIORITY_INFO"]
-  #[link_name = "\u{1}_SDL_LogInfo"]
   pub fn SDL_LogInfo(category: libc::c_int, fmt: *const libc::c_char, ...);
 }
 extern "C" {
   #[doc = "  \\brief Log a message with SDL_LOG_PRIORITY_WARN"]
-  #[link_name = "\u{1}_SDL_LogWarn"]
   pub fn SDL_LogWarn(category: libc::c_int, fmt: *const libc::c_char, ...);
 }
 extern "C" {
   #[doc = "  \\brief Log a message with SDL_LOG_PRIORITY_ERROR"]
-  #[link_name = "\u{1}_SDL_LogError"]
   pub fn SDL_LogError(category: libc::c_int, fmt: *const libc::c_char, ...);
 }
 extern "C" {
   #[doc = "  \\brief Log a message with SDL_LOG_PRIORITY_CRITICAL"]
-  #[link_name = "\u{1}_SDL_LogCritical"]
   pub fn SDL_LogCritical(category: libc::c_int, fmt: *const libc::c_char, ...);
 }
 extern "C" {
   #[doc = "  \\brief Log a message with the specified category and priority."]
-  #[link_name = "\u{1}_SDL_LogMessage"]
   pub fn SDL_LogMessage(
     category: libc::c_int,
     priority: SDL_LogPriority::Type,
@@ -13416,7 +12870,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Log a message with the specified category and priority."]
-  #[link_name = "\u{1}_SDL_LogMessageV"]
   pub fn SDL_LogMessageV(
     category: libc::c_int,
     priority: SDL_LogPriority::Type,
@@ -13435,7 +12888,6 @@ pub type SDL_LogOutputFunction = ::core::option::Option<
 >;
 extern "C" {
   #[doc = "  \\brief Get the current log output function."]
-  #[link_name = "\u{1}_SDL_LogGetOutputFunction"]
   pub fn SDL_LogGetOutputFunction(
     callback: *mut SDL_LogOutputFunction,
     userdata: *mut *mut libc::c_void,
@@ -13444,7 +12896,6 @@ extern "C" {
 extern "C" {
   #[doc = "  \\brief This function allows you to replace the default log output"]
   #[doc = "         function with one of your own."]
-  #[link_name = "\u{1}_SDL_LogSetOutputFunction"]
   pub fn SDL_LogSetOutputFunction(callback: SDL_LogOutputFunction, userdata: *mut libc::c_void);
 }
 pub mod SDL_MessageBoxFlags {
@@ -13731,7 +13182,6 @@ extern "C" {
   #[doc = "        window, or on the main thread if the messagebox has no parent.  It will"]
   #[doc = "        block execution of that thread until the user clicks a button or"]
   #[doc = "        closes the messagebox."]
-  #[link_name = "\u{1}_SDL_ShowMessageBox"]
   pub fn SDL_ShowMessageBox(
     messageboxdata: *const SDL_MessageBoxData,
     buttonid: *mut libc::c_int,
@@ -13748,7 +13198,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, -1 on error"]
   #[doc = ""]
   #[doc = "  \\sa SDL_ShowMessageBox"]
-  #[link_name = "\u{1}_SDL_ShowSimpleMessageBox"]
   pub fn SDL_ShowSimpleMessageBox(
     flags: Uint32,
     title: *const libc::c_char,
@@ -13782,7 +13231,6 @@ extern "C" {
   #[doc = "             can't determine a value, or we're not running on a battery."]
   #[doc = ""]
   #[doc = "  \\return The state of the battery (if any)."]
-  #[link_name = "\u{1}_SDL_GetPowerInfo"]
   pub fn SDL_GetPowerInfo(secs: *mut libc::c_int, pct: *mut libc::c_int) -> SDL_PowerState::Type;
 }
 pub mod SDL_RendererFlags {
@@ -13951,7 +13399,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_GetRenderDriverInfo()"]
   #[doc = "  \\sa SDL_CreateRenderer()"]
-  #[link_name = "\u{1}_SDL_GetNumRenderDrivers"]
   pub fn SDL_GetNumRenderDrivers() -> libc::c_int;
 }
 extern "C" {
@@ -13965,7 +13412,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, -1 if the index was out of range."]
   #[doc = ""]
   #[doc = "  \\sa SDL_CreateRenderer()"]
-  #[link_name = "\u{1}_SDL_GetRenderDriverInfo"]
   pub fn SDL_GetRenderDriverInfo(index: libc::c_int, info: *mut SDL_RendererInfo) -> libc::c_int;
 }
 extern "C" {
@@ -13978,7 +13424,6 @@ extern "C" {
   #[doc = "  \\param renderer A pointer filled with the renderer, or NULL on error"]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_CreateWindowAndRenderer"]
   pub fn SDL_CreateWindowAndRenderer(
     width: libc::c_int,
     height: libc::c_int,
@@ -14000,7 +13445,6 @@ extern "C" {
   #[doc = "  \\sa SDL_CreateSoftwareRenderer()"]
   #[doc = "  \\sa SDL_GetRendererInfo()"]
   #[doc = "  \\sa SDL_DestroyRenderer()"]
-  #[link_name = "\u{1}_SDL_CreateRenderer"]
   pub fn SDL_CreateRenderer(
     window: *mut SDL_Window,
     index: libc::c_int,
@@ -14016,17 +13460,14 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_CreateRenderer()"]
   #[doc = "  \\sa SDL_DestroyRenderer()"]
-  #[link_name = "\u{1}_SDL_CreateSoftwareRenderer"]
   pub fn SDL_CreateSoftwareRenderer(surface: *mut SDL_Surface) -> *mut SDL_Renderer;
 }
 extern "C" {
   #[doc = "  \\brief Get the renderer associated with a window."]
-  #[link_name = "\u{1}_SDL_GetRenderer"]
   pub fn SDL_GetRenderer(window: *mut SDL_Window) -> *mut SDL_Renderer;
 }
 extern "C" {
   #[doc = "  \\brief Get information about a rendering context."]
-  #[link_name = "\u{1}_SDL_GetRendererInfo"]
   pub fn SDL_GetRendererInfo(
     renderer: *mut SDL_Renderer,
     info: *mut SDL_RendererInfo,
@@ -14034,7 +13475,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Get the output size in pixels of a rendering context."]
-  #[link_name = "\u{1}_SDL_GetRendererOutputSize"]
   pub fn SDL_GetRendererOutputSize(
     renderer: *mut SDL_Renderer,
     w: *mut libc::c_int,
@@ -14059,7 +13499,6 @@ extern "C" {
   #[doc = "  \\sa SDL_QueryTexture()"]
   #[doc = "  \\sa SDL_UpdateTexture()"]
   #[doc = "  \\sa SDL_DestroyTexture()"]
-  #[link_name = "\u{1}_SDL_CreateTexture"]
   pub fn SDL_CreateTexture(
     renderer: *mut SDL_Renderer,
     format: Uint32,
@@ -14080,7 +13519,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_QueryTexture()"]
   #[doc = "  \\sa SDL_DestroyTexture()"]
-  #[link_name = "\u{1}_SDL_CreateTextureFromSurface"]
   pub fn SDL_CreateTextureFromSurface(
     renderer: *mut SDL_Renderer,
     surface: *mut SDL_Surface,
@@ -14098,7 +13536,6 @@ extern "C" {
   #[doc = "  \\param h       A pointer filled in with the height of the texture in pixels."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 if the texture is not valid."]
-  #[link_name = "\u{1}_SDL_QueryTexture"]
   pub fn SDL_QueryTexture(
     texture: *mut SDL_Texture,
     format: *mut Uint32,
@@ -14119,7 +13556,6 @@ extern "C" {
   #[doc = "          is not supported."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetTextureColorMod()"]
-  #[link_name = "\u{1}_SDL_SetTextureColorMod"]
   pub fn SDL_SetTextureColorMod(
     texture: *mut SDL_Texture,
     r: Uint8,
@@ -14138,7 +13574,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the texture is not valid."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetTextureColorMod()"]
-  #[link_name = "\u{1}_SDL_GetTextureColorMod"]
   pub fn SDL_GetTextureColorMod(
     texture: *mut SDL_Texture,
     r: *mut Uint8,
@@ -14156,7 +13591,6 @@ extern "C" {
   #[doc = "          is not supported."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetTextureAlphaMod()"]
-  #[link_name = "\u{1}_SDL_SetTextureAlphaMod"]
   pub fn SDL_SetTextureAlphaMod(texture: *mut SDL_Texture, alpha: Uint8) -> libc::c_int;
 }
 extern "C" {
@@ -14168,7 +13602,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the texture is not valid."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetTextureAlphaMod()"]
-  #[link_name = "\u{1}_SDL_GetTextureAlphaMod"]
   pub fn SDL_GetTextureAlphaMod(texture: *mut SDL_Texture, alpha: *mut Uint8) -> libc::c_int;
 }
 extern "C" {
@@ -14184,7 +13617,6 @@ extern "C" {
   #[doc = "        chosen."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetTextureBlendMode()"]
-  #[link_name = "\u{1}_SDL_SetTextureBlendMode"]
   pub fn SDL_SetTextureBlendMode(
     texture: *mut SDL_Texture,
     blendMode: SDL_BlendMode::Type,
@@ -14199,7 +13631,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the texture is not valid."]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetTextureBlendMode()"]
-  #[link_name = "\u{1}_SDL_GetTextureBlendMode"]
   pub fn SDL_GetTextureBlendMode(
     texture: *mut SDL_Texture,
     blendMode: *mut SDL_BlendMode::Type,
@@ -14220,7 +13651,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the texture is not valid."]
   #[doc = ""]
   #[doc = "  \\note This is a fairly slow function."]
-  #[link_name = "\u{1}_SDL_UpdateTexture"]
   pub fn SDL_UpdateTexture(
     texture: *mut SDL_Texture,
     rect: *const SDL_Rect,
@@ -14246,7 +13676,6 @@ extern "C" {
   #[doc = "  \\note You can use SDL_UpdateTexture() as long as your pixel data is"]
   #[doc = "        a contiguous block of Y and U/V planes in the proper order, but"]
   #[doc = "        this function is available if your pixel data is not contiguous."]
-  #[link_name = "\u{1}_SDL_UpdateYUVTexture"]
   pub fn SDL_UpdateYUVTexture(
     texture: *mut SDL_Texture,
     rect: *const SDL_Rect,
@@ -14272,7 +13701,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if the texture is not valid or was not created with ::SDL_TEXTUREACCESS_STREAMING."]
   #[doc = ""]
   #[doc = "  \\sa SDL_UnlockTexture()"]
-  #[link_name = "\u{1}_SDL_LockTexture"]
   pub fn SDL_LockTexture(
     texture: *mut SDL_Texture,
     rect: *const SDL_Rect,
@@ -14284,7 +13712,6 @@ extern "C" {
   #[doc = "  \\brief Unlock a texture, uploading the changes to video memory, if needed."]
   #[doc = ""]
   #[doc = "  \\sa SDL_LockTexture()"]
-  #[link_name = "\u{1}_SDL_UnlockTexture"]
   pub fn SDL_UnlockTexture(texture: *mut SDL_Texture);
 }
 extern "C" {
@@ -14293,7 +13720,6 @@ extern "C" {
   #[doc = " \\param renderer The renderer that will be checked"]
   #[doc = ""]
   #[doc = " \\return SDL_TRUE if supported, SDL_FALSE if not."]
-  #[link_name = "\u{1}_SDL_RenderTargetSupported"]
   pub fn SDL_RenderTargetSupported(renderer: *mut SDL_Renderer) -> SDL_bool::Type;
 }
 extern "C" {
@@ -14305,7 +13731,6 @@ extern "C" {
   #[doc = " \\return 0 on success, or -1 on error"]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetRenderTarget()"]
-  #[link_name = "\u{1}_SDL_SetRenderTarget"]
   pub fn SDL_SetRenderTarget(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture)
     -> libc::c_int;
 }
@@ -14315,7 +13740,6 @@ extern "C" {
   #[doc = " \\return The current render target"]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetRenderTarget()"]
-  #[link_name = "\u{1}_SDL_GetRenderTarget"]
   pub fn SDL_GetRenderTarget(renderer: *mut SDL_Renderer) -> *mut SDL_Texture;
 }
 extern "C" {
@@ -14340,7 +13764,6 @@ extern "C" {
   #[doc = "  \\sa SDL_RenderGetLogicalSize()"]
   #[doc = "  \\sa SDL_RenderSetScale()"]
   #[doc = "  \\sa SDL_RenderSetViewport()"]
-  #[link_name = "\u{1}_SDL_RenderSetLogicalSize"]
   pub fn SDL_RenderSetLogicalSize(
     renderer: *mut SDL_Renderer,
     w: libc::c_int,
@@ -14355,7 +13778,6 @@ extern "C" {
   #[doc = "  \\param h      A pointer filled with the height of the logical resolution"]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderSetLogicalSize()"]
-  #[link_name = "\u{1}_SDL_RenderGetLogicalSize"]
   pub fn SDL_RenderGetLogicalSize(
     renderer: *mut SDL_Renderer,
     w: *mut libc::c_int,
@@ -14373,7 +13795,6 @@ extern "C" {
   #[doc = "  rounded down to the lower multiple."]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderSetLogicalSize()"]
-  #[link_name = "\u{1}_SDL_RenderSetIntegerScale"]
   pub fn SDL_RenderSetIntegerScale(
     renderer: *mut SDL_Renderer,
     enable: SDL_bool::Type,
@@ -14385,7 +13806,6 @@ extern "C" {
   #[doc = "  \\param renderer The renderer from which integer scaling should be queried."]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderSetIntegerScale()"]
-  #[link_name = "\u{1}_SDL_RenderGetIntegerScale"]
   pub fn SDL_RenderGetIntegerScale(renderer: *mut SDL_Renderer) -> SDL_bool::Type;
 }
 extern "C" {
@@ -14402,14 +13822,12 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderGetViewport()"]
   #[doc = "  \\sa SDL_RenderSetLogicalSize()"]
-  #[link_name = "\u{1}_SDL_RenderSetViewport"]
   pub fn SDL_RenderSetViewport(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  \\brief Get the drawing area for the current target."]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderSetViewport()"]
-  #[link_name = "\u{1}_SDL_RenderGetViewport"]
   pub fn SDL_RenderGetViewport(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect);
 }
 extern "C" {
@@ -14422,7 +13840,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 on error"]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderGetClipRect()"]
-  #[link_name = "\u{1}_SDL_RenderSetClipRect"]
   pub fn SDL_RenderSetClipRect(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> libc::c_int;
 }
 extern "C" {
@@ -14433,7 +13850,6 @@ extern "C" {
   #[doc = "                an empty rectangle if clipping is disabled."]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderSetClipRect()"]
-  #[link_name = "\u{1}_SDL_RenderGetClipRect"]
   pub fn SDL_RenderGetClipRect(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect);
 }
 extern "C" {
@@ -14442,7 +13858,6 @@ extern "C" {
   #[doc = "  \\param renderer The renderer from which clip state should be queried."]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderGetClipRect()"]
-  #[link_name = "\u{1}_SDL_RenderIsClipEnabled"]
   pub fn SDL_RenderIsClipEnabled(renderer: *mut SDL_Renderer) -> SDL_bool::Type;
 }
 extern "C" {
@@ -14462,7 +13877,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderGetScale()"]
   #[doc = "  \\sa SDL_RenderSetLogicalSize()"]
-  #[link_name = "\u{1}_SDL_RenderSetScale"]
   pub fn SDL_RenderSetScale(renderer: *mut SDL_Renderer, scaleX: f32, scaleY: f32) -> libc::c_int;
 }
 extern "C" {
@@ -14473,7 +13887,6 @@ extern "C" {
   #[doc = "  \\param scaleY A pointer filled in with the vertical scaling factor"]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderSetScale()"]
-  #[link_name = "\u{1}_SDL_RenderGetScale"]
   pub fn SDL_RenderGetScale(renderer: *mut SDL_Renderer, scaleX: *mut f32, scaleY: *mut f32);
 }
 extern "C" {
@@ -14487,7 +13900,6 @@ extern "C" {
   #[doc = "           ::SDL_ALPHA_OPAQUE (255)."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_SetRenderDrawColor"]
   pub fn SDL_SetRenderDrawColor(
     renderer: *mut SDL_Renderer,
     r: Uint8,
@@ -14507,7 +13919,6 @@ extern "C" {
   #[doc = "           usually ::SDL_ALPHA_OPAQUE (255)."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_GetRenderDrawColor"]
   pub fn SDL_GetRenderDrawColor(
     renderer: *mut SDL_Renderer,
     r: *mut Uint8,
@@ -14528,7 +13939,6 @@ extern "C" {
   #[doc = "        chosen."]
   #[doc = ""]
   #[doc = "  \\sa SDL_GetRenderDrawBlendMode()"]
-  #[link_name = "\u{1}_SDL_SetRenderDrawBlendMode"]
   pub fn SDL_SetRenderDrawBlendMode(
     renderer: *mut SDL_Renderer,
     blendMode: SDL_BlendMode::Type,
@@ -14543,7 +13953,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 on error"]
   #[doc = ""]
   #[doc = "  \\sa SDL_SetRenderDrawBlendMode()"]
-  #[link_name = "\u{1}_SDL_GetRenderDrawBlendMode"]
   pub fn SDL_GetRenderDrawBlendMode(
     renderer: *mut SDL_Renderer,
     blendMode: *mut SDL_BlendMode::Type,
@@ -14556,7 +13965,6 @@ extern "C" {
   #[doc = "  the clip rectangle."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderClear"]
   pub fn SDL_RenderClear(renderer: *mut SDL_Renderer) -> libc::c_int;
 }
 extern "C" {
@@ -14567,7 +13975,6 @@ extern "C" {
   #[doc = "  \\param y The y coordinate of the point."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderDrawPoint"]
   pub fn SDL_RenderDrawPoint(
     renderer: *mut SDL_Renderer,
     x: libc::c_int,
@@ -14582,7 +13989,6 @@ extern "C" {
   #[doc = "  \\param count The number of points to draw"]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderDrawPoints"]
   pub fn SDL_RenderDrawPoints(
     renderer: *mut SDL_Renderer,
     points: *const SDL_Point,
@@ -14599,7 +14005,6 @@ extern "C" {
   #[doc = "  \\param y2 The y coordinate of the end point."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderDrawLine"]
   pub fn SDL_RenderDrawLine(
     renderer: *mut SDL_Renderer,
     x1: libc::c_int,
@@ -14616,7 +14021,6 @@ extern "C" {
   #[doc = "  \\param count The number of points, drawing count-1 lines"]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderDrawLines"]
   pub fn SDL_RenderDrawLines(
     renderer: *mut SDL_Renderer,
     points: *const SDL_Point,
@@ -14630,7 +14034,6 @@ extern "C" {
   #[doc = "  \\param rect A pointer to the destination rectangle, or NULL to outline the entire rendering target."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderDrawRect"]
   pub fn SDL_RenderDrawRect(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> libc::c_int;
 }
 extern "C" {
@@ -14641,7 +14044,6 @@ extern "C" {
   #[doc = "  \\param count The number of rectangles."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderDrawRects"]
   pub fn SDL_RenderDrawRects(
     renderer: *mut SDL_Renderer,
     rects: *const SDL_Rect,
@@ -14656,7 +14058,6 @@ extern "C" {
   #[doc = "              rendering target."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderFillRect"]
   pub fn SDL_RenderFillRect(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> libc::c_int;
 }
 extern "C" {
@@ -14667,7 +14068,6 @@ extern "C" {
   #[doc = "  \\param count The number of rectangles."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderFillRects"]
   pub fn SDL_RenderFillRects(
     renderer: *mut SDL_Renderer,
     rects: *const SDL_Rect,
@@ -14685,7 +14085,6 @@ extern "C" {
   #[doc = "                   entire rendering target."]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderCopy"]
   pub fn SDL_RenderCopy(
     renderer: *mut SDL_Renderer,
     texture: *mut SDL_Texture,
@@ -14707,7 +14106,6 @@ extern "C" {
   #[doc = "  \\param flip     An SDL_RendererFlip value stating which flipping actions should be performed on the texture"]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 on error"]
-  #[link_name = "\u{1}_SDL_RenderCopyEx"]
   pub fn SDL_RenderCopyEx(
     renderer: *mut SDL_Renderer,
     texture: *mut SDL_Texture,
@@ -14732,7 +14130,6 @@ extern "C" {
   #[doc = "  \\return 0 on success, or -1 if pixel reading is not supported."]
   #[doc = ""]
   #[doc = "  \\warning This is a very slow operation, and should not be used frequently."]
-  #[link_name = "\u{1}_SDL_RenderReadPixels"]
   pub fn SDL_RenderReadPixels(
     renderer: *mut SDL_Renderer,
     rect: *const SDL_Rect,
@@ -14743,7 +14140,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  \\brief Update the screen with rendering performed."]
-  #[link_name = "\u{1}_SDL_RenderPresent"]
   pub fn SDL_RenderPresent(renderer: *mut SDL_Renderer);
 }
 extern "C" {
@@ -14751,7 +14147,6 @@ extern "C" {
   #[doc = ""]
   #[doc = "  \\sa SDL_CreateTexture()"]
   #[doc = "  \\sa SDL_CreateTextureFromSurface()"]
-  #[link_name = "\u{1}_SDL_DestroyTexture"]
   pub fn SDL_DestroyTexture(texture: *mut SDL_Texture);
 }
 extern "C" {
@@ -14759,7 +14154,6 @@ extern "C" {
   #[doc = "         textures."]
   #[doc = ""]
   #[doc = "  \\sa SDL_CreateRenderer()"]
-  #[link_name = "\u{1}_SDL_DestroyRenderer"]
   pub fn SDL_DestroyRenderer(renderer: *mut SDL_Renderer);
 }
 extern "C" {
@@ -14771,7 +14165,6 @@ extern "C" {
   #[doc = "  \\param texh     A pointer to a float that will be filled with the texture height"]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 if the operation is not supported"]
-  #[link_name = "\u{1}_SDL_GL_BindTexture"]
   pub fn SDL_GL_BindTexture(
     texture: *mut SDL_Texture,
     texw: *mut f32,
@@ -14784,7 +14177,6 @@ extern "C" {
   #[doc = "  \\param texture  The SDL texture to unbind"]
   #[doc = ""]
   #[doc = "  \\return 0 on success, or -1 if the operation is not supported"]
-  #[link_name = "\u{1}_SDL_GL_UnbindTexture"]
   pub fn SDL_GL_UnbindTexture(texture: *mut SDL_Texture) -> libc::c_int;
 }
 extern "C" {
@@ -14795,7 +14187,6 @@ extern "C" {
   #[doc = "  \\return CAMetalLayer* on success, or NULL if the renderer isn't a Metal renderer"]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderGetMetalCommandEncoder()"]
-  #[link_name = "\u{1}_SDL_RenderGetMetalLayer"]
   pub fn SDL_RenderGetMetalLayer(renderer: *mut SDL_Renderer) -> *mut libc::c_void;
 }
 extern "C" {
@@ -14806,7 +14197,6 @@ extern "C" {
   #[doc = "  \\return id<MTLRenderCommandEncoder> on success, or NULL if the renderer isn't a Metal renderer"]
   #[doc = ""]
   #[doc = "  \\sa SDL_RenderGetMetalLayer()"]
-  #[link_name = "\u{1}_SDL_RenderGetMetalCommandEncoder"]
   pub fn SDL_RenderGetMetalCommandEncoder(renderer: *mut SDL_Renderer) -> *mut libc::c_void;
 }
 #[doc = "  \\brief SDL_sensor.h"]
@@ -14838,7 +14228,6 @@ pub mod SDL_SensorType {
 }
 extern "C" {
   #[doc = "  \\brief Count the number of sensors attached to the system right now"]
-  #[link_name = "\u{1}_SDL_NumSensors"]
   pub fn SDL_NumSensors() -> libc::c_int;
 }
 extern "C" {
@@ -14847,7 +14236,6 @@ extern "C" {
   #[doc = "  This can be called before any sensors are opened."]
   #[doc = ""]
   #[doc = "  \\return The sensor name, or NULL if device_index is out of range."]
-  #[link_name = "\u{1}_SDL_SensorGetDeviceName"]
   pub fn SDL_SensorGetDeviceName(device_index: libc::c_int) -> *const libc::c_char;
 }
 extern "C" {
@@ -14856,7 +14244,6 @@ extern "C" {
   #[doc = "  This can be called before any sensors are opened."]
   #[doc = ""]
   #[doc = "  \\return The sensor type, or SDL_SENSOR_INVALID if device_index is out of range."]
-  #[link_name = "\u{1}_SDL_SensorGetDeviceType"]
   pub fn SDL_SensorGetDeviceType(device_index: libc::c_int) -> SDL_SensorType::Type;
 }
 extern "C" {
@@ -14865,7 +14252,6 @@ extern "C" {
   #[doc = "  This can be called before any sensors are opened."]
   #[doc = ""]
   #[doc = "  \\return The sensor platform dependent type, or -1 if device_index is out of range."]
-  #[link_name = "\u{1}_SDL_SensorGetDeviceNonPortableType"]
   pub fn SDL_SensorGetDeviceNonPortableType(device_index: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -14874,7 +14260,6 @@ extern "C" {
   #[doc = "  This can be called before any sensors are opened."]
   #[doc = ""]
   #[doc = "  \\return The sensor instance ID, or -1 if device_index is out of range."]
-  #[link_name = "\u{1}_SDL_SensorGetDeviceInstanceID"]
   pub fn SDL_SensorGetDeviceInstanceID(device_index: libc::c_int) -> SDL_SensorID;
 }
 extern "C" {
@@ -14883,19 +14268,16 @@ extern "C" {
   #[doc = "  The index passed as an argument refers to the N'th sensor on the system."]
   #[doc = ""]
   #[doc = "  \\return A sensor identifier, or NULL if an error occurred."]
-  #[link_name = "\u{1}_SDL_SensorOpen"]
   pub fn SDL_SensorOpen(device_index: libc::c_int) -> *mut SDL_Sensor;
 }
 extern "C" {
   #[doc = " Return the SDL_Sensor associated with an instance id."]
-  #[link_name = "\u{1}_SDL_SensorFromInstanceID"]
   pub fn SDL_SensorFromInstanceID(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
 }
 extern "C" {
   #[doc = "  \\brief Get the implementation dependent name of a sensor."]
   #[doc = ""]
   #[doc = "  \\return The sensor name, or NULL if the sensor is NULL."]
-  #[link_name = "\u{1}_SDL_SensorGetName"]
   pub fn SDL_SensorGetName(sensor: *mut SDL_Sensor) -> *const libc::c_char;
 }
 extern "C" {
@@ -14904,7 +14286,6 @@ extern "C" {
   #[doc = "  This can be called before any sensors are opened."]
   #[doc = ""]
   #[doc = "  \\return The sensor type, or SDL_SENSOR_INVALID if the sensor is NULL."]
-  #[link_name = "\u{1}_SDL_SensorGetType"]
   pub fn SDL_SensorGetType(sensor: *mut SDL_Sensor) -> SDL_SensorType::Type;
 }
 extern "C" {
@@ -14913,7 +14294,6 @@ extern "C" {
   #[doc = "  This can be called before any sensors are opened."]
   #[doc = ""]
   #[doc = "  \\return The sensor platform dependent type, or -1 if the sensor is NULL."]
-  #[link_name = "\u{1}_SDL_SensorGetNonPortableType"]
   pub fn SDL_SensorGetNonPortableType(sensor: *mut SDL_Sensor) -> libc::c_int;
 }
 extern "C" {
@@ -14922,7 +14302,6 @@ extern "C" {
   #[doc = "  This can be called before any sensors are opened."]
   #[doc = ""]
   #[doc = "  \\return The sensor instance ID, or -1 if the sensor is NULL."]
-  #[link_name = "\u{1}_SDL_SensorGetInstanceID"]
   pub fn SDL_SensorGetInstanceID(sensor: *mut SDL_Sensor) -> SDL_SensorID;
 }
 extern "C" {
@@ -14935,7 +14314,6 @@ extern "C" {
   #[doc = "  \\param num_values The number of values to write to data"]
   #[doc = ""]
   #[doc = "  \\return 0 or -1 if an error occurred."]
-  #[link_name = "\u{1}_SDL_SensorGetData"]
   pub fn SDL_SensorGetData(
     sensor: *mut SDL_Sensor,
     data: *mut f32,
@@ -14944,7 +14322,6 @@ extern "C" {
 }
 extern "C" {
   #[doc = "  Close a sensor previously opened with SDL_SensorOpen()"]
-  #[link_name = "\u{1}_SDL_SensorClose"]
   pub fn SDL_SensorClose(sensor: *mut SDL_Sensor);
 }
 extern "C" {
@@ -14953,7 +14330,6 @@ extern "C" {
   #[doc = "  This is called automatically by the event loop if sensor events are enabled."]
   #[doc = ""]
   #[doc = "  This needs to be called from the thread that initialized the sensor subsystem."]
-  #[link_name = "\u{1}_SDL_SensorUpdate"]
   pub fn SDL_SensorUpdate();
 }
 extern "C" {
@@ -14975,7 +14351,6 @@ extern "C" {
   #[doc = "  \\return The window created, or NULL if window creation failed."]
   #[doc = ""]
   #[doc = "  \\sa SDL_DestroyWindow()"]
-  #[link_name = "\u{1}_SDL_CreateShapedWindow"]
   pub fn SDL_CreateShapedWindow(
     title: *const libc::c_char,
     x: libc::c_uint,
@@ -14993,7 +14368,6 @@ extern "C" {
   #[doc = " \\return SDL_TRUE if the window is a window that can be shaped, SDL_FALSE if the window is unshaped or NULL."]
   #[doc = ""]
   #[doc = " \\sa SDL_CreateShapedWindow"]
-  #[link_name = "\u{1}_SDL_IsShapedWindow"]
   pub fn SDL_IsShapedWindow(window: *const SDL_Window) -> SDL_bool::Type;
 }
 pub mod WindowShapeMode {
@@ -15130,7 +14504,6 @@ extern "C" {
   #[doc = ""]
   #[doc = " \\sa SDL_WindowShapeMode"]
   #[doc = " \\sa SDL_GetShapedWindowMode."]
-  #[link_name = "\u{1}_SDL_SetWindowShape"]
   pub fn SDL_SetWindowShape(
     window: *mut SDL_Window,
     shape: *mut SDL_Surface,
@@ -15149,7 +14522,6 @@ extern "C" {
   #[doc = ""]
   #[doc = " \\sa SDL_WindowShapeMode"]
   #[doc = " \\sa SDL_SetWindowShape"]
-  #[link_name = "\u{1}_SDL_GetShapedWindowMode"]
   pub fn SDL_GetShapedWindowMode(
     window: *mut SDL_Window,
     shape_mode: *mut SDL_WindowShapeMode,
@@ -15157,29 +14529,24 @@ extern "C" {
 }
 extern "C" {
   #[doc = "\\brief Return true if the current device is a tablet."]
-  #[link_name = "\u{1}_SDL_IsTablet"]
   pub fn SDL_IsTablet() -> SDL_bool::Type;
 }
 extern "C" {
   #[doc = " \\brief Get the number of milliseconds since the SDL library initialization."]
   #[doc = ""]
   #[doc = " \\note This value wraps if the program runs for more than ~49 days."]
-  #[link_name = "\u{1}_SDL_GetTicks"]
   pub fn SDL_GetTicks() -> Uint32;
 }
 extern "C" {
   #[doc = " \\brief Get the current value of the high resolution counter"]
-  #[link_name = "\u{1}_SDL_GetPerformanceCounter"]
   pub fn SDL_GetPerformanceCounter() -> Uint64;
 }
 extern "C" {
   #[doc = " \\brief Get the count per second of the high resolution counter"]
-  #[link_name = "\u{1}_SDL_GetPerformanceFrequency"]
   pub fn SDL_GetPerformanceFrequency() -> Uint64;
 }
 extern "C" {
   #[doc = " \\brief Wait a specified number of milliseconds before returning."]
-  #[link_name = "\u{1}_SDL_Delay"]
   pub fn SDL_Delay(ms: Uint32);
 }
 #[doc = "  Function prototype for the timer callback function."]
@@ -15197,7 +14564,6 @@ extern "C" {
   #[doc = " \\brief Add a new timer to the pool of timers already running."]
   #[doc = ""]
   #[doc = " \\return A timer ID, or 0 when an error occurs."]
-  #[link_name = "\u{1}_SDL_AddTimer"]
   pub fn SDL_AddTimer(
     interval: Uint32,
     callback: SDL_TimerCallback,
@@ -15210,7 +14576,6 @@ extern "C" {
   #[doc = " \\return A boolean value indicating success or failure."]
   #[doc = ""]
   #[doc = " \\warning It is not safe to remove a timer multiple times."]
-  #[link_name = "\u{1}_SDL_RemoveTimer"]
   pub fn SDL_RemoveTimer(id: SDL_TimerID) -> SDL_bool::Type;
 }
 #[doc = "  \\brief Information the version of SDL in use."]
@@ -15299,7 +14664,6 @@ extern "C" {
   #[doc = "  This function may be called safely at any time, even before SDL_Init()."]
   #[doc = ""]
   #[doc = "  \\sa SDL_VERSION"]
-  #[link_name = "\u{1}_SDL_GetVersion"]
   pub fn SDL_GetVersion(ver: *mut SDL_version);
 }
 extern "C" {
@@ -15308,7 +14672,6 @@ extern "C" {
   #[doc = "  Returns an arbitrary string (a hash value) uniquely identifying the"]
   #[doc = "  exact revision of the SDL library in use, and is only useful in comparing"]
   #[doc = "  against other revisions. It is NOT an incrementing number."]
-  #[link_name = "\u{1}_SDL_GetRevision"]
   pub fn SDL_GetRevision() -> *const libc::c_char;
 }
 extern "C" {
@@ -15317,12 +14680,10 @@ extern "C" {
   #[doc = "  Returns a number uniquely identifying the exact revision of the SDL"]
   #[doc = "  library in use. It is an incrementing number based on commits to"]
   #[doc = "  hg.libsdl.org."]
-  #[link_name = "\u{1}_SDL_GetRevisionNumber"]
   pub fn SDL_GetRevisionNumber() -> libc::c_int;
 }
 extern "C" {
   #[doc = "  This function initializes  the subsystems specified by \\c flags"]
-  #[link_name = "\u{1}_SDL_Init"]
   pub fn SDL_Init(flags: Uint32) -> libc::c_int;
 }
 extern "C" {
@@ -15333,12 +14694,10 @@ extern "C" {
   #[doc = "  shutdown a subsystem manually (or call SDL_Quit() to force shutdown)."]
   #[doc = "  If a subsystem is already loaded then this call will"]
   #[doc = "  increase the ref-count and return."]
-  #[link_name = "\u{1}_SDL_InitSubSystem"]
   pub fn SDL_InitSubSystem(flags: Uint32) -> libc::c_int;
 }
 extern "C" {
   #[doc = "  This function cleans up specific SDL subsystems"]
-  #[link_name = "\u{1}_SDL_QuitSubSystem"]
   pub fn SDL_QuitSubSystem(flags: Uint32);
 }
 extern "C" {
@@ -15346,13 +14705,11 @@ extern "C" {
   #[doc = "  previously been initialized."]
   #[doc = ""]
   #[doc = "  If \\c flags is 0, it returns a mask of all initialized subsystems."]
-  #[link_name = "\u{1}_SDL_WasInit"]
   pub fn SDL_WasInit(flags: Uint32) -> Uint32;
 }
 extern "C" {
   #[doc = "  This function cleans up all initialized subsystems. You should"]
   #[doc = "  call it upon all exit conditions."]
-  #[link_name = "\u{1}_SDL_Quit"]
   pub fn SDL_Quit();
 }
 #[repr(C)]
@@ -15706,7 +15063,6 @@ extern "C" {
   #[doc = "  SDL_VERSION(&info.version);"]
   #[doc = "  if ( SDL_GetWindowWMInfo(window, &info) ) { ... }"]
   #[doc = "  \\endcode"]
-  #[link_name = "\u{1}_SDL_GetWindowWMInfo"]
   pub fn SDL_GetWindowWMInfo(window: *mut SDL_Window, info: *mut SDL_SysWMinfo) -> SDL_bool::Type;
 }
 pub type __builtin_va_list = [__va_list_tag; 1usize];
