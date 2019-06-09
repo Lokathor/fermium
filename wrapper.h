@@ -20,5 +20,5 @@ X11 and wayland driver stuff.
 #endif /* __unix__ */
 
 #include "include/SDL.h"
-
+#include "include/SDL_vulkan.h"
 #include "include/SDL_syswm.h"
