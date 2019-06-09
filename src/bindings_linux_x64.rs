@@ -13951,6 +13951,4724 @@ extern "C" {
   #[doc = "  call it upon all exit conditions."]
   pub fn SDL_Quit();
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct VkInstance_T {
+  _unused: [u8; 0],
+}
+pub type VkInstance = *mut VkInstance_T;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct VkSurfaceKHR_T {
+  _unused: [u8; 0],
+}
+pub type VkSurfaceKHR = *mut VkSurfaceKHR_T;
+pub type SDL_vulkanInstance = VkInstance;
+pub type SDL_vulkanSurface = VkSurfaceKHR;
+extern "C" {
+  #[doc = "  \\brief Dynamically load a Vulkan loader library."]
+  #[doc = ""]
+  #[doc = "  \\param [in] path The platform dependent Vulkan loader library name, or"]
+  #[doc = "              \\c NULL."]
+  #[doc = ""]
+  #[doc = "  \\return \\c 0 on success, or \\c -1 if the library couldn't be loaded."]
+  #[doc = ""]
+  #[doc = "  If \\a path is NULL SDL will use the value of the environment variable"]
+  #[doc = "  \\c SDL_VULKAN_LIBRARY, if set, otherwise it loads the default Vulkan"]
+  #[doc = "  loader library."]
+  #[doc = ""]
+  #[doc = "  This should be called after initializing the video driver, but before"]
+  #[doc = "  creating any Vulkan windows. If no Vulkan loader library is loaded, the"]
+  #[doc = "  default library will be loaded upon creation of the first Vulkan window."]
+  #[doc = ""]
+  #[doc = "  \\note It is fairly common for Vulkan applications to link with \\a libvulkan"]
+  #[doc = "        instead of explicitly loading it at run time. This will work with"]
+  #[doc = "        SDL provided the application links to a dynamic library and both it"]
+  #[doc = "        and SDL use the same search path."]
+  #[doc = ""]
+  #[doc = "  \\note If you specify a non-NULL \\c path, an application should retrieve all"]
+  #[doc = "        of the Vulkan functions it uses from the dynamic library using"]
+  #[doc = "        \\c SDL_Vulkan_GetVkGetInstanceProcAddr() unless you can guarantee"]
+  #[doc = "        \\c path points to the same vulkan loader library the application"]
+  #[doc = "        linked to."]
+  #[doc = ""]
+  #[doc = "  \\note On Apple devices, if \\a path is NULL, SDL will attempt to find"]
+  #[doc = "        the vkGetInstanceProcAddr address within all the mach-o images of"]
+  #[doc = "        the current process. This is because it is fairly common for Vulkan"]
+  #[doc = "        applications to link with libvulkan (and historically MoltenVK was"]
+  #[doc = "        provided as a static library). If it is not found then, on macOS, SDL"]
+  #[doc = "        will attempt to load \\c vulkan.framework/vulkan, \\c libvulkan.1.dylib,"]
+  #[doc = "        \\c MoltenVK.framework/MoltenVK and \\c libMoltenVK.dylib in that order."]
+  #[doc = "        On iOS SDL will attempt to load \\c libMoltenVK.dylib. Applications"]
+  #[doc = "        using a dynamic framework or .dylib must ensure it is included in its"]
+  #[doc = "        application bundle."]
+  #[doc = ""]
+  #[doc = "  \\note On non-Apple devices, application linking with a static libvulkan is"]
+  #[doc = "        not supported. Either do not link to the Vulkan loader or link to a"]
+  #[doc = "        dynamic library version."]
+  #[doc = ""]
+  #[doc = "  \\note This function will fail if there are no working Vulkan drivers"]
+  #[doc = "        installed."]
+  #[doc = ""]
+  #[doc = "  \\sa SDL_Vulkan_GetVkGetInstanceProcAddr()"]
+  #[doc = "  \\sa SDL_Vulkan_UnloadLibrary()"]
+  pub fn SDL_Vulkan_LoadLibrary(path: *const libc::c_char) -> libc::c_int;
+}
+extern "C" {
+  #[doc = "  \\brief Get the address of the \\c vkGetInstanceProcAddr function."]
+  #[doc = ""]
+  #[doc = "  \\note This should be called after either calling SDL_Vulkan_LoadLibrary"]
+  #[doc = "        or creating an SDL_Window with the SDL_WINDOW_VULKAN flag."]
+  pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> *mut libc::c_void;
+}
+extern "C" {
+  #[doc = "  \\brief Unload the Vulkan loader library previously loaded by"]
+  #[doc = "         \\c SDL_Vulkan_LoadLibrary()."]
+  #[doc = ""]
+  #[doc = "  \\sa SDL_Vulkan_LoadLibrary()"]
+  pub fn SDL_Vulkan_UnloadLibrary();
+}
+extern "C" {
+  #[doc = "  \\brief Get the names of the Vulkan instance extensions needed to create"]
+  #[doc = "         a surface with \\c SDL_Vulkan_CreateSurface()."]
+  #[doc = ""]
+  #[doc = "  \\param [in]     \\c NULL or window Window for which the required Vulkan instance"]
+  #[doc = "                  extensions should be retrieved"]
+  #[doc = "  \\param [in,out] pCount pointer to an \\c unsigned related to the number of"]
+  #[doc = "                  required Vulkan instance extensions"]
+  #[doc = "  \\param [out]    pNames \\c NULL or a pointer to an array to be filled with the"]
+  #[doc = "                  required Vulkan instance extensions"]
+  #[doc = ""]
+  #[doc = "  \\return \\c SDL_TRUE on success, \\c SDL_FALSE on error."]
+  #[doc = ""]
+  #[doc = "  If \\a pNames is \\c NULL, then the number of required Vulkan instance"]
+  #[doc = "  extensions is returned in pCount. Otherwise, \\a pCount must point to a"]
+  #[doc = "  variable set to the number of elements in the \\a pNames array, and on"]
+  #[doc = "  return the variable is overwritten with the number of names actually"]
+  #[doc = "  written to \\a pNames. If \\a pCount is less than the number of required"]
+  #[doc = "  extensions, at most \\a pCount structures will be written. If \\a pCount"]
+  #[doc = "  is smaller than the number of required extensions, \\c SDL_FALSE will be"]
+  #[doc = "  returned instead of \\c SDL_TRUE, to indicate that not all the required"]
+  #[doc = "  extensions were returned."]
+  #[doc = ""]
+  #[doc = "  \\note If \\c window is not NULL, it will be checked against its creation"]
+  #[doc = "        flags to ensure that the Vulkan flag is present. This parameter"]
+  #[doc = "        will be removed in a future major release."]
+  #[doc = ""]
+  #[doc = "  \\note The returned list of extensions will contain \\c VK_KHR_surface"]
+  #[doc = "        and zero or more platform specific extensions"]
+  #[doc = ""]
+  #[doc = "  \\note The extension names queried here must be enabled when calling"]
+  #[doc = "        VkCreateInstance, otherwise surface creation will fail."]
+  #[doc = ""]
+  #[doc = "  \\note \\c window should have been created with the \\c SDL_WINDOW_VULKAN flag"]
+  #[doc = "        or be \\c NULL"]
+  #[doc = ""]
+  #[doc = "  \\code"]
+  #[doc = "  unsigned int count;"]
+  #[doc = "  // get count of required extensions"]
+  #[doc = "  if(!SDL_Vulkan_GetInstanceExtensions(NULL, &count, NULL))"]
+  #[doc = "      handle_error();"]
+  #[doc = ""]
+  #[doc = "  static const char *const additionalExtensions[] ="]
+  #[doc = "  {"]
+  #[doc = "      VK_EXT_DEBUG_REPORT_EXTENSION_NAME, // example additional extension"]
+  #[doc = "  };"]
+  #[doc = "  size_t additionalExtensionsCount = sizeof(additionalExtensions) / sizeof(additionalExtensions[0]);"]
+  #[doc = "  size_t extensionCount = count + additionalExtensionsCount;"]
+  #[doc = "  const char **names = malloc(sizeof(const char *) * extensionCount);"]
+  #[doc = "  if(!names)"]
+  #[doc = "      handle_error();"]
+  #[doc = ""]
+  #[doc = "  // get names of required extensions"]
+  #[doc = "  if(!SDL_Vulkan_GetInstanceExtensions(NULL, &count, names))"]
+  #[doc = "      handle_error();"]
+  #[doc = ""]
+  #[doc = "  // copy additional extensions after required extensions"]
+  #[doc = "  for(size_t i = 0; i < additionalExtensionsCount; i++)"]
+  #[doc = "      names[i + count] = additionalExtensions[i];"]
+  #[doc = ""]
+  #[doc = "  VkInstanceCreateInfo instanceCreateInfo = {};"]
+  #[doc = "  instanceCreateInfo.enabledExtensionCount = extensionCount;"]
+  #[doc = "  instanceCreateInfo.ppEnabledExtensionNames = names;"]
+  #[doc = "  // fill in rest of instanceCreateInfo"]
+  #[doc = ""]
+  #[doc = "  VkInstance instance;"]
+  #[doc = "  // create the Vulkan instance"]
+  #[doc = "  VkResult result = vkCreateInstance(&instanceCreateInfo, NULL, &instance);"]
+  #[doc = "  free(names);"]
+  #[doc = "  \\endcode"]
+  #[doc = ""]
+  #[doc = "  \\sa SDL_Vulkan_CreateSurface()"]
+  pub fn SDL_Vulkan_GetInstanceExtensions(
+    window: *mut SDL_Window, pCount: *mut libc::c_uint, pNames: *mut *const libc::c_char,
+  ) -> SDL_bool::Type;
+}
+extern "C" {
+  #[doc = "  \\brief Create a Vulkan rendering surface for a window."]
+  #[doc = ""]
+  #[doc = "  \\param [in]  window   SDL_Window to which to attach the rendering surface."]
+  #[doc = "  \\param [in]  instance handle to the Vulkan instance to use."]
+  #[doc = "  \\param [out] surface  pointer to a VkSurfaceKHR handle to receive the"]
+  #[doc = "                        handle of the newly created surface."]
+  #[doc = ""]
+  #[doc = "  \\return \\c SDL_TRUE on success, \\c SDL_FALSE on error."]
+  #[doc = ""]
+  #[doc = "  \\code"]
+  #[doc = "  VkInstance instance;"]
+  #[doc = "  SDL_Window *window;"]
+  #[doc = ""]
+  #[doc = "  // create instance and window"]
+  #[doc = ""]
+  #[doc = "  // create the Vulkan surface"]
+  #[doc = "  VkSurfaceKHR surface;"]
+  #[doc = "  if(!SDL_Vulkan_CreateSurface(window, instance, &surface))"]
+  #[doc = "      handle_error();"]
+  #[doc = "  \\endcode"]
+  #[doc = ""]
+  #[doc = "  \\note \\a window should have been created with the \\c SDL_WINDOW_VULKAN flag."]
+  #[doc = ""]
+  #[doc = "  \\note \\a instance should have been created with the extensions returned"]
+  #[doc = "        by \\c SDL_Vulkan_CreateSurface() enabled."]
+  #[doc = ""]
+  #[doc = "  \\sa SDL_Vulkan_GetInstanceExtensions()"]
+  pub fn SDL_Vulkan_CreateSurface(
+    window: *mut SDL_Window, instance: VkInstance, surface: *mut VkSurfaceKHR,
+  ) -> SDL_bool::Type;
+}
+extern "C" {
+  #[doc = "  \\brief Get the size of a window's underlying drawable in pixels (for use"]
+  #[doc = "         with setting viewport, scissor & etc)."]
+  #[doc = ""]
+  #[doc = "  \\param window   SDL_Window from which the drawable size should be queried"]
+  #[doc = "  \\param w        Pointer to variable for storing the width in pixels,"]
+  #[doc = "                  may be NULL"]
+  #[doc = "  \\param h        Pointer to variable for storing the height in pixels,"]
+  #[doc = "                  may be NULL"]
+  #[doc = ""]
+  #[doc = " This may differ from SDL_GetWindowSize() if we're rendering to a high-DPI"]
+  #[doc = " drawable, i.e. the window was created with SDL_WINDOW_ALLOW_HIGHDPI on a"]
+  #[doc = " platform with high-DPI support (Apple calls this \"Retina\"), and not disabled"]
+  #[doc = " by the \\c SDL_HINT_VIDEO_HIGHDPI_DISABLED hint."]
+  #[doc = ""]
+  #[doc = "  \\note On macOS high-DPI support must be enabled for an application by"]
+  #[doc = "        setting NSHighResolutionCapable to true in its Info.plist."]
+  #[doc = ""]
+  #[doc = "  \\sa SDL_GetWindowSize()"]
+  #[doc = "  \\sa SDL_CreateWindow()"]
+  pub fn SDL_Vulkan_GetDrawableSize(
+    window: *mut SDL_Window, w: *mut libc::c_int, h: *mut libc::c_int,
+  );
+}
+pub type XID = libc::c_ulong;
+pub type Atom = libc::c_ulong;
+pub type Time = libc::c_ulong;
+pub type Window = XID;
+pub type Drawable = XID;
+pub type Colormap = XID;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _XDisplay {
+  _unused: [u8; 0],
+}
+pub type Display = _XDisplay;
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XKeyEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub root: Window,
+  pub subwindow: Window,
+  pub time: Time,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub x_root: libc::c_int,
+  pub y_root: libc::c_int,
+  pub state: libc::c_uint,
+  pub keycode: libc::c_uint,
+  pub same_screen: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XKeyEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XKeyEvent>(),
+    96usize,
+    concat!("Size of: ", stringify!(XKeyEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XKeyEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XKeyEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).root as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).subwindow as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(subwindow)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).time as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(time)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).x as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).y as *const _ as usize },
+    68usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).x_root as *const _ as usize },
+    72usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(x_root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).y_root as *const _ as usize },
+    76usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(y_root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).state as *const _ as usize },
+    80usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(state)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).keycode as *const _ as usize },
+    84usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(keycode)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeyEvent>())).same_screen as *const _ as usize },
+    88usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeyEvent),
+      "::",
+      stringify!(same_screen)
+    )
+  );
+}
+impl Default for XKeyEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XButtonEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub root: Window,
+  pub subwindow: Window,
+  pub time: Time,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub x_root: libc::c_int,
+  pub y_root: libc::c_int,
+  pub state: libc::c_uint,
+  pub button: libc::c_uint,
+  pub same_screen: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XButtonEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XButtonEvent>(),
+    96usize,
+    concat!("Size of: ", stringify!(XButtonEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XButtonEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XButtonEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).root as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).subwindow as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(subwindow)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).time as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(time)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).x as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).y as *const _ as usize },
+    68usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).x_root as *const _ as usize },
+    72usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(x_root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).y_root as *const _ as usize },
+    76usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(y_root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).state as *const _ as usize },
+    80usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(state)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).button as *const _ as usize },
+    84usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(button)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XButtonEvent>())).same_screen as *const _ as usize },
+    88usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XButtonEvent),
+      "::",
+      stringify!(same_screen)
+    )
+  );
+}
+impl Default for XButtonEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XMotionEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub root: Window,
+  pub subwindow: Window,
+  pub time: Time,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub x_root: libc::c_int,
+  pub y_root: libc::c_int,
+  pub state: libc::c_uint,
+  pub is_hint: libc::c_char,
+  pub same_screen: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XMotionEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XMotionEvent>(),
+    96usize,
+    concat!("Size of: ", stringify!(XMotionEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XMotionEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XMotionEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).root as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).subwindow as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(subwindow)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).time as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(time)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).x as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).y as *const _ as usize },
+    68usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).x_root as *const _ as usize },
+    72usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(x_root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).y_root as *const _ as usize },
+    76usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(y_root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).state as *const _ as usize },
+    80usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(state)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).is_hint as *const _ as usize },
+    84usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(is_hint)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMotionEvent>())).same_screen as *const _ as usize },
+    88usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMotionEvent),
+      "::",
+      stringify!(same_screen)
+    )
+  );
+}
+impl Default for XMotionEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XCrossingEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub root: Window,
+  pub subwindow: Window,
+  pub time: Time,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub x_root: libc::c_int,
+  pub y_root: libc::c_int,
+  pub mode: libc::c_int,
+  pub detail: libc::c_int,
+  pub same_screen: libc::c_int,
+  pub focus: libc::c_int,
+  pub state: libc::c_uint,
+}
+#[test]
+fn bindgen_test_layout_XCrossingEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XCrossingEvent>(),
+    104usize,
+    concat!("Size of: ", stringify!(XCrossingEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XCrossingEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XCrossingEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).root as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).subwindow as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(subwindow)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).time as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(time)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).x as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).y as *const _ as usize },
+    68usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).x_root as *const _ as usize },
+    72usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(x_root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).y_root as *const _ as usize },
+    76usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(y_root)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).mode as *const _ as usize },
+    80usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(mode)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).detail as *const _ as usize },
+    84usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(detail)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).same_screen as *const _ as usize },
+    88usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(same_screen)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).focus as *const _ as usize },
+    92usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(focus)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCrossingEvent>())).state as *const _ as usize },
+    96usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCrossingEvent),
+      "::",
+      stringify!(state)
+    )
+  );
+}
+impl Default for XCrossingEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XFocusChangeEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub mode: libc::c_int,
+  pub detail: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XFocusChangeEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XFocusChangeEvent>(),
+    48usize,
+    concat!("Size of: ", stringify!(XFocusChangeEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XFocusChangeEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XFocusChangeEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XFocusChangeEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XFocusChangeEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XFocusChangeEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XFocusChangeEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XFocusChangeEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XFocusChangeEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XFocusChangeEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XFocusChangeEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XFocusChangeEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XFocusChangeEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XFocusChangeEvent>())).mode as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XFocusChangeEvent),
+      "::",
+      stringify!(mode)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XFocusChangeEvent>())).detail as *const _ as usize },
+    44usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XFocusChangeEvent),
+      "::",
+      stringify!(detail)
+    )
+  );
+}
+impl Default for XFocusChangeEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XKeymapEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub key_vector: [libc::c_char; 32usize],
+}
+#[test]
+fn bindgen_test_layout_XKeymapEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XKeymapEvent>(),
+    72usize,
+    concat!("Size of: ", stringify!(XKeymapEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XKeymapEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XKeymapEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeymapEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeymapEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeymapEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeymapEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeymapEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeymapEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeymapEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeymapEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeymapEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeymapEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XKeymapEvent>())).key_vector as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XKeymapEvent),
+      "::",
+      stringify!(key_vector)
+    )
+  );
+}
+impl Default for XKeymapEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XExposeEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub width: libc::c_int,
+  pub height: libc::c_int,
+  pub count: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XExposeEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XExposeEvent>(),
+    64usize,
+    concat!("Size of: ", stringify!(XExposeEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XExposeEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XExposeEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).x as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).y as *const _ as usize },
+    44usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).width as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(width)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).height as *const _ as usize },
+    52usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(height)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XExposeEvent>())).count as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XExposeEvent),
+      "::",
+      stringify!(count)
+    )
+  );
+}
+impl Default for XExposeEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XGraphicsExposeEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub drawable: Drawable,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub width: libc::c_int,
+  pub height: libc::c_int,
+  pub count: libc::c_int,
+  pub major_code: libc::c_int,
+  pub minor_code: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XGraphicsExposeEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XGraphicsExposeEvent>(),
+    72usize,
+    concat!("Size of: ", stringify!(XGraphicsExposeEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XGraphicsExposeEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XGraphicsExposeEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).drawable as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(drawable)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).x as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).y as *const _ as usize },
+    44usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).width as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(width)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).height as *const _ as usize },
+    52usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(height)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).count as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(count)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).major_code as *const _ as usize },
+    60usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(major_code)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGraphicsExposeEvent>())).minor_code as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGraphicsExposeEvent),
+      "::",
+      stringify!(minor_code)
+    )
+  );
+}
+impl Default for XGraphicsExposeEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XNoExposeEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub drawable: Drawable,
+  pub major_code: libc::c_int,
+  pub minor_code: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XNoExposeEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XNoExposeEvent>(),
+    48usize,
+    concat!("Size of: ", stringify!(XNoExposeEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XNoExposeEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XNoExposeEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XNoExposeEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XNoExposeEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XNoExposeEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XNoExposeEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XNoExposeEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XNoExposeEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XNoExposeEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XNoExposeEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XNoExposeEvent>())).drawable as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XNoExposeEvent),
+      "::",
+      stringify!(drawable)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XNoExposeEvent>())).major_code as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XNoExposeEvent),
+      "::",
+      stringify!(major_code)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XNoExposeEvent>())).minor_code as *const _ as usize },
+    44usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XNoExposeEvent),
+      "::",
+      stringify!(minor_code)
+    )
+  );
+}
+impl Default for XNoExposeEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XVisibilityEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub state: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XVisibilityEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XVisibilityEvent>(),
+    48usize,
+    concat!("Size of: ", stringify!(XVisibilityEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XVisibilityEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XVisibilityEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XVisibilityEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XVisibilityEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XVisibilityEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XVisibilityEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XVisibilityEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XVisibilityEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XVisibilityEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XVisibilityEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XVisibilityEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XVisibilityEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XVisibilityEvent>())).state as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XVisibilityEvent),
+      "::",
+      stringify!(state)
+    )
+  );
+}
+impl Default for XVisibilityEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XCreateWindowEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub parent: Window,
+  pub window: Window,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub width: libc::c_int,
+  pub height: libc::c_int,
+  pub border_width: libc::c_int,
+  pub override_redirect: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XCreateWindowEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XCreateWindowEvent>(),
+    72usize,
+    concat!("Size of: ", stringify!(XCreateWindowEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XCreateWindowEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XCreateWindowEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).parent as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(parent)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).x as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).y as *const _ as usize },
+    52usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).width as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(width)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).height as *const _ as usize },
+    60usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(height)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCreateWindowEvent>())).border_width as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(border_width)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<XCreateWindowEvent>())).override_redirect as *const _ as usize
+    },
+    68usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCreateWindowEvent),
+      "::",
+      stringify!(override_redirect)
+    )
+  );
+}
+impl Default for XCreateWindowEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XDestroyWindowEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub event: Window,
+  pub window: Window,
+}
+#[test]
+fn bindgen_test_layout_XDestroyWindowEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XDestroyWindowEvent>(),
+    48usize,
+    concat!("Size of: ", stringify!(XDestroyWindowEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XDestroyWindowEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XDestroyWindowEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XDestroyWindowEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XDestroyWindowEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XDestroyWindowEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XDestroyWindowEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XDestroyWindowEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XDestroyWindowEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XDestroyWindowEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XDestroyWindowEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XDestroyWindowEvent>())).event as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XDestroyWindowEvent),
+      "::",
+      stringify!(event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XDestroyWindowEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XDestroyWindowEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+}
+impl Default for XDestroyWindowEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XUnmapEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub event: Window,
+  pub window: Window,
+  pub from_configure: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XUnmapEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XUnmapEvent>(),
+    56usize,
+    concat!("Size of: ", stringify!(XUnmapEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XUnmapEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XUnmapEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XUnmapEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XUnmapEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XUnmapEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XUnmapEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XUnmapEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XUnmapEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XUnmapEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XUnmapEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XUnmapEvent>())).event as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XUnmapEvent),
+      "::",
+      stringify!(event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XUnmapEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XUnmapEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XUnmapEvent>())).from_configure as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XUnmapEvent),
+      "::",
+      stringify!(from_configure)
+    )
+  );
+}
+impl Default for XUnmapEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XMapEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub event: Window,
+  pub window: Window,
+  pub override_redirect: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XMapEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XMapEvent>(),
+    56usize,
+    concat!("Size of: ", stringify!(XMapEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XMapEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XMapEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapEvent>())).event as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapEvent),
+      "::",
+      stringify!(event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapEvent>())).override_redirect as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapEvent),
+      "::",
+      stringify!(override_redirect)
+    )
+  );
+}
+impl Default for XMapEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XMapRequestEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub parent: Window,
+  pub window: Window,
+}
+#[test]
+fn bindgen_test_layout_XMapRequestEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XMapRequestEvent>(),
+    48usize,
+    concat!("Size of: ", stringify!(XMapRequestEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XMapRequestEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XMapRequestEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapRequestEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapRequestEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapRequestEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapRequestEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapRequestEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapRequestEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapRequestEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapRequestEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapRequestEvent>())).parent as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapRequestEvent),
+      "::",
+      stringify!(parent)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMapRequestEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMapRequestEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+}
+impl Default for XMapRequestEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XReparentEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub event: Window,
+  pub window: Window,
+  pub parent: Window,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub override_redirect: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XReparentEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XReparentEvent>(),
+    72usize,
+    concat!("Size of: ", stringify!(XReparentEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XReparentEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XReparentEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).event as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).parent as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(parent)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).x as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).y as *const _ as usize },
+    60usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XReparentEvent>())).override_redirect as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XReparentEvent),
+      "::",
+      stringify!(override_redirect)
+    )
+  );
+}
+impl Default for XReparentEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XConfigureEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub event: Window,
+  pub window: Window,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub width: libc::c_int,
+  pub height: libc::c_int,
+  pub border_width: libc::c_int,
+  pub above: Window,
+  pub override_redirect: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XConfigureEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XConfigureEvent>(),
+    88usize,
+    concat!("Size of: ", stringify!(XConfigureEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XConfigureEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XConfigureEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).event as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).x as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).y as *const _ as usize },
+    52usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).width as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(width)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).height as *const _ as usize },
+    60usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(height)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).border_width as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(border_width)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).above as *const _ as usize },
+    72usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(above)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureEvent>())).override_redirect as *const _ as usize },
+    80usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureEvent),
+      "::",
+      stringify!(override_redirect)
+    )
+  );
+}
+impl Default for XConfigureEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XGravityEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub event: Window,
+  pub window: Window,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XGravityEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XGravityEvent>(),
+    56usize,
+    concat!("Size of: ", stringify!(XGravityEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XGravityEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XGravityEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGravityEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGravityEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGravityEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGravityEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGravityEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGravityEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGravityEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGravityEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGravityEvent>())).event as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGravityEvent),
+      "::",
+      stringify!(event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGravityEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGravityEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGravityEvent>())).x as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGravityEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGravityEvent>())).y as *const _ as usize },
+    52usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGravityEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+}
+impl Default for XGravityEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XResizeRequestEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub width: libc::c_int,
+  pub height: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XResizeRequestEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XResizeRequestEvent>(),
+    48usize,
+    concat!("Size of: ", stringify!(XResizeRequestEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XResizeRequestEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XResizeRequestEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XResizeRequestEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XResizeRequestEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XResizeRequestEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XResizeRequestEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XResizeRequestEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XResizeRequestEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XResizeRequestEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XResizeRequestEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XResizeRequestEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XResizeRequestEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XResizeRequestEvent>())).width as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XResizeRequestEvent),
+      "::",
+      stringify!(width)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XResizeRequestEvent>())).height as *const _ as usize },
+    44usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XResizeRequestEvent),
+      "::",
+      stringify!(height)
+    )
+  );
+}
+impl Default for XResizeRequestEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XConfigureRequestEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub parent: Window,
+  pub window: Window,
+  pub x: libc::c_int,
+  pub y: libc::c_int,
+  pub width: libc::c_int,
+  pub height: libc::c_int,
+  pub border_width: libc::c_int,
+  pub above: Window,
+  pub detail: libc::c_int,
+  pub value_mask: libc::c_ulong,
+}
+#[test]
+fn bindgen_test_layout_XConfigureRequestEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XConfigureRequestEvent>(),
+    96usize,
+    concat!("Size of: ", stringify!(XConfigureRequestEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XConfigureRequestEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XConfigureRequestEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).parent as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(parent)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).x as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).y as *const _ as usize },
+    52usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).width as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(width)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).height as *const _ as usize },
+    60usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(height)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<XConfigureRequestEvent>())).border_width as *const _ as usize
+    },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(border_width)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).above as *const _ as usize },
+    72usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(above)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).detail as *const _ as usize },
+    80usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(detail)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XConfigureRequestEvent>())).value_mask as *const _ as usize },
+    88usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XConfigureRequestEvent),
+      "::",
+      stringify!(value_mask)
+    )
+  );
+}
+impl Default for XConfigureRequestEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XCirculateEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub event: Window,
+  pub window: Window,
+  pub place: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XCirculateEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XCirculateEvent>(),
+    56usize,
+    concat!("Size of: ", stringify!(XCirculateEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XCirculateEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XCirculateEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateEvent>())).event as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateEvent),
+      "::",
+      stringify!(event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateEvent>())).place as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateEvent),
+      "::",
+      stringify!(place)
+    )
+  );
+}
+impl Default for XCirculateEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XCirculateRequestEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub parent: Window,
+  pub window: Window,
+  pub place: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XCirculateRequestEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XCirculateRequestEvent>(),
+    56usize,
+    concat!("Size of: ", stringify!(XCirculateRequestEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XCirculateRequestEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XCirculateRequestEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateRequestEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateRequestEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateRequestEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateRequestEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateRequestEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateRequestEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateRequestEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateRequestEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateRequestEvent>())).parent as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateRequestEvent),
+      "::",
+      stringify!(parent)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateRequestEvent>())).window as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateRequestEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XCirculateRequestEvent>())).place as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XCirculateRequestEvent),
+      "::",
+      stringify!(place)
+    )
+  );
+}
+impl Default for XCirculateRequestEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XPropertyEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub atom: Atom,
+  pub time: Time,
+  pub state: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XPropertyEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XPropertyEvent>(),
+    64usize,
+    concat!("Size of: ", stringify!(XPropertyEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XPropertyEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XPropertyEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XPropertyEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XPropertyEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XPropertyEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XPropertyEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XPropertyEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XPropertyEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XPropertyEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XPropertyEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XPropertyEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XPropertyEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XPropertyEvent>())).atom as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XPropertyEvent),
+      "::",
+      stringify!(atom)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XPropertyEvent>())).time as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XPropertyEvent),
+      "::",
+      stringify!(time)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XPropertyEvent>())).state as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XPropertyEvent),
+      "::",
+      stringify!(state)
+    )
+  );
+}
+impl Default for XPropertyEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XSelectionClearEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub selection: Atom,
+  pub time: Time,
+}
+#[test]
+fn bindgen_test_layout_XSelectionClearEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XSelectionClearEvent>(),
+    56usize,
+    concat!("Size of: ", stringify!(XSelectionClearEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XSelectionClearEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XSelectionClearEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionClearEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionClearEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionClearEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionClearEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionClearEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionClearEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionClearEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionClearEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionClearEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionClearEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionClearEvent>())).selection as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionClearEvent),
+      "::",
+      stringify!(selection)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionClearEvent>())).time as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionClearEvent),
+      "::",
+      stringify!(time)
+    )
+  );
+}
+impl Default for XSelectionClearEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XSelectionRequestEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub owner: Window,
+  pub requestor: Window,
+  pub selection: Atom,
+  pub target: Atom,
+  pub property: Atom,
+  pub time: Time,
+}
+#[test]
+fn bindgen_test_layout_XSelectionRequestEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XSelectionRequestEvent>(),
+    80usize,
+    concat!("Size of: ", stringify!(XSelectionRequestEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XSelectionRequestEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XSelectionRequestEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).owner as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(owner)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).requestor as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(requestor)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).selection as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(selection)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).target as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(target)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).property as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(property)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionRequestEvent>())).time as *const _ as usize },
+    72usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionRequestEvent),
+      "::",
+      stringify!(time)
+    )
+  );
+}
+impl Default for XSelectionRequestEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XSelectionEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub requestor: Window,
+  pub selection: Atom,
+  pub target: Atom,
+  pub property: Atom,
+  pub time: Time,
+}
+#[test]
+fn bindgen_test_layout_XSelectionEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XSelectionEvent>(),
+    72usize,
+    concat!("Size of: ", stringify!(XSelectionEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XSelectionEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XSelectionEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionEvent>())).requestor as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionEvent),
+      "::",
+      stringify!(requestor)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionEvent>())).selection as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionEvent),
+      "::",
+      stringify!(selection)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionEvent>())).target as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionEvent),
+      "::",
+      stringify!(target)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionEvent>())).property as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionEvent),
+      "::",
+      stringify!(property)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XSelectionEvent>())).time as *const _ as usize },
+    64usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XSelectionEvent),
+      "::",
+      stringify!(time)
+    )
+  );
+}
+impl Default for XSelectionEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XColormapEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub colormap: Colormap,
+  pub new: libc::c_int,
+  pub state: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XColormapEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XColormapEvent>(),
+    56usize,
+    concat!("Size of: ", stringify!(XColormapEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XColormapEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XColormapEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XColormapEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XColormapEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XColormapEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XColormapEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XColormapEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XColormapEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XColormapEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XColormapEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XColormapEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XColormapEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XColormapEvent>())).colormap as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XColormapEvent),
+      "::",
+      stringify!(colormap)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XColormapEvent>())).new as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XColormapEvent),
+      "::",
+      stringify!(new)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XColormapEvent>())).state as *const _ as usize },
+    52usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XColormapEvent),
+      "::",
+      stringify!(state)
+    )
+  );
+}
+impl Default for XColormapEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct XClientMessageEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub message_type: Atom,
+  pub format: libc::c_int,
+  pub data: XClientMessageEvent__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union XClientMessageEvent__bindgen_ty_1 {
+  pub b: [libc::c_char; 20usize],
+  pub s: [libc::c_short; 10usize],
+  pub l: [libc::c_long; 5usize],
+  _bindgen_union_align: [u64; 5usize],
+}
+#[test]
+fn bindgen_test_layout_XClientMessageEvent__bindgen_ty_1() {
+  assert_eq!(
+    ::core::mem::size_of::<XClientMessageEvent__bindgen_ty_1>(),
+    40usize,
+    concat!("Size of: ", stringify!(XClientMessageEvent__bindgen_ty_1))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XClientMessageEvent__bindgen_ty_1>(),
+    8usize,
+    concat!(
+      "Alignment of ",
+      stringify!(XClientMessageEvent__bindgen_ty_1)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<XClientMessageEvent__bindgen_ty_1>())).b as *const _ as usize
+    },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent__bindgen_ty_1),
+      "::",
+      stringify!(b)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<XClientMessageEvent__bindgen_ty_1>())).s as *const _ as usize
+    },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent__bindgen_ty_1),
+      "::",
+      stringify!(s)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<XClientMessageEvent__bindgen_ty_1>())).l as *const _ as usize
+    },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent__bindgen_ty_1),
+      "::",
+      stringify!(l)
+    )
+  );
+}
+impl Default for XClientMessageEvent__bindgen_ty_1 {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+impl ::core::fmt::Debug for XClientMessageEvent__bindgen_ty_1 {
+  fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+    write!(f, "XClientMessageEvent__bindgen_ty_1 {{ union }}")
+  }
+}
+#[test]
+fn bindgen_test_layout_XClientMessageEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XClientMessageEvent>(),
+    96usize,
+    concat!("Size of: ", stringify!(XClientMessageEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XClientMessageEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XClientMessageEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XClientMessageEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XClientMessageEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XClientMessageEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XClientMessageEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XClientMessageEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XClientMessageEvent>())).message_type as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent),
+      "::",
+      stringify!(message_type)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XClientMessageEvent>())).format as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent),
+      "::",
+      stringify!(format)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XClientMessageEvent>())).data as *const _ as usize },
+    56usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XClientMessageEvent),
+      "::",
+      stringify!(data)
+    )
+  );
+}
+impl Default for XClientMessageEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+impl ::core::fmt::Debug for XClientMessageEvent {
+  fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+    write ! ( f , "XClientMessageEvent {{ type: {:?}, serial: {:?}, send_event: {:?}, display: {:?}, window: {:?}, message_type: {:?}, format: {:?}, data: {:?} }}" , self . type_ , self . serial , self . send_event , self . display , self . window , self . message_type , self . format , self . data )
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XMappingEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+  pub request: libc::c_int,
+  pub first_keycode: libc::c_int,
+  pub count: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XMappingEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XMappingEvent>(),
+    56usize,
+    concat!("Size of: ", stringify!(XMappingEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XMappingEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XMappingEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMappingEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMappingEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMappingEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMappingEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMappingEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMappingEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMappingEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMappingEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMappingEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMappingEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMappingEvent>())).request as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMappingEvent),
+      "::",
+      stringify!(request)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMappingEvent>())).first_keycode as *const _ as usize },
+    44usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMappingEvent),
+      "::",
+      stringify!(first_keycode)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XMappingEvent>())).count as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XMappingEvent),
+      "::",
+      stringify!(count)
+    )
+  );
+}
+impl Default for XMappingEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XErrorEvent {
+  pub type_: libc::c_int,
+  pub display: *mut Display,
+  pub resourceid: XID,
+  pub serial: libc::c_ulong,
+  pub error_code: libc::c_uchar,
+  pub request_code: libc::c_uchar,
+  pub minor_code: libc::c_uchar,
+}
+#[test]
+fn bindgen_test_layout_XErrorEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XErrorEvent>(),
+    40usize,
+    concat!("Size of: ", stringify!(XErrorEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XErrorEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XErrorEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XErrorEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XErrorEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XErrorEvent>())).display as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XErrorEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XErrorEvent>())).resourceid as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XErrorEvent),
+      "::",
+      stringify!(resourceid)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XErrorEvent>())).serial as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XErrorEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XErrorEvent>())).error_code as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XErrorEvent),
+      "::",
+      stringify!(error_code)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XErrorEvent>())).request_code as *const _ as usize },
+    33usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XErrorEvent),
+      "::",
+      stringify!(request_code)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XErrorEvent>())).minor_code as *const _ as usize },
+    34usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XErrorEvent),
+      "::",
+      stringify!(minor_code)
+    )
+  );
+}
+impl Default for XErrorEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XAnyEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub window: Window,
+}
+#[test]
+fn bindgen_test_layout_XAnyEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XAnyEvent>(),
+    40usize,
+    concat!("Size of: ", stringify!(XAnyEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XAnyEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XAnyEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XAnyEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XAnyEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XAnyEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XAnyEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XAnyEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XAnyEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XAnyEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XAnyEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XAnyEvent>())).window as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XAnyEvent),
+      "::",
+      stringify!(window)
+    )
+  );
+}
+impl Default for XAnyEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XGenericEvent {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub extension: libc::c_int,
+  pub evtype: libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_XGenericEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<XGenericEvent>(),
+    40usize,
+    concat!("Size of: ", stringify!(XGenericEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XGenericEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XGenericEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEvent>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEvent),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEvent>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEvent),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEvent>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEvent>())).extension as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEvent),
+      "::",
+      stringify!(extension)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEvent>())).evtype as *const _ as usize },
+    36usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEvent),
+      "::",
+      stringify!(evtype)
+    )
+  );
+}
+impl Default for XGenericEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct XGenericEventCookie {
+  pub type_: libc::c_int,
+  pub serial: libc::c_ulong,
+  pub send_event: libc::c_int,
+  pub display: *mut Display,
+  pub extension: libc::c_int,
+  pub evtype: libc::c_int,
+  pub cookie: libc::c_uint,
+  pub data: *mut libc::c_void,
+}
+#[test]
+fn bindgen_test_layout_XGenericEventCookie() {
+  assert_eq!(
+    ::core::mem::size_of::<XGenericEventCookie>(),
+    56usize,
+    concat!("Size of: ", stringify!(XGenericEventCookie))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<XGenericEventCookie>(),
+    8usize,
+    concat!("Alignment of ", stringify!(XGenericEventCookie))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEventCookie>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEventCookie),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEventCookie>())).serial as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEventCookie),
+      "::",
+      stringify!(serial)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEventCookie>())).send_event as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEventCookie),
+      "::",
+      stringify!(send_event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEventCookie>())).display as *const _ as usize },
+    24usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEventCookie),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEventCookie>())).extension as *const _ as usize },
+    32usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEventCookie),
+      "::",
+      stringify!(extension)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEventCookie>())).evtype as *const _ as usize },
+    36usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEventCookie),
+      "::",
+      stringify!(evtype)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEventCookie>())).cookie as *const _ as usize },
+    40usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEventCookie),
+      "::",
+      stringify!(cookie)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<XGenericEventCookie>())).data as *const _ as usize },
+    48usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(XGenericEventCookie),
+      "::",
+      stringify!(data)
+    )
+  );
+}
+impl Default for XGenericEventCookie {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union _XEvent {
+  pub type_: libc::c_int,
+  pub xany: XAnyEvent,
+  pub xkey: XKeyEvent,
+  pub xbutton: XButtonEvent,
+  pub xmotion: XMotionEvent,
+  pub xcrossing: XCrossingEvent,
+  pub xfocus: XFocusChangeEvent,
+  pub xexpose: XExposeEvent,
+  pub xgraphicsexpose: XGraphicsExposeEvent,
+  pub xnoexpose: XNoExposeEvent,
+  pub xvisibility: XVisibilityEvent,
+  pub xcreatewindow: XCreateWindowEvent,
+  pub xdestroywindow: XDestroyWindowEvent,
+  pub xunmap: XUnmapEvent,
+  pub xmap: XMapEvent,
+  pub xmaprequest: XMapRequestEvent,
+  pub xreparent: XReparentEvent,
+  pub xconfigure: XConfigureEvent,
+  pub xgravity: XGravityEvent,
+  pub xresizerequest: XResizeRequestEvent,
+  pub xconfigurerequest: XConfigureRequestEvent,
+  pub xcirculate: XCirculateEvent,
+  pub xcirculaterequest: XCirculateRequestEvent,
+  pub xproperty: XPropertyEvent,
+  pub xselectionclear: XSelectionClearEvent,
+  pub xselectionrequest: XSelectionRequestEvent,
+  pub xselection: XSelectionEvent,
+  pub xcolormap: XColormapEvent,
+  pub xclient: XClientMessageEvent,
+  pub xmapping: XMappingEvent,
+  pub xerror: XErrorEvent,
+  pub xkeymap: XKeymapEvent,
+  pub xgeneric: XGenericEvent,
+  pub xcookie: XGenericEventCookie,
+  pub pad: [libc::c_long; 24usize],
+  _bindgen_union_align: [u64; 24usize],
+}
+#[test]
+fn bindgen_test_layout__XEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<_XEvent>(),
+    192usize,
+    concat!("Size of: ", stringify!(_XEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<_XEvent>(),
+    8usize,
+    concat!("Alignment of ", stringify!(_XEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xany as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xany)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xkey as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xkey)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xbutton as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xbutton)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xmotion as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xmotion)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xcrossing as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xcrossing)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xfocus as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xfocus)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xexpose as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xexpose)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xgraphicsexpose as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xgraphicsexpose)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xnoexpose as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xnoexpose)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xvisibility as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xvisibility)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xcreatewindow as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xcreatewindow)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xdestroywindow as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xdestroywindow)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xunmap as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xunmap)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xmap as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xmap)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xmaprequest as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xmaprequest)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xreparent as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xreparent)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xconfigure as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xconfigure)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xgravity as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xgravity)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xresizerequest as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xresizerequest)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xconfigurerequest as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xconfigurerequest)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xcirculate as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xcirculate)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xcirculaterequest as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xcirculaterequest)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xproperty as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xproperty)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xselectionclear as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xselectionclear)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xselectionrequest as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xselectionrequest)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xselection as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xselection)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xcolormap as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xcolormap)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xclient as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xclient)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xmapping as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xmapping)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xerror as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xerror)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xkeymap as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xkeymap)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xgeneric as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xgeneric)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).xcookie as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(xcookie)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<_XEvent>())).pad as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(_XEvent),
+      "::",
+      stringify!(pad)
+    )
+  );
+}
+impl Default for _XEvent {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+impl ::core::fmt::Debug for _XEvent {
+  fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+    write!(f, "_XEvent {{ union }}")
+  }
+}
+pub type XEvent = _XEvent;
 pub mod SDL_SYSWM_TYPE {
   #[doc = "  These are the various supported windowing subsystems"]
   pub type Type = u32;
@@ -13978,20 +18696,82 @@ pub struct SDL_SysWMmsg {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union SDL_SysWMmsg__bindgen_ty_1 {
+  pub x11: SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1,
   pub dummy: libc::c_int,
-  _bindgen_union_align: u32,
+  _bindgen_union_align: [u64; 24usize],
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1 {
+  pub event: XEvent,
+}
+#[test]
+fn bindgen_test_layout_SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1() {
+  assert_eq!(
+    ::core::mem::size_of::<SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1>(),
+    192usize,
+    concat!(
+      "Size of: ",
+      stringify!(SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1)
+    )
+  );
+  assert_eq!(
+    ::core::mem::align_of::<SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1>(),
+    8usize,
+    concat!(
+      "Alignment of ",
+      stringify!(SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1>())).event as *const _
+        as usize
+    },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1),
+      "::",
+      stringify!(event)
+    )
+  );
+}
+impl Default for SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1 {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+impl ::core::fmt::Debug for SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1 {
+  fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+    write!(
+      f,
+      "SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1 {{ event: {:?} }}",
+      self.event
+    )
+  }
 }
 #[test]
 fn bindgen_test_layout_SDL_SysWMmsg__bindgen_ty_1() {
   assert_eq!(
     ::core::mem::size_of::<SDL_SysWMmsg__bindgen_ty_1>(),
-    4usize,
+    192usize,
     concat!("Size of: ", stringify!(SDL_SysWMmsg__bindgen_ty_1))
   );
   assert_eq!(
     ::core::mem::align_of::<SDL_SysWMmsg__bindgen_ty_1>(),
-    4usize,
+    8usize,
     concat!("Alignment of ", stringify!(SDL_SysWMmsg__bindgen_ty_1))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_SysWMmsg__bindgen_ty_1>())).x11 as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SysWMmsg__bindgen_ty_1),
+      "::",
+      stringify!(x11)
+    )
   );
   assert_eq!(
     unsafe { &(*(::core::ptr::null::<SDL_SysWMmsg__bindgen_ty_1>())).dummy as *const _ as usize },
@@ -14018,12 +18798,12 @@ impl ::core::fmt::Debug for SDL_SysWMmsg__bindgen_ty_1 {
 fn bindgen_test_layout_SDL_SysWMmsg() {
   assert_eq!(
     ::core::mem::size_of::<SDL_SysWMmsg>(),
-    12usize,
+    200usize,
     concat!("Size of: ", stringify!(SDL_SysWMmsg))
   );
   assert_eq!(
     ::core::mem::align_of::<SDL_SysWMmsg>(),
-    4usize,
+    8usize,
     concat!("Alignment of ", stringify!(SDL_SysWMmsg))
   );
   assert_eq!(
@@ -14085,8 +18865,141 @@ pub struct SDL_SysWMinfo {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union SDL_SysWMinfo__bindgen_ty_1 {
+  pub x11: SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1,
+  pub wl: SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2,
   pub dummy: [Uint8; 64usize],
-  _bindgen_union_align: [u8; 64usize],
+  _bindgen_union_align: [u64; 8usize],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1 {
+  #[doc = "< The X11 display"]
+  pub display: *mut Display,
+  #[doc = "< The X11 window"]
+  pub window: Window,
+}
+#[test]
+fn bindgen_test_layout_SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1() {
+  assert_eq!(
+    ::core::mem::size_of::<SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1>(),
+    16usize,
+    concat!(
+      "Size of: ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1)
+    )
+  );
+  assert_eq!(
+    ::core::mem::align_of::<SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1>(),
+    8usize,
+    concat!(
+      "Alignment of ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1>())).display as *const _
+        as usize
+    },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1>())).window as *const _
+        as usize
+    },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1),
+      "::",
+      stringify!(window)
+    )
+  );
+}
+impl Default for SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1 {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2 {
+  #[doc = "< Wayland display"]
+  pub display: *mut wl_display,
+  #[doc = "< Wayland surface"]
+  pub surface: *mut wl_surface,
+  #[doc = "< Wayland shell_surface (window manager handle)"]
+  pub shell_surface: *mut wl_shell_surface,
+}
+#[test]
+fn bindgen_test_layout_SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2() {
+  assert_eq!(
+    ::core::mem::size_of::<SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2>(),
+    24usize,
+    concat!(
+      "Size of: ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2)
+    )
+  );
+  assert_eq!(
+    ::core::mem::align_of::<SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2>(),
+    8usize,
+    concat!(
+      "Alignment of ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2>())).display as *const _
+        as usize
+    },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2>())).surface as *const _
+        as usize
+    },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2),
+      "::",
+      stringify!(surface)
+    )
+  );
+  assert_eq!(
+    unsafe {
+      &(*(::core::ptr::null::<SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2>())).shell_surface
+        as *const _ as usize
+    },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2),
+      "::",
+      stringify!(shell_surface)
+    )
+  );
+}
+impl Default for SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2 {
+  fn default() -> Self {
+    unsafe { ::core::mem::zeroed() }
+  }
 }
 #[test]
 fn bindgen_test_layout_SDL_SysWMinfo__bindgen_ty_1() {
@@ -14097,8 +19010,28 @@ fn bindgen_test_layout_SDL_SysWMinfo__bindgen_ty_1() {
   );
   assert_eq!(
     ::core::mem::align_of::<SDL_SysWMinfo__bindgen_ty_1>(),
-    1usize,
+    8usize,
     concat!("Alignment of ", stringify!(SDL_SysWMinfo__bindgen_ty_1))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_SysWMinfo__bindgen_ty_1>())).x11 as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1),
+      "::",
+      stringify!(x11)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_SysWMinfo__bindgen_ty_1>())).wl as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SysWMinfo__bindgen_ty_1),
+      "::",
+      stringify!(wl)
+    )
   );
   assert_eq!(
     unsafe { &(*(::core::ptr::null::<SDL_SysWMinfo__bindgen_ty_1>())).dummy as *const _ as usize },
@@ -14130,7 +19063,7 @@ fn bindgen_test_layout_SDL_SysWMinfo() {
   );
   assert_eq!(
     ::core::mem::align_of::<SDL_SysWMinfo>(),
-    4usize,
+    8usize,
     concat!("Alignment of ", stringify!(SDL_SysWMinfo))
   );
   assert_eq!(
@@ -14267,5 +19200,23 @@ impl Default for __va_list_tag {
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_BlitMap {
+  pub _address: u8,
+}
+#[doc = "< Wayland display"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct wl_display {
+  pub _address: u8,
+}
+#[doc = "< Wayland surface"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct wl_surface {
+  pub _address: u8,
+}
+#[doc = "< Wayland shell_surface (window manager handle)"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct wl_shell_surface {
   pub _address: u8,
 }
