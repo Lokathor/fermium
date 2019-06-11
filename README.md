@@ -35,6 +35,13 @@
 * Bindings use "scoped constants" instead of "rustified enums".
 * The `build.rs` file is simple and easy to understand.
 
+## Additional Warning
+
+This crate is essentially "for internal use", to build Rust abstractions on top of.
+
+[beryllium](https://github.com/Lokathor/beryllium) is the crate with the safe
+wrapper layer.
+
 ## License
 
 This crate uses the Zlib license, the same license that SDL2 itself uses.
