@@ -14163,7 +14163,6 @@ extern "C" {
 pub type XID = libc::c_ulong;
 pub type Atom = libc::c_ulong;
 pub type Time = libc::c_ulong;
-pub type Window = XID;
 pub type Drawable = XID;
 pub type Colormap = XID;
 #[repr(C)]
@@ -14179,9 +14178,9 @@ pub struct XKeyEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
-  pub root: Window,
-  pub subwindow: Window,
+  pub window: XID,
+  pub root: XID,
+  pub subwindow: XID,
   pub time: Time,
   pub x: libc::c_int,
   pub y: libc::c_int,
@@ -14366,9 +14365,9 @@ pub struct XButtonEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
-  pub root: Window,
-  pub subwindow: Window,
+  pub window: XID,
+  pub root: XID,
+  pub subwindow: XID,
   pub time: Time,
   pub x: libc::c_int,
   pub y: libc::c_int,
@@ -14553,9 +14552,9 @@ pub struct XMotionEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
-  pub root: Window,
-  pub subwindow: Window,
+  pub window: XID,
+  pub root: XID,
+  pub subwindow: XID,
   pub time: Time,
   pub x: libc::c_int,
   pub y: libc::c_int,
@@ -14740,9 +14739,9 @@ pub struct XCrossingEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
-  pub root: Window,
-  pub subwindow: Window,
+  pub window: XID,
+  pub root: XID,
+  pub subwindow: XID,
   pub time: Time,
   pub x: libc::c_int,
   pub y: libc::c_int,
@@ -14949,7 +14948,7 @@ pub struct XFocusChangeEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub mode: libc::c_int,
   pub detail: libc::c_int,
 }
@@ -15048,7 +15047,7 @@ pub struct XKeymapEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub key_vector: [libc::c_char; 32usize],
 }
 #[test]
@@ -15136,7 +15135,7 @@ pub struct XExposeEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub x: libc::c_int,
   pub y: libc::c_int,
   pub width: libc::c_int,
@@ -15521,7 +15520,7 @@ pub struct XVisibilityEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub state: libc::c_int,
 }
 #[test]
@@ -15609,8 +15608,8 @@ pub struct XCreateWindowEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub parent: Window,
-  pub window: Window,
+  pub parent: XID,
+  pub window: XID,
   pub x: libc::c_int,
   pub y: libc::c_int,
   pub width: libc::c_int,
@@ -15765,8 +15764,8 @@ pub struct XDestroyWindowEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub event: Window,
-  pub window: Window,
+  pub event: XID,
+  pub window: XID,
 }
 #[test]
 fn bindgen_test_layout_XDestroyWindowEvent() {
@@ -15853,8 +15852,8 @@ pub struct XUnmapEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub event: Window,
-  pub window: Window,
+  pub event: XID,
+  pub window: XID,
   pub from_configure: libc::c_int,
 }
 #[test]
@@ -15952,8 +15951,8 @@ pub struct XMapEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub event: Window,
-  pub window: Window,
+  pub event: XID,
+  pub window: XID,
   pub override_redirect: libc::c_int,
 }
 #[test]
@@ -16051,8 +16050,8 @@ pub struct XMapRequestEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub parent: Window,
-  pub window: Window,
+  pub parent: XID,
+  pub window: XID,
 }
 #[test]
 fn bindgen_test_layout_XMapRequestEvent() {
@@ -16139,9 +16138,9 @@ pub struct XReparentEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub event: Window,
-  pub window: Window,
-  pub parent: Window,
+  pub event: XID,
+  pub window: XID,
+  pub parent: XID,
   pub x: libc::c_int,
   pub y: libc::c_int,
   pub override_redirect: libc::c_int,
@@ -16271,14 +16270,14 @@ pub struct XConfigureEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub event: Window,
-  pub window: Window,
+  pub event: XID,
+  pub window: XID,
   pub x: libc::c_int,
   pub y: libc::c_int,
   pub width: libc::c_int,
   pub height: libc::c_int,
   pub border_width: libc::c_int,
-  pub above: Window,
+  pub above: XID,
   pub override_redirect: libc::c_int,
 }
 #[test]
@@ -16436,8 +16435,8 @@ pub struct XGravityEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub event: Window,
-  pub window: Window,
+  pub event: XID,
+  pub window: XID,
   pub x: libc::c_int,
   pub y: libc::c_int,
 }
@@ -16546,7 +16545,7 @@ pub struct XResizeRequestEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub width: libc::c_int,
   pub height: libc::c_int,
 }
@@ -16645,14 +16644,14 @@ pub struct XConfigureRequestEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub parent: Window,
-  pub window: Window,
+  pub parent: XID,
+  pub window: XID,
   pub x: libc::c_int,
   pub y: libc::c_int,
   pub width: libc::c_int,
   pub height: libc::c_int,
   pub border_width: libc::c_int,
-  pub above: Window,
+  pub above: XID,
   pub detail: libc::c_int,
   pub value_mask: libc::c_ulong,
 }
@@ -16823,8 +16822,8 @@ pub struct XCirculateEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub event: Window,
-  pub window: Window,
+  pub event: XID,
+  pub window: XID,
   pub place: libc::c_int,
 }
 #[test]
@@ -16922,8 +16921,8 @@ pub struct XCirculateRequestEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub parent: Window,
-  pub window: Window,
+  pub parent: XID,
+  pub window: XID,
   pub place: libc::c_int,
 }
 #[test]
@@ -17021,7 +17020,7 @@ pub struct XPropertyEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub atom: Atom,
   pub time: Time,
   pub state: libc::c_int,
@@ -17131,7 +17130,7 @@ pub struct XSelectionClearEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub selection: Atom,
   pub time: Time,
 }
@@ -17230,8 +17229,8 @@ pub struct XSelectionRequestEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub owner: Window,
-  pub requestor: Window,
+  pub owner: XID,
+  pub requestor: XID,
   pub selection: Atom,
   pub target: Atom,
   pub property: Atom,
@@ -17362,7 +17361,7 @@ pub struct XSelectionEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub requestor: Window,
+  pub requestor: XID,
   pub selection: Atom,
   pub target: Atom,
   pub property: Atom,
@@ -17483,7 +17482,7 @@ pub struct XColormapEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub colormap: Colormap,
   pub new: libc::c_int,
   pub state: libc::c_int,
@@ -17593,7 +17592,7 @@ pub struct XClientMessageEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub message_type: Atom,
   pub format: libc::c_int,
   pub data: XClientMessageEvent__bindgen_ty_1,
@@ -17778,7 +17777,7 @@ pub struct XMappingEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
   pub request: libc::c_int,
   pub first_keycode: libc::c_int,
   pub count: libc::c_int,
@@ -17987,7 +17986,7 @@ pub struct XAnyEvent {
   pub serial: libc::c_ulong,
   pub send_event: libc::c_int,
   pub display: *mut Display,
-  pub window: Window,
+  pub window: XID,
 }
 #[test]
 fn bindgen_test_layout_XAnyEvent() {
@@ -18876,7 +18875,7 @@ pub struct SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1 {
   #[doc = "< The X11 display"]
   pub display: *mut Display,
   #[doc = "< The X11 window"]
-  pub window: Window,
+  pub window: XID,
 }
 #[test]
 fn bindgen_test_layout_SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1() {
