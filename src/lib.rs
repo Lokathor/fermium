@@ -10,6 +10,7 @@
 //!
 //! * `SDL2.h`
 //! * `SDL_syswm.h`
+//! * `SDL_vulkan.h`
 //!
 //! However, `SDL_syswm.h` in particular pulls in a bunch of extra code and it
 //! overwhelms the generated bindings. To avoid this, we only keep the following
@@ -18,6 +19,7 @@
 //! * `SDL_` (functions, types, and vars)
 //! * `SDLK_` (vars)
 //! * `AUDIO_` (vars)
+//! * Anything that one of these depends on also gets pulled in.
 //!
 //! It is thought that this will expose all needed functionality, but if you
 //! think something should be added to the whitelist please [submit an
