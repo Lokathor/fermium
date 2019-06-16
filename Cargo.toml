@@ -40,3 +40,8 @@ libc = "0.2"
 [badges]
 appveyor = { repository = "Lokathor/fermium" }
 travis-ci = { repository = "Lokathor/fermium" }
+
+# This forces docs.rs to build us on windows, which has the simplest build for
+# docs.rs to perform.
+[package.metadata.docs.rs]
+default-target = "x86_64-pc-windows-msvc"
