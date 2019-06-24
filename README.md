@@ -4,6 +4,10 @@
 [![crates.io](https://img.shields.io/crates/v/fermium.svg)](https://crates.io/crates/fermium)
 [![docs.rs](https://docs.rs/fermium/badge.svg)](https://docs.rs/fermium/)
 
+# THIS CRATE IS REVOKED AND BANNED YOU CANNOT USE IT BECAUSE C IS TERRIBLE
+
+please have a good day
+
 # fermium
 
 * Has pre-generated bindings files for major platforms
