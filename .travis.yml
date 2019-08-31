@@ -22,7 +22,8 @@ install:
   - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
   - cargo install-update -a
   - |
-    if [[ $TRAVIS_OS_NAME == "linux" ]] then
+    if [[ $TRAVIS_OS_NAME == "linux" ]]
+    then
       # https://packages.ubuntu.com/bionic/libsdl2-dev
       sudo apt-get install libsdl2-dev
     else
