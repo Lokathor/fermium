@@ -10,45 +10,19 @@ please have a good day
 
 # fermium
 
-* Has pre-generated bindings files for major platforms
-  * win32-msvc-x86_64, linux-x86_64, linux-arm32 (rpi3), mac-x86_64,
-  * You can build with either the `use_bindgen_bin` or `use_bindgen_lib`
-    features to make your own bindings if you need to. PRs are accepted if you
-    generate bindings for a new platform!
-* Performs static linking to SDL2 by default, with the [Dynamic
-  API](https://www.reddit.com/r/linux_gaming/comments/1upn39/sdl2_adds_dynamic_api_magic_to_allow_updating_it/)
-  enabled.
-  * There is a `dynamic_link` cargo feature if you really want.
-* Does not attempt to automatically set up SDL2 itself on non-Windows platforms.
-  * On win32-msvc-x86_64 there are provided build artifacts for both a static
-    link and dynamic link build.
-  * On Mac you should use Homebrew: `brew install sdl2`
-  * On Linux you should install SDL2-2.0.9 or later using any desired method.
-    This version is not currently available in many package managers, so you
-    might have to build from source. There's a [shell script](install-sdl2.sh)
-    that I use for the CI builds, if you'd like to use that.
-  * Non-Windows platforms require `sdl2-config` to be in the `PATH` during the
-    build to get the proper linking info, but this is part of a normal SDL2
-    install on both macOS and Linux so it shouldn't be a problem.
-* The whole crate is `no_std` of course.
-* The bindings use `libc` for the C type declarations.
 
-## Major Differences From `sdl2-sys`
-
-* Static linking by default (cargo feature for `dynamic_link`)
-* Bindings use "scoped constants" instead of "rustified enums".
-* The `build.rs` file is simple and easy to understand.
-
-## Additional Warning
-
-This crate is essentially "for internal use", to build Rust abstractions on top of.
-
-[beryllium](https://github.com/Lokathor/beryllium) is the crate with the safe
-wrapper layer.
 
 ## License
 
 This crate uses the Zlib license, the same license that SDL2 itself uses.
+
+* The `old-headers-only/` directory contains header files from older versions of
+  SDL2 and its add-ons, for use by bindgen when needed.
+* The `full-source/` directory contains all the source needed to potentially
+  build SDL2 and its add-ons, for use with static linking on windows. It's not
+  _literally_ the entire source tree you'd get off their website, because a lot
+  of test asset files (PNGs, mp3s, etc) have been removed to keep the download
+  smaller.
 
 ## Project Logo
 

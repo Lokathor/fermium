@@ -60,9 +60,6 @@ winapi = "0.3"
 [target."cfg(not(windows))".dependencies]
 libc = "0.2"
 
-[build-dependencies]
-bindgen = { version = "0.51", optional = true }
-
 [badges]
 appveyor = { repository = "Lokathor/fermium" }
 travis-ci = { repository = "Lokathor/fermium" }
