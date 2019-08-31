@@ -16,6 +16,11 @@ matrix:
       dist: bionic
     - os: osx
 
+addons:
+  homebrew:
+    packages:
+    - sdl2 # https://formulae.brew.sh/formula/sdl2#default
+
 install:
   - rustup component add rustfmt
   - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
@@ -25,10 +30,7 @@ install:
     if [[ $TRAVIS_OS_NAME == "linux" ]]
     then
       # https://packages.ubuntu.com/bionic/libsdl2-dev
-      sudo apt-get install libsdl2-dev
-    else
-      # https://formulae.brew.sh/formula/sdl2#default
-      brew install sdl2
+      sudo apt-get -qq install libsdl2-dev
     fi
   # Run these to confirm that the SDL2 installation is working
   - sdl2-config --cflags
