@@ -24,14 +24,14 @@ can probably make it become optional or something.
 #endif /* __unix__ */
 
 #if defined(BINDGEN_2_0_8)
-#include "old-headers-only/v2.0.8/SDL.h"
-#include "old-headers-only/v2.0.8/SDL_vulkan.h"
-#include "old-headers-only/v2.0.8/SDL_syswm.h"
+#include "old-headers-only/SDL2-v2.0.8/SDL.h"
+#include "old-headers-only/SDL2-v2.0.8/SDL_vulkan.h"
+#include "old-headers-only/SDL2-v2.0.8/SDL_syswm.h"
 
 #elif defined(BINDGEN_2_0_9)
-#include "old-headers-only/v2.0.9/SDL.h"
-#include "old-headers-only/v2.0.9/SDL_vulkan.h"
-#include "old-headers-only/v2.0.9/SDL_syswm.h"
+#include "old-headers-only/SDL2-v2.0.9/SDL.h"
+#include "old-headers-only/SDL2-v2.0.9/SDL_vulkan.h"
+#include "old-headers-only/SDL2-v2.0.9/SDL_syswm.h"
 
 #elif defined(BINDGEN_2_0_10)
 #include "full-source/SDL2-v2.0.10/include/SDL.h"
