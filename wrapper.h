@@ -8,7 +8,8 @@
 /*
 Note(Lokathor): As a sanity check against the fact that I usually generate the
 linux bindings on a headless linux server, we will try to forcibly turn on the
-X11 and wayland driver stuff.
+X11 and wayland driver stuff. File an issue if this gives you trouble and we
+can probably make it become optional or something.
 */
 #if defined(__unix__)
 
@@ -33,8 +34,8 @@ X11 and wayland driver stuff.
 #include "old-headers-only/v2.0.9/SDL_syswm.h"
 
 #elif defined(BINDGEN_2_0_10)
-#include "full-source-SDL2-2.0.10/include/SDL.h"
-#include "full-source-SDL2-2.0.10/include/SDL_vulkan.h"
-#include "full-source-SDL2-2.0.10/include/SDL_syswm.h"
+#include "full-source/SDL2-v2.0.10/include/SDL.h"
+#include "full-source/SDL2-v2.0.10/include/SDL_vulkan.h"
+#include "full-source/SDL2-v2.0.10/include/SDL_syswm.h"
 
-#endif
+#endif /* bindgen version selection */
