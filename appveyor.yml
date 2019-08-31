@@ -1,5 +1,5 @@
 
-os: Visual Studio 2017
+os: Visual Studio 2015
 
 matrix:
   fast_finish: true
@@ -23,6 +23,9 @@ install:
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
   - rustup-init -y --default-toolchain %channel% --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+  # https://www.appveyor.com/docs/windows-images-software/#mingw-msys-cygwin
+  - if %target% == "i686-pc-windows-gnu" set PATH=%PATH%;C:\mingw-w64\i686-6.3.0-posix-dwarf-rt_v5-rev1
+  - if %target% == "x86_64-pc-windows-gnu" set PATH=%PATH%;C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1
   - cargo install bindgen
   - rustc -vV
   - cargo -vV
