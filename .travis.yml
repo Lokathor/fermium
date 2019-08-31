@@ -22,23 +22,19 @@ install:
   - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
   - cargo install-update -a
   - |
-    if [[ $TRAVIS_OS == "osx" ]]
-    then
-      # https://formulae.brew.sh/formula/sdl2#default
-      brew install sdl2
-    else
+    if [[ $TRAVIS_OS_NAME == "linux" ]] then
       # https://packages.ubuntu.com/bionic/libsdl2-dev
       sudo apt-get install libsdl2-dev
+    else
+      # https://formulae.brew.sh/formula/sdl2#default
+      brew install sdl2
     fi
   # Run these to confirm that the SDL2 installation is working
   - sdl2-config --cflags
   - sdl2-config --libs
   - sdl2-config --static-libs
 
-script:
-  # We cannot run doctests because rustdoc is silly and tries to interpret too
-  # much stuff as code blocks and then dies when the "code blocks" don't contain
-  # valid rust. https://github.com/rust-lang/rust/issues/59867 We should still
-  # run all the other tests of course.
+build: false
 
-  # TODO: copy the build from appveyor once we decide what the build is
+test_script:
+  # TODO: copy the build from appveyor... once we decide what the build is

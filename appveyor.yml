@@ -1,6 +1,9 @@
 
 os: Visual Studio 2017
 
+matrix:
+  fast_finish: true
+
 environment:
   matrix:
     # Stable 32-bit
@@ -27,10 +30,5 @@ install:
 build: false
 
 test_script:
-  # We cannot run doctests because rustdoc is silly and tries to interpret too
-  # much stuff as code blocks and then dies when the "code blocks" don't contain
-  # valid rust. https://github.com/rust-lang/rust/issues/59867 We should still
-  # run all the other tests of course.
-
   - cargo build
   - cargo test
