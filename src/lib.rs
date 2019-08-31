@@ -3,10 +3,10 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-//! The `fermium` crate is a set of bindings to SDL2, currently 2.0.9.
+//! The `fermium` crate is bindings to SDL2.
 //!
 //! `bindgen` is used to generate the bindings from the official SDL2 include
-//! files. At the moment we include the following:
+//! files. At the moment we include the following SDL2 headers:
 //!
 //! * `SDL2.h`
 //! * `SDL_syswm.h`
@@ -19,12 +19,22 @@
 //! * `SDL_` (functions, types, and vars)
 //! * `SDLK_` (vars)
 //! * `AUDIO_` (vars)
-//! * Anything that one of these depends on also gets pulled in.
+//! * Any other items that the above depend on.
 //!
 //! It is thought that this will expose all needed functionality, but if you
 //! think something should be added to the whitelist please [submit an
 //! issue](https://github.com/Lokathor/fermium/issues).
 
+use cfg_if::cfg_if;
+
+cfg_if! {
+  if #[cfg(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))] {
+    include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+  }
+}
+// TODO: all the else branches
+
+/*
 // Note(Lokathor): Only one of the following `include!` directives should end up
 // being used in any given build.
 
@@ -62,3 +72,5 @@ include!("bindings_mac_x64.rs");
 ///
 /// `SDL_touch.h`, line 53
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
+
+*/

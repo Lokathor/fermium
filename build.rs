@@ -1,7 +1,4 @@
-#![cfg_attr(
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib")),
-  allow(unused_imports)
-)]
+#![allow(unused_imports)]
 
 use std::{
   env,
@@ -10,106 +7,135 @@ use std::{
 };
 
 fn main() {
-  #[cfg(all(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))]
-  {
-    compile_error!("If you want to build fresh bindings please enable `use_bindgen_bin` or `use_bindgen_lib`, but NOT both.");
+  let use_pregenerated_files = cfg!(feature = "use_pregenerated_files");
+  let use_bindgen_bin = cfg!(feature = "use_bindgen_bin");
+  let use_bindgen_lib = cfg!(feature = "use_bindgen_lib");
+  println!("use_pregenerated_files: {}", use_pregenerated_files);
+  println!("use_bindgen_bin: {}", use_bindgen_bin);
+  let use_request_count = use_pregenerated_files as usize + use_bindgen_bin as usize;
+  if use_request_count != 1 {
+    panic!(
+      "You must select exactly one style of bindings usage, you selected {}",
+      use_request_count
+    );
   }
+
+  let link_dynamic = cfg!(feature = "link_dynamic");
+  let link_static = cfg!(feature = "link_static");
+  println!("link_dynamic: {}", link_dynamic);
+  println!("link_static: {}", link_static);
+  let link_count = link_dynamic as usize + link_static as usize;
+  if link_count != 1 {
+    panic!(
+      "You must select exactly one linking type, you selected {}",
+      link_count
+    );
+  }
+
+  let bind_version_2_0_8 = cfg!(feature = "bind_version_2_0_8");
+  let bind_version_2_0_9 = cfg!(feature = "bind_version_2_0_9");
+  let bind_version_2_0_10 = cfg!(feature = "bind_version_2_0_10");
+  println!("bind_version_2_0_8: {}", bind_version_2_0_8);
+  println!("bind_version_2_0_9: {}", bind_version_2_0_9);
+  println!("bind_version_2_0_10: {}", bind_version_2_0_10);
+  assert!(bind_version_2_0_8, "You must select to bind to at least v2.0.8");
+
   #[cfg(feature = "use_bindgen_bin")]
-  {
-    let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
-    generate_bindings_file_via_cli(&out_dir);
-  }
-  #[cfg(feature = "use_bindgen_lib")]
-  {
-    let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR` value."));
-    generate_bindings_file_via_lib(&out_dir);
-  }
-  declare_linking();
+  run_bindgen_bin();
 }
 
 #[cfg(feature = "use_bindgen_bin")]
-fn generate_bindings_file_via_cli(out_dir: &Path) {
-  // where from
-  let current_dir = std::env::current_dir().expect("Couldn't read the current dir.");
+fn run_bindgen_bin() {
+  // 
+  let current_dir = env::current_dir().expect("Couldn't read the current directory.");
   let wrapper_filename = current_dir.join("wrapper.h");
-  // where to
+  
+  // 
+  let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR`"));
   let bindings_filename = out_dir.join("bindings.rs");
-  let mut bindings_command = Command::new("bindgen");
-  // flags
-  bindings_command.arg("--impl-debug");
-  bindings_command.arg("--impl-partialeq");
-  bindings_command.arg("--use-core");
-  bindings_command.arg("--with-derive-default");
-  bindings_command.arg("--with-derive-partialeq");
+  
+  // build up the whole bindgen command
+  let mut bindgen = Command::new("bindgen");
+  // flags, TODO: investigate --generate-inline-functions
+  bindgen.arg("--disable-name-namespacing");
+  bindgen.arg("--impl-debug");
+  bindgen.arg("--impl-partialeq");
+  bindgen.arg("--no-doc-comments");
+  bindgen.arg("--no-prepend-enum-name");
+  bindgen.arg("--use-core");
+  bindgen.arg("--with-derive-default");
+  bindgen.arg("--with-derive-partialeq");
   // options
-  bindings_command.arg("--ctypes-prefix").arg("libc");
-  bindings_command
+  #[cfg(not(windows))]
+  bindgen.arg("--ctypes-prefix").arg("libc");
+  #[cfg(windows)]
+  bindgen.arg("--ctypes-prefix").arg("winapi::ctypes");
+  bindgen
     .arg("--default-enum-style")
     .arg("moduleconsts");
-  bindings_command
+  bindgen
     .arg("--output")
     .arg(&format!("{}", bindings_filename.display()));
-  bindings_command.arg("--rust-target").arg("1.33");
-  bindings_command.arg("--rustfmt-configuration-file").arg(
+  bindgen.arg("--rust-target").arg("1.33");
+  bindgen.arg("--rustfmt-configuration-file").arg(
     std::env::current_dir()
       .expect("couldn't get current directory!")
       .join("rustfmt.toml")
       .to_str()
       .expect("rustfmt.toml file path isn't valid utf8, stop that"),
   );
-  bindings_command.arg("--whitelist-function").arg("SDL_.*");
-  bindings_command.arg("--whitelist-type").arg("SDL_.*");
-  bindings_command.arg("--whitelist-var").arg("SDL_.*");
-  bindings_command.arg("--whitelist-var").arg("AUDIO_.*");
-  bindings_command.arg("--whitelist-var").arg("SDLK_.*");
+  bindgen.arg("--whitelist-function").arg("SDL_.*");
+  bindgen.arg("--whitelist-type").arg("SDL_.*");
+  bindgen.arg("--whitelist-var").arg("SDL_.*");
+  bindgen.arg("--whitelist-var").arg("AUDIO_.*");
+  bindgen.arg("--whitelist-var").arg("SDLK_.*");
   // header
-  bindings_command.arg(&wrapper_filename);
-
-  println!("EXECUTING:{:?}", bindings_command);
-  let bindings_command_output = bindings_command
-    .output()
-    .expect("Couldn't run the 'bindgen' command, perhaps you need to 'cargo install bindgen'?");
-  if bindings_command_output.status.success() {
-    println!("SUCCESS!")
+  bindgen.arg(&wrapper_filename);
+  // mario kart double dash
+  bindgen.arg("--");
+  // clang args
+  bindgen.arg("--no-warnings");
+  if cfg!(feature = "bind_version_2_0_10") {
+    bindgen.arg("-DBINDGEN_2_0_10");
+  } else if cfg!(feature = "bind_version_2_0_9") {
+    bindgen.arg("-DBINDGEN_2_0_9");
+  } else if cfg!(feature = "bind_version_2_0_8") {
+    bindgen.arg("-DBINDGEN_2_0_8");
   } else {
-    println!("FAILURE!")
+    panic!("No bindings target version is defined!");
   }
-  for line in String::from_utf8_lossy(&bindings_command_output.stdout).lines() {
+
+  println!("bindgen version check: {}", {
+    let mut bindgen_version = Command::new("bindgen");
+    bindgen_version.arg("--version");
+    let version_out = bindgen_version.output().expect("Couldn't execute bindgen version check!");
+    if version_out.status.success() {
+      String::from_utf8_lossy(&version_out.stdout).into_owned()
+    } else {
+      panic!("bindgen version check failed!");
+    }
+  });
+  println!("executing command: {:?}", bindgen);
+  let bindgen_output = bindgen
+    .output()
+    .expect("Couldn't run 'bindgen', perhaps you need to 'cargo install bindgen'?");
+  if bindgen_output.status.success() {
+    println!("command success!")
+  } else {
+    println!("command failure!")
+  }
+  for line in String::from_utf8_lossy(&bindgen_output.stdout).lines() {
     println!("OUT:{}", line);
   }
-  for line in String::from_utf8_lossy(&bindings_command_output.stderr).lines() {
+  for line in String::from_utf8_lossy(&bindgen_output.stderr).lines() {
     println!("ERR:{}", line);
   }
-  if !bindings_command_output.status.success() {
-    panic!("The 'bindgen' process FAILED! (see output log for details)");
+  if !bindgen_output.status.success() {
+    panic!("The 'bindgen' command failed! (see output log for details)");
   }
 }
 
-#[cfg(feature = "use_bindgen_lib")]
-fn generate_bindings_file_via_lib(out_dir: &Path) {
-  let bindings_filename = out_dir.join("bindings.rs");
-  #[allow(unused_mut)]
-  let mut builder = bindgen::builder()
-    .header("wrapper.h")
-    .use_core()
-    .ctypes_prefix("libc")
-    .default_enum_style(bindgen::EnumVariation::ModuleConsts)
-    .impl_debug(true)
-    .derive_default(true)
-    .derive_partialeq(true)
-    .time_phases(true) // Note(Lokathor): just for fun!
-    .rustfmt_bindings(true)
-    .rustfmt_configuration_file(Some(PathBuf::from("rustfmt.toml")))
-    .whitelist_function("SDL_.*")
-    .whitelist_type("SDL_.*")
-    .whitelist_var("SDL_.*")
-    .whitelist_var("AUDIO_.*")
-    .whitelist_var("SDLK_.*");
-  let bindings = builder.generate().expect("Couldn't generate the bindings.");
-  bindings
-    .write_to_file(&bindings_filename)
-    .expect("Couldn't write the bindings file.");
-}
+/*
 
 fn declare_linking() {
   if cfg!(windows) {
@@ -197,3 +223,28 @@ fn declare_linking() {
     }
   }
 }
+
+
+
+// compile a shared or static lib depending on the feature 
+#[cfg(feature = "bundled")]
+fn compile_sdl2(sdl2_build_path: &Path, target_os: &str) -> PathBuf {
+    let mut cfg = cmake::Config::new(sdl2_build_path);
+    cfg.profile("release");
+
+    if target_os == "windows-gnu" {
+        cfg.define("VIDEO_OPENGLES", "OFF");
+    }
+
+    if cfg!(feature = "static-link") {
+        cfg.define("SDL_SHARED", "OFF");
+        cfg.define("SDL_STATIC", "ON");
+    } else {
+        cfg.define("SDL_SHARED", "ON");
+        cfg.define("SDL_STATIC", "OFF");
+    }
+
+    cfg.build()
+}
+
+*/
