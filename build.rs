@@ -9,7 +9,6 @@ use std::{
 fn main() {
   let use_pregenerated_files = cfg!(feature = "use_pregenerated_files");
   let use_bindgen_bin = cfg!(feature = "use_bindgen_bin");
-  let use_bindgen_lib = cfg!(feature = "use_bindgen_lib");
   println!("use_pregenerated_files: {}", use_pregenerated_files);
   println!("use_bindgen_bin: {}", use_bindgen_bin);
   let use_request_count = use_pregenerated_files as usize + use_bindgen_bin as usize;

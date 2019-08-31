@@ -28,43 +28,13 @@
 use cfg_if::cfg_if;
 
 cfg_if! {
-  if #[cfg(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))] {
+  if #[cfg(feature = "use_bindgen_bin")] {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
   }
 }
 // TODO: all the else branches
 
 /*
-// Note(Lokathor): Only one of the following `include!` directives should end up
-// being used in any given build.
-
-#[cfg(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))]
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
-
-#[cfg(all(
-  all(target_os = "windows", target_arch = "x86_64"),
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
-))]
-include!("bindings_win32_msvc_x64.rs");
-
-#[cfg(all(
-  all(target_os = "linux", target_arch = "x86_64"),
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
-))]
-include!("bindings_linux_x64.rs");
-
-#[cfg(all(
-  all(target_os = "linux", target_arch = "arm", target_env = "gnu"),
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
-))]
-include!("bindings_rpi3.rs");
-
-#[cfg(all(
-  all(target_os = "macos", target_arch = "x86_64"),
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
-))]
-include!("bindings_mac_x64.rs");
-
 // Note(Lokathor): Bindgen doesn't parse all things properly on its own, so we
 // define a few more things here "by hand".
 
@@ -72,5 +42,4 @@ include!("bindings_mac_x64.rs");
 ///
 /// `SDL_touch.h`, line 53
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
-
 */
