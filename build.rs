@@ -1,4 +1,5 @@
 #![allow(unused_imports)]
+#![allow(non_snake_case)]
 
 use std::{
   env,
@@ -31,13 +32,10 @@ fn main() {
     );
   }
 
-  let bind_version_2_0_8 = cfg!(feature = "bind_version_2_0_8");
-  let bind_version_2_0_9 = cfg!(feature = "bind_version_2_0_9");
-  let bind_version_2_0_10 = cfg!(feature = "bind_version_2_0_10");
-  println!("bind_version_2_0_8: {}", bind_version_2_0_8);
-  println!("bind_version_2_0_9: {}", bind_version_2_0_9);
-  println!("bind_version_2_0_10: {}", bind_version_2_0_10);
-  assert!(bind_version_2_0_8, "You must select to bind to at least v2.0.8");
+  let bind_SDL2_2_0_9 = cfg!(feature = "bind_SDL2_2_0_9");
+  let bind_SDL2_2_0_10 = cfg!(feature = "bind_SDL2_2_0_10");
+  println!("bind_SDL2_2_0_9: {}", bind_SDL2_2_0_9);
+  println!("bind_SDL2_2_0_10: {}", bind_SDL2_2_0_10);
 
   #[cfg(feature = "use_bindgen_bin")]
   run_bindgen_bin();
@@ -98,10 +96,8 @@ fn run_bindgen_bin() {
     bindgen.arg("-DBINDGEN_2_0_10");
   } else if cfg!(feature = "bind_version_2_0_9") {
     bindgen.arg("-DBINDGEN_2_0_9");
-  } else if cfg!(feature = "bind_version_2_0_8") {
-    bindgen.arg("-DBINDGEN_2_0_8");
   } else {
-    panic!("No bindings target version is defined!");
+    bindgen.arg("-DBINDGEN_2_0_8");
   }
 
   println!("bindgen version check: {}", {

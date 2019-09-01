@@ -40,9 +40,20 @@ use cfg_if::cfg_if;
 cfg_if! {
   if #[cfg(feature = "use_bindgen_bin")] {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+  } else if #[cfg(all(target_arch="x86_64", windows, target_env="msvc"))] {
+    cfg_if! {
+      if #[cfg(feature = "bind_SDL2_2_0_10")] {
+        include!("SDL2-v2.0.10/x86_64-pc-windows-msvc.rs");
+      } else if #[cfg(feature = "bind_SDL2_2_0_9")] {
+        include!("SDL2-v2.0.9/x86_64-pc-windows-msvc.rs");
+      } else {
+        include!("SDL2-v2.0.8/x86_64-pc-windows-msvc.rs");
+      }
+    }
+  } else {
+    compile_error!("No bindings found and you didn't run bindgen!");
   }
 }
-// TODO: all the else branches
 
 /*
 // Note(Lokathor): Bindgen doesn't parse all things properly on its own, so we
