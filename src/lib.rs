@@ -56,9 +56,9 @@ cfg_if! {
       if #[cfg(feature = "bind_SDL2_2_0_10")] {
         compile_error!("No pre-made bindings found and you didn't run bindgen!");
       } else if #[cfg(feature = "bind_SDL2_2_0_9")] {
-        include!("SDL2-v2.0.9/x86_64-pc-windows-msvc.rs");
+        include!("SDL2-v2.0.9/armv7-unknown-linux-gnueabihf.rs");
       } else {
-        include!("SDL2-v2.0.8/x86_64-pc-windows-msvc.rs");
+        include!("SDL2-v2.0.8/armv7-unknown-linux-gnueabihf.rs");
       }
     }
   } else {

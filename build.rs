@@ -43,14 +43,14 @@ fn main() {
 
 #[cfg(feature = "use_bindgen_bin")]
 fn run_bindgen_bin() {
-  // 
+  //
   let current_dir = env::current_dir().expect("Couldn't read the current directory.");
   let wrapper_filename = current_dir.join("wrapper.h");
-  
-  // 
+
+  //
   let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR`"));
   let bindings_filename = out_dir.join("bindings.rs");
-  
+
   // build up the whole bindgen command
   let mut bindgen = Command::new("bindgen");
   // flags, TODO: investigate --generate-inline-functions
@@ -67,9 +67,7 @@ fn run_bindgen_bin() {
   bindgen.arg("--ctypes-prefix").arg("libc");
   #[cfg(windows)]
   bindgen.arg("--ctypes-prefix").arg("winapi::ctypes");
-  bindgen
-    .arg("--default-enum-style")
-    .arg("moduleconsts");
+  bindgen.arg("--default-enum-style").arg("moduleconsts");
   bindgen
     .arg("--output")
     .arg(&format!("{}", bindings_filename.display()));
@@ -103,7 +101,9 @@ fn run_bindgen_bin() {
   println!("bindgen version check: {}", {
     let mut bindgen_version = Command::new("bindgen");
     bindgen_version.arg("--version");
-    let version_out = bindgen_version.output().expect("Couldn't execute bindgen version check!");
+    let version_out = bindgen_version
+      .output()
+      .expect("Couldn't execute bindgen version check!");
     if version_out.status.success() {
       String::from_utf8_lossy(&version_out.stdout).into_owned()
     } else {
@@ -221,7 +221,7 @@ fn declare_linking() {
 
 
 
-// compile a shared or static lib depending on the feature 
+// compile a shared or static lib depending on the feature
 #[cfg(feature = "bundled")]
 fn compile_sdl2(sdl2_build_path: &Path, target_os: &str) -> PathBuf {
     let mut cfg = cmake::Config::new(sdl2_build_path);
