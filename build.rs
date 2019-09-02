@@ -265,10 +265,7 @@ fn declare_sd2_config_linking() {
   let version_parts: Vec<u32> = version_out_string
     .trim()
     .split('.')
-    .map(|s| {
-      println!("'{}'", s);
-      s.parse::<u32>().unwrap()
-    })
+    .map(|s| s.parse::<u32>().unwrap())
     .collect();
   // exact matches
   assert_eq!(version_parts[0], 2);
@@ -324,7 +321,7 @@ fn declare_sd2_config_linking() {
       println!("cargo:rustc-env=LD_LIBRARY_PATH={}", &term[11..]);
     } else if term.starts_with("-Wl,--enable-new-dtags") {
       // Do we do anything here?
-    } else if term.starts_with(" -Wl,--no-undefined") {
+    } else if term.starts_with("-Wl,--no-undefined") {
       // Do we do anything here?
     } else {
       panic!("Unknown term: {}", term);
