@@ -35,7 +35,12 @@ install:
   - sdl2-config --libs
   - sdl2-config --static-libs
 
-build: false
-
-test_script:
-  # TODO: copy the build from appveyor... once we decide what the build is
+build_script:
+  # dynamic
+  - cargo build --no-default-features --features="link_dynamic"
+  - cargo test --no-default-features --features="link_dynamic"
+  - cargo clean
+  # static
+  - cargo build --no-default-features --features="link_static"
+  - cargo test --no-default-features --features="link_static"
+  - cargo clean
