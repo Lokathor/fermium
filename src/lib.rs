@@ -59,6 +59,16 @@ cfg_if! {
         include!("SDL2-v2.0.8/x86_64-pc-windows-msvc.rs");
       }
     }
+  } else if #[cfg(all(target_arch="i686", target_os="windows", target_env="msvc"))] {
+    cfg_if! {
+      if #[cfg(feature = "bind_SDL2_2_0_10")] {
+        include!("SDL2-v2.0.10/i686-pc-windows-msvc.rs");
+      } else if #[cfg(feature = "bind_SDL2_2_0_9")] {
+        include!("SDL2-v2.0.9/i686-pc-windows-msvc.rs");
+      } else {
+        include!("SDL2-v2.0.8/i686-pc-windows-msvc.rs");
+      }
+    }
   } else if #[cfg(all(target_arch="arm", target_os="linux", target_env="gnu"))] {
     // Generated on an rpi4 with 2.0.9 from the package manager
     cfg_if! {
