@@ -75,15 +75,14 @@ cfg_if! {
         include!("SDL2-v2.0.8/i686-pc-windows-msvc.rs");
       }
     }
-  } else if #[cfg(all(target_arch="arm", target_os="linux", target_env="gnu"))] {
-    // Generated on an rpi4 with 2.0.9 from the package manager
+  } else if #[cfg(all(target_arch="x86_64", target_os="macos", target_env=""))] {
     cfg_if! {
       if #[cfg(feature = "bind_SDL2_2_0_10")] {
-        compile_error!("No pre-made bindings found and you didn't run bindgen!");
+        include!("SDL2-v2.0.10/x86_64-apple-darwin.rs");
       } else if #[cfg(feature = "bind_SDL2_2_0_9")] {
-        include!("SDL2-v2.0.9/armv7-unknown-linux-gnueabihf.rs");
+        include!("SDL2-v2.0.9/x86_64-apple-darwin.rs");
       } else {
-        include!("SDL2-v2.0.8/armv7-unknown-linux-gnueabihf.rs");
+        include!("SDL2-v2.0.8/x86_64-apple-darwin.rs");
       }
     }
   } else if #[cfg(all(target_arch="x86_64", target_os="linux", target_env="gnu"))] {
@@ -97,17 +96,27 @@ cfg_if! {
         include!("SDL2-v2.0.8/x86_64-unknown-linux-gnu.rs");
       }
     }
+  } else if #[cfg(all(target_arch="arm", target_os="linux", target_env="gnu"))] {
+    // Generated on an rpi4 with 2.0.9 from the package manager
+    cfg_if! {
+      if #[cfg(feature = "bind_SDL2_2_0_10")] {
+        compile_error!("No pre-made bindings found and you didn't run bindgen!");
+      } else if #[cfg(feature = "bind_SDL2_2_0_9")] {
+        include!("SDL2-v2.0.9/armv7-unknown-linux-gnueabihf.rs");
+      } else {
+        include!("SDL2-v2.0.8/armv7-unknown-linux-gnueabihf.rs");
+      }
+    }
   } else {
     compile_error!("No pre-made bindings found and you didn't run bindgen!");
   }
 }
 
-/*
 // Note(Lokathor): Bindgen doesn't parse all things properly on its own, so we
 // define a few more things here "by hand".
 
-/// Used as the device ID for mouse events simulated with touch input
-///
-/// `SDL_touch.h`, line 53
+/// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch input
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
-*/
+
+/// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse input
+pub const SDL_MOUSE_TOUCHID: u64 = -1i64 as u64;

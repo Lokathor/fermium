@@ -132,8 +132,8 @@ fn run_bindgen_bin() {
 }
 
 // Note: In addition to only calling this as needed, we must also cfg it to only
-// exist as needed so that we can avoid building in the `cmake` crate unless
-// it's really gonna be used.
+// exist as needed so that we can avoid building in the `cmake` crate and its
+// dependencies unless it's really gonna be used.
 #[cfg(all(windows, feature = "link_static"))]
 fn win32_build_static_libs() -> PathBuf {
   let manifest_dir =
@@ -142,6 +142,7 @@ fn win32_build_static_libs() -> PathBuf {
   cfg.profile("release");
   cfg.static_crt(true);
 
+  // Note(Lokathor): I haven't tested this, it's just what I saw in sdl2-sys.
   if cfg!(target_env = "gnu") {
     cfg.define("VIDEO_OPENGLES", "OFF");
   }
@@ -295,7 +296,10 @@ fn declare_sd2_config_linking() {
     .output()
     .unwrap_or_else(|_| panic!("Couldn't run `sdl2-config {}`.", link_style_arg));
   assert!(sd2_config_linking.status.success());
-  for term in String::from_utf8_lossy(&sd2_config_linking.stdout).split_whitespace() {
+  let sd2_config_linking_string: String = String::from_utf8_lossy(&sd2_config_linking.stdout).into_owned();
+  println!("sd2_config_linking: {}", sd2_config_linking_string);
+  assert!(sd2_config_linking_string.len() > 0);
+  for term in sd2_config_linking_string.split_whitespace() {
     if term.starts_with("-L") {
       println!("cargo:rustc-link-search=native={}", &term[2..]);
     } else if term.starts_with("-lSDL2") {
