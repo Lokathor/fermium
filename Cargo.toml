@@ -11,7 +11,7 @@ links = "SDL2"
 build = "build.rs"
 
 [features]
-default = ["use_bindgen_bin", "link_dynamic"]
+default = []
 
 # You can enable the `use_bindgen_bin` feature to override the use of the
 # included pre-generated files. Instead, it will run the `bindgen` CLI
