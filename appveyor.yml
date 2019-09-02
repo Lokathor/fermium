@@ -5,15 +5,16 @@ matrix:
   fast_finish: true
 
 environment:
+  # Note(Lokathor): When someone submits the GNU files we can test the GNU files
   matrix:
     # Stable 32-bit
-    - channel: 1.36.0
-      target: i686-pc-windows-gnu
+    #- channel: 1.36.0
+    #  target: i686-pc-windows-gnu
     - channel: 1.36.0
       target: i686-pc-windows-msvc
     # Stable 64-bit
-    - channel: 1.36.0
-      target: x86_64-pc-windows-gnu
+    #- channel: 1.36.0
+    #  target: x86_64-pc-windows-gnu
     - channel: 1.36.0
       target: x86_64-pc-windows-msvc
     # Beta and Nightly are covered as necessary by TravisCI, since builds
@@ -22,19 +23,15 @@ environment:
 install:
   # Put our DLL in place, depending on 32-bit/64-bit
   - if %target%==i686-pc-windows-gnu cp win32-devel-files\VC\lib\x86\SDL2.dll .
-  - if %target%==i686-pc-windows-gnu dir
+  - if %target%==i686-pc-windows-gnu dir *.dll
   - if %target%==x86_64-pc-windows-gnu cp win32-devel-files\VC\lib\x86\SDL2.dll .
-  - if %target%==x86_64-pc-windows-gnu dir
+  - if %target%==x86_64-pc-windows-gnu dir *.dll
   # Setup Rust
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
   - rustup-init -y --default-toolchain %channel% --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
   - rustc -vV
   - cargo -vV
-  # https://www.appveyor.com/docs/windows-images-software/#mingw-msys-cygwin
-  #- if %target% == "i686-pc-windows-gnu" set PATH=%PATH%;C:\mingw-w64\i686-6.3.0-posix-dwarf-rt_v5-rev1\bin
-  #- if %target% == "x86_64-pc-windows-gnu" set PATH=%PATH%;C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\bin
-  #- cargo install bindgen
 
 build: false
 
