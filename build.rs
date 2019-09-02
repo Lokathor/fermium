@@ -296,7 +296,8 @@ fn declare_sd2_config_linking() {
     .output()
     .unwrap_or_else(|_| panic!("Couldn't run `sdl2-config {}`.", link_style_arg));
   assert!(sd2_config_linking.status.success());
-  let sd2_config_linking_string: String = String::from_utf8_lossy(&sd2_config_linking.stdout).into_owned();
+  let sd2_config_linking_string: String =
+    String::from_utf8_lossy(&sd2_config_linking.stdout).into_owned();
   println!("sd2_config_linking: {}", sd2_config_linking_string);
   assert!(sd2_config_linking_string.len() > 0);
   for term in sd2_config_linking_string.split_whitespace() {
@@ -337,19 +338,19 @@ fn declare_sd2_config_linking() {
   // probably is based on what Debian / Ubuntu do. Sane, right?
   println!("cargo:rustc-link-search=native=/usr/lib");
   println!("cargo:rustc-link-search=native=/usr/local/lib");
-  if cfg!(target_arch="x86_64") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+  if cfg!(target_arch = "x86_64") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
     println!("cargo:rustc-link-search=native=/usr/lib/x86_64-linux-gnu");
   }
-  if cfg!(target_arch="aarch64") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+  if cfg!(target_arch = "aarch64") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
     println!("cargo:rustc-link-search=native=/usr/lib/aarch64-linux-gnu");
   }
-  if cfg!(target_arch="arm") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+  if cfg!(target_arch = "arm") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
     println!("cargo:rustc-link-search=native=/usr/lib/arm-linux-gnueabihf");
   }
-  if cfg!(target_arch="x86") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+  if cfg!(target_arch = "x86") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
     println!("cargo:rustc-link-search=native=/usr/lib/i386-linux-gnu");
   }
-  if cfg!(target_arch="powerpc64") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+  if cfg!(target_arch = "powerpc64") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
     println!("cargo:rustc-link-search=native=/usr/lib/powerpc64le-linux-gnu");
   }
 }

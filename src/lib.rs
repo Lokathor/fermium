@@ -115,13 +115,141 @@ cfg_if! {
 // Note(Lokathor): Bindgen doesn't parse all things properly on its own, so we
 // define a few more things here "by hand".
 
-/// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch input
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type PixelType = _bindgen_ty_1::Type;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type BitmapOrder = _bindgen_ty_2::Type;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type PackedOrder = _bindgen_ty_3::Type;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type ArrayOrder = _bindgen_ty_4::Type;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type PackedLayout = _bindgen_ty_5::Type;
+
+/// See [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum)
+pub type SDL_PixelFormatEnum = _bindgen_ty_6::Type;
+
+/// See [`SDL_LOG_CATEGORY`](https://wiki.libsdl.org/SDL_LOG_CATEGORY)
+pub type LogCategory = _bindgen_ty_8::Type;
+
+/// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch
+/// input
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
 
-/// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse input
+/// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse
+/// input
 pub const SDL_MOUSE_TOUCHID: u64 = -1i64 as u64;
 
+/// `SDL_surface.h`: Evaluates to true if the surface needs to be locked before
+/// access.
 #[inline(always)]
 pub unsafe fn SDL_MUSTLOCK(surface: *const SDL_Surface) -> bool {
   (*surface).flags & SDL_RLEACCEL != 0
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub const fn SDL_PIXELFLAG(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 28) & 0x0F
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub const fn SDL_PIXELTYPE(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 24) & 0x0F
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub const fn SDL_PIXELORDER(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 20) & 0x0F
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub const fn SDL_PIXELLAYOUT(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 16) & 0x0F
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 8) & 0xFF
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub fn SDL_BYTESPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  use _bindgen_ty_6::*;
+  if SDL_ISPIXELFORMAT_FOURCC(format) {
+    if format == SDL_PIXELFORMAT_YUY2
+      || format == SDL_PIXELFORMAT_UYVY
+      || format == SDL_PIXELFORMAT_YVYU
+    {
+      2
+    } else {
+      1
+    }
+  } else {
+    format & 0xFF
+  }
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
+  use _bindgen_ty_1::*;
+  !SDL_ISPIXELFORMAT_FOURCC(format)
+    && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8)
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
+  use _bindgen_ty_1::*;
+  !SDL_ISPIXELFORMAT_FOURCC(format)
+    && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32)
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
+  use _bindgen_ty_1::*;
+  !SDL_ISPIXELFORMAT_FOURCC(format)
+    && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU32
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32)
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
+  use _bindgen_ty_3::*;
+  use _bindgen_ty_4::*;
+  (SDL_ISPIXELFORMAT_PACKED(format)
+    && (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB
+      || SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA
+      || SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR
+      || SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))
+    || (SDL_ISPIXELFORMAT_ARRAY(format)
+      && (SDL_PIXELORDER(format) == SDL_ARRAYORDER_ARGB
+        || SDL_PIXELORDER(format) == SDL_ARRAYORDER_RGBA
+        || SDL_PIXELORDER(format) == SDL_ARRAYORDER_ABGR
+        || SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA))
+}
+
+/// `SDL_pixels.h`:
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormatEnum) -> bool {
+  (format != 0) && (SDL_PIXELFLAG(format) != 1)
 }
