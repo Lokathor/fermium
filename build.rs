@@ -224,11 +224,13 @@ fn declare_win32_linking() {
 }
 
 fn declare_sd2_config_linking() {
-  // Verify that sdl2-config exists and supports the linking we want.
+  // Verify that sdl2-config exists and supports the linking we want. The output
+  // of this should go to stderr.
   let sdl2_config_usage = Command::new("sdl2-config")
     .output()
     .expect("couldn't run `sdl2-config`, please properly install SDL2.");
-  let usage_out_string = String::from_utf8_lossy(&sdl2_config_usage.stdout);
+  assert!(!sdl2_config_usage.success());
+  let usage_out_string = String::from_utf8_lossy(&sdl2_config_usage.stderr);
   println!("sdl2-config: {}", usage_out_string);
   let usage_words: Vec<String> = usage_out_string
     .split_whitespace()
@@ -257,6 +259,7 @@ fn declare_sd2_config_linking() {
     .arg("--version")
     .output()
     .expect("couldn't run `sdl2-config`, please properly install SDL2.");
+  assert!(sdl2_config_version.success());
   let version_out_string = String::from_utf8_lossy(&sdl2_config_version.stdout);
   println!("sdl2-config --version: {}", version_out_string);
   let version_parts: Vec<u32> = version_out_string
@@ -290,6 +293,7 @@ fn declare_sd2_config_linking() {
     .arg(link_style_arg)
     .output()
     .unwrap_or_else(|_| panic!("Couldn't run `sdl2-config {}`.", link_style_arg));
+  assert!(sd2_config_linking.success());
   for term in String::from_utf8_lossy(&sd2_config_linking.stdout).split_whitespace() {
     if term.starts_with("-L") {
       println!("cargo:rustc-link-search=native={}", &term[2..]);
