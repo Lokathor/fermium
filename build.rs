@@ -28,6 +28,15 @@ fn main() {
   println!("bind_SDL2_2_0_9: {}", bind_SDL2_2_0_9);
   println!("bind_SDL2_2_0_10: {}", bind_SDL2_2_0_10);
 
+  println!("cargo:rustc-env=TARGET={}", env::var("TARGET").expect("Couldn't read `TARGET`"));
+  println!("cargo:rustc-env=BIND_PATCH_LEVEL={}", if bind_SDL2_2_0_10 {
+    10
+  } else if bind_SDL2_2_0_9 {
+    9
+  } else {
+    8
+  });
+
   if cfg!(feature = "use_bindgen_bin") {
     run_bindgen_bin();
   }
@@ -44,90 +53,95 @@ fn main() {
 }
 
 fn run_bindgen_bin() {
+  println!("bindgen --version: {}", {
+    let mut bindgen_version = Command::new("bindgen");
+    bindgen_version.arg("--version");
+    let version_out = bindgen_version
+      .output()
+      .expect("Couldn't execute `bindgen --version`!");
+    if version_out.status.success() {
+      String::from_utf8_lossy(&version_out.stdout).into_owned()
+    } else {
+      panic!("`bindgen --version` did not give an exit-success!");
+    }
+  });
+
   //
   let current_dir = env::current_dir().expect("Couldn't read the current directory.");
   let wrapper_filename = current_dir.join("wrapper.h");
 
   //
   let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR`"));
-  let bindings_filename = out_dir.join("bindings.rs");
+  let target = env::var("TARGET").expect("Couldn't read `TARGET`");
 
-  // build up the whole bindgen command
-  let mut bindgen = Command::new("bindgen");
-  // flags, TODO: investigate --generate-inline-functions
-  bindgen.arg("--disable-name-namespacing");
-  bindgen.arg("--impl-debug");
-  bindgen.arg("--impl-partialeq");
-  bindgen.arg("--no-doc-comments");
-  bindgen.arg("--no-prepend-enum-name");
-  bindgen.arg("--use-core");
-  bindgen.arg("--with-derive-default");
-  bindgen.arg("--with-derive-partialeq");
-  // options
-  #[cfg(not(windows))]
-  bindgen.arg("--ctypes-prefix").arg("libc");
-  #[cfg(windows)]
-  bindgen.arg("--ctypes-prefix").arg("winapi::ctypes");
-  bindgen.arg("--default-enum-style").arg("moduleconsts");
-  bindgen
-    .arg("--output")
-    .arg(&format!("{}", bindings_filename.display()));
-  bindgen.arg("--rust-target").arg("1.33");
-  bindgen.arg("--rustfmt-configuration-file").arg(
-    std::env::current_dir()
-      .expect("couldn't get current directory!")
-      .join("rustfmt.toml")
-      .to_str()
-      .expect("rustfmt.toml file path isn't valid utf8, stop that"),
-  );
-  bindgen.arg("--whitelist-function").arg("SDL_.*");
-  bindgen.arg("--whitelist-type").arg("SDL_.*");
-  bindgen.arg("--whitelist-var").arg("SDL_.*");
-  bindgen.arg("--whitelist-var").arg("AUDIO_.*");
-  bindgen.arg("--whitelist-var").arg("SDLK_.*");
-  // header
-  bindgen.arg(&wrapper_filename);
-  // mario kart double dash
-  bindgen.arg("--");
-  // clang args
-  bindgen.arg("--no-warnings");
-  if cfg!(feature = "bind_version_2_0_10") {
-    bindgen.arg("-DBINDGEN_2_0_10");
-  } else if cfg!(feature = "bind_version_2_0_9") {
-    bindgen.arg("-DBINDGEN_2_0_9");
-  } else {
-    bindgen.arg("-DBINDGEN_2_0_8");
-  }
+  let make_bindgen_command = |patch_level: i32| {
+    // build up the whole bindgen command
+    let mut bindgen = Command::new("bindgen");
+    // flags, TODO: investigate --generate-inline-functions
+    bindgen.arg("--disable-name-namespacing");
+    bindgen.arg("--impl-debug");
+    bindgen.arg("--impl-partialeq");
+    bindgen.arg("--no-doc-comments");
+    bindgen.arg("--no-prepend-enum-name");
+    bindgen.arg("--use-core");
+    bindgen.arg("--with-derive-default");
+    bindgen.arg("--with-derive-partialeq");
+    // options
+    #[cfg(not(windows))]
+    bindgen.arg("--ctypes-prefix").arg("libc");
+    #[cfg(windows)]
+    bindgen.arg("--ctypes-prefix").arg("winapi::ctypes");
+    bindgen.arg("--default-enum-style").arg("moduleconsts");
+    bindgen.arg("--output").arg(&format!(
+      "{}",
+      out_dir
+        .join(format!("SDL2-v2.0.{}-{}.rs", patch_level, target))
+        .display()
+    ));
+    bindgen.arg("--rust-target").arg("1.33");
+    bindgen.arg("--rustfmt-configuration-file").arg(
+      std::env::current_dir()
+        .expect("couldn't get current directory!")
+        .join("rustfmt.toml")
+        .to_str()
+        .expect("rustfmt.toml file path isn't valid utf8, stop that"),
+    );
+    bindgen.arg("--whitelist-function").arg("SDL_.*");
+    bindgen.arg("--whitelist-type").arg("SDL_.*");
+    bindgen.arg("--whitelist-var").arg("SDL_.*");
+    bindgen.arg("--whitelist-var").arg("AUDIO_.*");
+    bindgen.arg("--whitelist-var").arg("SDLK_.*");
+    // header
+    bindgen.arg(&wrapper_filename);
+    // mario kart double dash
+    bindgen.arg("--");
+    // clang args
+    bindgen.arg("--no-warnings");
+    bindgen.arg(format!("-DBINDGEN_2_0_{}", patch_level));
+    bindgen
+  };
 
-  println!("bindgen version check: {}", {
-    let mut bindgen_version = Command::new("bindgen");
-    bindgen_version.arg("--version");
-    let version_out = bindgen_version
+  for patch_level in [8, 9, 10].iter().copied() {
+    let mut bindgen = make_bindgen_command(patch_level);
+
+    println!("executing command: {:?}", bindgen);
+    let bindgen_output = bindgen
       .output()
-      .expect("Couldn't execute bindgen version check!");
-    if version_out.status.success() {
-      String::from_utf8_lossy(&version_out.stdout).into_owned()
+      .expect("Couldn't run 'bindgen', perhaps you need to 'cargo install bindgen'?");
+    if bindgen_output.status.success() {
+      println!("command success!")
     } else {
-      panic!("bindgen version check failed!");
+      println!("command failure!")
     }
-  });
-  println!("executing command: {:?}", bindgen);
-  let bindgen_output = bindgen
-    .output()
-    .expect("Couldn't run 'bindgen', perhaps you need to 'cargo install bindgen'?");
-  if bindgen_output.status.success() {
-    println!("command success!")
-  } else {
-    println!("command failure!")
-  }
-  for line in String::from_utf8_lossy(&bindgen_output.stdout).lines() {
-    println!("OUT:{}", line);
-  }
-  for line in String::from_utf8_lossy(&bindgen_output.stderr).lines() {
-    println!("ERR:{}", line);
-  }
-  if !bindgen_output.status.success() {
-    panic!("The 'bindgen' command failed! (see output log for details)");
+    for line in String::from_utf8_lossy(&bindgen_output.stdout).lines() {
+      println!("OUT:{}", line);
+    }
+    for line in String::from_utf8_lossy(&bindgen_output.stderr).lines() {
+      println!("ERR:{}", line);
+    }
+    if !bindgen_output.status.success() {
+      panic!("The 'bindgen' command failed! (see output log for details)");
+    }
   }
 }
 
