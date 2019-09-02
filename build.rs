@@ -295,6 +295,10 @@ fn declare_sd2_config_linking() {
     .output()
     .unwrap_or_else(|_| panic!("Couldn't run `sdl2-config {}`.", link_style_arg));
   assert!(sd2_config_linking.status.success());
+  // Note(Lokathor): Sometimes `sdl2-config` won't give us an -L term. However,
+  // we can just wildly guess about where SDL2 probably is.
+  println!("cargo:rustc-link-search=native=/usr/lib");
+  println!("cargo:rustc-link-search=native=/usr/local/lib");
   for term in String::from_utf8_lossy(&sd2_config_linking.stdout).split_whitespace() {
     if term.starts_with("-L") {
       println!("cargo:rustc-link-search=native={}", &term[2..]);
