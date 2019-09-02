@@ -95,37 +95,37 @@ pub unsafe fn SDL_MUSTLOCK(surface: *const SDL_Surface) -> bool {
   (*surface).flags & SDL_RLEACCEL != 0
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: "internal" macro to check if a value is a pixel format value.
 #[inline(always)]
 pub const fn SDL_PIXELFLAG(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
   (format >> 28) & 0x0F
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Pixel type of this format.
 #[inline(always)]
 pub const fn SDL_PIXELTYPE(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
   (format >> 24) & 0x0F
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Component ordering of this format.
 #[inline(always)]
 pub const fn SDL_PIXELORDER(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
   (format >> 20) & 0x0F
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Channel width layout of this format.
 #[inline(always)]
 pub const fn SDL_PIXELLAYOUT(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
   (format >> 16) & 0x0F
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Bits per pixel.
 #[inline(always)]
 pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
   (format >> 8) & 0xFF
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Bytes per pixel.
 #[inline(always)]
 pub fn SDL_BYTESPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
   use _bindgen_ty_6::*;
@@ -143,7 +143,7 @@ pub fn SDL_BYTESPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
   }
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Is this an indexed format?
 #[inline(always)]
 pub fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
   use _bindgen_ty_1::*;
@@ -153,7 +153,7 @@ pub fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
       || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8)
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Is this a packed format?
 #[inline(always)]
 pub fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
   use _bindgen_ty_1::*;
@@ -163,7 +163,7 @@ pub fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
       || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32)
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Is this an array format?
 #[inline(always)]
 pub fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
   use _bindgen_ty_1::*;
@@ -175,7 +175,7 @@ pub fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
       || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32)
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Does this format have an alpha channel?
 #[inline(always)]
 pub fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
   use _bindgen_ty_3::*;
@@ -192,7 +192,7 @@ pub fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
         || SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA))
 }
 
-/// `SDL_pixels.h`:
+/// `SDL_pixels.h`: Is this a FourCC format?
 #[inline(always)]
 pub fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormatEnum) -> bool {
   (format != 0) && (SDL_PIXELFLAG(format) != 1)
