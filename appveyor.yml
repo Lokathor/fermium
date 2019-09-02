@@ -5,16 +5,13 @@ matrix:
   fast_finish: true
 
 environment:
-  # Note(Lokathor): When someone submits the GNU files we can test the GNU files
+  # Note(Lokathor): When someone submits the GNU files we can add the GNU stuff
+  # into our CI. Until then, no GNU CI support.
   matrix:
     # Stable 32-bit
-    #- channel: 1.36.0
-    #  target: i686-pc-windows-gnu
     - channel: 1.36.0
       target: i686-pc-windows-msvc
     # Stable 64-bit
-    #- channel: 1.36.0
-    #  target: x86_64-pc-windows-gnu
     - channel: 1.36.0
       target: x86_64-pc-windows-msvc
     # Beta and Nightly are covered as necessary by TravisCI, since builds
@@ -22,10 +19,10 @@ environment:
 
 install:
   # Put our DLL in place, depending on 32-bit/64-bit
-  - if %target%==i686-pc-windows-gnu cp win32-devel-files\VC\lib\x86\SDL2.dll .
-  - if %target%==i686-pc-windows-gnu dir *.dll
-  - if %target%==x86_64-pc-windows-gnu cp win32-devel-files\VC\lib\x86\SDL2.dll .
-  - if %target%==x86_64-pc-windows-gnu dir *.dll
+  - if %target%==i686-pc-windows-msvc cp win32-devel-files\VC\lib\x86\SDL2.dll .
+  - if %target%==i686-pc-windows-msvc dir *.dll
+  - if %target%==x86_64-pc-windows-msvc cp win32-devel-files\VC\lib\x64\SDL2.dll .
+  - if %target%==x86_64-pc-windows-msvc dir *.dll
   # Setup Rust
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
   - rustup-init -y --default-toolchain %channel% --default-host %target%

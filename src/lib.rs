@@ -59,7 +59,7 @@ cfg_if! {
         include!("SDL2-v2.0.8/x86_64-pc-windows-msvc.rs");
       }
     }
-  } else if #[cfg(all(target_arch="i686", target_os="windows", target_env="msvc"))] {
+  } else if #[cfg(all(target_arch="x86", target_os="windows", target_env="msvc"))] {
     cfg_if! {
       if #[cfg(feature = "bind_SDL2_2_0_10")] {
         include!("SDL2-v2.0.10/i686-pc-windows-msvc.rs");
@@ -92,10 +92,7 @@ cfg_if! {
       }
     }
   } else {
-    #[cfg(not(target_arch="i686"))]
-    compile_error!("not i686");
-    #[cfg(target_arch="i686")]
-    compile_error!("i686");
+    compile_error!("No pre-made bindings found and you didn't run bindgen!");
   }
 }
 
