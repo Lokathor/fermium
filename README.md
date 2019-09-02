@@ -18,7 +18,7 @@ This is bindings to the SDL2 C API.
   * Install the `clang-3.9`, `libclang-3.9-dev`, and `llvm` packages for your
     platform. Might be under different names, depending on distro and such.
   * Then `cargo install bindgen`
-  * The `cargo build --features="use_bindgen_bin"`
+  * Then `cargo build --features="use_bindgen_bin"`
   * All the results go in to the `OUT_DIR`, something like
     `target/debug/build/fermium-LONGHASHCODE/out`.
   * There should be a 2.0.8, 2.0.9, and 2.0.10 version of the bindings for your
