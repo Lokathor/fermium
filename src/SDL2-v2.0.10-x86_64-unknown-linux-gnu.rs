@@ -61,6 +61,7 @@ pub const SDL_SWSURFACE: u32 = 0;
 pub const SDL_PREALLOC: u32 = 1;
 pub const SDL_RLEACCEL: u32 = 2;
 pub const SDL_DONTFREE: u32 = 4;
+pub const SDL_SIMD_ALIGNED: u32 = 8;
 pub const SDL_WINDOWPOS_UNDEFINED_MASK: u32 = 536805376;
 pub const SDL_WINDOWPOS_CENTERED_MASK: u32 = 805240832;
 pub const SDLK_SCANCODE_MASK: u32 = 1073741824;
@@ -150,6 +151,7 @@ pub const SDL_HINT_MOUSE_RELATIVE_MODE_WARP: &'static [u8; 29usize] =
 pub const SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH: &'static [u8; 29usize] =
   b"SDL_MOUSE_FOCUS_CLICKTHROUGH\0";
 pub const SDL_HINT_TOUCH_MOUSE_EVENTS: &'static [u8; 23usize] = b"SDL_TOUCH_MOUSE_EVENTS\0";
+pub const SDL_HINT_MOUSE_TOUCH_EVENTS: &'static [u8; 23usize] = b"SDL_MOUSE_TOUCH_EVENTS\0";
 pub const SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS: &'static [u8; 33usize] =
   b"SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS\0";
 pub const SDL_HINT_IDLE_TIMER_DISABLED: &'static [u8; 28usize] = b"SDL_IOS_IDLE_TIMER_DISABLED\0";
@@ -167,6 +169,8 @@ pub const SDL_HINT_XINPUT_ENABLED: &'static [u8; 19usize] = b"SDL_XINPUT_ENABLED
 pub const SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING: &'static [u8; 36usize] =
   b"SDL_XINPUT_USE_OLD_JOYSTICK_MAPPING\0";
 pub const SDL_HINT_GAMECONTROLLERCONFIG: &'static [u8; 25usize] = b"SDL_GAMECONTROLLERCONFIG\0";
+pub const SDL_HINT_GAMECONTROLLERCONFIG_FILE: &'static [u8; 30usize] =
+  b"SDL_GAMECONTROLLERCONFIG_FILE\0";
 pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES: &'static [u8; 34usize] =
   b"SDL_GAMECONTROLLER_IGNORE_DEVICES\0";
 pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT: &'static [u8; 41usize] =
@@ -208,10 +212,9 @@ pub const SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION: &'static [u8; 44usiz
 pub const SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION: &'static [u8; 45usize] =
   b"SDL_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION\0";
 pub const SDL_HINT_IME_INTERNAL_EDITING: &'static [u8; 25usize] = b"SDL_IME_INTERNAL_EDITING\0";
-pub const SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH: &'static [u8; 37usize] =
-  b"SDL_ANDROID_SEPARATE_MOUSE_AND_TOUCH\0";
 pub const SDL_HINT_ANDROID_TRAP_BACK_BUTTON: &'static [u8; 29usize] =
   b"SDL_ANDROID_TRAP_BACK_BUTTON\0";
+pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE: &'static [u8; 27usize] = b"SDL_ANDROID_BLOCK_ON_PAUSE\0";
 pub const SDL_HINT_RETURN_KEY_HIDES_IME: &'static [u8; 25usize] = b"SDL_RETURN_KEY_HIDES_IME\0";
 pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: &'static [u8; 32usize] =
   b"SDL_EMSCRIPTEN_KEYBOARD_ELEMENT\0";
@@ -226,6 +229,11 @@ pub const SDL_HINT_VIDEO_DOUBLE_BUFFER: &'static [u8; 24usize] = b"SDL_VIDEO_DOU
 pub const SDL_HINT_OPENGL_ES_DRIVER: &'static [u8; 21usize] = b"SDL_OPENGL_ES_DRIVER\0";
 pub const SDL_HINT_AUDIO_RESAMPLING_MODE: &'static [u8; 26usize] = b"SDL_AUDIO_RESAMPLING_MODE\0";
 pub const SDL_HINT_AUDIO_CATEGORY: &'static [u8; 19usize] = b"SDL_AUDIO_CATEGORY\0";
+pub const SDL_HINT_RENDER_BATCHING: &'static [u8; 20usize] = b"SDL_RENDER_BATCHING\0";
+pub const SDL_HINT_EVENT_LOGGING: &'static [u8; 18usize] = b"SDL_EVENT_LOGGING\0";
+pub const SDL_HINT_WAVE_RIFF_CHUNK_SIZE: &'static [u8; 25usize] = b"SDL_WAVE_RIFF_CHUNK_SIZE\0";
+pub const SDL_HINT_WAVE_TRUNCATION: &'static [u8; 20usize] = b"SDL_WAVE_TRUNCATION\0";
+pub const SDL_HINT_WAVE_FACT_CHUNK: &'static [u8; 20usize] = b"SDL_WAVE_FACT_CHUNK\0";
 pub const SDL_MAX_LOG_MESSAGE: u32 = 4096;
 pub const SDL_STANDARD_GRAVITY: f64 = 9.80665;
 pub const SDL_NONSHAPEABLE_WINDOW: i32 = -1;
@@ -233,7 +241,7 @@ pub const SDL_INVALID_SHAPE_ARGUMENT: i32 = -2;
 pub const SDL_WINDOW_LACKS_SHAPE: i32 = -3;
 pub const SDL_MAJOR_VERSION: u32 = 2;
 pub const SDL_MINOR_VERSION: u32 = 0;
-pub const SDL_PATCHLEVEL: u32 = 9;
+pub const SDL_PATCHLEVEL: u32 = 10;
 pub const SDL_INIT_TIMER: u32 = 1;
 pub const SDL_INIT_AUDIO: u32 = 16;
 pub const SDL_INIT_VIDEO: u32 = 32;
@@ -681,6 +689,9 @@ extern "C" {
     inbytesleft: usize,
   ) -> *mut libc::c_char;
 }
+pub type SDL_main_func = ::core::option::Option<
+  unsafe extern "C" fn(argc: libc::c_int, argv: *mut *mut libc::c_char) -> libc::c_int,
+>;
 extern "C" {
   pub fn SDL_main(argc: libc::c_int, argv: *mut *mut libc::c_char) -> libc::c_int;
 }
@@ -1360,11 +1371,42 @@ extern "C" {
   pub fn SDL_FreeRW(area: *mut SDL_RWops);
 }
 extern "C" {
+  pub fn SDL_RWsize(context: *mut SDL_RWops) -> Sint64;
+}
+extern "C" {
+  pub fn SDL_RWseek(context: *mut SDL_RWops, offset: Sint64, whence: libc::c_int) -> Sint64;
+}
+extern "C" {
+  pub fn SDL_RWtell(context: *mut SDL_RWops) -> Sint64;
+}
+extern "C" {
+  pub fn SDL_RWread(
+    context: *mut SDL_RWops,
+    ptr: *mut libc::c_void,
+    size: usize,
+    maxnum: usize,
+  ) -> usize;
+}
+extern "C" {
+  pub fn SDL_RWwrite(
+    context: *mut SDL_RWops,
+    ptr: *const libc::c_void,
+    size: usize,
+    num: usize,
+  ) -> usize;
+}
+extern "C" {
+  pub fn SDL_RWclose(context: *mut SDL_RWops) -> libc::c_int;
+}
+extern "C" {
   pub fn SDL_LoadFile_RW(
     src: *mut SDL_RWops,
     datasize: *mut usize,
     freesrc: libc::c_int,
   ) -> *mut libc::c_void;
+}
+extern "C" {
+  pub fn SDL_LoadFile(file: *const libc::c_char, datasize: *mut usize) -> *mut libc::c_void;
 }
 extern "C" {
   pub fn SDL_ReadU8(src: *mut SDL_RWops) -> Uint8;
@@ -1901,6 +1943,15 @@ extern "C" {
 extern "C" {
   pub fn SDL_GetSystemRAM() -> libc::c_int;
 }
+extern "C" {
+  pub fn SDL_SIMDGetAlignment() -> usize;
+}
+extern "C" {
+  pub fn SDL_SIMDAlloc(len: usize) -> *mut libc::c_void;
+}
+extern "C" {
+  pub fn SDL_SIMDFree(ptr: *mut libc::c_void);
+}
 pub mod _bindgen_ty_1 {
   pub type Type = u32;
   pub const SDL_PIXELTYPE_UNKNOWN: Type = 0;
@@ -1956,7 +2007,7 @@ pub mod _bindgen_ty_5 {
   pub const SDL_PACKEDLAYOUT_2101010: Type = 7;
   pub const SDL_PACKEDLAYOUT_1010102: Type = 8;
 }
-pub mod _bindgen_ty_6 {
+pub mod SDL_PixelFormatEnum {
   pub type Type = u32;
   pub const SDL_PIXELFORMAT_UNKNOWN: Type = 0;
   pub const SDL_PIXELFORMAT_INDEX1LSB: Type = 286261504;
@@ -2483,6 +2534,45 @@ fn bindgen_test_layout_SDL_Point() {
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct SDL_FPoint {
+  pub x: f32,
+  pub y: f32,
+}
+#[test]
+fn bindgen_test_layout_SDL_FPoint() {
+  assert_eq!(
+    ::core::mem::size_of::<SDL_FPoint>(),
+    8usize,
+    concat!("Size of: ", stringify!(SDL_FPoint))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<SDL_FPoint>(),
+    4usize,
+    concat!("Alignment of ", stringify!(SDL_FPoint))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_FPoint>())).x as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_FPoint),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_FPoint>())).y as *const _ as usize },
+    4usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_FPoint),
+      "::",
+      stringify!(y)
+    )
+  );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_Rect {
   pub x: libc::c_int,
   pub y: libc::c_int,
@@ -2537,6 +2627,67 @@ fn bindgen_test_layout_SDL_Rect() {
     concat!(
       "Offset of field: ",
       stringify!(SDL_Rect),
+      "::",
+      stringify!(h)
+    )
+  );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct SDL_FRect {
+  pub x: f32,
+  pub y: f32,
+  pub w: f32,
+  pub h: f32,
+}
+#[test]
+fn bindgen_test_layout_SDL_FRect() {
+  assert_eq!(
+    ::core::mem::size_of::<SDL_FRect>(),
+    16usize,
+    concat!("Size of: ", stringify!(SDL_FRect))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<SDL_FRect>(),
+    4usize,
+    concat!("Alignment of ", stringify!(SDL_FRect))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_FRect>())).x as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_FRect),
+      "::",
+      stringify!(x)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_FRect>())).y as *const _ as usize },
+    4usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_FRect),
+      "::",
+      stringify!(y)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_FRect>())).w as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_FRect),
+      "::",
+      stringify!(w)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_FRect>())).h as *const _ as usize },
+    12usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_FRect),
       "::",
       stringify!(h)
     )
@@ -3773,7 +3924,7 @@ pub mod SDL_Scancode {
   pub const SDL_NUM_SCANCODES: Type = 512;
 }
 pub type SDL_Keycode = Sint32;
-pub mod _bindgen_ty_7 {
+pub mod _bindgen_ty_6 {
   pub type Type = u32;
   pub const SDLK_UNKNOWN: Type = 0;
   pub const SDLK_RETURN: Type = 13;
@@ -4773,6 +4924,13 @@ extern "C" {
 }
 pub type SDL_TouchID = Sint64;
 pub type SDL_FingerID = Sint64;
+pub mod SDL_TouchDeviceType {
+  pub type Type = i32;
+  pub const SDL_TOUCH_DEVICE_INVALID: Type = -1;
+  pub const SDL_TOUCH_DEVICE_DIRECT: Type = 0;
+  pub const SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE: Type = 1;
+  pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: Type = 2;
+}
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_Finger {
@@ -4839,6 +4997,9 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_GetTouchDevice(index: libc::c_int) -> SDL_TouchID;
+}
+extern "C" {
+  pub fn SDL_GetTouchDeviceType(touchID: SDL_TouchID) -> SDL_TouchDeviceType::Type;
 }
 extern "C" {
   pub fn SDL_GetNumTouchFingers(touchID: SDL_TouchID) -> libc::c_int;
@@ -7613,6 +7774,7 @@ impl ::core::fmt::Debug for SDL_Event {
     write!(f, "SDL_Event {{ union }}")
   }
 }
+pub type SDL_compile_time_assert_SDL_Event = [libc::c_int; 1usize];
 extern "C" {
   pub fn SDL_PumpEvents();
 }
@@ -8854,7 +9016,7 @@ extern "C" {
 extern "C" {
   pub fn SDL_UnloadObject(handle: *mut libc::c_void);
 }
-pub mod _bindgen_ty_8 {
+pub mod _bindgen_ty_7 {
   pub type Type = u32;
   pub const SDL_LOG_CATEGORY_APPLICATION: Type = 0;
   pub const SDL_LOG_CATEGORY_ERROR: Type = 1;
@@ -9644,6 +9806,71 @@ extern "C" {
   ) -> libc::c_int;
 }
 extern "C" {
+  pub fn SDL_RenderDrawPointF(renderer: *mut SDL_Renderer, x: f32, y: f32) -> libc::c_int;
+}
+extern "C" {
+  pub fn SDL_RenderDrawPointsF(
+    renderer: *mut SDL_Renderer,
+    points: *const SDL_FPoint,
+    count: libc::c_int,
+  ) -> libc::c_int;
+}
+extern "C" {
+  pub fn SDL_RenderDrawLineF(
+    renderer: *mut SDL_Renderer,
+    x1: f32,
+    y1: f32,
+    x2: f32,
+    y2: f32,
+  ) -> libc::c_int;
+}
+extern "C" {
+  pub fn SDL_RenderDrawLinesF(
+    renderer: *mut SDL_Renderer,
+    points: *const SDL_FPoint,
+    count: libc::c_int,
+  ) -> libc::c_int;
+}
+extern "C" {
+  pub fn SDL_RenderDrawRectF(renderer: *mut SDL_Renderer, rect: *const SDL_FRect) -> libc::c_int;
+}
+extern "C" {
+  pub fn SDL_RenderDrawRectsF(
+    renderer: *mut SDL_Renderer,
+    rects: *const SDL_FRect,
+    count: libc::c_int,
+  ) -> libc::c_int;
+}
+extern "C" {
+  pub fn SDL_RenderFillRectF(renderer: *mut SDL_Renderer, rect: *const SDL_FRect) -> libc::c_int;
+}
+extern "C" {
+  pub fn SDL_RenderFillRectsF(
+    renderer: *mut SDL_Renderer,
+    rects: *const SDL_FRect,
+    count: libc::c_int,
+  ) -> libc::c_int;
+}
+extern "C" {
+  pub fn SDL_RenderCopyF(
+    renderer: *mut SDL_Renderer,
+    texture: *mut SDL_Texture,
+    srcrect: *const SDL_Rect,
+    dstrect: *const SDL_FRect,
+  ) -> libc::c_int;
+}
+extern "C" {
+  pub fn SDL_RenderCopyExF(
+    renderer: *mut SDL_Renderer,
+    texture: *mut SDL_Texture,
+    srcrect: *const SDL_Rect,
+    dstrect: *const SDL_FRect,
+    angle: f64,
+    center: *const SDL_FPoint,
+    flip: SDL_RendererFlip::Type,
+  ) -> libc::c_int;
+}
+extern "C" {
   pub fn SDL_RenderReadPixels(
     renderer: *mut SDL_Renderer,
     rect: *const SDL_Rect,
@@ -9660,6 +9887,9 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_DestroyRenderer(renderer: *mut SDL_Renderer);
+}
+extern "C" {
+  pub fn SDL_RenderFlush(renderer: *mut SDL_Renderer) -> libc::c_int;
 }
 extern "C" {
   pub fn SDL_GL_BindTexture(
