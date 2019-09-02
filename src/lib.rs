@@ -92,10 +92,10 @@ cfg_if! {
       }
     }
   } else {
-    compile_error!("No pre-made bindings found and you didn't run bindgen!
-    i686:{}
-    windows:{}
-    msvc:{}", cfg!(target_arch="i686"), cfg!(target_os="windows"), cfg!(target_env="msvc"));
+    #[cfg(not(target_arch="i686"))]
+    compile_error!("not i686");
+    #[cfg(target_arch="i686")]
+    compile_error!("i686");
   }
 }
 
