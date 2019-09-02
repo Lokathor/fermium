@@ -1,11 +1,15 @@
+
 #if defined(__APPLE__)
+
 #define MAC_OS_X_VERSION_MIN_REQUIRED 1060
+
 #endif /* __APPLE__ */
 
 /*
 Note(Lokathor): As a sanity check against the fact that I usually generate the
 linux bindings on a headless linux server, we will try to forcibly turn on the
-X11 and wayland driver stuff.
+X11 and wayland driver stuff. File an issue if this gives you trouble and we
+can probably make it become optional or something.
 */
 #if defined(__unix__)
 
@@ -19,6 +23,19 @@ X11 and wayland driver stuff.
 
 #endif /* __unix__ */
 
-#include "include/SDL.h"
-#include "include/SDL_vulkan.h"
-#include "include/SDL_syswm.h"
+#if defined(BINDGEN_2_0_8)
+#include "old-headers-only/SDL2-v2.0.8/SDL.h"
+#include "old-headers-only/SDL2-v2.0.8/SDL_vulkan.h"
+#include "old-headers-only/SDL2-v2.0.8/SDL_syswm.h"
+
+#elif defined(BINDGEN_2_0_9)
+#include "old-headers-only/SDL2-v2.0.9/SDL.h"
+#include "old-headers-only/SDL2-v2.0.9/SDL_vulkan.h"
+#include "old-headers-only/SDL2-v2.0.9/SDL_syswm.h"
+
+#elif defined(BINDGEN_2_0_10)
+#include "full-source/SDL2-v2.0.10/include/SDL.h"
+#include "full-source/SDL2-v2.0.10/include/SDL_vulkan.h"
+#include "full-source/SDL2-v2.0.10/include/SDL_syswm.h"
+
+#endif /* bindgen version selection */

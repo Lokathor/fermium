@@ -1,64 +1,47 @@
 
-language: rust
 git:
   quiet: true
 
-rust:
-  - 1.36.0
+language: rust
 
 cache:
   cargo
 
-os:
-  - linux
-  - osx
+rust:
+  - 1.33.0
 
-before_script:
-  # Make sure we have the bindgen cli program up to date
+matrix:
+  include:
+    - os: linux
+      dist: bionic
+    - os: osx
+
+install:
   - rustup component add rustfmt
   - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
   - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
   - cargo install-update -a
   - |
-    if [[ $TRAVIS_OS == "osx" ]]
+    if [[ $TRAVIS_OS_NAME == "linux" ]]
     then
+      # https://packages.ubuntu.com/bionic/libsdl2-dev
+      sudo apt-get -qq install libsdl2-dev
+    else
       # https://formulae.brew.sh/formula/sdl2#default
       brew install sdl2
-    else
-      sudo apt-get install libx11-dev
-      # the package managers often have very old versions of SDL2, we just build
-      # the correct version from source
-      sudo ./install-sdl2.sh
     fi
+  # Run these to confirm that the SDL2 installation is working
+  - sdl2-config --version
   - sdl2-config --cflags
   - sdl2-config --libs
   - sdl2-config --static-libs
 
 script:
-  # We cannot run doctests because rustdoc is silly and tries to interpret too
-  # much stuff as code blocks and then dies when the "code blocks" don't contain
-  # valid rust. https://github.com/rust-lang/rust/issues/59867 We should still
-  # run all the other tests of course.
-
-  # First we verify the pre-generated bindings.
+  # dynamic
   - cargo build
-  - cargo build --examples
-  - cargo test --lib --tests
-
-  # Next we attempt with `use_bindgen_bin`
+  - cargo test
   - cargo clean
-  - cargo build --features="use_bindgen_bin"
-  - cargo build --features="use_bindgen_bin" --examples
-  - cargo test  --features="use_bindgen_bin" --lib --tests
-
-  # Next we attempt with `use_bindgen_lib`
+  # static
+  - cargo build --no-default-features --features="link_static"
+  - cargo test --no-default-features --features="link_static"
   - cargo clean
-  - cargo build --features="use_bindgen_lib"
-  - cargo build --features="use_bindgen_lib" --examples
-  - cargo test  --features="use_bindgen_lib" --lib --tests
-  
-  # Next we attempt with `dynamic_link` (using builtin bindings)
-  - cargo clean
-  - cargo build --features="dynamic_link"
-  - cargo build --features="dynamic_link" --examples
-  - cargo test  --features="dynamic_link" --lib --tests

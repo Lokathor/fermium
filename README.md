@@ -1,54 +1,74 @@
 [![License:Zlib](https://img.shields.io/badge/License-Zlib-brightgreen.svg)](https://opensource.org/licenses/Zlib)
+![Minimum Rust Version](https://img.shields.io/badge/Min%20Rust-1.33-green.svg)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/lqvi8qbjayf35v8m/branch/master?svg=true)](https://ci.appveyor.com/project/Lokathor/fermium/branch/master)
 [![TravisCI](https://travis-ci.org/Lokathor/fermium.svg?branch=master)](https://travis-ci.org/Lokathor/fermium)
 [![crates.io](https://img.shields.io/crates/v/fermium.svg)](https://crates.io/crates/fermium)
 [![docs.rs](https://docs.rs/fermium/badge.svg)](https://docs.rs/fermium/)
 
-# THIS CRATE IS REVOKED AND BANNED YOU CANNOT USE IT BECAUSE C IS TERRIBLE
-
-please have a good day
-
 # fermium
 
-* Has pre-generated bindings files for major platforms
-  * win32-msvc-x86_64, linux-x86_64, linux-arm32 (rpi3), mac-x86_64,
-  * You can build with either the `use_bindgen_bin` or `use_bindgen_lib`
-    features to make your own bindings if you need to. PRs are accepted if you
-    generate bindings for a new platform!
-* Performs static linking to SDL2 by default, with the [Dynamic
-  API](https://www.reddit.com/r/linux_gaming/comments/1upn39/sdl2_adds_dynamic_api_magic_to_allow_updating_it/)
-  enabled.
-  * There is a `dynamic_link` cargo feature if you really want.
-* Does not attempt to automatically set up SDL2 itself on non-Windows platforms.
-  * On win32-msvc-x86_64 there are provided build artifacts for both a static
-    link and dynamic link build.
-  * On Mac you should use Homebrew: `brew install sdl2`
-  * On Linux you should install SDL2-2.0.9 or later using any desired method.
-    This version is not currently available in many package managers, so you
-    might have to build from source. There's a [shell script](install-sdl2.sh)
-    that I use for the CI builds, if you'd like to use that.
-  * Non-Windows platforms require `sdl2-config` to be in the `PATH` during the
-    build to get the proper linking info, but this is part of a normal SDL2
-    install on both macOS and Linux so it shouldn't be a problem.
-* The whole crate is `no_std` of course.
-* The bindings use `libc` for the C type declarations.
+This is bindings to the SDL2 C API.
 
-## Major Differences From `sdl2-sys`
+* There are pre-generated bindings for the following targets:
+  * armv7-unknown-linux-gnueabihf
+  * i686-pc-windows-msvc
+  * x86_64-apple-darwin
+  * x86_64-pc-windows-msvc
+  * x86_64-unknown-linux-gnu
+* If your platform supports SDL2 but isn't on that list, please send in a PR!
+  * Install the `clang-3.9`, `libclang-3.9-dev`, and `llvm` packages for your
+    platform. Might be under different names, depending on distro and such.
+  * Then `cargo install bindgen`
+  * Then `cargo build --features="use_bindgen_bin"`
+  * All the results go in to the `OUT_DIR`, something like
+    `target/debug/build/fermium-LONGHASHCODE/out`.
+  * There should be a 2.0.8, 2.0.9, and 2.0.10 version of the bindings for your
+    target, it does all three versions in a single build. 
+  * Just PR those new files and I'll get it up on crates.io as soon as I can.
 
-* Static linking by default (cargo feature for `dynamic_link`)
-* Bindings use "scoped constants" instead of "rustified enums".
-* The `build.rs` file is simple and easy to understand.
+You can dynamic link or static link.
 
-## Additional Warning
+* Dynamic linking is the default, and is the officially suggested linking style,
+  both by me and also by the SDL2 project.
+  * On Windows just grab the "Runtime Binaries" from [The SDL
+    Website](https://libsdl.org/download-2.0.php) or [from the fermium
+    repository](https://github.com/Lokathor/fermium/blob/master/win32-devel-files/VC/lib/x64).
+    Put it in your project directory for development, and ship it with your
+    program when you release something.
+  * On not-windows you should get SDL2 through your distro package manager
+    (linux) or homebrew (Mac).
+* Static linking is available.
+  * On Windows this will automatically build the static library for you. This
+    takes some extra time, but is otherwise fully automated and you don't need
+    to perform any special steps.
+  * On not-Windows please be aware that not all package managers distribute SDL2
+    configured for static linking, so you might have to build the library from
+    source with static linking enabled.
 
-This crate is essentially "for internal use", to build Rust abstractions on top of.
+The default API target level is 2.0.8, but you can enable features to add in
+functions from 2.0.9 or 2.0.10.
 
-[beryllium](https://github.com/Lokathor/beryllium) is the crate with the safe
-wrapper layer.
+* Even without the features enabled your program will build and run with any
+  newer version of SDL2 as well, and you'll get all relevent bug fixes and such,
+  you just can't call the newer functions.
+* Please be aware that while Windows and Mac both have easy access to 2.0.10,
+  Most of the Linux distributions still have 2.0.8 or 2.0.9 in their package
+  managers. Unless you _really_ need those newer functions, you might as well
+  stay at the 2.0.8 API level for now.
 
 ## License
 
 This crate uses the Zlib license, the same license that SDL2 itself uses.
+
+* The `old-headers-only/` directory contains header files from older versions of
+  SDL2 and its add-ons, for use by bindgen when needed.
+* The `full-source/` directory contains all the source needed to potentially
+  build SDL2 and its add-ons, for use with static linking on windows. A lot of
+  the test asset files (PNGs, mp3s, etc) have been removed to keep the download
+  smaller.
+* The `win32-devel-files/` directory has dynamic lib files for use when building
+  on Windows. As with the `full-source/` directory, spare files have been
+  deleted to save on space.
 
 ## Project Logo
 

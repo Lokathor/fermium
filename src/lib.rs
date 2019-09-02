@@ -2,11 +2,21 @@
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
+#![allow(clippy::unreadable_literal)]
+#![allow(clippy::redundant_static_lifetimes)]
+#![allow(clippy::cognitive_complexity)]
 
-//! The `fermium` crate is a set of bindings to SDL2, currently 2.0.9.
+//! The `fermium` crate is bindings to SDL2.
+//!
+//! Depending on how you configure the crate, you can target a minimum SDL2
+//! version of 2.0.8 or later. You can compile against a later version than your
+//! minimum bind version, but not an earlier one, so for best compatability you
+//! should target the earliest SDL2 API version you can. The current version of
+//! SDL2 in Ubuntu 18 is 2.0.8, and Debian Stable has 2.0.9, so we don't at this
+//! time bother to support SDL2 versions before 2.0.8.
 //!
 //! `bindgen` is used to generate the bindings from the official SDL2 include
-//! files. At the moment we include the following:
+//! files. At the moment we include the following SDL2 headers:
 //!
 //! * `SDL2.h`
 //! * `SDL_syswm.h`
@@ -19,46 +29,171 @@
 //! * `SDL_` (functions, types, and vars)
 //! * `SDLK_` (vars)
 //! * `AUDIO_` (vars)
-//! * Anything that one of these depends on also gets pulled in.
+//! * Any other items that the above depend on.
 //!
 //! It is thought that this will expose all needed functionality, but if you
 //! think something should be added to the whitelist please [submit an
 //! issue](https://github.com/Lokathor/fermium/issues).
+//!
+//! ## Docs
+//!
+//! Bindgen doesn't understand how to convert doxygen style docs into rustdoc
+//! style docs, so instead you should look up the docs on the [SDL2
+//! Wiki](https://wiki.libsdl.org/)
 
-// Note(Lokathor): Only one of the following `include!` directives should end up
-// being used in any given build.
+#[cfg(not(windows))]
+pub use libc::{
+  c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
+};
+#[cfg(windows)]
+pub use winapi::ctypes::{
+  c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
+};
 
-#[cfg(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))]
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+#[cfg(feature = "use_bindgen_bin")]
+include!(concat!(env!("OUT_DIR"), "/SDL2-v2.0.", env!("BIND_PATCH_LEVEL"),"-", env!("TARGET"), ".rs"));
 
-#[cfg(all(
-  all(target_os = "windows", target_arch = "x86_64"),
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
-))]
-include!("bindings_win32_msvc_x64.rs");
-
-#[cfg(all(
-  all(target_os = "linux", target_arch = "x86_64"),
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
-))]
-include!("bindings_linux_x64.rs");
-
-#[cfg(all(
-  all(target_os = "linux", target_arch = "arm", target_env = "gnu"),
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
-))]
-include!("bindings_rpi3.rs");
-
-#[cfg(all(
-  all(target_os = "macos", target_arch = "x86_64"),
-  not(any(feature = "use_bindgen_bin", feature = "use_bindgen_lib"))
-))]
-include!("bindings_mac_x64.rs");
+#[cfg(not(feature = "use_bindgen_bin"))]
+include!(concat!("SDL2-v2.0.", env!("BIND_PATCH_LEVEL"),"-", env!("TARGET"), ".rs"));
 
 // Note(Lokathor): Bindgen doesn't parse all things properly on its own, so we
 // define a few more things here "by hand".
 
-/// Used as the device ID for mouse events simulated with touch input
-///
-/// `SDL_touch.h`, line 53
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type PixelType = _bindgen_ty_1::Type;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type BitmapOrder = _bindgen_ty_2::Type;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type PackedOrder = _bindgen_ty_3::Type;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type ArrayOrder = _bindgen_ty_4::Type;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type PackedLayout = _bindgen_ty_5::Type;
+
+/// See [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum)
+pub type SDL_PixelFormatEnum = _bindgen_ty_6::Type;
+
+/// See [`SDL_LOG_CATEGORY`](https://wiki.libsdl.org/SDL_LOG_CATEGORY)
+pub type LogCategory = _bindgen_ty_8::Type;
+
+/// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch
+/// input
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
+
+/// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse
+/// input
+pub const SDL_MOUSE_TOUCHID: u64 = -1i64 as u64;
+
+/// `SDL_surface.h`: Evaluates to true if the surface needs to be locked before
+/// access.
+#[inline(always)]
+pub unsafe fn SDL_MUSTLOCK(surface: *const SDL_Surface) -> bool {
+  (*surface).flags & SDL_RLEACCEL != 0
+}
+
+/// `SDL_pixels.h`: "internal" macro to check if a value is a pixel format value.
+#[inline(always)]
+pub const fn SDL_PIXELFLAG(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 28) & 0x0F
+}
+
+/// `SDL_pixels.h`: Pixel type of this format.
+#[inline(always)]
+pub const fn SDL_PIXELTYPE(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 24) & 0x0F
+}
+
+/// `SDL_pixels.h`: Component ordering of this format.
+#[inline(always)]
+pub const fn SDL_PIXELORDER(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 20) & 0x0F
+}
+
+/// `SDL_pixels.h`: Channel width layout of this format.
+#[inline(always)]
+pub const fn SDL_PIXELLAYOUT(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 16) & 0x0F
+}
+
+/// `SDL_pixels.h`: Bits per pixel.
+#[inline(always)]
+pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  (format >> 8) & 0xFF
+}
+
+/// `SDL_pixels.h`: Bytes per pixel.
+#[inline(always)]
+pub fn SDL_BYTESPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+  use _bindgen_ty_6::*;
+  if SDL_ISPIXELFORMAT_FOURCC(format) {
+    if format == SDL_PIXELFORMAT_YUY2
+      || format == SDL_PIXELFORMAT_UYVY
+      || format == SDL_PIXELFORMAT_YVYU
+    {
+      2
+    } else {
+      1
+    }
+  } else {
+    format & 0xFF
+  }
+}
+
+/// `SDL_pixels.h`: Is this an indexed format?
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
+  use _bindgen_ty_1::*;
+  !SDL_ISPIXELFORMAT_FOURCC(format)
+    && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8)
+}
+
+/// `SDL_pixels.h`: Is this a packed format?
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
+  use _bindgen_ty_1::*;
+  !SDL_ISPIXELFORMAT_FOURCC(format)
+    && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32)
+}
+
+/// `SDL_pixels.h`: Is this an array format?
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
+  use _bindgen_ty_1::*;
+  !SDL_ISPIXELFORMAT_FOURCC(format)
+    && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU32
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16
+      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32)
+}
+
+/// `SDL_pixels.h`: Does this format have an alpha channel?
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
+  use _bindgen_ty_3::*;
+  use _bindgen_ty_4::*;
+  (SDL_ISPIXELFORMAT_PACKED(format)
+    && (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB
+      || SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA
+      || SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR
+      || SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))
+    || (SDL_ISPIXELFORMAT_ARRAY(format)
+      && (SDL_PIXELORDER(format) == SDL_ARRAYORDER_ARGB
+        || SDL_PIXELORDER(format) == SDL_ARRAYORDER_RGBA
+        || SDL_PIXELORDER(format) == SDL_ARRAYORDER_ABGR
+        || SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA))
+}
+
+/// `SDL_pixels.h`: Is this a FourCC format?
+#[inline(always)]
+pub fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormatEnum) -> bool {
+  (format != 0) && (SDL_PIXELFLAG(format) != 1)
+}
