@@ -21,10 +21,10 @@ environment:
 
 install:
   # Put our DLL in place, depending on 32-bit/64-bit
-  - if %target%=="i686-pc-windows-gnu" cp win32-devel-files\VC\lib\x86\SDL2.dll .
-  - dir
-  - if %target%=="x86_64-pc-windows-gnu" cp win32-devel-files\VC\lib\x86\SDL2.dll .
-  - dir
+  - if %target%==i686-pc-windows-gnu cp win32-devel-files\VC\lib\x86\SDL2.dll .
+  - if %target%==i686-pc-windows-gnu dir
+  - if %target%==x86_64-pc-windows-gnu cp win32-devel-files\VC\lib\x86\SDL2.dll .
+  - if %target%==x86_64-pc-windows-gnu dir
   # Setup Rust
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
   - rustup-init -y --default-toolchain %channel% --default-host %target%
