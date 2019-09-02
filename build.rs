@@ -299,6 +299,8 @@ fn declare_sd2_config_linking() {
   // we can just wildly guess about where SDL2 probably is.
   println!("cargo:rustc-link-search=native=/usr/lib");
   println!("cargo:rustc-link-search=native=/usr/local/lib");
+  let target = env::var("TARGET").expect("Cargo build scripts always have TARGET");
+  println!("cargo:rustc-link-search=native=/usr/local/lib/{}", target);
   for term in String::from_utf8_lossy(&sd2_config_linking.stdout).split_whitespace() {
     if term.starts_with("-L") {
       println!("cargo:rustc-link-search=native={}", &term[2..]);
