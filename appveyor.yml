@@ -8,14 +8,12 @@ environment:
   # Note(Lokathor): When someone submits the GNU files we can add the GNU stuff
   # into our CI. Until then, no GNU CI support.
   matrix:
-    # Stable 32-bit
-    - channel: 1.36.0
+    # 32-bit MSVC
+    - channel: 1.33.0
       target: i686-pc-windows-msvc
-    # Stable 64-bit
-    - channel: 1.36.0
+    # 64-bit MSVC
+    - channel: 1.33.0
       target: x86_64-pc-windows-msvc
-    # Beta and Nightly are covered as necessary by TravisCI, since builds
-    # there run in parallel.
 
 install:
   # Put our DLL in place, depending on 32-bit/64-bit
