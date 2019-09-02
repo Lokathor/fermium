@@ -35,7 +35,7 @@ install:
   - sdl2-config --libs
   - sdl2-config --static-libs
 
-build:
+script:
   # dynamic
   - cargo build --no-default-features --features="link_dynamic"
   - cargo test --no-default-features --features="link_dynamic"
