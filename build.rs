@@ -295,12 +295,6 @@ fn declare_sd2_config_linking() {
     .output()
     .unwrap_or_else(|_| panic!("Couldn't run `sdl2-config {}`.", link_style_arg));
   assert!(sd2_config_linking.status.success());
-  // Note(Lokathor): Sometimes `sdl2-config` won't give us an -L term. However,
-  // we can just wildly guess about where SDL2 probably is.
-  println!("cargo:rustc-link-search=native=/usr/lib");
-  println!("cargo:rustc-link-search=native=/usr/local/lib");
-  let target = env::var("TARGET").expect("Cargo build scripts always have TARGET");
-  println!("cargo:rustc-link-search=native=/usr/local/lib/{}", target);
   for term in String::from_utf8_lossy(&sd2_config_linking.stdout).split_whitespace() {
     if term.starts_with("-L") {
       println!("cargo:rustc-link-search=native={}", &term[2..]);
@@ -332,5 +326,26 @@ fn declare_sd2_config_linking() {
     } else {
       panic!("Unknown term: {}", term);
     }
+  }
+  // Note(Lokathor): If you get `sdl2-config` from the package manager instead
+  // of building from source it usually won't actually give an -L term for where
+  // to look for SDL2 itself. However, we can just wildly guess about where SDL2
+  // probably is based on what Debian / Ubuntu do. Sane, right?
+  println!("cargo:rustc-link-search=native=/usr/lib");
+  println!("cargo:rustc-link-search=native=/usr/local/lib");
+  if cfg!(target_arch="x86_64") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+    println!("cargo:rustc-link-search=native=/usr/lib/x86_64-linux-gnu");
+  }
+  if cfg!(target_arch="aarch64") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+    println!("cargo:rustc-link-search=native=/usr/lib/aarch64-linux-gnu");
+  }
+  if cfg!(target_arch="arm") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+    println!("cargo:rustc-link-search=native=/usr/lib/arm-linux-gnueabihf");
+  }
+  if cfg!(target_arch="x86") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+    println!("cargo:rustc-link-search=native=/usr/lib/i386-linux-gnu");
+  }
+  if cfg!(target_arch="powerpc64") && cfg!(target_os="linux") && cfg!(target_env="gnu") {
+    println!("cargo:rustc-link-search=native=/usr/lib/powerpc64le-linux-gnu");
   }
 }
