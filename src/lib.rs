@@ -120,3 +120,8 @@ pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
 
 /// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse input
 pub const SDL_MOUSE_TOUCHID: u64 = -1i64 as u64;
+
+#[inline(always)]
+pub unsafe fn SDL_MUSTLOCK(surface: *const SDL_Surface) -> bool {
+  (*surface).flags & SDL_RLEACCEL != 0
+}
