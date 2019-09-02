@@ -34,7 +34,7 @@ use_bindgen_bin = []
 # build SDL2 from source.
 
 link_dynamic = []
-link_static = []
+link_static = ["cmake"]
 
 # In terms of the API version that you want to target the bindings at, lower is
 # strictly better. If you bind to an old version you can always still compile
@@ -60,6 +60,9 @@ cfg-if = "0.1"
 winapi = "0.3"
 [target."cfg(not(windows))".dependencies]
 libc = "0.2"
+
+[build-dependencies]
+cmake = { version = "0.1", optional = true }
 
 [badges]
 appveyor = { repository = "Lokathor/fermium" }

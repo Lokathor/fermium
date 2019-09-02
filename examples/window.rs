@@ -8,8 +8,8 @@
 //! It's documented quite a bit so that hopefully a Rust programmer that doesn't
 //! know about SDL2 can read it and follow along with what's going on.
 
-use fermium::{SDL_EventType::*, SDL_WindowFlags::*, *};
-use libc::{c_char, c_int};
+use fermium::{c_char, c_int, SDL_EventType::*, SDL_WindowFlags::*, *};
+//use libc::{};
 
 // bindgen isn't perfect, and sometimes it turns C macro definitions into not
 // quite the right Rust types that we want. In this case, it has the "mask" but

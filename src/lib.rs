@@ -35,6 +35,15 @@
 //! think something should be added to the whitelist please [submit an
 //! issue](https://github.com/Lokathor/fermium/issues).
 
+#[cfg(not(windows))]
+pub use libc::{
+  c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
+};
+#[cfg(windows)]
+pub use winapi::ctypes::{
+  c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
+};
+
 use cfg_if::cfg_if;
 
 cfg_if! {
