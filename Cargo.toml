@@ -52,9 +52,6 @@ bind_SDL2_2_0_10 = ["bind_SDL2_2_0_9"]
 # otherwise having 2.0.8 be the minimum version supported by the crate seems
 # fine to me. Anyone farther back than Debian Stable is pretty far back.
 
-[dependencies]
-cfg-if = "0.1"
-
 # This allows us to get access to the ctypes we need.
 [target."cfg(windows)".dependencies]
 winapi = "0.3"
