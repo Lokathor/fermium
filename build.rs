@@ -263,8 +263,12 @@ fn declare_sd2_config_linking() {
   let version_out_string = String::from_utf8_lossy(&sdl2_config_version.stdout);
   println!("sdl2-config --version: {}", version_out_string);
   let version_parts: Vec<u32> = version_out_string
+    .trim()
     .split('.')
-    .map(|s| {println!("{}", s); s.parse::<u32>().unwrap()})
+    .map(|s| {
+      println!("'{}'", s);
+      s.parse::<u32>().unwrap()
+    })
     .collect();
   // exact matches
   assert_eq!(version_parts[0], 2);
