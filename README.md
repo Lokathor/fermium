@@ -16,9 +16,9 @@ This is bindings to the SDL2 C API.
   * x86_64-unknown-linux-gnu
 * If your platform supports SDL2 but isn't on that list, please send in a PR!
   * Install the `clang-3.9`, `libclang-3.9-dev`, and `llvm` packages for your
-    platform.
+    platform. Might be under different names, depending on distro and such.
   * Then `cargo install bindgen`
-  * Build this crate with the `use_bindgen_bin` feature activated.
+  * The `cargo build --features="use_bindgen_bin"`
   * All the results go in to the `OUT_DIR`, something like
     `target/debug/build/fermium-LONGHASHCODE/out`.
   * There should be a 2.0.8, 2.0.9, and 2.0.10 version of the bindings for your
@@ -30,8 +30,8 @@ You can dynamic link or static link.
 * Dynamic linking is the default, and is the officially suggested linking style,
   both by me and also by the SDL2 project.
   * On Windows just grab the "Runtime Binaries" from [The SDL
-    Website](https://libsdl.org/download-2.0.php) or [from this very
-    repo](https://github.com/Lokathor/fermium/blob/master/win32-devel-files/VC/lib/x64).
+    Website](https://libsdl.org/download-2.0.php) or [from the fermium
+    repository](https://github.com/Lokathor/fermium/blob/master/win32-devel-files/VC/lib/x64).
     Put it in your project directory for development, and ship it with your
     program when you release something.
   * On not-windows you should get SDL2 through your distro package manager
@@ -62,10 +62,12 @@ This crate uses the Zlib license, the same license that SDL2 itself uses.
 * The `old-headers-only/` directory contains header files from older versions of
   SDL2 and its add-ons, for use by bindgen when needed.
 * The `full-source/` directory contains all the source needed to potentially
-  build SDL2 and its add-ons, for use with static linking on windows. It's not
-  _literally_ the entire source tree you'd get off their website, because a lot
-  of test asset files (PNGs, mp3s, etc) have been removed to keep the download
+  build SDL2 and its add-ons, for use with static linking on windows. A lot of
+  the test asset files (PNGs, mp3s, etc) have been removed to keep the download
   smaller.
+* The `win32-devel-files/` directory has dynamic lib files for use when building
+  on Windows. As with the `full-source/` directory, spare files have been
+  deleted to save on space.
 
 ## Project Logo
 
