@@ -121,7 +121,7 @@ fn run_bindgen_bin() {
     bindgen
   };
 
-  for patch_level in [8, 9, 10].iter().copied() {
+  for &patch_level in [8, 9, 10].iter() {
     let mut bindgen = make_bindgen_command(patch_level);
 
     println!("executing command: {:?}", bindgen);
