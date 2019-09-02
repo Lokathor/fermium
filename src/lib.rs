@@ -34,6 +34,12 @@
 //! It is thought that this will expose all needed functionality, but if you
 //! think something should be added to the whitelist please [submit an
 //! issue](https://github.com/Lokathor/fermium/issues).
+//!
+//! ## Docs
+//!
+//! Bindgen doesn't understand how to convert doxygen style docs into rustdoc
+//! style docs, so instead you should look up the docs on the [SDL2
+//! Wiki](https://wiki.libsdl.org/)
 
 #[cfg(not(windows))]
 pub use libc::{

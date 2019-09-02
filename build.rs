@@ -264,7 +264,7 @@ fn declare_sd2_config_linking() {
   println!("sdl2-config --version: {}", version_out_string);
   let version_parts: Vec<u32> = version_out_string
     .split('.')
-    .map(|s| s.parse::<u32>().unwrap())
+    .map(|s| {println!("{}", s); s.parse::<u32>().unwrap()})
     .collect();
   // exact matches
   assert_eq!(version_parts[0], 2);
