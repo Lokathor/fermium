@@ -209,13 +209,7 @@ fn declare_win32_linking() {
 
   if cfg!(feature = "link_dynamic") {
     let sub_directory: &str = if cfg!(target_env = "gnu") {
-      if cfg!(target_arch = "x86") {
-        "win32-devel-files\\mingw\\i686-w64-mingw32\\lib"
-      } else if cfg!(target_arch = "x86_64") {
-        "win32-devel-files\\mingw\\x86_64-w64-mingw32\\lib"
-      } else {
-        panic!("No provided library files for this CPU type.")
-      }
+      panic!("No provided library files for the gnu toolchain. File a PR.")
     } else if cfg!(target_env = "msvc") {
       if cfg!(target_arch = "x86") {
         "win32-devel-files\\VC\\lib\\x86"
