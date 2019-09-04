@@ -28,14 +28,20 @@ fn main() {
   println!("bind_SDL2_2_0_9: {}", bind_SDL2_2_0_9);
   println!("bind_SDL2_2_0_10: {}", bind_SDL2_2_0_10);
 
-  println!("cargo:rustc-env=TARGET={}", env::var("TARGET").expect("Couldn't read `TARGET`"));
-  println!("cargo:rustc-env=BIND_PATCH_LEVEL={}", if bind_SDL2_2_0_10 {
-    10
-  } else if bind_SDL2_2_0_9 {
-    9
-  } else {
-    8
-  });
+  println!(
+    "cargo:rustc-env=TARGET={}",
+    env::var("TARGET").expect("Couldn't read `TARGET`")
+  );
+  println!(
+    "cargo:rustc-env=BIND_PATCH_LEVEL={}",
+    if bind_SDL2_2_0_10 {
+      10
+    } else if bind_SDL2_2_0_9 {
+      9
+    } else {
+      8
+    }
+  );
 
   if cfg!(feature = "use_bindgen_bin") {
     run_bindgen_bin();

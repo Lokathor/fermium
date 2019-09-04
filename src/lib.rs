@@ -51,10 +51,23 @@ pub use winapi::ctypes::{
 };
 
 #[cfg(feature = "use_bindgen_bin")]
-include!(concat!(env!("OUT_DIR"), "/SDL2-v2.0.", env!("BIND_PATCH_LEVEL"),"-", env!("TARGET"), ".rs"));
+include!(concat!(
+  env!("OUT_DIR"),
+  "/SDL2-v2.0.",
+  env!("BIND_PATCH_LEVEL"),
+  "-",
+  env!("TARGET"),
+  ".rs"
+));
 
 #[cfg(not(feature = "use_bindgen_bin"))]
-include!(concat!("SDL2-v2.0.", env!("BIND_PATCH_LEVEL"),"-", env!("TARGET"), ".rs"));
+include!(concat!(
+  "SDL2-v2.0.",
+  env!("BIND_PATCH_LEVEL"),
+  "-",
+  env!("TARGET"),
+  ".rs"
+));
 
 // Note(Lokathor): Bindgen doesn't parse all things properly on its own, and it
 // doesn't parse CPP macros at all, so we must define some more stuff here.
