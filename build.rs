@@ -77,7 +77,6 @@ fn run_bindgen_bin() {
   let make_bindgen_command = |patch_level: i32| {
     // build up the whole bindgen command
     let mut bindgen = Command::new("bindgen");
-    // flags, TODO: investigate --generate-inline-functions
     bindgen.arg("--disable-name-namespacing");
     bindgen.arg("--impl-debug");
     bindgen.arg("--impl-partialeq");
@@ -91,7 +90,7 @@ fn run_bindgen_bin() {
     bindgen.arg("--ctypes-prefix").arg("libc");
     #[cfg(windows)]
     bindgen.arg("--ctypes-prefix").arg("winapi::ctypes");
-    bindgen.arg("--default-enum-style").arg("moduleconsts");
+    bindgen.arg("--default-enum-style").arg("consts");
     bindgen.arg("--output").arg(&format!(
       "{}",
       out_dir
