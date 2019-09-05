@@ -7,8 +7,10 @@ pub const SDL_AUDIO_DRIVER_DISK: u32 = 1;
 pub const SDL_AUDIO_DRIVER_DUMMY: u32 = 1;
 pub const SDL_JOYSTICK_DINPUT: u32 = 1;
 pub const SDL_JOYSTICK_XINPUT: u32 = 1;
+pub const SDL_JOYSTICK_HIDAPI: u32 = 1;
 pub const SDL_HAPTIC_DINPUT: u32 = 1;
 pub const SDL_HAPTIC_XINPUT: u32 = 1;
+pub const SDL_SENSOR_DUMMY: u32 = 1;
 pub const SDL_LOADSO_WINDOWS: u32 = 1;
 pub const SDL_THREAD_WINDOWS: u32 = 1;
 pub const SDL_TIMER_WINDOWS: u32 = 1;
@@ -66,7 +68,8 @@ pub const AUDIO_F32SYS: u32 = 33056;
 pub const SDL_AUDIO_ALLOW_FREQUENCY_CHANGE: u32 = 1;
 pub const SDL_AUDIO_ALLOW_FORMAT_CHANGE: u32 = 2;
 pub const SDL_AUDIO_ALLOW_CHANNELS_CHANGE: u32 = 4;
-pub const SDL_AUDIO_ALLOW_ANY_CHANGE: u32 = 7;
+pub const SDL_AUDIO_ALLOW_SAMPLES_CHANGE: u32 = 8;
+pub const SDL_AUDIO_ALLOW_ANY_CHANGE: u32 = 15;
 pub const SDL_AUDIOCVT_MAX_FILTERS: u32 = 9;
 pub const SDL_MIX_MAXVOLUME: u32 = 128;
 pub const SDL_CACHELINE_SIZE: u32 = 128;
@@ -152,6 +155,10 @@ pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL: &'static [u8; 35usize] =
 pub const SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP: &'static [u8; 31usize] =
   b"SDL_WINDOWS_ENABLE_MESSAGELOOP\0";
 pub const SDL_HINT_GRAB_KEYBOARD: &'static [u8; 18usize] = b"SDL_GRAB_KEYBOARD\0";
+pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME: &'static [u8; 28usize] =
+  b"SDL_MOUSE_DOUBLE_CLICK_TIME\0";
+pub const SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS: &'static [u8; 30usize] =
+  b"SDL_MOUSE_DOUBLE_CLICK_RADIUS\0";
 pub const SDL_HINT_MOUSE_NORMAL_SPEED_SCALE: &'static [u8; 29usize] =
   b"SDL_MOUSE_NORMAL_SPEED_SCALE\0";
 pub const SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE: &'static [u8; 31usize] =
@@ -184,6 +191,15 @@ pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT: &'static [u8; 41usize] 
   b"SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT\0";
 pub const SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS: &'static [u8; 37usize] =
   b"SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS\0";
+pub const SDL_HINT_JOYSTICK_HIDAPI: &'static [u8; 20usize] = b"SDL_JOYSTICK_HIDAPI\0";
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS4: &'static [u8; 24usize] = b"SDL_JOYSTICK_HIDAPI_PS4\0";
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE: &'static [u8; 31usize] =
+  b"SDL_JOYSTICK_HIDAPI_PS4_RUMBLE\0";
+pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM: &'static [u8; 26usize] = b"SDL_JOYSTICK_HIDAPI_STEAM\0";
+pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH: &'static [u8; 27usize] = b"SDL_JOYSTICK_HIDAPI_SWITCH\0";
+pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX: &'static [u8; 25usize] = b"SDL_JOYSTICK_HIDAPI_XBOX\0";
+pub const SDL_HINT_ENABLE_STEAM_CONTROLLERS: &'static [u8; 29usize] =
+  b"SDL_ENABLE_STEAM_CONTROLLERS\0";
 pub const SDL_HINT_ALLOW_TOPMOST: &'static [u8; 18usize] = b"SDL_ALLOW_TOPMOST\0";
 pub const SDL_HINT_TIMER_RESOLUTION: &'static [u8; 21usize] = b"SDL_TIMER_RESOLUTION\0";
 pub const SDL_HINT_QTWAYLAND_CONTENT_ORIENTATION: &'static [u8; 34usize] =
@@ -212,6 +228,8 @@ pub const SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION: &'static [u8; 45usi
 pub const SDL_HINT_IME_INTERNAL_EDITING: &'static [u8; 25usize] = b"SDL_IME_INTERNAL_EDITING\0";
 pub const SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH: &'static [u8; 37usize] =
   b"SDL_ANDROID_SEPARATE_MOUSE_AND_TOUCH\0";
+pub const SDL_HINT_ANDROID_TRAP_BACK_BUTTON: &'static [u8; 29usize] =
+  b"SDL_ANDROID_TRAP_BACK_BUTTON\0";
 pub const SDL_HINT_RETURN_KEY_HIDES_IME: &'static [u8; 25usize] = b"SDL_RETURN_KEY_HIDES_IME\0";
 pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: &'static [u8; 32usize] =
   b"SDL_EMSCRIPTEN_KEYBOARD_ELEMENT\0";
@@ -227,12 +245,13 @@ pub const SDL_HINT_OPENGL_ES_DRIVER: &'static [u8; 21usize] = b"SDL_OPENGL_ES_DR
 pub const SDL_HINT_AUDIO_RESAMPLING_MODE: &'static [u8; 26usize] = b"SDL_AUDIO_RESAMPLING_MODE\0";
 pub const SDL_HINT_AUDIO_CATEGORY: &'static [u8; 19usize] = b"SDL_AUDIO_CATEGORY\0";
 pub const SDL_MAX_LOG_MESSAGE: u32 = 4096;
+pub const SDL_STANDARD_GRAVITY: f64 = 9.80665;
 pub const SDL_NONSHAPEABLE_WINDOW: i32 = -1;
 pub const SDL_INVALID_SHAPE_ARGUMENT: i32 = -2;
 pub const SDL_WINDOW_LACKS_SHAPE: i32 = -3;
 pub const SDL_MAJOR_VERSION: u32 = 2;
 pub const SDL_MINOR_VERSION: u32 = 0;
-pub const SDL_PATCHLEVEL: u32 = 8;
+pub const SDL_PATCHLEVEL: u32 = 9;
 pub const SDL_INIT_TIMER: u32 = 1;
 pub const SDL_INIT_AUDIO: u32 = 16;
 pub const SDL_INIT_VIDEO: u32 = 32;
@@ -240,18 +259,17 @@ pub const SDL_INIT_JOYSTICK: u32 = 512;
 pub const SDL_INIT_HAPTIC: u32 = 4096;
 pub const SDL_INIT_GAMECONTROLLER: u32 = 8192;
 pub const SDL_INIT_EVENTS: u32 = 16384;
+pub const SDL_INIT_SENSOR: u32 = 32768;
 pub const SDL_INIT_NOPARACHUTE: u32 = 1048576;
-pub const SDL_INIT_EVERYTHING: u32 = 29233;
+pub const SDL_INIT_EVERYTHING: u32 = 62001;
 extern "C" {
   pub fn SDL_GetPlatform() -> *const winapi::ctypes::c_char;
 }
 pub type wchar_t = winapi::ctypes::c_ushort;
 pub type va_list = __builtin_va_list;
-pub mod SDL_bool {
-  pub type Type = i32;
-  pub const SDL_FALSE: Type = 0;
-  pub const SDL_TRUE: Type = 1;
-}
+pub const SDL_FALSE: SDL_bool = 0;
+pub const SDL_TRUE: SDL_bool = 1;
+pub type SDL_bool = i32;
 pub type Uint8 = u8;
 pub type Sint16 = i16;
 pub type Uint16 = u16;
@@ -267,10 +285,8 @@ pub type SDL_compile_time_assert_uint32 = [winapi::ctypes::c_int; 1usize];
 pub type SDL_compile_time_assert_sint32 = [winapi::ctypes::c_int; 1usize];
 pub type SDL_compile_time_assert_uint64 = [winapi::ctypes::c_int; 1usize];
 pub type SDL_compile_time_assert_sint64 = [winapi::ctypes::c_int; 1usize];
-pub mod SDL_DUMMY_ENUM {
-  pub type Type = i32;
-  pub const DUMMY_ENUM_VALUE: Type = 0;
-}
+pub const DUMMY_ENUM_VALUE: SDL_DUMMY_ENUM = 0;
+pub type SDL_DUMMY_ENUM = i32;
 pub type SDL_compile_time_assert_enum = [winapi::ctypes::c_int; 1usize];
 extern "C" {
   pub fn SDL_malloc(size: usize) -> *mut winapi::ctypes::c_void;
@@ -381,6 +397,9 @@ extern "C" {
     s2: *const winapi::ctypes::c_void,
     len: usize,
   ) -> winapi::ctypes::c_int;
+}
+extern "C" {
+  pub fn SDL_wcsdup(wstr: *const wchar_t) -> *mut wchar_t;
 }
 extern "C" {
   pub fn SDL_wcslen(wstr: *const wchar_t) -> usize;
@@ -632,6 +651,12 @@ extern "C" {
   pub fn SDL_cosf(x: f32) -> f32;
 }
 extern "C" {
+  pub fn SDL_exp(x: f64) -> f64;
+}
+extern "C" {
+  pub fn SDL_expf(x: f32) -> f32;
+}
+extern "C" {
   pub fn SDL_fabs(x: f64) -> f64;
 }
 extern "C" {
@@ -742,14 +767,12 @@ extern "C" {
 extern "C" {
   pub fn SDL_UnregisterApp();
 }
-pub mod SDL_AssertState {
-  pub type Type = i32;
-  pub const SDL_ASSERTION_RETRY: Type = 0;
-  pub const SDL_ASSERTION_BREAK: Type = 1;
-  pub const SDL_ASSERTION_ABORT: Type = 2;
-  pub const SDL_ASSERTION_IGNORE: Type = 3;
-  pub const SDL_ASSERTION_ALWAYS_IGNORE: Type = 4;
-}
+pub const SDL_ASSERTION_RETRY: SDL_AssertState = 0;
+pub const SDL_ASSERTION_BREAK: SDL_AssertState = 1;
+pub const SDL_ASSERTION_ABORT: SDL_AssertState = 2;
+pub const SDL_ASSERTION_IGNORE: SDL_AssertState = 3;
+pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = 4;
+pub type SDL_AssertState = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_AssertData {
@@ -855,13 +878,13 @@ extern "C" {
     arg2: *const winapi::ctypes::c_char,
     arg3: *const winapi::ctypes::c_char,
     arg4: winapi::ctypes::c_int,
-  ) -> SDL_AssertState::Type;
+  ) -> SDL_AssertState;
 }
 pub type SDL_AssertionHandler = ::core::option::Option<
   unsafe extern "C" fn(
     data: *const SDL_AssertData,
     userdata: *mut winapi::ctypes::c_void,
-  ) -> SDL_AssertState::Type,
+  ) -> SDL_AssertState,
 >;
 extern "C" {
   pub fn SDL_SetAssertionHandler(
@@ -885,7 +908,7 @@ extern "C" {
 }
 pub type SDL_SpinLock = winapi::ctypes::c_int;
 extern "C" {
-  pub fn SDL_AtomicTryLock(lock: *mut SDL_SpinLock) -> SDL_bool::Type;
+  pub fn SDL_AtomicTryLock(lock: *mut SDL_SpinLock) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_AtomicLock(lock: *mut SDL_SpinLock);
@@ -932,7 +955,7 @@ extern "C" {
     a: *mut SDL_atomic_t,
     oldval: winapi::ctypes::c_int,
     newval: winapi::ctypes::c_int,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_AtomicSet(a: *mut SDL_atomic_t, v: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
@@ -948,7 +971,7 @@ extern "C" {
     a: *mut *mut winapi::ctypes::c_void,
     oldval: *mut winapi::ctypes::c_void,
     newval: *mut winapi::ctypes::c_void,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_AtomicSetPtr(
@@ -968,17 +991,15 @@ extern "C" {
 extern "C" {
   pub fn SDL_ClearError();
 }
-pub mod SDL_errorcode {
-  pub type Type = i32;
-  pub const SDL_ENOMEM: Type = 0;
-  pub const SDL_EFREAD: Type = 1;
-  pub const SDL_EFWRITE: Type = 2;
-  pub const SDL_EFSEEK: Type = 3;
-  pub const SDL_UNSUPPORTED: Type = 4;
-  pub const SDL_LASTERROR: Type = 5;
-}
+pub const SDL_ENOMEM: SDL_errorcode = 0;
+pub const SDL_EFREAD: SDL_errorcode = 1;
+pub const SDL_EFWRITE: SDL_errorcode = 2;
+pub const SDL_EFSEEK: SDL_errorcode = 3;
+pub const SDL_UNSUPPORTED: SDL_errorcode = 4;
+pub const SDL_LASTERROR: SDL_errorcode = 5;
+pub type SDL_errorcode = i32;
 extern "C" {
-  pub fn SDL_Error(code: SDL_errorcode::Type) -> winapi::ctypes::c_int;
+  pub fn SDL_Error(code: SDL_errorcode) -> winapi::ctypes::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1061,12 +1082,11 @@ pub struct SDL_Thread {
 }
 pub type SDL_threadID = winapi::ctypes::c_ulong;
 pub type SDL_TLSID = winapi::ctypes::c_uint;
-pub mod SDL_ThreadPriority {
-  pub type Type = i32;
-  pub const SDL_THREAD_PRIORITY_LOW: Type = 0;
-  pub const SDL_THREAD_PRIORITY_NORMAL: Type = 1;
-  pub const SDL_THREAD_PRIORITY_HIGH: Type = 2;
-}
+pub const SDL_THREAD_PRIORITY_LOW: SDL_ThreadPriority = 0;
+pub const SDL_THREAD_PRIORITY_NORMAL: SDL_ThreadPriority = 1;
+pub const SDL_THREAD_PRIORITY_HIGH: SDL_ThreadPriority = 2;
+pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = 3;
+pub type SDL_ThreadPriority = i32;
 pub type SDL_ThreadFunction = ::core::option::Option<
   unsafe extern "C" fn(data: *mut winapi::ctypes::c_void) -> winapi::ctypes::c_int,
 >;
@@ -1094,6 +1114,18 @@ extern "C" {
   ) -> *mut SDL_Thread;
 }
 extern "C" {
+  pub fn SDL_CreateThreadWithStackSize(
+    fn_: ::core::option::Option<
+      unsafe extern "C" fn(arg1: *mut winapi::ctypes::c_void) -> winapi::ctypes::c_int,
+    >,
+    name: *const winapi::ctypes::c_char,
+    stacksize: usize,
+    data: *mut winapi::ctypes::c_void,
+    pfnBeginThread: pfnSDL_CurrentBeginThread,
+    pfnEndThread: pfnSDL_CurrentEndThread,
+  ) -> *mut SDL_Thread;
+}
+extern "C" {
   pub fn SDL_GetThreadName(thread: *mut SDL_Thread) -> *const winapi::ctypes::c_char;
 }
 extern "C" {
@@ -1103,7 +1135,7 @@ extern "C" {
   pub fn SDL_GetThreadID(thread: *mut SDL_Thread) -> SDL_threadID;
 }
 extern "C" {
-  pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority::Type) -> winapi::ctypes::c_int;
+  pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority) -> winapi::ctypes::c_int;
 }
 extern "C" {
   pub fn SDL_WaitThread(thread: *mut SDL_Thread, status: *mut winapi::ctypes::c_int);
@@ -1167,7 +1199,7 @@ pub union SDL_RWops__bindgen_ty_1 {
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_RWops__bindgen_ty_1__bindgen_ty_1 {
-  pub append: SDL_bool::Type,
+  pub append: SDL_bool,
   pub h: *mut winapi::ctypes::c_void,
   pub buffer: SDL_RWops__bindgen_ty_1__bindgen_ty_1__bindgen_ty_1,
 }
@@ -1575,8 +1607,7 @@ extern "C" {
   ) -> *mut SDL_RWops;
 }
 extern "C" {
-  pub fn SDL_RWFromFP(fp: *mut winapi::ctypes::c_void, autoclose: SDL_bool::Type)
-    -> *mut SDL_RWops;
+  pub fn SDL_RWFromFP(fp: *mut winapi::ctypes::c_void, autoclose: SDL_bool) -> *mut SDL_RWops;
 }
 extern "C" {
   pub fn SDL_RWFromMem(
@@ -1959,17 +1990,15 @@ extern "C" {
     allowed_changes: winapi::ctypes::c_int,
   ) -> SDL_AudioDeviceID;
 }
-pub mod SDL_AudioStatus {
-  pub type Type = i32;
-  pub const SDL_AUDIO_STOPPED: Type = 0;
-  pub const SDL_AUDIO_PLAYING: Type = 1;
-  pub const SDL_AUDIO_PAUSED: Type = 2;
+pub const SDL_AUDIO_STOPPED: SDL_AudioStatus = 0;
+pub const SDL_AUDIO_PLAYING: SDL_AudioStatus = 1;
+pub const SDL_AUDIO_PAUSED: SDL_AudioStatus = 2;
+pub type SDL_AudioStatus = i32;
+extern "C" {
+  pub fn SDL_GetAudioStatus() -> SDL_AudioStatus;
 }
 extern "C" {
-  pub fn SDL_GetAudioStatus() -> SDL_AudioStatus::Type;
-}
-extern "C" {
-  pub fn SDL_GetAudioDeviceStatus(dev: SDL_AudioDeviceID) -> SDL_AudioStatus::Type;
+  pub fn SDL_GetAudioDeviceStatus(dev: SDL_AudioDeviceID) -> SDL_AudioStatus;
 }
 extern "C" {
   pub fn SDL_PauseAudio(pause_on: winapi::ctypes::c_int);
@@ -2107,7 +2136,7 @@ extern "C" {
   pub fn SDL_GetClipboardText() -> *mut winapi::ctypes::c_char;
 }
 extern "C" {
-  pub fn SDL_HasClipboardText() -> SDL_bool::Type;
+  pub fn SDL_HasClipboardText() -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GetCPUCount() -> winapi::ctypes::c_int;
@@ -2116,145 +2145,136 @@ extern "C" {
   pub fn SDL_GetCPUCacheLineSize() -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_HasRDTSC() -> SDL_bool::Type;
+  pub fn SDL_HasRDTSC() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasAltiVec() -> SDL_bool::Type;
+  pub fn SDL_HasAltiVec() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasMMX() -> SDL_bool::Type;
+  pub fn SDL_HasMMX() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_Has3DNow() -> SDL_bool::Type;
+  pub fn SDL_Has3DNow() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasSSE() -> SDL_bool::Type;
+  pub fn SDL_HasSSE() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasSSE2() -> SDL_bool::Type;
+  pub fn SDL_HasSSE2() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasSSE3() -> SDL_bool::Type;
+  pub fn SDL_HasSSE3() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasSSE41() -> SDL_bool::Type;
+  pub fn SDL_HasSSE41() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasSSE42() -> SDL_bool::Type;
+  pub fn SDL_HasSSE42() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasAVX() -> SDL_bool::Type;
+  pub fn SDL_HasAVX() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasAVX2() -> SDL_bool::Type;
+  pub fn SDL_HasAVX2() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasNEON() -> SDL_bool::Type;
+  pub fn SDL_HasAVX512F() -> SDL_bool;
+}
+extern "C" {
+  pub fn SDL_HasNEON() -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GetSystemRAM() -> winapi::ctypes::c_int;
 }
-pub mod _bindgen_ty_1 {
-  pub type Type = i32;
-  pub const SDL_PIXELTYPE_UNKNOWN: Type = 0;
-  pub const SDL_PIXELTYPE_INDEX1: Type = 1;
-  pub const SDL_PIXELTYPE_INDEX4: Type = 2;
-  pub const SDL_PIXELTYPE_INDEX8: Type = 3;
-  pub const SDL_PIXELTYPE_PACKED8: Type = 4;
-  pub const SDL_PIXELTYPE_PACKED16: Type = 5;
-  pub const SDL_PIXELTYPE_PACKED32: Type = 6;
-  pub const SDL_PIXELTYPE_ARRAYU8: Type = 7;
-  pub const SDL_PIXELTYPE_ARRAYU16: Type = 8;
-  pub const SDL_PIXELTYPE_ARRAYU32: Type = 9;
-  pub const SDL_PIXELTYPE_ARRAYF16: Type = 10;
-  pub const SDL_PIXELTYPE_ARRAYF32: Type = 11;
-}
-pub mod _bindgen_ty_2 {
-  pub type Type = i32;
-  pub const SDL_BITMAPORDER_NONE: Type = 0;
-  pub const SDL_BITMAPORDER_4321: Type = 1;
-  pub const SDL_BITMAPORDER_1234: Type = 2;
-}
-pub mod _bindgen_ty_3 {
-  pub type Type = i32;
-  pub const SDL_PACKEDORDER_NONE: Type = 0;
-  pub const SDL_PACKEDORDER_XRGB: Type = 1;
-  pub const SDL_PACKEDORDER_RGBX: Type = 2;
-  pub const SDL_PACKEDORDER_ARGB: Type = 3;
-  pub const SDL_PACKEDORDER_RGBA: Type = 4;
-  pub const SDL_PACKEDORDER_XBGR: Type = 5;
-  pub const SDL_PACKEDORDER_BGRX: Type = 6;
-  pub const SDL_PACKEDORDER_ABGR: Type = 7;
-  pub const SDL_PACKEDORDER_BGRA: Type = 8;
-}
-pub mod _bindgen_ty_4 {
-  pub type Type = i32;
-  pub const SDL_ARRAYORDER_NONE: Type = 0;
-  pub const SDL_ARRAYORDER_RGB: Type = 1;
-  pub const SDL_ARRAYORDER_RGBA: Type = 2;
-  pub const SDL_ARRAYORDER_ARGB: Type = 3;
-  pub const SDL_ARRAYORDER_BGR: Type = 4;
-  pub const SDL_ARRAYORDER_BGRA: Type = 5;
-  pub const SDL_ARRAYORDER_ABGR: Type = 6;
-}
-pub mod _bindgen_ty_5 {
-  pub type Type = i32;
-  pub const SDL_PACKEDLAYOUT_NONE: Type = 0;
-  pub const SDL_PACKEDLAYOUT_332: Type = 1;
-  pub const SDL_PACKEDLAYOUT_4444: Type = 2;
-  pub const SDL_PACKEDLAYOUT_1555: Type = 3;
-  pub const SDL_PACKEDLAYOUT_5551: Type = 4;
-  pub const SDL_PACKEDLAYOUT_565: Type = 5;
-  pub const SDL_PACKEDLAYOUT_8888: Type = 6;
-  pub const SDL_PACKEDLAYOUT_2101010: Type = 7;
-  pub const SDL_PACKEDLAYOUT_1010102: Type = 8;
-}
-pub mod _bindgen_ty_6 {
-  pub type Type = i32;
-  pub const SDL_PIXELFORMAT_UNKNOWN: Type = 0;
-  pub const SDL_PIXELFORMAT_INDEX1LSB: Type = 286261504;
-  pub const SDL_PIXELFORMAT_INDEX1MSB: Type = 287310080;
-  pub const SDL_PIXELFORMAT_INDEX4LSB: Type = 303039488;
-  pub const SDL_PIXELFORMAT_INDEX4MSB: Type = 304088064;
-  pub const SDL_PIXELFORMAT_INDEX8: Type = 318769153;
-  pub const SDL_PIXELFORMAT_RGB332: Type = 336660481;
-  pub const SDL_PIXELFORMAT_RGB444: Type = 353504258;
-  pub const SDL_PIXELFORMAT_RGB555: Type = 353570562;
-  pub const SDL_PIXELFORMAT_BGR555: Type = 357764866;
-  pub const SDL_PIXELFORMAT_ARGB4444: Type = 355602434;
-  pub const SDL_PIXELFORMAT_RGBA4444: Type = 356651010;
-  pub const SDL_PIXELFORMAT_ABGR4444: Type = 359796738;
-  pub const SDL_PIXELFORMAT_BGRA4444: Type = 360845314;
-  pub const SDL_PIXELFORMAT_ARGB1555: Type = 355667970;
-  pub const SDL_PIXELFORMAT_RGBA5551: Type = 356782082;
-  pub const SDL_PIXELFORMAT_ABGR1555: Type = 359862274;
-  pub const SDL_PIXELFORMAT_BGRA5551: Type = 360976386;
-  pub const SDL_PIXELFORMAT_RGB565: Type = 353701890;
-  pub const SDL_PIXELFORMAT_BGR565: Type = 357896194;
-  pub const SDL_PIXELFORMAT_RGB24: Type = 386930691;
-  pub const SDL_PIXELFORMAT_BGR24: Type = 390076419;
-  pub const SDL_PIXELFORMAT_RGB888: Type = 370546692;
-  pub const SDL_PIXELFORMAT_RGBX8888: Type = 371595268;
-  pub const SDL_PIXELFORMAT_BGR888: Type = 374740996;
-  pub const SDL_PIXELFORMAT_BGRX8888: Type = 375789572;
-  pub const SDL_PIXELFORMAT_ARGB8888: Type = 372645892;
-  pub const SDL_PIXELFORMAT_RGBA8888: Type = 373694468;
-  pub const SDL_PIXELFORMAT_ABGR8888: Type = 376840196;
-  pub const SDL_PIXELFORMAT_BGRA8888: Type = 377888772;
-  pub const SDL_PIXELFORMAT_ARGB2101010: Type = 372711428;
-  pub const SDL_PIXELFORMAT_RGBA32: Type = 376840196;
-  pub const SDL_PIXELFORMAT_ARGB32: Type = 377888772;
-  pub const SDL_PIXELFORMAT_BGRA32: Type = 372645892;
-  pub const SDL_PIXELFORMAT_ABGR32: Type = 373694468;
-  pub const SDL_PIXELFORMAT_YV12: Type = 842094169;
-  pub const SDL_PIXELFORMAT_IYUV: Type = 1448433993;
-  pub const SDL_PIXELFORMAT_YUY2: Type = 844715353;
-  pub const SDL_PIXELFORMAT_UYVY: Type = 1498831189;
-  pub const SDL_PIXELFORMAT_YVYU: Type = 1431918169;
-  pub const SDL_PIXELFORMAT_NV12: Type = 842094158;
-  pub const SDL_PIXELFORMAT_NV21: Type = 825382478;
-  pub const SDL_PIXELFORMAT_EXTERNAL_OES: Type = 542328143;
-}
+pub const SDL_PIXELTYPE_UNKNOWN: _bindgen_ty_1 = 0;
+pub const SDL_PIXELTYPE_INDEX1: _bindgen_ty_1 = 1;
+pub const SDL_PIXELTYPE_INDEX4: _bindgen_ty_1 = 2;
+pub const SDL_PIXELTYPE_INDEX8: _bindgen_ty_1 = 3;
+pub const SDL_PIXELTYPE_PACKED8: _bindgen_ty_1 = 4;
+pub const SDL_PIXELTYPE_PACKED16: _bindgen_ty_1 = 5;
+pub const SDL_PIXELTYPE_PACKED32: _bindgen_ty_1 = 6;
+pub const SDL_PIXELTYPE_ARRAYU8: _bindgen_ty_1 = 7;
+pub const SDL_PIXELTYPE_ARRAYU16: _bindgen_ty_1 = 8;
+pub const SDL_PIXELTYPE_ARRAYU32: _bindgen_ty_1 = 9;
+pub const SDL_PIXELTYPE_ARRAYF16: _bindgen_ty_1 = 10;
+pub const SDL_PIXELTYPE_ARRAYF32: _bindgen_ty_1 = 11;
+pub type _bindgen_ty_1 = i32;
+pub const SDL_BITMAPORDER_NONE: _bindgen_ty_2 = 0;
+pub const SDL_BITMAPORDER_4321: _bindgen_ty_2 = 1;
+pub const SDL_BITMAPORDER_1234: _bindgen_ty_2 = 2;
+pub type _bindgen_ty_2 = i32;
+pub const SDL_PACKEDORDER_NONE: _bindgen_ty_3 = 0;
+pub const SDL_PACKEDORDER_XRGB: _bindgen_ty_3 = 1;
+pub const SDL_PACKEDORDER_RGBX: _bindgen_ty_3 = 2;
+pub const SDL_PACKEDORDER_ARGB: _bindgen_ty_3 = 3;
+pub const SDL_PACKEDORDER_RGBA: _bindgen_ty_3 = 4;
+pub const SDL_PACKEDORDER_XBGR: _bindgen_ty_3 = 5;
+pub const SDL_PACKEDORDER_BGRX: _bindgen_ty_3 = 6;
+pub const SDL_PACKEDORDER_ABGR: _bindgen_ty_3 = 7;
+pub const SDL_PACKEDORDER_BGRA: _bindgen_ty_3 = 8;
+pub type _bindgen_ty_3 = i32;
+pub const SDL_ARRAYORDER_NONE: _bindgen_ty_4 = 0;
+pub const SDL_ARRAYORDER_RGB: _bindgen_ty_4 = 1;
+pub const SDL_ARRAYORDER_RGBA: _bindgen_ty_4 = 2;
+pub const SDL_ARRAYORDER_ARGB: _bindgen_ty_4 = 3;
+pub const SDL_ARRAYORDER_BGR: _bindgen_ty_4 = 4;
+pub const SDL_ARRAYORDER_BGRA: _bindgen_ty_4 = 5;
+pub const SDL_ARRAYORDER_ABGR: _bindgen_ty_4 = 6;
+pub type _bindgen_ty_4 = i32;
+pub const SDL_PACKEDLAYOUT_NONE: _bindgen_ty_5 = 0;
+pub const SDL_PACKEDLAYOUT_332: _bindgen_ty_5 = 1;
+pub const SDL_PACKEDLAYOUT_4444: _bindgen_ty_5 = 2;
+pub const SDL_PACKEDLAYOUT_1555: _bindgen_ty_5 = 3;
+pub const SDL_PACKEDLAYOUT_5551: _bindgen_ty_5 = 4;
+pub const SDL_PACKEDLAYOUT_565: _bindgen_ty_5 = 5;
+pub const SDL_PACKEDLAYOUT_8888: _bindgen_ty_5 = 6;
+pub const SDL_PACKEDLAYOUT_2101010: _bindgen_ty_5 = 7;
+pub const SDL_PACKEDLAYOUT_1010102: _bindgen_ty_5 = 8;
+pub type _bindgen_ty_5 = i32;
+pub const SDL_PIXELFORMAT_UNKNOWN: _bindgen_ty_6 = 0;
+pub const SDL_PIXELFORMAT_INDEX1LSB: _bindgen_ty_6 = 286261504;
+pub const SDL_PIXELFORMAT_INDEX1MSB: _bindgen_ty_6 = 287310080;
+pub const SDL_PIXELFORMAT_INDEX4LSB: _bindgen_ty_6 = 303039488;
+pub const SDL_PIXELFORMAT_INDEX4MSB: _bindgen_ty_6 = 304088064;
+pub const SDL_PIXELFORMAT_INDEX8: _bindgen_ty_6 = 318769153;
+pub const SDL_PIXELFORMAT_RGB332: _bindgen_ty_6 = 336660481;
+pub const SDL_PIXELFORMAT_RGB444: _bindgen_ty_6 = 353504258;
+pub const SDL_PIXELFORMAT_RGB555: _bindgen_ty_6 = 353570562;
+pub const SDL_PIXELFORMAT_BGR555: _bindgen_ty_6 = 357764866;
+pub const SDL_PIXELFORMAT_ARGB4444: _bindgen_ty_6 = 355602434;
+pub const SDL_PIXELFORMAT_RGBA4444: _bindgen_ty_6 = 356651010;
+pub const SDL_PIXELFORMAT_ABGR4444: _bindgen_ty_6 = 359796738;
+pub const SDL_PIXELFORMAT_BGRA4444: _bindgen_ty_6 = 360845314;
+pub const SDL_PIXELFORMAT_ARGB1555: _bindgen_ty_6 = 355667970;
+pub const SDL_PIXELFORMAT_RGBA5551: _bindgen_ty_6 = 356782082;
+pub const SDL_PIXELFORMAT_ABGR1555: _bindgen_ty_6 = 359862274;
+pub const SDL_PIXELFORMAT_BGRA5551: _bindgen_ty_6 = 360976386;
+pub const SDL_PIXELFORMAT_RGB565: _bindgen_ty_6 = 353701890;
+pub const SDL_PIXELFORMAT_BGR565: _bindgen_ty_6 = 357896194;
+pub const SDL_PIXELFORMAT_RGB24: _bindgen_ty_6 = 386930691;
+pub const SDL_PIXELFORMAT_BGR24: _bindgen_ty_6 = 390076419;
+pub const SDL_PIXELFORMAT_RGB888: _bindgen_ty_6 = 370546692;
+pub const SDL_PIXELFORMAT_RGBX8888: _bindgen_ty_6 = 371595268;
+pub const SDL_PIXELFORMAT_BGR888: _bindgen_ty_6 = 374740996;
+pub const SDL_PIXELFORMAT_BGRX8888: _bindgen_ty_6 = 375789572;
+pub const SDL_PIXELFORMAT_ARGB8888: _bindgen_ty_6 = 372645892;
+pub const SDL_PIXELFORMAT_RGBA8888: _bindgen_ty_6 = 373694468;
+pub const SDL_PIXELFORMAT_ABGR8888: _bindgen_ty_6 = 376840196;
+pub const SDL_PIXELFORMAT_BGRA8888: _bindgen_ty_6 = 377888772;
+pub const SDL_PIXELFORMAT_ARGB2101010: _bindgen_ty_6 = 372711428;
+pub const SDL_PIXELFORMAT_RGBA32: _bindgen_ty_6 = 376840196;
+pub const SDL_PIXELFORMAT_ARGB32: _bindgen_ty_6 = 377888772;
+pub const SDL_PIXELFORMAT_BGRA32: _bindgen_ty_6 = 372645892;
+pub const SDL_PIXELFORMAT_ABGR32: _bindgen_ty_6 = 373694468;
+pub const SDL_PIXELFORMAT_YV12: _bindgen_ty_6 = 842094169;
+pub const SDL_PIXELFORMAT_IYUV: _bindgen_ty_6 = 1448433993;
+pub const SDL_PIXELFORMAT_YUY2: _bindgen_ty_6 = 844715353;
+pub const SDL_PIXELFORMAT_UYVY: _bindgen_ty_6 = 1498831189;
+pub const SDL_PIXELFORMAT_YVYU: _bindgen_ty_6 = 1431918169;
+pub const SDL_PIXELFORMAT_NV12: _bindgen_ty_6 = 842094158;
+pub const SDL_PIXELFORMAT_NV21: _bindgen_ty_6 = 825382478;
+pub const SDL_PIXELFORMAT_EXTERNAL_OES: _bindgen_ty_6 = 542328143;
+pub type _bindgen_ty_6 = i32;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_Color {
@@ -2624,7 +2644,7 @@ extern "C" {
     Gmask: *mut Uint32,
     Bmask: *mut Uint32,
     Amask: *mut Uint32,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_MasksToPixelFormatEnum(
@@ -2796,14 +2816,14 @@ fn bindgen_test_layout_SDL_Rect() {
   );
 }
 extern "C" {
-  pub fn SDL_HasIntersection(A: *const SDL_Rect, B: *const SDL_Rect) -> SDL_bool::Type;
+  pub fn SDL_HasIntersection(A: *const SDL_Rect, B: *const SDL_Rect) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_IntersectRect(
     A: *const SDL_Rect,
     B: *const SDL_Rect,
     result: *mut SDL_Rect,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_UnionRect(A: *const SDL_Rect, B: *const SDL_Rect, result: *mut SDL_Rect);
@@ -2814,7 +2834,7 @@ extern "C" {
     count: winapi::ctypes::c_int,
     clip: *const SDL_Rect,
     result: *mut SDL_Rect,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_IntersectRectAndLine(
@@ -2823,46 +2843,40 @@ extern "C" {
     Y1: *mut winapi::ctypes::c_int,
     X2: *mut winapi::ctypes::c_int,
     Y2: *mut winapi::ctypes::c_int,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
-pub mod SDL_BlendMode {
-  pub type Type = i32;
-  pub const SDL_BLENDMODE_NONE: Type = 0;
-  pub const SDL_BLENDMODE_BLEND: Type = 1;
-  pub const SDL_BLENDMODE_ADD: Type = 2;
-  pub const SDL_BLENDMODE_MOD: Type = 4;
-  pub const SDL_BLENDMODE_INVALID: Type = 2147483647;
-}
-pub mod SDL_BlendOperation {
-  pub type Type = i32;
-  pub const SDL_BLENDOPERATION_ADD: Type = 1;
-  pub const SDL_BLENDOPERATION_SUBTRACT: Type = 2;
-  pub const SDL_BLENDOPERATION_REV_SUBTRACT: Type = 3;
-  pub const SDL_BLENDOPERATION_MINIMUM: Type = 4;
-  pub const SDL_BLENDOPERATION_MAXIMUM: Type = 5;
-}
-pub mod SDL_BlendFactor {
-  pub type Type = i32;
-  pub const SDL_BLENDFACTOR_ZERO: Type = 1;
-  pub const SDL_BLENDFACTOR_ONE: Type = 2;
-  pub const SDL_BLENDFACTOR_SRC_COLOR: Type = 3;
-  pub const SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR: Type = 4;
-  pub const SDL_BLENDFACTOR_SRC_ALPHA: Type = 5;
-  pub const SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA: Type = 6;
-  pub const SDL_BLENDFACTOR_DST_COLOR: Type = 7;
-  pub const SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR: Type = 8;
-  pub const SDL_BLENDFACTOR_DST_ALPHA: Type = 9;
-  pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA: Type = 10;
-}
+pub const SDL_BLENDMODE_NONE: SDL_BlendMode = 0;
+pub const SDL_BLENDMODE_BLEND: SDL_BlendMode = 1;
+pub const SDL_BLENDMODE_ADD: SDL_BlendMode = 2;
+pub const SDL_BLENDMODE_MOD: SDL_BlendMode = 4;
+pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = 2147483647;
+pub type SDL_BlendMode = i32;
+pub const SDL_BLENDOPERATION_ADD: SDL_BlendOperation = 1;
+pub const SDL_BLENDOPERATION_SUBTRACT: SDL_BlendOperation = 2;
+pub const SDL_BLENDOPERATION_REV_SUBTRACT: SDL_BlendOperation = 3;
+pub const SDL_BLENDOPERATION_MINIMUM: SDL_BlendOperation = 4;
+pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = 5;
+pub type SDL_BlendOperation = i32;
+pub const SDL_BLENDFACTOR_ZERO: SDL_BlendFactor = 1;
+pub const SDL_BLENDFACTOR_ONE: SDL_BlendFactor = 2;
+pub const SDL_BLENDFACTOR_SRC_COLOR: SDL_BlendFactor = 3;
+pub const SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR: SDL_BlendFactor = 4;
+pub const SDL_BLENDFACTOR_SRC_ALPHA: SDL_BlendFactor = 5;
+pub const SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA: SDL_BlendFactor = 6;
+pub const SDL_BLENDFACTOR_DST_COLOR: SDL_BlendFactor = 7;
+pub const SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR: SDL_BlendFactor = 8;
+pub const SDL_BLENDFACTOR_DST_ALPHA: SDL_BlendFactor = 9;
+pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_BlendFactor = 10;
+pub type SDL_BlendFactor = i32;
 extern "C" {
   pub fn SDL_ComposeCustomBlendMode(
-    srcColorFactor: SDL_BlendFactor::Type,
-    dstColorFactor: SDL_BlendFactor::Type,
-    colorOperation: SDL_BlendOperation::Type,
-    srcAlphaFactor: SDL_BlendFactor::Type,
-    dstAlphaFactor: SDL_BlendFactor::Type,
-    alphaOperation: SDL_BlendOperation::Type,
-  ) -> SDL_BlendMode::Type;
+    srcColorFactor: SDL_BlendFactor,
+    dstColorFactor: SDL_BlendFactor,
+    colorOperation: SDL_BlendOperation,
+    srcAlphaFactor: SDL_BlendFactor,
+    dstAlphaFactor: SDL_BlendFactor,
+    alphaOperation: SDL_BlendOperation,
+  ) -> SDL_BlendMode;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -3026,13 +3040,11 @@ pub type SDL_blit = ::core::option::Option<
     dstrect: *mut SDL_Rect,
   ) -> winapi::ctypes::c_int,
 >;
-pub mod SDL_YUV_CONVERSION_MODE {
-  pub type Type = i32;
-  pub const SDL_YUV_CONVERSION_JPEG: Type = 0;
-  pub const SDL_YUV_CONVERSION_BT601: Type = 1;
-  pub const SDL_YUV_CONVERSION_BT709: Type = 2;
-  pub const SDL_YUV_CONVERSION_AUTOMATIC: Type = 3;
-}
+pub const SDL_YUV_CONVERSION_JPEG: SDL_YUV_CONVERSION_MODE = 0;
+pub const SDL_YUV_CONVERSION_BT601: SDL_YUV_CONVERSION_MODE = 1;
+pub const SDL_YUV_CONVERSION_BT709: SDL_YUV_CONVERSION_MODE = 2;
+pub const SDL_YUV_CONVERSION_AUTOMATIC: SDL_YUV_CONVERSION_MODE = 3;
+pub type SDL_YUV_CONVERSION_MODE = i32;
 extern "C" {
   pub fn SDL_CreateRGBSurface(
     flags: Uint32,
@@ -3116,6 +3128,9 @@ extern "C" {
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
+  pub fn SDL_HasColorKey(surface: *mut SDL_Surface) -> SDL_bool;
+}
+extern "C" {
   pub fn SDL_GetColorKey(surface: *mut SDL_Surface, key: *mut Uint32) -> winapi::ctypes::c_int;
 }
 extern "C" {
@@ -3146,17 +3161,17 @@ extern "C" {
 extern "C" {
   pub fn SDL_SetSurfaceBlendMode(
     surface: *mut SDL_Surface,
-    blendMode: SDL_BlendMode::Type,
+    blendMode: SDL_BlendMode,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
   pub fn SDL_GetSurfaceBlendMode(
     surface: *mut SDL_Surface,
-    blendMode: *mut SDL_BlendMode::Type,
+    blendMode: *mut SDL_BlendMode,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_SetClipRect(surface: *mut SDL_Surface, rect: *const SDL_Rect) -> SDL_bool::Type;
+  pub fn SDL_SetClipRect(surface: *mut SDL_Surface, rect: *const SDL_Rect) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GetClipRect(surface: *mut SDL_Surface, rect: *mut SDL_Rect);
@@ -3246,16 +3261,16 @@ extern "C" {
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_SetYUVConversionMode(mode: SDL_YUV_CONVERSION_MODE::Type);
+  pub fn SDL_SetYUVConversionMode(mode: SDL_YUV_CONVERSION_MODE);
 }
 extern "C" {
-  pub fn SDL_GetYUVConversionMode() -> SDL_YUV_CONVERSION_MODE::Type;
+  pub fn SDL_GetYUVConversionMode() -> SDL_YUV_CONVERSION_MODE;
 }
 extern "C" {
   pub fn SDL_GetYUVConversionModeForResolution(
     width: winapi::ctypes::c_int,
     height: winapi::ctypes::c_int,
-  ) -> SDL_YUV_CONVERSION_MODE::Type;
+  ) -> SDL_YUV_CONVERSION_MODE;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -3339,104 +3354,99 @@ impl Default for SDL_DisplayMode {
 pub struct SDL_Window {
   _unused: [u8; 0],
 }
-pub mod SDL_WindowFlags {
-  pub type Type = i32;
-  pub const SDL_WINDOW_FULLSCREEN: Type = 1;
-  pub const SDL_WINDOW_OPENGL: Type = 2;
-  pub const SDL_WINDOW_SHOWN: Type = 4;
-  pub const SDL_WINDOW_HIDDEN: Type = 8;
-  pub const SDL_WINDOW_BORDERLESS: Type = 16;
-  pub const SDL_WINDOW_RESIZABLE: Type = 32;
-  pub const SDL_WINDOW_MINIMIZED: Type = 64;
-  pub const SDL_WINDOW_MAXIMIZED: Type = 128;
-  pub const SDL_WINDOW_INPUT_GRABBED: Type = 256;
-  pub const SDL_WINDOW_INPUT_FOCUS: Type = 512;
-  pub const SDL_WINDOW_MOUSE_FOCUS: Type = 1024;
-  pub const SDL_WINDOW_FULLSCREEN_DESKTOP: Type = 4097;
-  pub const SDL_WINDOW_FOREIGN: Type = 2048;
-  pub const SDL_WINDOW_ALLOW_HIGHDPI: Type = 8192;
-  pub const SDL_WINDOW_MOUSE_CAPTURE: Type = 16384;
-  pub const SDL_WINDOW_ALWAYS_ON_TOP: Type = 32768;
-  pub const SDL_WINDOW_SKIP_TASKBAR: Type = 65536;
-  pub const SDL_WINDOW_UTILITY: Type = 131072;
-  pub const SDL_WINDOW_TOOLTIP: Type = 262144;
-  pub const SDL_WINDOW_POPUP_MENU: Type = 524288;
-  pub const SDL_WINDOW_VULKAN: Type = 268435456;
-}
-pub mod SDL_WindowEventID {
-  pub type Type = i32;
-  pub const SDL_WINDOWEVENT_NONE: Type = 0;
-  pub const SDL_WINDOWEVENT_SHOWN: Type = 1;
-  pub const SDL_WINDOWEVENT_HIDDEN: Type = 2;
-  pub const SDL_WINDOWEVENT_EXPOSED: Type = 3;
-  pub const SDL_WINDOWEVENT_MOVED: Type = 4;
-  pub const SDL_WINDOWEVENT_RESIZED: Type = 5;
-  pub const SDL_WINDOWEVENT_SIZE_CHANGED: Type = 6;
-  pub const SDL_WINDOWEVENT_MINIMIZED: Type = 7;
-  pub const SDL_WINDOWEVENT_MAXIMIZED: Type = 8;
-  pub const SDL_WINDOWEVENT_RESTORED: Type = 9;
-  pub const SDL_WINDOWEVENT_ENTER: Type = 10;
-  pub const SDL_WINDOWEVENT_LEAVE: Type = 11;
-  pub const SDL_WINDOWEVENT_FOCUS_GAINED: Type = 12;
-  pub const SDL_WINDOWEVENT_FOCUS_LOST: Type = 13;
-  pub const SDL_WINDOWEVENT_CLOSE: Type = 14;
-  pub const SDL_WINDOWEVENT_TAKE_FOCUS: Type = 15;
-  pub const SDL_WINDOWEVENT_HIT_TEST: Type = 16;
-}
+pub const SDL_WINDOW_FULLSCREEN: SDL_WindowFlags = 1;
+pub const SDL_WINDOW_OPENGL: SDL_WindowFlags = 2;
+pub const SDL_WINDOW_SHOWN: SDL_WindowFlags = 4;
+pub const SDL_WINDOW_HIDDEN: SDL_WindowFlags = 8;
+pub const SDL_WINDOW_BORDERLESS: SDL_WindowFlags = 16;
+pub const SDL_WINDOW_RESIZABLE: SDL_WindowFlags = 32;
+pub const SDL_WINDOW_MINIMIZED: SDL_WindowFlags = 64;
+pub const SDL_WINDOW_MAXIMIZED: SDL_WindowFlags = 128;
+pub const SDL_WINDOW_INPUT_GRABBED: SDL_WindowFlags = 256;
+pub const SDL_WINDOW_INPUT_FOCUS: SDL_WindowFlags = 512;
+pub const SDL_WINDOW_MOUSE_FOCUS: SDL_WindowFlags = 1024;
+pub const SDL_WINDOW_FULLSCREEN_DESKTOP: SDL_WindowFlags = 4097;
+pub const SDL_WINDOW_FOREIGN: SDL_WindowFlags = 2048;
+pub const SDL_WINDOW_ALLOW_HIGHDPI: SDL_WindowFlags = 8192;
+pub const SDL_WINDOW_MOUSE_CAPTURE: SDL_WindowFlags = 16384;
+pub const SDL_WINDOW_ALWAYS_ON_TOP: SDL_WindowFlags = 32768;
+pub const SDL_WINDOW_SKIP_TASKBAR: SDL_WindowFlags = 65536;
+pub const SDL_WINDOW_UTILITY: SDL_WindowFlags = 131072;
+pub const SDL_WINDOW_TOOLTIP: SDL_WindowFlags = 262144;
+pub const SDL_WINDOW_POPUP_MENU: SDL_WindowFlags = 524288;
+pub const SDL_WINDOW_VULKAN: SDL_WindowFlags = 268435456;
+pub type SDL_WindowFlags = i32;
+pub const SDL_WINDOWEVENT_NONE: SDL_WindowEventID = 0;
+pub const SDL_WINDOWEVENT_SHOWN: SDL_WindowEventID = 1;
+pub const SDL_WINDOWEVENT_HIDDEN: SDL_WindowEventID = 2;
+pub const SDL_WINDOWEVENT_EXPOSED: SDL_WindowEventID = 3;
+pub const SDL_WINDOWEVENT_MOVED: SDL_WindowEventID = 4;
+pub const SDL_WINDOWEVENT_RESIZED: SDL_WindowEventID = 5;
+pub const SDL_WINDOWEVENT_SIZE_CHANGED: SDL_WindowEventID = 6;
+pub const SDL_WINDOWEVENT_MINIMIZED: SDL_WindowEventID = 7;
+pub const SDL_WINDOWEVENT_MAXIMIZED: SDL_WindowEventID = 8;
+pub const SDL_WINDOWEVENT_RESTORED: SDL_WindowEventID = 9;
+pub const SDL_WINDOWEVENT_ENTER: SDL_WindowEventID = 10;
+pub const SDL_WINDOWEVENT_LEAVE: SDL_WindowEventID = 11;
+pub const SDL_WINDOWEVENT_FOCUS_GAINED: SDL_WindowEventID = 12;
+pub const SDL_WINDOWEVENT_FOCUS_LOST: SDL_WindowEventID = 13;
+pub const SDL_WINDOWEVENT_CLOSE: SDL_WindowEventID = 14;
+pub const SDL_WINDOWEVENT_TAKE_FOCUS: SDL_WindowEventID = 15;
+pub const SDL_WINDOWEVENT_HIT_TEST: SDL_WindowEventID = 16;
+pub type SDL_WindowEventID = i32;
+pub const SDL_DISPLAYEVENT_NONE: SDL_DisplayEventID = 0;
+pub const SDL_DISPLAYEVENT_ORIENTATION: SDL_DisplayEventID = 1;
+pub type SDL_DisplayEventID = i32;
+pub const SDL_ORIENTATION_UNKNOWN: SDL_DisplayOrientation = 0;
+pub const SDL_ORIENTATION_LANDSCAPE: SDL_DisplayOrientation = 1;
+pub const SDL_ORIENTATION_LANDSCAPE_FLIPPED: SDL_DisplayOrientation = 2;
+pub const SDL_ORIENTATION_PORTRAIT: SDL_DisplayOrientation = 3;
+pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation = 4;
+pub type SDL_DisplayOrientation = i32;
 pub type SDL_GLContext = *mut winapi::ctypes::c_void;
-pub mod SDL_GLattr {
-  pub type Type = i32;
-  pub const SDL_GL_RED_SIZE: Type = 0;
-  pub const SDL_GL_GREEN_SIZE: Type = 1;
-  pub const SDL_GL_BLUE_SIZE: Type = 2;
-  pub const SDL_GL_ALPHA_SIZE: Type = 3;
-  pub const SDL_GL_BUFFER_SIZE: Type = 4;
-  pub const SDL_GL_DOUBLEBUFFER: Type = 5;
-  pub const SDL_GL_DEPTH_SIZE: Type = 6;
-  pub const SDL_GL_STENCIL_SIZE: Type = 7;
-  pub const SDL_GL_ACCUM_RED_SIZE: Type = 8;
-  pub const SDL_GL_ACCUM_GREEN_SIZE: Type = 9;
-  pub const SDL_GL_ACCUM_BLUE_SIZE: Type = 10;
-  pub const SDL_GL_ACCUM_ALPHA_SIZE: Type = 11;
-  pub const SDL_GL_STEREO: Type = 12;
-  pub const SDL_GL_MULTISAMPLEBUFFERS: Type = 13;
-  pub const SDL_GL_MULTISAMPLESAMPLES: Type = 14;
-  pub const SDL_GL_ACCELERATED_VISUAL: Type = 15;
-  pub const SDL_GL_RETAINED_BACKING: Type = 16;
-  pub const SDL_GL_CONTEXT_MAJOR_VERSION: Type = 17;
-  pub const SDL_GL_CONTEXT_MINOR_VERSION: Type = 18;
-  pub const SDL_GL_CONTEXT_EGL: Type = 19;
-  pub const SDL_GL_CONTEXT_FLAGS: Type = 20;
-  pub const SDL_GL_CONTEXT_PROFILE_MASK: Type = 21;
-  pub const SDL_GL_SHARE_WITH_CURRENT_CONTEXT: Type = 22;
-  pub const SDL_GL_FRAMEBUFFER_SRGB_CAPABLE: Type = 23;
-  pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR: Type = 24;
-  pub const SDL_GL_CONTEXT_RESET_NOTIFICATION: Type = 25;
-  pub const SDL_GL_CONTEXT_NO_ERROR: Type = 26;
-}
-pub mod SDL_GLprofile {
-  pub type Type = i32;
-  pub const SDL_GL_CONTEXT_PROFILE_CORE: Type = 1;
-  pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: Type = 2;
-  pub const SDL_GL_CONTEXT_PROFILE_ES: Type = 4;
-}
-pub mod SDL_GLcontextFlag {
-  pub type Type = i32;
-  pub const SDL_GL_CONTEXT_DEBUG_FLAG: Type = 1;
-  pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: Type = 2;
-  pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: Type = 4;
-  pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: Type = 8;
-}
-pub mod SDL_GLcontextReleaseFlag {
-  pub type Type = i32;
-  pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: Type = 0;
-  pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: Type = 1;
-}
-pub mod SDL_GLContextResetNotification {
-  pub type Type = i32;
-  pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: Type = 0;
-  pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: Type = 1;
-}
+pub const SDL_GL_RED_SIZE: SDL_GLattr = 0;
+pub const SDL_GL_GREEN_SIZE: SDL_GLattr = 1;
+pub const SDL_GL_BLUE_SIZE: SDL_GLattr = 2;
+pub const SDL_GL_ALPHA_SIZE: SDL_GLattr = 3;
+pub const SDL_GL_BUFFER_SIZE: SDL_GLattr = 4;
+pub const SDL_GL_DOUBLEBUFFER: SDL_GLattr = 5;
+pub const SDL_GL_DEPTH_SIZE: SDL_GLattr = 6;
+pub const SDL_GL_STENCIL_SIZE: SDL_GLattr = 7;
+pub const SDL_GL_ACCUM_RED_SIZE: SDL_GLattr = 8;
+pub const SDL_GL_ACCUM_GREEN_SIZE: SDL_GLattr = 9;
+pub const SDL_GL_ACCUM_BLUE_SIZE: SDL_GLattr = 10;
+pub const SDL_GL_ACCUM_ALPHA_SIZE: SDL_GLattr = 11;
+pub const SDL_GL_STEREO: SDL_GLattr = 12;
+pub const SDL_GL_MULTISAMPLEBUFFERS: SDL_GLattr = 13;
+pub const SDL_GL_MULTISAMPLESAMPLES: SDL_GLattr = 14;
+pub const SDL_GL_ACCELERATED_VISUAL: SDL_GLattr = 15;
+pub const SDL_GL_RETAINED_BACKING: SDL_GLattr = 16;
+pub const SDL_GL_CONTEXT_MAJOR_VERSION: SDL_GLattr = 17;
+pub const SDL_GL_CONTEXT_MINOR_VERSION: SDL_GLattr = 18;
+pub const SDL_GL_CONTEXT_EGL: SDL_GLattr = 19;
+pub const SDL_GL_CONTEXT_FLAGS: SDL_GLattr = 20;
+pub const SDL_GL_CONTEXT_PROFILE_MASK: SDL_GLattr = 21;
+pub const SDL_GL_SHARE_WITH_CURRENT_CONTEXT: SDL_GLattr = 22;
+pub const SDL_GL_FRAMEBUFFER_SRGB_CAPABLE: SDL_GLattr = 23;
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR: SDL_GLattr = 24;
+pub const SDL_GL_CONTEXT_RESET_NOTIFICATION: SDL_GLattr = 25;
+pub const SDL_GL_CONTEXT_NO_ERROR: SDL_GLattr = 26;
+pub type SDL_GLattr = i32;
+pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLprofile = 1;
+pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLprofile = 2;
+pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLprofile = 4;
+pub type SDL_GLprofile = i32;
+pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLcontextFlag = 1;
+pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLcontextFlag = 2;
+pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLcontextFlag = 4;
+pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag = 8;
+pub type SDL_GLcontextFlag = i32;
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLcontextReleaseFlag = 0;
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag = 1;
+pub type SDL_GLcontextReleaseFlag = i32;
+pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification = 0;
+pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification = 1;
+pub type SDL_GLContextResetNotification = i32;
 extern "C" {
   pub fn SDL_GetNumVideoDrivers() -> winapi::ctypes::c_int;
 }
@@ -3465,6 +3475,12 @@ extern "C" {
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
+  pub fn SDL_GetDisplayUsableBounds(
+    displayIndex: winapi::ctypes::c_int,
+    rect: *mut SDL_Rect,
+  ) -> winapi::ctypes::c_int;
+}
+extern "C" {
   pub fn SDL_GetDisplayDPI(
     displayIndex: winapi::ctypes::c_int,
     ddpi: *mut f32,
@@ -3473,10 +3489,7 @@ extern "C" {
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_GetDisplayUsableBounds(
-    displayIndex: winapi::ctypes::c_int,
-    rect: *mut SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  pub fn SDL_GetDisplayOrientation(displayIndex: winapi::ctypes::c_int) -> SDL_DisplayOrientation;
 }
 extern "C" {
   pub fn SDL_GetNumDisplayModes(displayIndex: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
@@ -3635,10 +3648,10 @@ extern "C" {
   );
 }
 extern "C" {
-  pub fn SDL_SetWindowBordered(window: *mut SDL_Window, bordered: SDL_bool::Type);
+  pub fn SDL_SetWindowBordered(window: *mut SDL_Window, bordered: SDL_bool);
 }
 extern "C" {
-  pub fn SDL_SetWindowResizable(window: *mut SDL_Window, resizable: SDL_bool::Type);
+  pub fn SDL_SetWindowResizable(window: *mut SDL_Window, resizable: SDL_bool);
 }
 extern "C" {
   pub fn SDL_ShowWindow(window: *mut SDL_Window);
@@ -3675,10 +3688,10 @@ extern "C" {
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_SetWindowGrab(window: *mut SDL_Window, grabbed: SDL_bool::Type);
+  pub fn SDL_SetWindowGrab(window: *mut SDL_Window, grabbed: SDL_bool);
 }
 extern "C" {
-  pub fn SDL_GetWindowGrab(window: *mut SDL_Window) -> SDL_bool::Type;
+  pub fn SDL_GetWindowGrab(window: *mut SDL_Window) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GetGrabbedWindow() -> *mut SDL_Window;
@@ -3724,25 +3737,23 @@ extern "C" {
     blue: *mut Uint16,
   ) -> winapi::ctypes::c_int;
 }
-pub mod SDL_HitTestResult {
-  pub type Type = i32;
-  pub const SDL_HITTEST_NORMAL: Type = 0;
-  pub const SDL_HITTEST_DRAGGABLE: Type = 1;
-  pub const SDL_HITTEST_RESIZE_TOPLEFT: Type = 2;
-  pub const SDL_HITTEST_RESIZE_TOP: Type = 3;
-  pub const SDL_HITTEST_RESIZE_TOPRIGHT: Type = 4;
-  pub const SDL_HITTEST_RESIZE_RIGHT: Type = 5;
-  pub const SDL_HITTEST_RESIZE_BOTTOMRIGHT: Type = 6;
-  pub const SDL_HITTEST_RESIZE_BOTTOM: Type = 7;
-  pub const SDL_HITTEST_RESIZE_BOTTOMLEFT: Type = 8;
-  pub const SDL_HITTEST_RESIZE_LEFT: Type = 9;
-}
+pub const SDL_HITTEST_NORMAL: SDL_HitTestResult = 0;
+pub const SDL_HITTEST_DRAGGABLE: SDL_HitTestResult = 1;
+pub const SDL_HITTEST_RESIZE_TOPLEFT: SDL_HitTestResult = 2;
+pub const SDL_HITTEST_RESIZE_TOP: SDL_HitTestResult = 3;
+pub const SDL_HITTEST_RESIZE_TOPRIGHT: SDL_HitTestResult = 4;
+pub const SDL_HITTEST_RESIZE_RIGHT: SDL_HitTestResult = 5;
+pub const SDL_HITTEST_RESIZE_BOTTOMRIGHT: SDL_HitTestResult = 6;
+pub const SDL_HITTEST_RESIZE_BOTTOM: SDL_HitTestResult = 7;
+pub const SDL_HITTEST_RESIZE_BOTTOMLEFT: SDL_HitTestResult = 8;
+pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = 9;
+pub type SDL_HitTestResult = i32;
 pub type SDL_HitTest = ::core::option::Option<
   unsafe extern "C" fn(
     win: *mut SDL_Window,
     area: *const SDL_Point,
     data: *mut winapi::ctypes::c_void,
-  ) -> SDL_HitTestResult::Type,
+  ) -> SDL_HitTestResult,
 >;
 extern "C" {
   pub fn SDL_SetWindowHitTest(
@@ -3755,7 +3766,7 @@ extern "C" {
   pub fn SDL_DestroyWindow(window: *mut SDL_Window);
 }
 extern "C" {
-  pub fn SDL_IsScreenSaverEnabled() -> SDL_bool::Type;
+  pub fn SDL_IsScreenSaverEnabled() -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_EnableScreenSaver();
@@ -3774,20 +3785,20 @@ extern "C" {
   pub fn SDL_GL_UnloadLibrary();
 }
 extern "C" {
-  pub fn SDL_GL_ExtensionSupported(extension: *const winapi::ctypes::c_char) -> SDL_bool::Type;
+  pub fn SDL_GL_ExtensionSupported(extension: *const winapi::ctypes::c_char) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GL_ResetAttributes();
 }
 extern "C" {
   pub fn SDL_GL_SetAttribute(
-    attr: SDL_GLattr::Type,
+    attr: SDL_GLattr,
     value: winapi::ctypes::c_int,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
   pub fn SDL_GL_GetAttribute(
-    attr: SDL_GLattr::Type,
+    attr: SDL_GLattr,
     value: *mut winapi::ctypes::c_int,
   ) -> winapi::ctypes::c_int;
 }
@@ -3825,517 +3836,511 @@ extern "C" {
 extern "C" {
   pub fn SDL_GL_DeleteContext(context: SDL_GLContext);
 }
-pub mod SDL_Scancode {
-  pub type Type = i32;
-  pub const SDL_SCANCODE_UNKNOWN: Type = 0;
-  pub const SDL_SCANCODE_A: Type = 4;
-  pub const SDL_SCANCODE_B: Type = 5;
-  pub const SDL_SCANCODE_C: Type = 6;
-  pub const SDL_SCANCODE_D: Type = 7;
-  pub const SDL_SCANCODE_E: Type = 8;
-  pub const SDL_SCANCODE_F: Type = 9;
-  pub const SDL_SCANCODE_G: Type = 10;
-  pub const SDL_SCANCODE_H: Type = 11;
-  pub const SDL_SCANCODE_I: Type = 12;
-  pub const SDL_SCANCODE_J: Type = 13;
-  pub const SDL_SCANCODE_K: Type = 14;
-  pub const SDL_SCANCODE_L: Type = 15;
-  pub const SDL_SCANCODE_M: Type = 16;
-  pub const SDL_SCANCODE_N: Type = 17;
-  pub const SDL_SCANCODE_O: Type = 18;
-  pub const SDL_SCANCODE_P: Type = 19;
-  pub const SDL_SCANCODE_Q: Type = 20;
-  pub const SDL_SCANCODE_R: Type = 21;
-  pub const SDL_SCANCODE_S: Type = 22;
-  pub const SDL_SCANCODE_T: Type = 23;
-  pub const SDL_SCANCODE_U: Type = 24;
-  pub const SDL_SCANCODE_V: Type = 25;
-  pub const SDL_SCANCODE_W: Type = 26;
-  pub const SDL_SCANCODE_X: Type = 27;
-  pub const SDL_SCANCODE_Y: Type = 28;
-  pub const SDL_SCANCODE_Z: Type = 29;
-  pub const SDL_SCANCODE_1: Type = 30;
-  pub const SDL_SCANCODE_2: Type = 31;
-  pub const SDL_SCANCODE_3: Type = 32;
-  pub const SDL_SCANCODE_4: Type = 33;
-  pub const SDL_SCANCODE_5: Type = 34;
-  pub const SDL_SCANCODE_6: Type = 35;
-  pub const SDL_SCANCODE_7: Type = 36;
-  pub const SDL_SCANCODE_8: Type = 37;
-  pub const SDL_SCANCODE_9: Type = 38;
-  pub const SDL_SCANCODE_0: Type = 39;
-  pub const SDL_SCANCODE_RETURN: Type = 40;
-  pub const SDL_SCANCODE_ESCAPE: Type = 41;
-  pub const SDL_SCANCODE_BACKSPACE: Type = 42;
-  pub const SDL_SCANCODE_TAB: Type = 43;
-  pub const SDL_SCANCODE_SPACE: Type = 44;
-  pub const SDL_SCANCODE_MINUS: Type = 45;
-  pub const SDL_SCANCODE_EQUALS: Type = 46;
-  pub const SDL_SCANCODE_LEFTBRACKET: Type = 47;
-  pub const SDL_SCANCODE_RIGHTBRACKET: Type = 48;
-  pub const SDL_SCANCODE_BACKSLASH: Type = 49;
-  pub const SDL_SCANCODE_NONUSHASH: Type = 50;
-  pub const SDL_SCANCODE_SEMICOLON: Type = 51;
-  pub const SDL_SCANCODE_APOSTROPHE: Type = 52;
-  pub const SDL_SCANCODE_GRAVE: Type = 53;
-  pub const SDL_SCANCODE_COMMA: Type = 54;
-  pub const SDL_SCANCODE_PERIOD: Type = 55;
-  pub const SDL_SCANCODE_SLASH: Type = 56;
-  pub const SDL_SCANCODE_CAPSLOCK: Type = 57;
-  pub const SDL_SCANCODE_F1: Type = 58;
-  pub const SDL_SCANCODE_F2: Type = 59;
-  pub const SDL_SCANCODE_F3: Type = 60;
-  pub const SDL_SCANCODE_F4: Type = 61;
-  pub const SDL_SCANCODE_F5: Type = 62;
-  pub const SDL_SCANCODE_F6: Type = 63;
-  pub const SDL_SCANCODE_F7: Type = 64;
-  pub const SDL_SCANCODE_F8: Type = 65;
-  pub const SDL_SCANCODE_F9: Type = 66;
-  pub const SDL_SCANCODE_F10: Type = 67;
-  pub const SDL_SCANCODE_F11: Type = 68;
-  pub const SDL_SCANCODE_F12: Type = 69;
-  pub const SDL_SCANCODE_PRINTSCREEN: Type = 70;
-  pub const SDL_SCANCODE_SCROLLLOCK: Type = 71;
-  pub const SDL_SCANCODE_PAUSE: Type = 72;
-  pub const SDL_SCANCODE_INSERT: Type = 73;
-  pub const SDL_SCANCODE_HOME: Type = 74;
-  pub const SDL_SCANCODE_PAGEUP: Type = 75;
-  pub const SDL_SCANCODE_DELETE: Type = 76;
-  pub const SDL_SCANCODE_END: Type = 77;
-  pub const SDL_SCANCODE_PAGEDOWN: Type = 78;
-  pub const SDL_SCANCODE_RIGHT: Type = 79;
-  pub const SDL_SCANCODE_LEFT: Type = 80;
-  pub const SDL_SCANCODE_DOWN: Type = 81;
-  pub const SDL_SCANCODE_UP: Type = 82;
-  pub const SDL_SCANCODE_NUMLOCKCLEAR: Type = 83;
-  pub const SDL_SCANCODE_KP_DIVIDE: Type = 84;
-  pub const SDL_SCANCODE_KP_MULTIPLY: Type = 85;
-  pub const SDL_SCANCODE_KP_MINUS: Type = 86;
-  pub const SDL_SCANCODE_KP_PLUS: Type = 87;
-  pub const SDL_SCANCODE_KP_ENTER: Type = 88;
-  pub const SDL_SCANCODE_KP_1: Type = 89;
-  pub const SDL_SCANCODE_KP_2: Type = 90;
-  pub const SDL_SCANCODE_KP_3: Type = 91;
-  pub const SDL_SCANCODE_KP_4: Type = 92;
-  pub const SDL_SCANCODE_KP_5: Type = 93;
-  pub const SDL_SCANCODE_KP_6: Type = 94;
-  pub const SDL_SCANCODE_KP_7: Type = 95;
-  pub const SDL_SCANCODE_KP_8: Type = 96;
-  pub const SDL_SCANCODE_KP_9: Type = 97;
-  pub const SDL_SCANCODE_KP_0: Type = 98;
-  pub const SDL_SCANCODE_KP_PERIOD: Type = 99;
-  pub const SDL_SCANCODE_NONUSBACKSLASH: Type = 100;
-  pub const SDL_SCANCODE_APPLICATION: Type = 101;
-  pub const SDL_SCANCODE_POWER: Type = 102;
-  pub const SDL_SCANCODE_KP_EQUALS: Type = 103;
-  pub const SDL_SCANCODE_F13: Type = 104;
-  pub const SDL_SCANCODE_F14: Type = 105;
-  pub const SDL_SCANCODE_F15: Type = 106;
-  pub const SDL_SCANCODE_F16: Type = 107;
-  pub const SDL_SCANCODE_F17: Type = 108;
-  pub const SDL_SCANCODE_F18: Type = 109;
-  pub const SDL_SCANCODE_F19: Type = 110;
-  pub const SDL_SCANCODE_F20: Type = 111;
-  pub const SDL_SCANCODE_F21: Type = 112;
-  pub const SDL_SCANCODE_F22: Type = 113;
-  pub const SDL_SCANCODE_F23: Type = 114;
-  pub const SDL_SCANCODE_F24: Type = 115;
-  pub const SDL_SCANCODE_EXECUTE: Type = 116;
-  pub const SDL_SCANCODE_HELP: Type = 117;
-  pub const SDL_SCANCODE_MENU: Type = 118;
-  pub const SDL_SCANCODE_SELECT: Type = 119;
-  pub const SDL_SCANCODE_STOP: Type = 120;
-  pub const SDL_SCANCODE_AGAIN: Type = 121;
-  pub const SDL_SCANCODE_UNDO: Type = 122;
-  pub const SDL_SCANCODE_CUT: Type = 123;
-  pub const SDL_SCANCODE_COPY: Type = 124;
-  pub const SDL_SCANCODE_PASTE: Type = 125;
-  pub const SDL_SCANCODE_FIND: Type = 126;
-  pub const SDL_SCANCODE_MUTE: Type = 127;
-  pub const SDL_SCANCODE_VOLUMEUP: Type = 128;
-  pub const SDL_SCANCODE_VOLUMEDOWN: Type = 129;
-  pub const SDL_SCANCODE_KP_COMMA: Type = 133;
-  pub const SDL_SCANCODE_KP_EQUALSAS400: Type = 134;
-  pub const SDL_SCANCODE_INTERNATIONAL1: Type = 135;
-  pub const SDL_SCANCODE_INTERNATIONAL2: Type = 136;
-  pub const SDL_SCANCODE_INTERNATIONAL3: Type = 137;
-  pub const SDL_SCANCODE_INTERNATIONAL4: Type = 138;
-  pub const SDL_SCANCODE_INTERNATIONAL5: Type = 139;
-  pub const SDL_SCANCODE_INTERNATIONAL6: Type = 140;
-  pub const SDL_SCANCODE_INTERNATIONAL7: Type = 141;
-  pub const SDL_SCANCODE_INTERNATIONAL8: Type = 142;
-  pub const SDL_SCANCODE_INTERNATIONAL9: Type = 143;
-  pub const SDL_SCANCODE_LANG1: Type = 144;
-  pub const SDL_SCANCODE_LANG2: Type = 145;
-  pub const SDL_SCANCODE_LANG3: Type = 146;
-  pub const SDL_SCANCODE_LANG4: Type = 147;
-  pub const SDL_SCANCODE_LANG5: Type = 148;
-  pub const SDL_SCANCODE_LANG6: Type = 149;
-  pub const SDL_SCANCODE_LANG7: Type = 150;
-  pub const SDL_SCANCODE_LANG8: Type = 151;
-  pub const SDL_SCANCODE_LANG9: Type = 152;
-  pub const SDL_SCANCODE_ALTERASE: Type = 153;
-  pub const SDL_SCANCODE_SYSREQ: Type = 154;
-  pub const SDL_SCANCODE_CANCEL: Type = 155;
-  pub const SDL_SCANCODE_CLEAR: Type = 156;
-  pub const SDL_SCANCODE_PRIOR: Type = 157;
-  pub const SDL_SCANCODE_RETURN2: Type = 158;
-  pub const SDL_SCANCODE_SEPARATOR: Type = 159;
-  pub const SDL_SCANCODE_OUT: Type = 160;
-  pub const SDL_SCANCODE_OPER: Type = 161;
-  pub const SDL_SCANCODE_CLEARAGAIN: Type = 162;
-  pub const SDL_SCANCODE_CRSEL: Type = 163;
-  pub const SDL_SCANCODE_EXSEL: Type = 164;
-  pub const SDL_SCANCODE_KP_00: Type = 176;
-  pub const SDL_SCANCODE_KP_000: Type = 177;
-  pub const SDL_SCANCODE_THOUSANDSSEPARATOR: Type = 178;
-  pub const SDL_SCANCODE_DECIMALSEPARATOR: Type = 179;
-  pub const SDL_SCANCODE_CURRENCYUNIT: Type = 180;
-  pub const SDL_SCANCODE_CURRENCYSUBUNIT: Type = 181;
-  pub const SDL_SCANCODE_KP_LEFTPAREN: Type = 182;
-  pub const SDL_SCANCODE_KP_RIGHTPAREN: Type = 183;
-  pub const SDL_SCANCODE_KP_LEFTBRACE: Type = 184;
-  pub const SDL_SCANCODE_KP_RIGHTBRACE: Type = 185;
-  pub const SDL_SCANCODE_KP_TAB: Type = 186;
-  pub const SDL_SCANCODE_KP_BACKSPACE: Type = 187;
-  pub const SDL_SCANCODE_KP_A: Type = 188;
-  pub const SDL_SCANCODE_KP_B: Type = 189;
-  pub const SDL_SCANCODE_KP_C: Type = 190;
-  pub const SDL_SCANCODE_KP_D: Type = 191;
-  pub const SDL_SCANCODE_KP_E: Type = 192;
-  pub const SDL_SCANCODE_KP_F: Type = 193;
-  pub const SDL_SCANCODE_KP_XOR: Type = 194;
-  pub const SDL_SCANCODE_KP_POWER: Type = 195;
-  pub const SDL_SCANCODE_KP_PERCENT: Type = 196;
-  pub const SDL_SCANCODE_KP_LESS: Type = 197;
-  pub const SDL_SCANCODE_KP_GREATER: Type = 198;
-  pub const SDL_SCANCODE_KP_AMPERSAND: Type = 199;
-  pub const SDL_SCANCODE_KP_DBLAMPERSAND: Type = 200;
-  pub const SDL_SCANCODE_KP_VERTICALBAR: Type = 201;
-  pub const SDL_SCANCODE_KP_DBLVERTICALBAR: Type = 202;
-  pub const SDL_SCANCODE_KP_COLON: Type = 203;
-  pub const SDL_SCANCODE_KP_HASH: Type = 204;
-  pub const SDL_SCANCODE_KP_SPACE: Type = 205;
-  pub const SDL_SCANCODE_KP_AT: Type = 206;
-  pub const SDL_SCANCODE_KP_EXCLAM: Type = 207;
-  pub const SDL_SCANCODE_KP_MEMSTORE: Type = 208;
-  pub const SDL_SCANCODE_KP_MEMRECALL: Type = 209;
-  pub const SDL_SCANCODE_KP_MEMCLEAR: Type = 210;
-  pub const SDL_SCANCODE_KP_MEMADD: Type = 211;
-  pub const SDL_SCANCODE_KP_MEMSUBTRACT: Type = 212;
-  pub const SDL_SCANCODE_KP_MEMMULTIPLY: Type = 213;
-  pub const SDL_SCANCODE_KP_MEMDIVIDE: Type = 214;
-  pub const SDL_SCANCODE_KP_PLUSMINUS: Type = 215;
-  pub const SDL_SCANCODE_KP_CLEAR: Type = 216;
-  pub const SDL_SCANCODE_KP_CLEARENTRY: Type = 217;
-  pub const SDL_SCANCODE_KP_BINARY: Type = 218;
-  pub const SDL_SCANCODE_KP_OCTAL: Type = 219;
-  pub const SDL_SCANCODE_KP_DECIMAL: Type = 220;
-  pub const SDL_SCANCODE_KP_HEXADECIMAL: Type = 221;
-  pub const SDL_SCANCODE_LCTRL: Type = 224;
-  pub const SDL_SCANCODE_LSHIFT: Type = 225;
-  pub const SDL_SCANCODE_LALT: Type = 226;
-  pub const SDL_SCANCODE_LGUI: Type = 227;
-  pub const SDL_SCANCODE_RCTRL: Type = 228;
-  pub const SDL_SCANCODE_RSHIFT: Type = 229;
-  pub const SDL_SCANCODE_RALT: Type = 230;
-  pub const SDL_SCANCODE_RGUI: Type = 231;
-  pub const SDL_SCANCODE_MODE: Type = 257;
-  pub const SDL_SCANCODE_AUDIONEXT: Type = 258;
-  pub const SDL_SCANCODE_AUDIOPREV: Type = 259;
-  pub const SDL_SCANCODE_AUDIOSTOP: Type = 260;
-  pub const SDL_SCANCODE_AUDIOPLAY: Type = 261;
-  pub const SDL_SCANCODE_AUDIOMUTE: Type = 262;
-  pub const SDL_SCANCODE_MEDIASELECT: Type = 263;
-  pub const SDL_SCANCODE_WWW: Type = 264;
-  pub const SDL_SCANCODE_MAIL: Type = 265;
-  pub const SDL_SCANCODE_CALCULATOR: Type = 266;
-  pub const SDL_SCANCODE_COMPUTER: Type = 267;
-  pub const SDL_SCANCODE_AC_SEARCH: Type = 268;
-  pub const SDL_SCANCODE_AC_HOME: Type = 269;
-  pub const SDL_SCANCODE_AC_BACK: Type = 270;
-  pub const SDL_SCANCODE_AC_FORWARD: Type = 271;
-  pub const SDL_SCANCODE_AC_STOP: Type = 272;
-  pub const SDL_SCANCODE_AC_REFRESH: Type = 273;
-  pub const SDL_SCANCODE_AC_BOOKMARKS: Type = 274;
-  pub const SDL_SCANCODE_BRIGHTNESSDOWN: Type = 275;
-  pub const SDL_SCANCODE_BRIGHTNESSUP: Type = 276;
-  pub const SDL_SCANCODE_DISPLAYSWITCH: Type = 277;
-  pub const SDL_SCANCODE_KBDILLUMTOGGLE: Type = 278;
-  pub const SDL_SCANCODE_KBDILLUMDOWN: Type = 279;
-  pub const SDL_SCANCODE_KBDILLUMUP: Type = 280;
-  pub const SDL_SCANCODE_EJECT: Type = 281;
-  pub const SDL_SCANCODE_SLEEP: Type = 282;
-  pub const SDL_SCANCODE_APP1: Type = 283;
-  pub const SDL_SCANCODE_APP2: Type = 284;
-  pub const SDL_SCANCODE_AUDIOREWIND: Type = 285;
-  pub const SDL_SCANCODE_AUDIOFASTFORWARD: Type = 286;
-  pub const SDL_NUM_SCANCODES: Type = 512;
-}
+pub const SDL_SCANCODE_UNKNOWN: SDL_Scancode = 0;
+pub const SDL_SCANCODE_A: SDL_Scancode = 4;
+pub const SDL_SCANCODE_B: SDL_Scancode = 5;
+pub const SDL_SCANCODE_C: SDL_Scancode = 6;
+pub const SDL_SCANCODE_D: SDL_Scancode = 7;
+pub const SDL_SCANCODE_E: SDL_Scancode = 8;
+pub const SDL_SCANCODE_F: SDL_Scancode = 9;
+pub const SDL_SCANCODE_G: SDL_Scancode = 10;
+pub const SDL_SCANCODE_H: SDL_Scancode = 11;
+pub const SDL_SCANCODE_I: SDL_Scancode = 12;
+pub const SDL_SCANCODE_J: SDL_Scancode = 13;
+pub const SDL_SCANCODE_K: SDL_Scancode = 14;
+pub const SDL_SCANCODE_L: SDL_Scancode = 15;
+pub const SDL_SCANCODE_M: SDL_Scancode = 16;
+pub const SDL_SCANCODE_N: SDL_Scancode = 17;
+pub const SDL_SCANCODE_O: SDL_Scancode = 18;
+pub const SDL_SCANCODE_P: SDL_Scancode = 19;
+pub const SDL_SCANCODE_Q: SDL_Scancode = 20;
+pub const SDL_SCANCODE_R: SDL_Scancode = 21;
+pub const SDL_SCANCODE_S: SDL_Scancode = 22;
+pub const SDL_SCANCODE_T: SDL_Scancode = 23;
+pub const SDL_SCANCODE_U: SDL_Scancode = 24;
+pub const SDL_SCANCODE_V: SDL_Scancode = 25;
+pub const SDL_SCANCODE_W: SDL_Scancode = 26;
+pub const SDL_SCANCODE_X: SDL_Scancode = 27;
+pub const SDL_SCANCODE_Y: SDL_Scancode = 28;
+pub const SDL_SCANCODE_Z: SDL_Scancode = 29;
+pub const SDL_SCANCODE_1: SDL_Scancode = 30;
+pub const SDL_SCANCODE_2: SDL_Scancode = 31;
+pub const SDL_SCANCODE_3: SDL_Scancode = 32;
+pub const SDL_SCANCODE_4: SDL_Scancode = 33;
+pub const SDL_SCANCODE_5: SDL_Scancode = 34;
+pub const SDL_SCANCODE_6: SDL_Scancode = 35;
+pub const SDL_SCANCODE_7: SDL_Scancode = 36;
+pub const SDL_SCANCODE_8: SDL_Scancode = 37;
+pub const SDL_SCANCODE_9: SDL_Scancode = 38;
+pub const SDL_SCANCODE_0: SDL_Scancode = 39;
+pub const SDL_SCANCODE_RETURN: SDL_Scancode = 40;
+pub const SDL_SCANCODE_ESCAPE: SDL_Scancode = 41;
+pub const SDL_SCANCODE_BACKSPACE: SDL_Scancode = 42;
+pub const SDL_SCANCODE_TAB: SDL_Scancode = 43;
+pub const SDL_SCANCODE_SPACE: SDL_Scancode = 44;
+pub const SDL_SCANCODE_MINUS: SDL_Scancode = 45;
+pub const SDL_SCANCODE_EQUALS: SDL_Scancode = 46;
+pub const SDL_SCANCODE_LEFTBRACKET: SDL_Scancode = 47;
+pub const SDL_SCANCODE_RIGHTBRACKET: SDL_Scancode = 48;
+pub const SDL_SCANCODE_BACKSLASH: SDL_Scancode = 49;
+pub const SDL_SCANCODE_NONUSHASH: SDL_Scancode = 50;
+pub const SDL_SCANCODE_SEMICOLON: SDL_Scancode = 51;
+pub const SDL_SCANCODE_APOSTROPHE: SDL_Scancode = 52;
+pub const SDL_SCANCODE_GRAVE: SDL_Scancode = 53;
+pub const SDL_SCANCODE_COMMA: SDL_Scancode = 54;
+pub const SDL_SCANCODE_PERIOD: SDL_Scancode = 55;
+pub const SDL_SCANCODE_SLASH: SDL_Scancode = 56;
+pub const SDL_SCANCODE_CAPSLOCK: SDL_Scancode = 57;
+pub const SDL_SCANCODE_F1: SDL_Scancode = 58;
+pub const SDL_SCANCODE_F2: SDL_Scancode = 59;
+pub const SDL_SCANCODE_F3: SDL_Scancode = 60;
+pub const SDL_SCANCODE_F4: SDL_Scancode = 61;
+pub const SDL_SCANCODE_F5: SDL_Scancode = 62;
+pub const SDL_SCANCODE_F6: SDL_Scancode = 63;
+pub const SDL_SCANCODE_F7: SDL_Scancode = 64;
+pub const SDL_SCANCODE_F8: SDL_Scancode = 65;
+pub const SDL_SCANCODE_F9: SDL_Scancode = 66;
+pub const SDL_SCANCODE_F10: SDL_Scancode = 67;
+pub const SDL_SCANCODE_F11: SDL_Scancode = 68;
+pub const SDL_SCANCODE_F12: SDL_Scancode = 69;
+pub const SDL_SCANCODE_PRINTSCREEN: SDL_Scancode = 70;
+pub const SDL_SCANCODE_SCROLLLOCK: SDL_Scancode = 71;
+pub const SDL_SCANCODE_PAUSE: SDL_Scancode = 72;
+pub const SDL_SCANCODE_INSERT: SDL_Scancode = 73;
+pub const SDL_SCANCODE_HOME: SDL_Scancode = 74;
+pub const SDL_SCANCODE_PAGEUP: SDL_Scancode = 75;
+pub const SDL_SCANCODE_DELETE: SDL_Scancode = 76;
+pub const SDL_SCANCODE_END: SDL_Scancode = 77;
+pub const SDL_SCANCODE_PAGEDOWN: SDL_Scancode = 78;
+pub const SDL_SCANCODE_RIGHT: SDL_Scancode = 79;
+pub const SDL_SCANCODE_LEFT: SDL_Scancode = 80;
+pub const SDL_SCANCODE_DOWN: SDL_Scancode = 81;
+pub const SDL_SCANCODE_UP: SDL_Scancode = 82;
+pub const SDL_SCANCODE_NUMLOCKCLEAR: SDL_Scancode = 83;
+pub const SDL_SCANCODE_KP_DIVIDE: SDL_Scancode = 84;
+pub const SDL_SCANCODE_KP_MULTIPLY: SDL_Scancode = 85;
+pub const SDL_SCANCODE_KP_MINUS: SDL_Scancode = 86;
+pub const SDL_SCANCODE_KP_PLUS: SDL_Scancode = 87;
+pub const SDL_SCANCODE_KP_ENTER: SDL_Scancode = 88;
+pub const SDL_SCANCODE_KP_1: SDL_Scancode = 89;
+pub const SDL_SCANCODE_KP_2: SDL_Scancode = 90;
+pub const SDL_SCANCODE_KP_3: SDL_Scancode = 91;
+pub const SDL_SCANCODE_KP_4: SDL_Scancode = 92;
+pub const SDL_SCANCODE_KP_5: SDL_Scancode = 93;
+pub const SDL_SCANCODE_KP_6: SDL_Scancode = 94;
+pub const SDL_SCANCODE_KP_7: SDL_Scancode = 95;
+pub const SDL_SCANCODE_KP_8: SDL_Scancode = 96;
+pub const SDL_SCANCODE_KP_9: SDL_Scancode = 97;
+pub const SDL_SCANCODE_KP_0: SDL_Scancode = 98;
+pub const SDL_SCANCODE_KP_PERIOD: SDL_Scancode = 99;
+pub const SDL_SCANCODE_NONUSBACKSLASH: SDL_Scancode = 100;
+pub const SDL_SCANCODE_APPLICATION: SDL_Scancode = 101;
+pub const SDL_SCANCODE_POWER: SDL_Scancode = 102;
+pub const SDL_SCANCODE_KP_EQUALS: SDL_Scancode = 103;
+pub const SDL_SCANCODE_F13: SDL_Scancode = 104;
+pub const SDL_SCANCODE_F14: SDL_Scancode = 105;
+pub const SDL_SCANCODE_F15: SDL_Scancode = 106;
+pub const SDL_SCANCODE_F16: SDL_Scancode = 107;
+pub const SDL_SCANCODE_F17: SDL_Scancode = 108;
+pub const SDL_SCANCODE_F18: SDL_Scancode = 109;
+pub const SDL_SCANCODE_F19: SDL_Scancode = 110;
+pub const SDL_SCANCODE_F20: SDL_Scancode = 111;
+pub const SDL_SCANCODE_F21: SDL_Scancode = 112;
+pub const SDL_SCANCODE_F22: SDL_Scancode = 113;
+pub const SDL_SCANCODE_F23: SDL_Scancode = 114;
+pub const SDL_SCANCODE_F24: SDL_Scancode = 115;
+pub const SDL_SCANCODE_EXECUTE: SDL_Scancode = 116;
+pub const SDL_SCANCODE_HELP: SDL_Scancode = 117;
+pub const SDL_SCANCODE_MENU: SDL_Scancode = 118;
+pub const SDL_SCANCODE_SELECT: SDL_Scancode = 119;
+pub const SDL_SCANCODE_STOP: SDL_Scancode = 120;
+pub const SDL_SCANCODE_AGAIN: SDL_Scancode = 121;
+pub const SDL_SCANCODE_UNDO: SDL_Scancode = 122;
+pub const SDL_SCANCODE_CUT: SDL_Scancode = 123;
+pub const SDL_SCANCODE_COPY: SDL_Scancode = 124;
+pub const SDL_SCANCODE_PASTE: SDL_Scancode = 125;
+pub const SDL_SCANCODE_FIND: SDL_Scancode = 126;
+pub const SDL_SCANCODE_MUTE: SDL_Scancode = 127;
+pub const SDL_SCANCODE_VOLUMEUP: SDL_Scancode = 128;
+pub const SDL_SCANCODE_VOLUMEDOWN: SDL_Scancode = 129;
+pub const SDL_SCANCODE_KP_COMMA: SDL_Scancode = 133;
+pub const SDL_SCANCODE_KP_EQUALSAS400: SDL_Scancode = 134;
+pub const SDL_SCANCODE_INTERNATIONAL1: SDL_Scancode = 135;
+pub const SDL_SCANCODE_INTERNATIONAL2: SDL_Scancode = 136;
+pub const SDL_SCANCODE_INTERNATIONAL3: SDL_Scancode = 137;
+pub const SDL_SCANCODE_INTERNATIONAL4: SDL_Scancode = 138;
+pub const SDL_SCANCODE_INTERNATIONAL5: SDL_Scancode = 139;
+pub const SDL_SCANCODE_INTERNATIONAL6: SDL_Scancode = 140;
+pub const SDL_SCANCODE_INTERNATIONAL7: SDL_Scancode = 141;
+pub const SDL_SCANCODE_INTERNATIONAL8: SDL_Scancode = 142;
+pub const SDL_SCANCODE_INTERNATIONAL9: SDL_Scancode = 143;
+pub const SDL_SCANCODE_LANG1: SDL_Scancode = 144;
+pub const SDL_SCANCODE_LANG2: SDL_Scancode = 145;
+pub const SDL_SCANCODE_LANG3: SDL_Scancode = 146;
+pub const SDL_SCANCODE_LANG4: SDL_Scancode = 147;
+pub const SDL_SCANCODE_LANG5: SDL_Scancode = 148;
+pub const SDL_SCANCODE_LANG6: SDL_Scancode = 149;
+pub const SDL_SCANCODE_LANG7: SDL_Scancode = 150;
+pub const SDL_SCANCODE_LANG8: SDL_Scancode = 151;
+pub const SDL_SCANCODE_LANG9: SDL_Scancode = 152;
+pub const SDL_SCANCODE_ALTERASE: SDL_Scancode = 153;
+pub const SDL_SCANCODE_SYSREQ: SDL_Scancode = 154;
+pub const SDL_SCANCODE_CANCEL: SDL_Scancode = 155;
+pub const SDL_SCANCODE_CLEAR: SDL_Scancode = 156;
+pub const SDL_SCANCODE_PRIOR: SDL_Scancode = 157;
+pub const SDL_SCANCODE_RETURN2: SDL_Scancode = 158;
+pub const SDL_SCANCODE_SEPARATOR: SDL_Scancode = 159;
+pub const SDL_SCANCODE_OUT: SDL_Scancode = 160;
+pub const SDL_SCANCODE_OPER: SDL_Scancode = 161;
+pub const SDL_SCANCODE_CLEARAGAIN: SDL_Scancode = 162;
+pub const SDL_SCANCODE_CRSEL: SDL_Scancode = 163;
+pub const SDL_SCANCODE_EXSEL: SDL_Scancode = 164;
+pub const SDL_SCANCODE_KP_00: SDL_Scancode = 176;
+pub const SDL_SCANCODE_KP_000: SDL_Scancode = 177;
+pub const SDL_SCANCODE_THOUSANDSSEPARATOR: SDL_Scancode = 178;
+pub const SDL_SCANCODE_DECIMALSEPARATOR: SDL_Scancode = 179;
+pub const SDL_SCANCODE_CURRENCYUNIT: SDL_Scancode = 180;
+pub const SDL_SCANCODE_CURRENCYSUBUNIT: SDL_Scancode = 181;
+pub const SDL_SCANCODE_KP_LEFTPAREN: SDL_Scancode = 182;
+pub const SDL_SCANCODE_KP_RIGHTPAREN: SDL_Scancode = 183;
+pub const SDL_SCANCODE_KP_LEFTBRACE: SDL_Scancode = 184;
+pub const SDL_SCANCODE_KP_RIGHTBRACE: SDL_Scancode = 185;
+pub const SDL_SCANCODE_KP_TAB: SDL_Scancode = 186;
+pub const SDL_SCANCODE_KP_BACKSPACE: SDL_Scancode = 187;
+pub const SDL_SCANCODE_KP_A: SDL_Scancode = 188;
+pub const SDL_SCANCODE_KP_B: SDL_Scancode = 189;
+pub const SDL_SCANCODE_KP_C: SDL_Scancode = 190;
+pub const SDL_SCANCODE_KP_D: SDL_Scancode = 191;
+pub const SDL_SCANCODE_KP_E: SDL_Scancode = 192;
+pub const SDL_SCANCODE_KP_F: SDL_Scancode = 193;
+pub const SDL_SCANCODE_KP_XOR: SDL_Scancode = 194;
+pub const SDL_SCANCODE_KP_POWER: SDL_Scancode = 195;
+pub const SDL_SCANCODE_KP_PERCENT: SDL_Scancode = 196;
+pub const SDL_SCANCODE_KP_LESS: SDL_Scancode = 197;
+pub const SDL_SCANCODE_KP_GREATER: SDL_Scancode = 198;
+pub const SDL_SCANCODE_KP_AMPERSAND: SDL_Scancode = 199;
+pub const SDL_SCANCODE_KP_DBLAMPERSAND: SDL_Scancode = 200;
+pub const SDL_SCANCODE_KP_VERTICALBAR: SDL_Scancode = 201;
+pub const SDL_SCANCODE_KP_DBLVERTICALBAR: SDL_Scancode = 202;
+pub const SDL_SCANCODE_KP_COLON: SDL_Scancode = 203;
+pub const SDL_SCANCODE_KP_HASH: SDL_Scancode = 204;
+pub const SDL_SCANCODE_KP_SPACE: SDL_Scancode = 205;
+pub const SDL_SCANCODE_KP_AT: SDL_Scancode = 206;
+pub const SDL_SCANCODE_KP_EXCLAM: SDL_Scancode = 207;
+pub const SDL_SCANCODE_KP_MEMSTORE: SDL_Scancode = 208;
+pub const SDL_SCANCODE_KP_MEMRECALL: SDL_Scancode = 209;
+pub const SDL_SCANCODE_KP_MEMCLEAR: SDL_Scancode = 210;
+pub const SDL_SCANCODE_KP_MEMADD: SDL_Scancode = 211;
+pub const SDL_SCANCODE_KP_MEMSUBTRACT: SDL_Scancode = 212;
+pub const SDL_SCANCODE_KP_MEMMULTIPLY: SDL_Scancode = 213;
+pub const SDL_SCANCODE_KP_MEMDIVIDE: SDL_Scancode = 214;
+pub const SDL_SCANCODE_KP_PLUSMINUS: SDL_Scancode = 215;
+pub const SDL_SCANCODE_KP_CLEAR: SDL_Scancode = 216;
+pub const SDL_SCANCODE_KP_CLEARENTRY: SDL_Scancode = 217;
+pub const SDL_SCANCODE_KP_BINARY: SDL_Scancode = 218;
+pub const SDL_SCANCODE_KP_OCTAL: SDL_Scancode = 219;
+pub const SDL_SCANCODE_KP_DECIMAL: SDL_Scancode = 220;
+pub const SDL_SCANCODE_KP_HEXADECIMAL: SDL_Scancode = 221;
+pub const SDL_SCANCODE_LCTRL: SDL_Scancode = 224;
+pub const SDL_SCANCODE_LSHIFT: SDL_Scancode = 225;
+pub const SDL_SCANCODE_LALT: SDL_Scancode = 226;
+pub const SDL_SCANCODE_LGUI: SDL_Scancode = 227;
+pub const SDL_SCANCODE_RCTRL: SDL_Scancode = 228;
+pub const SDL_SCANCODE_RSHIFT: SDL_Scancode = 229;
+pub const SDL_SCANCODE_RALT: SDL_Scancode = 230;
+pub const SDL_SCANCODE_RGUI: SDL_Scancode = 231;
+pub const SDL_SCANCODE_MODE: SDL_Scancode = 257;
+pub const SDL_SCANCODE_AUDIONEXT: SDL_Scancode = 258;
+pub const SDL_SCANCODE_AUDIOPREV: SDL_Scancode = 259;
+pub const SDL_SCANCODE_AUDIOSTOP: SDL_Scancode = 260;
+pub const SDL_SCANCODE_AUDIOPLAY: SDL_Scancode = 261;
+pub const SDL_SCANCODE_AUDIOMUTE: SDL_Scancode = 262;
+pub const SDL_SCANCODE_MEDIASELECT: SDL_Scancode = 263;
+pub const SDL_SCANCODE_WWW: SDL_Scancode = 264;
+pub const SDL_SCANCODE_MAIL: SDL_Scancode = 265;
+pub const SDL_SCANCODE_CALCULATOR: SDL_Scancode = 266;
+pub const SDL_SCANCODE_COMPUTER: SDL_Scancode = 267;
+pub const SDL_SCANCODE_AC_SEARCH: SDL_Scancode = 268;
+pub const SDL_SCANCODE_AC_HOME: SDL_Scancode = 269;
+pub const SDL_SCANCODE_AC_BACK: SDL_Scancode = 270;
+pub const SDL_SCANCODE_AC_FORWARD: SDL_Scancode = 271;
+pub const SDL_SCANCODE_AC_STOP: SDL_Scancode = 272;
+pub const SDL_SCANCODE_AC_REFRESH: SDL_Scancode = 273;
+pub const SDL_SCANCODE_AC_BOOKMARKS: SDL_Scancode = 274;
+pub const SDL_SCANCODE_BRIGHTNESSDOWN: SDL_Scancode = 275;
+pub const SDL_SCANCODE_BRIGHTNESSUP: SDL_Scancode = 276;
+pub const SDL_SCANCODE_DISPLAYSWITCH: SDL_Scancode = 277;
+pub const SDL_SCANCODE_KBDILLUMTOGGLE: SDL_Scancode = 278;
+pub const SDL_SCANCODE_KBDILLUMDOWN: SDL_Scancode = 279;
+pub const SDL_SCANCODE_KBDILLUMUP: SDL_Scancode = 280;
+pub const SDL_SCANCODE_EJECT: SDL_Scancode = 281;
+pub const SDL_SCANCODE_SLEEP: SDL_Scancode = 282;
+pub const SDL_SCANCODE_APP1: SDL_Scancode = 283;
+pub const SDL_SCANCODE_APP2: SDL_Scancode = 284;
+pub const SDL_SCANCODE_AUDIOREWIND: SDL_Scancode = 285;
+pub const SDL_SCANCODE_AUDIOFASTFORWARD: SDL_Scancode = 286;
+pub const SDL_NUM_SCANCODES: SDL_Scancode = 512;
+pub type SDL_Scancode = i32;
 pub type SDL_Keycode = Sint32;
-pub mod _bindgen_ty_7 {
-  pub type Type = i32;
-  pub const SDLK_UNKNOWN: Type = 0;
-  pub const SDLK_RETURN: Type = 13;
-  pub const SDLK_ESCAPE: Type = 27;
-  pub const SDLK_BACKSPACE: Type = 8;
-  pub const SDLK_TAB: Type = 9;
-  pub const SDLK_SPACE: Type = 32;
-  pub const SDLK_EXCLAIM: Type = 33;
-  pub const SDLK_QUOTEDBL: Type = 34;
-  pub const SDLK_HASH: Type = 35;
-  pub const SDLK_PERCENT: Type = 37;
-  pub const SDLK_DOLLAR: Type = 36;
-  pub const SDLK_AMPERSAND: Type = 38;
-  pub const SDLK_QUOTE: Type = 39;
-  pub const SDLK_LEFTPAREN: Type = 40;
-  pub const SDLK_RIGHTPAREN: Type = 41;
-  pub const SDLK_ASTERISK: Type = 42;
-  pub const SDLK_PLUS: Type = 43;
-  pub const SDLK_COMMA: Type = 44;
-  pub const SDLK_MINUS: Type = 45;
-  pub const SDLK_PERIOD: Type = 46;
-  pub const SDLK_SLASH: Type = 47;
-  pub const SDLK_0: Type = 48;
-  pub const SDLK_1: Type = 49;
-  pub const SDLK_2: Type = 50;
-  pub const SDLK_3: Type = 51;
-  pub const SDLK_4: Type = 52;
-  pub const SDLK_5: Type = 53;
-  pub const SDLK_6: Type = 54;
-  pub const SDLK_7: Type = 55;
-  pub const SDLK_8: Type = 56;
-  pub const SDLK_9: Type = 57;
-  pub const SDLK_COLON: Type = 58;
-  pub const SDLK_SEMICOLON: Type = 59;
-  pub const SDLK_LESS: Type = 60;
-  pub const SDLK_EQUALS: Type = 61;
-  pub const SDLK_GREATER: Type = 62;
-  pub const SDLK_QUESTION: Type = 63;
-  pub const SDLK_AT: Type = 64;
-  pub const SDLK_LEFTBRACKET: Type = 91;
-  pub const SDLK_BACKSLASH: Type = 92;
-  pub const SDLK_RIGHTBRACKET: Type = 93;
-  pub const SDLK_CARET: Type = 94;
-  pub const SDLK_UNDERSCORE: Type = 95;
-  pub const SDLK_BACKQUOTE: Type = 96;
-  pub const SDLK_a: Type = 97;
-  pub const SDLK_b: Type = 98;
-  pub const SDLK_c: Type = 99;
-  pub const SDLK_d: Type = 100;
-  pub const SDLK_e: Type = 101;
-  pub const SDLK_f: Type = 102;
-  pub const SDLK_g: Type = 103;
-  pub const SDLK_h: Type = 104;
-  pub const SDLK_i: Type = 105;
-  pub const SDLK_j: Type = 106;
-  pub const SDLK_k: Type = 107;
-  pub const SDLK_l: Type = 108;
-  pub const SDLK_m: Type = 109;
-  pub const SDLK_n: Type = 110;
-  pub const SDLK_o: Type = 111;
-  pub const SDLK_p: Type = 112;
-  pub const SDLK_q: Type = 113;
-  pub const SDLK_r: Type = 114;
-  pub const SDLK_s: Type = 115;
-  pub const SDLK_t: Type = 116;
-  pub const SDLK_u: Type = 117;
-  pub const SDLK_v: Type = 118;
-  pub const SDLK_w: Type = 119;
-  pub const SDLK_x: Type = 120;
-  pub const SDLK_y: Type = 121;
-  pub const SDLK_z: Type = 122;
-  pub const SDLK_CAPSLOCK: Type = 1073741881;
-  pub const SDLK_F1: Type = 1073741882;
-  pub const SDLK_F2: Type = 1073741883;
-  pub const SDLK_F3: Type = 1073741884;
-  pub const SDLK_F4: Type = 1073741885;
-  pub const SDLK_F5: Type = 1073741886;
-  pub const SDLK_F6: Type = 1073741887;
-  pub const SDLK_F7: Type = 1073741888;
-  pub const SDLK_F8: Type = 1073741889;
-  pub const SDLK_F9: Type = 1073741890;
-  pub const SDLK_F10: Type = 1073741891;
-  pub const SDLK_F11: Type = 1073741892;
-  pub const SDLK_F12: Type = 1073741893;
-  pub const SDLK_PRINTSCREEN: Type = 1073741894;
-  pub const SDLK_SCROLLLOCK: Type = 1073741895;
-  pub const SDLK_PAUSE: Type = 1073741896;
-  pub const SDLK_INSERT: Type = 1073741897;
-  pub const SDLK_HOME: Type = 1073741898;
-  pub const SDLK_PAGEUP: Type = 1073741899;
-  pub const SDLK_DELETE: Type = 127;
-  pub const SDLK_END: Type = 1073741901;
-  pub const SDLK_PAGEDOWN: Type = 1073741902;
-  pub const SDLK_RIGHT: Type = 1073741903;
-  pub const SDLK_LEFT: Type = 1073741904;
-  pub const SDLK_DOWN: Type = 1073741905;
-  pub const SDLK_UP: Type = 1073741906;
-  pub const SDLK_NUMLOCKCLEAR: Type = 1073741907;
-  pub const SDLK_KP_DIVIDE: Type = 1073741908;
-  pub const SDLK_KP_MULTIPLY: Type = 1073741909;
-  pub const SDLK_KP_MINUS: Type = 1073741910;
-  pub const SDLK_KP_PLUS: Type = 1073741911;
-  pub const SDLK_KP_ENTER: Type = 1073741912;
-  pub const SDLK_KP_1: Type = 1073741913;
-  pub const SDLK_KP_2: Type = 1073741914;
-  pub const SDLK_KP_3: Type = 1073741915;
-  pub const SDLK_KP_4: Type = 1073741916;
-  pub const SDLK_KP_5: Type = 1073741917;
-  pub const SDLK_KP_6: Type = 1073741918;
-  pub const SDLK_KP_7: Type = 1073741919;
-  pub const SDLK_KP_8: Type = 1073741920;
-  pub const SDLK_KP_9: Type = 1073741921;
-  pub const SDLK_KP_0: Type = 1073741922;
-  pub const SDLK_KP_PERIOD: Type = 1073741923;
-  pub const SDLK_APPLICATION: Type = 1073741925;
-  pub const SDLK_POWER: Type = 1073741926;
-  pub const SDLK_KP_EQUALS: Type = 1073741927;
-  pub const SDLK_F13: Type = 1073741928;
-  pub const SDLK_F14: Type = 1073741929;
-  pub const SDLK_F15: Type = 1073741930;
-  pub const SDLK_F16: Type = 1073741931;
-  pub const SDLK_F17: Type = 1073741932;
-  pub const SDLK_F18: Type = 1073741933;
-  pub const SDLK_F19: Type = 1073741934;
-  pub const SDLK_F20: Type = 1073741935;
-  pub const SDLK_F21: Type = 1073741936;
-  pub const SDLK_F22: Type = 1073741937;
-  pub const SDLK_F23: Type = 1073741938;
-  pub const SDLK_F24: Type = 1073741939;
-  pub const SDLK_EXECUTE: Type = 1073741940;
-  pub const SDLK_HELP: Type = 1073741941;
-  pub const SDLK_MENU: Type = 1073741942;
-  pub const SDLK_SELECT: Type = 1073741943;
-  pub const SDLK_STOP: Type = 1073741944;
-  pub const SDLK_AGAIN: Type = 1073741945;
-  pub const SDLK_UNDO: Type = 1073741946;
-  pub const SDLK_CUT: Type = 1073741947;
-  pub const SDLK_COPY: Type = 1073741948;
-  pub const SDLK_PASTE: Type = 1073741949;
-  pub const SDLK_FIND: Type = 1073741950;
-  pub const SDLK_MUTE: Type = 1073741951;
-  pub const SDLK_VOLUMEUP: Type = 1073741952;
-  pub const SDLK_VOLUMEDOWN: Type = 1073741953;
-  pub const SDLK_KP_COMMA: Type = 1073741957;
-  pub const SDLK_KP_EQUALSAS400: Type = 1073741958;
-  pub const SDLK_ALTERASE: Type = 1073741977;
-  pub const SDLK_SYSREQ: Type = 1073741978;
-  pub const SDLK_CANCEL: Type = 1073741979;
-  pub const SDLK_CLEAR: Type = 1073741980;
-  pub const SDLK_PRIOR: Type = 1073741981;
-  pub const SDLK_RETURN2: Type = 1073741982;
-  pub const SDLK_SEPARATOR: Type = 1073741983;
-  pub const SDLK_OUT: Type = 1073741984;
-  pub const SDLK_OPER: Type = 1073741985;
-  pub const SDLK_CLEARAGAIN: Type = 1073741986;
-  pub const SDLK_CRSEL: Type = 1073741987;
-  pub const SDLK_EXSEL: Type = 1073741988;
-  pub const SDLK_KP_00: Type = 1073742000;
-  pub const SDLK_KP_000: Type = 1073742001;
-  pub const SDLK_THOUSANDSSEPARATOR: Type = 1073742002;
-  pub const SDLK_DECIMALSEPARATOR: Type = 1073742003;
-  pub const SDLK_CURRENCYUNIT: Type = 1073742004;
-  pub const SDLK_CURRENCYSUBUNIT: Type = 1073742005;
-  pub const SDLK_KP_LEFTPAREN: Type = 1073742006;
-  pub const SDLK_KP_RIGHTPAREN: Type = 1073742007;
-  pub const SDLK_KP_LEFTBRACE: Type = 1073742008;
-  pub const SDLK_KP_RIGHTBRACE: Type = 1073742009;
-  pub const SDLK_KP_TAB: Type = 1073742010;
-  pub const SDLK_KP_BACKSPACE: Type = 1073742011;
-  pub const SDLK_KP_A: Type = 1073742012;
-  pub const SDLK_KP_B: Type = 1073742013;
-  pub const SDLK_KP_C: Type = 1073742014;
-  pub const SDLK_KP_D: Type = 1073742015;
-  pub const SDLK_KP_E: Type = 1073742016;
-  pub const SDLK_KP_F: Type = 1073742017;
-  pub const SDLK_KP_XOR: Type = 1073742018;
-  pub const SDLK_KP_POWER: Type = 1073742019;
-  pub const SDLK_KP_PERCENT: Type = 1073742020;
-  pub const SDLK_KP_LESS: Type = 1073742021;
-  pub const SDLK_KP_GREATER: Type = 1073742022;
-  pub const SDLK_KP_AMPERSAND: Type = 1073742023;
-  pub const SDLK_KP_DBLAMPERSAND: Type = 1073742024;
-  pub const SDLK_KP_VERTICALBAR: Type = 1073742025;
-  pub const SDLK_KP_DBLVERTICALBAR: Type = 1073742026;
-  pub const SDLK_KP_COLON: Type = 1073742027;
-  pub const SDLK_KP_HASH: Type = 1073742028;
-  pub const SDLK_KP_SPACE: Type = 1073742029;
-  pub const SDLK_KP_AT: Type = 1073742030;
-  pub const SDLK_KP_EXCLAM: Type = 1073742031;
-  pub const SDLK_KP_MEMSTORE: Type = 1073742032;
-  pub const SDLK_KP_MEMRECALL: Type = 1073742033;
-  pub const SDLK_KP_MEMCLEAR: Type = 1073742034;
-  pub const SDLK_KP_MEMADD: Type = 1073742035;
-  pub const SDLK_KP_MEMSUBTRACT: Type = 1073742036;
-  pub const SDLK_KP_MEMMULTIPLY: Type = 1073742037;
-  pub const SDLK_KP_MEMDIVIDE: Type = 1073742038;
-  pub const SDLK_KP_PLUSMINUS: Type = 1073742039;
-  pub const SDLK_KP_CLEAR: Type = 1073742040;
-  pub const SDLK_KP_CLEARENTRY: Type = 1073742041;
-  pub const SDLK_KP_BINARY: Type = 1073742042;
-  pub const SDLK_KP_OCTAL: Type = 1073742043;
-  pub const SDLK_KP_DECIMAL: Type = 1073742044;
-  pub const SDLK_KP_HEXADECIMAL: Type = 1073742045;
-  pub const SDLK_LCTRL: Type = 1073742048;
-  pub const SDLK_LSHIFT: Type = 1073742049;
-  pub const SDLK_LALT: Type = 1073742050;
-  pub const SDLK_LGUI: Type = 1073742051;
-  pub const SDLK_RCTRL: Type = 1073742052;
-  pub const SDLK_RSHIFT: Type = 1073742053;
-  pub const SDLK_RALT: Type = 1073742054;
-  pub const SDLK_RGUI: Type = 1073742055;
-  pub const SDLK_MODE: Type = 1073742081;
-  pub const SDLK_AUDIONEXT: Type = 1073742082;
-  pub const SDLK_AUDIOPREV: Type = 1073742083;
-  pub const SDLK_AUDIOSTOP: Type = 1073742084;
-  pub const SDLK_AUDIOPLAY: Type = 1073742085;
-  pub const SDLK_AUDIOMUTE: Type = 1073742086;
-  pub const SDLK_MEDIASELECT: Type = 1073742087;
-  pub const SDLK_WWW: Type = 1073742088;
-  pub const SDLK_MAIL: Type = 1073742089;
-  pub const SDLK_CALCULATOR: Type = 1073742090;
-  pub const SDLK_COMPUTER: Type = 1073742091;
-  pub const SDLK_AC_SEARCH: Type = 1073742092;
-  pub const SDLK_AC_HOME: Type = 1073742093;
-  pub const SDLK_AC_BACK: Type = 1073742094;
-  pub const SDLK_AC_FORWARD: Type = 1073742095;
-  pub const SDLK_AC_STOP: Type = 1073742096;
-  pub const SDLK_AC_REFRESH: Type = 1073742097;
-  pub const SDLK_AC_BOOKMARKS: Type = 1073742098;
-  pub const SDLK_BRIGHTNESSDOWN: Type = 1073742099;
-  pub const SDLK_BRIGHTNESSUP: Type = 1073742100;
-  pub const SDLK_DISPLAYSWITCH: Type = 1073742101;
-  pub const SDLK_KBDILLUMTOGGLE: Type = 1073742102;
-  pub const SDLK_KBDILLUMDOWN: Type = 1073742103;
-  pub const SDLK_KBDILLUMUP: Type = 1073742104;
-  pub const SDLK_EJECT: Type = 1073742105;
-  pub const SDLK_SLEEP: Type = 1073742106;
-  pub const SDLK_APP1: Type = 1073742107;
-  pub const SDLK_APP2: Type = 1073742108;
-  pub const SDLK_AUDIOREWIND: Type = 1073742109;
-  pub const SDLK_AUDIOFASTFORWARD: Type = 1073742110;
-}
-pub mod SDL_Keymod {
-  pub type Type = i32;
-  pub const KMOD_NONE: Type = 0;
-  pub const KMOD_LSHIFT: Type = 1;
-  pub const KMOD_RSHIFT: Type = 2;
-  pub const KMOD_LCTRL: Type = 64;
-  pub const KMOD_RCTRL: Type = 128;
-  pub const KMOD_LALT: Type = 256;
-  pub const KMOD_RALT: Type = 512;
-  pub const KMOD_LGUI: Type = 1024;
-  pub const KMOD_RGUI: Type = 2048;
-  pub const KMOD_NUM: Type = 4096;
-  pub const KMOD_CAPS: Type = 8192;
-  pub const KMOD_MODE: Type = 16384;
-  pub const KMOD_RESERVED: Type = 32768;
-}
+pub const SDLK_UNKNOWN: _bindgen_ty_7 = 0;
+pub const SDLK_RETURN: _bindgen_ty_7 = 13;
+pub const SDLK_ESCAPE: _bindgen_ty_7 = 27;
+pub const SDLK_BACKSPACE: _bindgen_ty_7 = 8;
+pub const SDLK_TAB: _bindgen_ty_7 = 9;
+pub const SDLK_SPACE: _bindgen_ty_7 = 32;
+pub const SDLK_EXCLAIM: _bindgen_ty_7 = 33;
+pub const SDLK_QUOTEDBL: _bindgen_ty_7 = 34;
+pub const SDLK_HASH: _bindgen_ty_7 = 35;
+pub const SDLK_PERCENT: _bindgen_ty_7 = 37;
+pub const SDLK_DOLLAR: _bindgen_ty_7 = 36;
+pub const SDLK_AMPERSAND: _bindgen_ty_7 = 38;
+pub const SDLK_QUOTE: _bindgen_ty_7 = 39;
+pub const SDLK_LEFTPAREN: _bindgen_ty_7 = 40;
+pub const SDLK_RIGHTPAREN: _bindgen_ty_7 = 41;
+pub const SDLK_ASTERISK: _bindgen_ty_7 = 42;
+pub const SDLK_PLUS: _bindgen_ty_7 = 43;
+pub const SDLK_COMMA: _bindgen_ty_7 = 44;
+pub const SDLK_MINUS: _bindgen_ty_7 = 45;
+pub const SDLK_PERIOD: _bindgen_ty_7 = 46;
+pub const SDLK_SLASH: _bindgen_ty_7 = 47;
+pub const SDLK_0: _bindgen_ty_7 = 48;
+pub const SDLK_1: _bindgen_ty_7 = 49;
+pub const SDLK_2: _bindgen_ty_7 = 50;
+pub const SDLK_3: _bindgen_ty_7 = 51;
+pub const SDLK_4: _bindgen_ty_7 = 52;
+pub const SDLK_5: _bindgen_ty_7 = 53;
+pub const SDLK_6: _bindgen_ty_7 = 54;
+pub const SDLK_7: _bindgen_ty_7 = 55;
+pub const SDLK_8: _bindgen_ty_7 = 56;
+pub const SDLK_9: _bindgen_ty_7 = 57;
+pub const SDLK_COLON: _bindgen_ty_7 = 58;
+pub const SDLK_SEMICOLON: _bindgen_ty_7 = 59;
+pub const SDLK_LESS: _bindgen_ty_7 = 60;
+pub const SDLK_EQUALS: _bindgen_ty_7 = 61;
+pub const SDLK_GREATER: _bindgen_ty_7 = 62;
+pub const SDLK_QUESTION: _bindgen_ty_7 = 63;
+pub const SDLK_AT: _bindgen_ty_7 = 64;
+pub const SDLK_LEFTBRACKET: _bindgen_ty_7 = 91;
+pub const SDLK_BACKSLASH: _bindgen_ty_7 = 92;
+pub const SDLK_RIGHTBRACKET: _bindgen_ty_7 = 93;
+pub const SDLK_CARET: _bindgen_ty_7 = 94;
+pub const SDLK_UNDERSCORE: _bindgen_ty_7 = 95;
+pub const SDLK_BACKQUOTE: _bindgen_ty_7 = 96;
+pub const SDLK_a: _bindgen_ty_7 = 97;
+pub const SDLK_b: _bindgen_ty_7 = 98;
+pub const SDLK_c: _bindgen_ty_7 = 99;
+pub const SDLK_d: _bindgen_ty_7 = 100;
+pub const SDLK_e: _bindgen_ty_7 = 101;
+pub const SDLK_f: _bindgen_ty_7 = 102;
+pub const SDLK_g: _bindgen_ty_7 = 103;
+pub const SDLK_h: _bindgen_ty_7 = 104;
+pub const SDLK_i: _bindgen_ty_7 = 105;
+pub const SDLK_j: _bindgen_ty_7 = 106;
+pub const SDLK_k: _bindgen_ty_7 = 107;
+pub const SDLK_l: _bindgen_ty_7 = 108;
+pub const SDLK_m: _bindgen_ty_7 = 109;
+pub const SDLK_n: _bindgen_ty_7 = 110;
+pub const SDLK_o: _bindgen_ty_7 = 111;
+pub const SDLK_p: _bindgen_ty_7 = 112;
+pub const SDLK_q: _bindgen_ty_7 = 113;
+pub const SDLK_r: _bindgen_ty_7 = 114;
+pub const SDLK_s: _bindgen_ty_7 = 115;
+pub const SDLK_t: _bindgen_ty_7 = 116;
+pub const SDLK_u: _bindgen_ty_7 = 117;
+pub const SDLK_v: _bindgen_ty_7 = 118;
+pub const SDLK_w: _bindgen_ty_7 = 119;
+pub const SDLK_x: _bindgen_ty_7 = 120;
+pub const SDLK_y: _bindgen_ty_7 = 121;
+pub const SDLK_z: _bindgen_ty_7 = 122;
+pub const SDLK_CAPSLOCK: _bindgen_ty_7 = 1073741881;
+pub const SDLK_F1: _bindgen_ty_7 = 1073741882;
+pub const SDLK_F2: _bindgen_ty_7 = 1073741883;
+pub const SDLK_F3: _bindgen_ty_7 = 1073741884;
+pub const SDLK_F4: _bindgen_ty_7 = 1073741885;
+pub const SDLK_F5: _bindgen_ty_7 = 1073741886;
+pub const SDLK_F6: _bindgen_ty_7 = 1073741887;
+pub const SDLK_F7: _bindgen_ty_7 = 1073741888;
+pub const SDLK_F8: _bindgen_ty_7 = 1073741889;
+pub const SDLK_F9: _bindgen_ty_7 = 1073741890;
+pub const SDLK_F10: _bindgen_ty_7 = 1073741891;
+pub const SDLK_F11: _bindgen_ty_7 = 1073741892;
+pub const SDLK_F12: _bindgen_ty_7 = 1073741893;
+pub const SDLK_PRINTSCREEN: _bindgen_ty_7 = 1073741894;
+pub const SDLK_SCROLLLOCK: _bindgen_ty_7 = 1073741895;
+pub const SDLK_PAUSE: _bindgen_ty_7 = 1073741896;
+pub const SDLK_INSERT: _bindgen_ty_7 = 1073741897;
+pub const SDLK_HOME: _bindgen_ty_7 = 1073741898;
+pub const SDLK_PAGEUP: _bindgen_ty_7 = 1073741899;
+pub const SDLK_DELETE: _bindgen_ty_7 = 127;
+pub const SDLK_END: _bindgen_ty_7 = 1073741901;
+pub const SDLK_PAGEDOWN: _bindgen_ty_7 = 1073741902;
+pub const SDLK_RIGHT: _bindgen_ty_7 = 1073741903;
+pub const SDLK_LEFT: _bindgen_ty_7 = 1073741904;
+pub const SDLK_DOWN: _bindgen_ty_7 = 1073741905;
+pub const SDLK_UP: _bindgen_ty_7 = 1073741906;
+pub const SDLK_NUMLOCKCLEAR: _bindgen_ty_7 = 1073741907;
+pub const SDLK_KP_DIVIDE: _bindgen_ty_7 = 1073741908;
+pub const SDLK_KP_MULTIPLY: _bindgen_ty_7 = 1073741909;
+pub const SDLK_KP_MINUS: _bindgen_ty_7 = 1073741910;
+pub const SDLK_KP_PLUS: _bindgen_ty_7 = 1073741911;
+pub const SDLK_KP_ENTER: _bindgen_ty_7 = 1073741912;
+pub const SDLK_KP_1: _bindgen_ty_7 = 1073741913;
+pub const SDLK_KP_2: _bindgen_ty_7 = 1073741914;
+pub const SDLK_KP_3: _bindgen_ty_7 = 1073741915;
+pub const SDLK_KP_4: _bindgen_ty_7 = 1073741916;
+pub const SDLK_KP_5: _bindgen_ty_7 = 1073741917;
+pub const SDLK_KP_6: _bindgen_ty_7 = 1073741918;
+pub const SDLK_KP_7: _bindgen_ty_7 = 1073741919;
+pub const SDLK_KP_8: _bindgen_ty_7 = 1073741920;
+pub const SDLK_KP_9: _bindgen_ty_7 = 1073741921;
+pub const SDLK_KP_0: _bindgen_ty_7 = 1073741922;
+pub const SDLK_KP_PERIOD: _bindgen_ty_7 = 1073741923;
+pub const SDLK_APPLICATION: _bindgen_ty_7 = 1073741925;
+pub const SDLK_POWER: _bindgen_ty_7 = 1073741926;
+pub const SDLK_KP_EQUALS: _bindgen_ty_7 = 1073741927;
+pub const SDLK_F13: _bindgen_ty_7 = 1073741928;
+pub const SDLK_F14: _bindgen_ty_7 = 1073741929;
+pub const SDLK_F15: _bindgen_ty_7 = 1073741930;
+pub const SDLK_F16: _bindgen_ty_7 = 1073741931;
+pub const SDLK_F17: _bindgen_ty_7 = 1073741932;
+pub const SDLK_F18: _bindgen_ty_7 = 1073741933;
+pub const SDLK_F19: _bindgen_ty_7 = 1073741934;
+pub const SDLK_F20: _bindgen_ty_7 = 1073741935;
+pub const SDLK_F21: _bindgen_ty_7 = 1073741936;
+pub const SDLK_F22: _bindgen_ty_7 = 1073741937;
+pub const SDLK_F23: _bindgen_ty_7 = 1073741938;
+pub const SDLK_F24: _bindgen_ty_7 = 1073741939;
+pub const SDLK_EXECUTE: _bindgen_ty_7 = 1073741940;
+pub const SDLK_HELP: _bindgen_ty_7 = 1073741941;
+pub const SDLK_MENU: _bindgen_ty_7 = 1073741942;
+pub const SDLK_SELECT: _bindgen_ty_7 = 1073741943;
+pub const SDLK_STOP: _bindgen_ty_7 = 1073741944;
+pub const SDLK_AGAIN: _bindgen_ty_7 = 1073741945;
+pub const SDLK_UNDO: _bindgen_ty_7 = 1073741946;
+pub const SDLK_CUT: _bindgen_ty_7 = 1073741947;
+pub const SDLK_COPY: _bindgen_ty_7 = 1073741948;
+pub const SDLK_PASTE: _bindgen_ty_7 = 1073741949;
+pub const SDLK_FIND: _bindgen_ty_7 = 1073741950;
+pub const SDLK_MUTE: _bindgen_ty_7 = 1073741951;
+pub const SDLK_VOLUMEUP: _bindgen_ty_7 = 1073741952;
+pub const SDLK_VOLUMEDOWN: _bindgen_ty_7 = 1073741953;
+pub const SDLK_KP_COMMA: _bindgen_ty_7 = 1073741957;
+pub const SDLK_KP_EQUALSAS400: _bindgen_ty_7 = 1073741958;
+pub const SDLK_ALTERASE: _bindgen_ty_7 = 1073741977;
+pub const SDLK_SYSREQ: _bindgen_ty_7 = 1073741978;
+pub const SDLK_CANCEL: _bindgen_ty_7 = 1073741979;
+pub const SDLK_CLEAR: _bindgen_ty_7 = 1073741980;
+pub const SDLK_PRIOR: _bindgen_ty_7 = 1073741981;
+pub const SDLK_RETURN2: _bindgen_ty_7 = 1073741982;
+pub const SDLK_SEPARATOR: _bindgen_ty_7 = 1073741983;
+pub const SDLK_OUT: _bindgen_ty_7 = 1073741984;
+pub const SDLK_OPER: _bindgen_ty_7 = 1073741985;
+pub const SDLK_CLEARAGAIN: _bindgen_ty_7 = 1073741986;
+pub const SDLK_CRSEL: _bindgen_ty_7 = 1073741987;
+pub const SDLK_EXSEL: _bindgen_ty_7 = 1073741988;
+pub const SDLK_KP_00: _bindgen_ty_7 = 1073742000;
+pub const SDLK_KP_000: _bindgen_ty_7 = 1073742001;
+pub const SDLK_THOUSANDSSEPARATOR: _bindgen_ty_7 = 1073742002;
+pub const SDLK_DECIMALSEPARATOR: _bindgen_ty_7 = 1073742003;
+pub const SDLK_CURRENCYUNIT: _bindgen_ty_7 = 1073742004;
+pub const SDLK_CURRENCYSUBUNIT: _bindgen_ty_7 = 1073742005;
+pub const SDLK_KP_LEFTPAREN: _bindgen_ty_7 = 1073742006;
+pub const SDLK_KP_RIGHTPAREN: _bindgen_ty_7 = 1073742007;
+pub const SDLK_KP_LEFTBRACE: _bindgen_ty_7 = 1073742008;
+pub const SDLK_KP_RIGHTBRACE: _bindgen_ty_7 = 1073742009;
+pub const SDLK_KP_TAB: _bindgen_ty_7 = 1073742010;
+pub const SDLK_KP_BACKSPACE: _bindgen_ty_7 = 1073742011;
+pub const SDLK_KP_A: _bindgen_ty_7 = 1073742012;
+pub const SDLK_KP_B: _bindgen_ty_7 = 1073742013;
+pub const SDLK_KP_C: _bindgen_ty_7 = 1073742014;
+pub const SDLK_KP_D: _bindgen_ty_7 = 1073742015;
+pub const SDLK_KP_E: _bindgen_ty_7 = 1073742016;
+pub const SDLK_KP_F: _bindgen_ty_7 = 1073742017;
+pub const SDLK_KP_XOR: _bindgen_ty_7 = 1073742018;
+pub const SDLK_KP_POWER: _bindgen_ty_7 = 1073742019;
+pub const SDLK_KP_PERCENT: _bindgen_ty_7 = 1073742020;
+pub const SDLK_KP_LESS: _bindgen_ty_7 = 1073742021;
+pub const SDLK_KP_GREATER: _bindgen_ty_7 = 1073742022;
+pub const SDLK_KP_AMPERSAND: _bindgen_ty_7 = 1073742023;
+pub const SDLK_KP_DBLAMPERSAND: _bindgen_ty_7 = 1073742024;
+pub const SDLK_KP_VERTICALBAR: _bindgen_ty_7 = 1073742025;
+pub const SDLK_KP_DBLVERTICALBAR: _bindgen_ty_7 = 1073742026;
+pub const SDLK_KP_COLON: _bindgen_ty_7 = 1073742027;
+pub const SDLK_KP_HASH: _bindgen_ty_7 = 1073742028;
+pub const SDLK_KP_SPACE: _bindgen_ty_7 = 1073742029;
+pub const SDLK_KP_AT: _bindgen_ty_7 = 1073742030;
+pub const SDLK_KP_EXCLAM: _bindgen_ty_7 = 1073742031;
+pub const SDLK_KP_MEMSTORE: _bindgen_ty_7 = 1073742032;
+pub const SDLK_KP_MEMRECALL: _bindgen_ty_7 = 1073742033;
+pub const SDLK_KP_MEMCLEAR: _bindgen_ty_7 = 1073742034;
+pub const SDLK_KP_MEMADD: _bindgen_ty_7 = 1073742035;
+pub const SDLK_KP_MEMSUBTRACT: _bindgen_ty_7 = 1073742036;
+pub const SDLK_KP_MEMMULTIPLY: _bindgen_ty_7 = 1073742037;
+pub const SDLK_KP_MEMDIVIDE: _bindgen_ty_7 = 1073742038;
+pub const SDLK_KP_PLUSMINUS: _bindgen_ty_7 = 1073742039;
+pub const SDLK_KP_CLEAR: _bindgen_ty_7 = 1073742040;
+pub const SDLK_KP_CLEARENTRY: _bindgen_ty_7 = 1073742041;
+pub const SDLK_KP_BINARY: _bindgen_ty_7 = 1073742042;
+pub const SDLK_KP_OCTAL: _bindgen_ty_7 = 1073742043;
+pub const SDLK_KP_DECIMAL: _bindgen_ty_7 = 1073742044;
+pub const SDLK_KP_HEXADECIMAL: _bindgen_ty_7 = 1073742045;
+pub const SDLK_LCTRL: _bindgen_ty_7 = 1073742048;
+pub const SDLK_LSHIFT: _bindgen_ty_7 = 1073742049;
+pub const SDLK_LALT: _bindgen_ty_7 = 1073742050;
+pub const SDLK_LGUI: _bindgen_ty_7 = 1073742051;
+pub const SDLK_RCTRL: _bindgen_ty_7 = 1073742052;
+pub const SDLK_RSHIFT: _bindgen_ty_7 = 1073742053;
+pub const SDLK_RALT: _bindgen_ty_7 = 1073742054;
+pub const SDLK_RGUI: _bindgen_ty_7 = 1073742055;
+pub const SDLK_MODE: _bindgen_ty_7 = 1073742081;
+pub const SDLK_AUDIONEXT: _bindgen_ty_7 = 1073742082;
+pub const SDLK_AUDIOPREV: _bindgen_ty_7 = 1073742083;
+pub const SDLK_AUDIOSTOP: _bindgen_ty_7 = 1073742084;
+pub const SDLK_AUDIOPLAY: _bindgen_ty_7 = 1073742085;
+pub const SDLK_AUDIOMUTE: _bindgen_ty_7 = 1073742086;
+pub const SDLK_MEDIASELECT: _bindgen_ty_7 = 1073742087;
+pub const SDLK_WWW: _bindgen_ty_7 = 1073742088;
+pub const SDLK_MAIL: _bindgen_ty_7 = 1073742089;
+pub const SDLK_CALCULATOR: _bindgen_ty_7 = 1073742090;
+pub const SDLK_COMPUTER: _bindgen_ty_7 = 1073742091;
+pub const SDLK_AC_SEARCH: _bindgen_ty_7 = 1073742092;
+pub const SDLK_AC_HOME: _bindgen_ty_7 = 1073742093;
+pub const SDLK_AC_BACK: _bindgen_ty_7 = 1073742094;
+pub const SDLK_AC_FORWARD: _bindgen_ty_7 = 1073742095;
+pub const SDLK_AC_STOP: _bindgen_ty_7 = 1073742096;
+pub const SDLK_AC_REFRESH: _bindgen_ty_7 = 1073742097;
+pub const SDLK_AC_BOOKMARKS: _bindgen_ty_7 = 1073742098;
+pub const SDLK_BRIGHTNESSDOWN: _bindgen_ty_7 = 1073742099;
+pub const SDLK_BRIGHTNESSUP: _bindgen_ty_7 = 1073742100;
+pub const SDLK_DISPLAYSWITCH: _bindgen_ty_7 = 1073742101;
+pub const SDLK_KBDILLUMTOGGLE: _bindgen_ty_7 = 1073742102;
+pub const SDLK_KBDILLUMDOWN: _bindgen_ty_7 = 1073742103;
+pub const SDLK_KBDILLUMUP: _bindgen_ty_7 = 1073742104;
+pub const SDLK_EJECT: _bindgen_ty_7 = 1073742105;
+pub const SDLK_SLEEP: _bindgen_ty_7 = 1073742106;
+pub const SDLK_APP1: _bindgen_ty_7 = 1073742107;
+pub const SDLK_APP2: _bindgen_ty_7 = 1073742108;
+pub const SDLK_AUDIOREWIND: _bindgen_ty_7 = 1073742109;
+pub const SDLK_AUDIOFASTFORWARD: _bindgen_ty_7 = 1073742110;
+pub type _bindgen_ty_7 = i32;
+pub const KMOD_NONE: SDL_Keymod = 0;
+pub const KMOD_LSHIFT: SDL_Keymod = 1;
+pub const KMOD_RSHIFT: SDL_Keymod = 2;
+pub const KMOD_LCTRL: SDL_Keymod = 64;
+pub const KMOD_RCTRL: SDL_Keymod = 128;
+pub const KMOD_LALT: SDL_Keymod = 256;
+pub const KMOD_RALT: SDL_Keymod = 512;
+pub const KMOD_LGUI: SDL_Keymod = 1024;
+pub const KMOD_RGUI: SDL_Keymod = 2048;
+pub const KMOD_NUM: SDL_Keymod = 4096;
+pub const KMOD_CAPS: SDL_Keymod = 8192;
+pub const KMOD_MODE: SDL_Keymod = 16384;
+pub const KMOD_RESERVED: SDL_Keymod = 32768;
+pub type SDL_Keymod = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_Keysym {
-  pub scancode: SDL_Scancode::Type,
+  pub scancode: SDL_Scancode,
   pub sym: SDL_Keycode,
   pub mod_: Uint16,
   pub unused: Uint32,
@@ -4405,22 +4410,22 @@ extern "C" {
   pub fn SDL_GetKeyboardState(numkeys: *mut winapi::ctypes::c_int) -> *const Uint8;
 }
 extern "C" {
-  pub fn SDL_GetModState() -> SDL_Keymod::Type;
+  pub fn SDL_GetModState() -> SDL_Keymod;
 }
 extern "C" {
-  pub fn SDL_SetModState(modstate: SDL_Keymod::Type);
+  pub fn SDL_SetModState(modstate: SDL_Keymod);
 }
 extern "C" {
-  pub fn SDL_GetKeyFromScancode(scancode: SDL_Scancode::Type) -> SDL_Keycode;
+  pub fn SDL_GetKeyFromScancode(scancode: SDL_Scancode) -> SDL_Keycode;
 }
 extern "C" {
-  pub fn SDL_GetScancodeFromKey(key: SDL_Keycode) -> SDL_Scancode::Type;
+  pub fn SDL_GetScancodeFromKey(key: SDL_Keycode) -> SDL_Scancode;
 }
 extern "C" {
-  pub fn SDL_GetScancodeName(scancode: SDL_Scancode::Type) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetScancodeName(scancode: SDL_Scancode) -> *const winapi::ctypes::c_char;
 }
 extern "C" {
-  pub fn SDL_GetScancodeFromName(name: *const winapi::ctypes::c_char) -> SDL_Scancode::Type;
+  pub fn SDL_GetScancodeFromName(name: *const winapi::ctypes::c_char) -> SDL_Scancode;
 }
 extern "C" {
   pub fn SDL_GetKeyName(key: SDL_Keycode) -> *const winapi::ctypes::c_char;
@@ -4432,7 +4437,7 @@ extern "C" {
   pub fn SDL_StartTextInput();
 }
 extern "C" {
-  pub fn SDL_IsTextInputActive() -> SDL_bool::Type;
+  pub fn SDL_IsTextInputActive() -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_StopTextInput();
@@ -4441,37 +4446,33 @@ extern "C" {
   pub fn SDL_SetTextInputRect(rect: *mut SDL_Rect);
 }
 extern "C" {
-  pub fn SDL_HasScreenKeyboardSupport() -> SDL_bool::Type;
+  pub fn SDL_HasScreenKeyboardSupport() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_IsScreenKeyboardShown(window: *mut SDL_Window) -> SDL_bool::Type;
+  pub fn SDL_IsScreenKeyboardShown(window: *mut SDL_Window) -> SDL_bool;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct SDL_Cursor {
   _unused: [u8; 0],
 }
-pub mod SDL_SystemCursor {
-  pub type Type = i32;
-  pub const SDL_SYSTEM_CURSOR_ARROW: Type = 0;
-  pub const SDL_SYSTEM_CURSOR_IBEAM: Type = 1;
-  pub const SDL_SYSTEM_CURSOR_WAIT: Type = 2;
-  pub const SDL_SYSTEM_CURSOR_CROSSHAIR: Type = 3;
-  pub const SDL_SYSTEM_CURSOR_WAITARROW: Type = 4;
-  pub const SDL_SYSTEM_CURSOR_SIZENWSE: Type = 5;
-  pub const SDL_SYSTEM_CURSOR_SIZENESW: Type = 6;
-  pub const SDL_SYSTEM_CURSOR_SIZEWE: Type = 7;
-  pub const SDL_SYSTEM_CURSOR_SIZENS: Type = 8;
-  pub const SDL_SYSTEM_CURSOR_SIZEALL: Type = 9;
-  pub const SDL_SYSTEM_CURSOR_NO: Type = 10;
-  pub const SDL_SYSTEM_CURSOR_HAND: Type = 11;
-  pub const SDL_NUM_SYSTEM_CURSORS: Type = 12;
-}
-pub mod SDL_MouseWheelDirection {
-  pub type Type = i32;
-  pub const SDL_MOUSEWHEEL_NORMAL: Type = 0;
-  pub const SDL_MOUSEWHEEL_FLIPPED: Type = 1;
-}
+pub const SDL_SYSTEM_CURSOR_ARROW: SDL_SystemCursor = 0;
+pub const SDL_SYSTEM_CURSOR_IBEAM: SDL_SystemCursor = 1;
+pub const SDL_SYSTEM_CURSOR_WAIT: SDL_SystemCursor = 2;
+pub const SDL_SYSTEM_CURSOR_CROSSHAIR: SDL_SystemCursor = 3;
+pub const SDL_SYSTEM_CURSOR_WAITARROW: SDL_SystemCursor = 4;
+pub const SDL_SYSTEM_CURSOR_SIZENWSE: SDL_SystemCursor = 5;
+pub const SDL_SYSTEM_CURSOR_SIZENESW: SDL_SystemCursor = 6;
+pub const SDL_SYSTEM_CURSOR_SIZEWE: SDL_SystemCursor = 7;
+pub const SDL_SYSTEM_CURSOR_SIZENS: SDL_SystemCursor = 8;
+pub const SDL_SYSTEM_CURSOR_SIZEALL: SDL_SystemCursor = 9;
+pub const SDL_SYSTEM_CURSOR_NO: SDL_SystemCursor = 10;
+pub const SDL_SYSTEM_CURSOR_HAND: SDL_SystemCursor = 11;
+pub const SDL_NUM_SYSTEM_CURSORS: SDL_SystemCursor = 12;
+pub type SDL_SystemCursor = i32;
+pub const SDL_MOUSEWHEEL_NORMAL: SDL_MouseWheelDirection = 0;
+pub const SDL_MOUSEWHEEL_FLIPPED: SDL_MouseWheelDirection = 1;
+pub type SDL_MouseWheelDirection = i32;
 extern "C" {
   pub fn SDL_GetMouseFocus() -> *mut SDL_Window;
 }
@@ -4504,13 +4505,13 @@ extern "C" {
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_SetRelativeMouseMode(enabled: SDL_bool::Type) -> winapi::ctypes::c_int;
+  pub fn SDL_SetRelativeMouseMode(enabled: SDL_bool) -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_CaptureMouse(enabled: SDL_bool::Type) -> winapi::ctypes::c_int;
+  pub fn SDL_CaptureMouse(enabled: SDL_bool) -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_GetRelativeMouseMode() -> SDL_bool::Type;
+  pub fn SDL_GetRelativeMouseMode() -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_CreateCursor(
@@ -4530,7 +4531,7 @@ extern "C" {
   ) -> *mut SDL_Cursor;
 }
 extern "C" {
-  pub fn SDL_CreateSystemCursor(id: SDL_SystemCursor::Type) -> *mut SDL_Cursor;
+  pub fn SDL_CreateSystemCursor(id: SDL_SystemCursor) -> *mut SDL_Cursor;
 }
 extern "C" {
   pub fn SDL_SetCursor(cursor: *mut SDL_Cursor);
@@ -4582,29 +4583,25 @@ fn bindgen_test_layout_SDL_JoystickGUID() {
   );
 }
 pub type SDL_JoystickID = Sint32;
-pub mod SDL_JoystickType {
-  pub type Type = i32;
-  pub const SDL_JOYSTICK_TYPE_UNKNOWN: Type = 0;
-  pub const SDL_JOYSTICK_TYPE_GAMECONTROLLER: Type = 1;
-  pub const SDL_JOYSTICK_TYPE_WHEEL: Type = 2;
-  pub const SDL_JOYSTICK_TYPE_ARCADE_STICK: Type = 3;
-  pub const SDL_JOYSTICK_TYPE_FLIGHT_STICK: Type = 4;
-  pub const SDL_JOYSTICK_TYPE_DANCE_PAD: Type = 5;
-  pub const SDL_JOYSTICK_TYPE_GUITAR: Type = 6;
-  pub const SDL_JOYSTICK_TYPE_DRUM_KIT: Type = 7;
-  pub const SDL_JOYSTICK_TYPE_ARCADE_PAD: Type = 8;
-  pub const SDL_JOYSTICK_TYPE_THROTTLE: Type = 9;
-}
-pub mod SDL_JoystickPowerLevel {
-  pub type Type = i32;
-  pub const SDL_JOYSTICK_POWER_UNKNOWN: Type = -1;
-  pub const SDL_JOYSTICK_POWER_EMPTY: Type = 0;
-  pub const SDL_JOYSTICK_POWER_LOW: Type = 1;
-  pub const SDL_JOYSTICK_POWER_MEDIUM: Type = 2;
-  pub const SDL_JOYSTICK_POWER_FULL: Type = 3;
-  pub const SDL_JOYSTICK_POWER_WIRED: Type = 4;
-  pub const SDL_JOYSTICK_POWER_MAX: Type = 5;
-}
+pub const SDL_JOYSTICK_TYPE_UNKNOWN: SDL_JoystickType = 0;
+pub const SDL_JOYSTICK_TYPE_GAMECONTROLLER: SDL_JoystickType = 1;
+pub const SDL_JOYSTICK_TYPE_WHEEL: SDL_JoystickType = 2;
+pub const SDL_JOYSTICK_TYPE_ARCADE_STICK: SDL_JoystickType = 3;
+pub const SDL_JOYSTICK_TYPE_FLIGHT_STICK: SDL_JoystickType = 4;
+pub const SDL_JOYSTICK_TYPE_DANCE_PAD: SDL_JoystickType = 5;
+pub const SDL_JOYSTICK_TYPE_GUITAR: SDL_JoystickType = 6;
+pub const SDL_JOYSTICK_TYPE_DRUM_KIT: SDL_JoystickType = 7;
+pub const SDL_JOYSTICK_TYPE_ARCADE_PAD: SDL_JoystickType = 8;
+pub const SDL_JOYSTICK_TYPE_THROTTLE: SDL_JoystickType = 9;
+pub type SDL_JoystickType = i32;
+pub const SDL_JOYSTICK_POWER_UNKNOWN: SDL_JoystickPowerLevel = -1;
+pub const SDL_JOYSTICK_POWER_EMPTY: SDL_JoystickPowerLevel = 0;
+pub const SDL_JOYSTICK_POWER_LOW: SDL_JoystickPowerLevel = 1;
+pub const SDL_JOYSTICK_POWER_MEDIUM: SDL_JoystickPowerLevel = 2;
+pub const SDL_JOYSTICK_POWER_FULL: SDL_JoystickPowerLevel = 3;
+pub const SDL_JOYSTICK_POWER_WIRED: SDL_JoystickPowerLevel = 4;
+pub const SDL_JOYSTICK_POWER_MAX: SDL_JoystickPowerLevel = 5;
+pub type SDL_JoystickPowerLevel = i32;
 extern "C" {
   pub fn SDL_LockJoysticks();
 }
@@ -4620,6 +4617,11 @@ extern "C" {
   ) -> *const winapi::ctypes::c_char;
 }
 extern "C" {
+  pub fn SDL_JoystickGetDevicePlayerIndex(
+    device_index: winapi::ctypes::c_int,
+  ) -> winapi::ctypes::c_int;
+}
+extern "C" {
   pub fn SDL_JoystickGetDeviceGUID(device_index: winapi::ctypes::c_int) -> SDL_JoystickGUID;
 }
 extern "C" {
@@ -4632,7 +4634,7 @@ extern "C" {
   pub fn SDL_JoystickGetDeviceProductVersion(device_index: winapi::ctypes::c_int) -> Uint16;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceType(device_index: winapi::ctypes::c_int) -> SDL_JoystickType::Type;
+  pub fn SDL_JoystickGetDeviceType(device_index: winapi::ctypes::c_int) -> SDL_JoystickType;
 }
 extern "C" {
   pub fn SDL_JoystickGetDeviceInstanceID(device_index: winapi::ctypes::c_int) -> SDL_JoystickID;
@@ -4647,6 +4649,9 @@ extern "C" {
   pub fn SDL_JoystickName(joystick: *mut SDL_Joystick) -> *const winapi::ctypes::c_char;
 }
 extern "C" {
+  pub fn SDL_JoystickGetPlayerIndex(joystick: *mut SDL_Joystick) -> winapi::ctypes::c_int;
+}
+extern "C" {
   pub fn SDL_JoystickGetGUID(joystick: *mut SDL_Joystick) -> SDL_JoystickGUID;
 }
 extern "C" {
@@ -4659,7 +4664,7 @@ extern "C" {
   pub fn SDL_JoystickGetProductVersion(joystick: *mut SDL_Joystick) -> Uint16;
 }
 extern "C" {
-  pub fn SDL_JoystickGetType(joystick: *mut SDL_Joystick) -> SDL_JoystickType::Type;
+  pub fn SDL_JoystickGetType(joystick: *mut SDL_Joystick) -> SDL_JoystickType;
 }
 extern "C" {
   pub fn SDL_JoystickGetGUIDString(
@@ -4672,7 +4677,7 @@ extern "C" {
   pub fn SDL_JoystickGetGUIDFromString(pchGUID: *const winapi::ctypes::c_char) -> SDL_JoystickGUID;
 }
 extern "C" {
-  pub fn SDL_JoystickGetAttached(joystick: *mut SDL_Joystick) -> SDL_bool::Type;
+  pub fn SDL_JoystickGetAttached(joystick: *mut SDL_Joystick) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_JoystickInstanceID(joystick: *mut SDL_Joystick) -> SDL_JoystickID;
@@ -4703,7 +4708,7 @@ extern "C" {
     joystick: *mut SDL_Joystick,
     axis: winapi::ctypes::c_int,
     state: *mut Sint16,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_JoystickGetHat(joystick: *mut SDL_Joystick, hat: winapi::ctypes::c_int) -> Uint8;
@@ -4721,11 +4726,18 @@ extern "C" {
     -> Uint8;
 }
 extern "C" {
+  pub fn SDL_JoystickRumble(
+    joystick: *mut SDL_Joystick,
+    low_frequency_rumble: Uint16,
+    high_frequency_rumble: Uint16,
+    duration_ms: Uint32,
+  ) -> winapi::ctypes::c_int;
+}
+extern "C" {
   pub fn SDL_JoystickClose(joystick: *mut SDL_Joystick);
 }
 extern "C" {
-  pub fn SDL_JoystickCurrentPowerLevel(joystick: *mut SDL_Joystick)
-    -> SDL_JoystickPowerLevel::Type;
+  pub fn SDL_JoystickCurrentPowerLevel(joystick: *mut SDL_Joystick) -> SDL_JoystickPowerLevel;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -4733,17 +4745,15 @@ pub struct _SDL_GameController {
   _unused: [u8; 0],
 }
 pub type SDL_GameController = _SDL_GameController;
-pub mod SDL_GameControllerBindType {
-  pub type Type = i32;
-  pub const SDL_CONTROLLER_BINDTYPE_NONE: Type = 0;
-  pub const SDL_CONTROLLER_BINDTYPE_BUTTON: Type = 1;
-  pub const SDL_CONTROLLER_BINDTYPE_AXIS: Type = 2;
-  pub const SDL_CONTROLLER_BINDTYPE_HAT: Type = 3;
-}
+pub const SDL_CONTROLLER_BINDTYPE_NONE: SDL_GameControllerBindType = 0;
+pub const SDL_CONTROLLER_BINDTYPE_BUTTON: SDL_GameControllerBindType = 1;
+pub const SDL_CONTROLLER_BINDTYPE_AXIS: SDL_GameControllerBindType = 2;
+pub const SDL_CONTROLLER_BINDTYPE_HAT: SDL_GameControllerBindType = 3;
+pub type SDL_GameControllerBindType = i32;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SDL_GameControllerButtonBind {
-  pub bindType: SDL_GameControllerBindType::Type,
+  pub bindType: SDL_GameControllerBindType,
   pub value: SDL_GameControllerButtonBind__bindgen_ty_1,
 }
 #[repr(C)]
@@ -4950,12 +4960,17 @@ extern "C" {
   ) -> *mut winapi::ctypes::c_char;
 }
 extern "C" {
-  pub fn SDL_IsGameController(joystick_index: winapi::ctypes::c_int) -> SDL_bool::Type;
+  pub fn SDL_IsGameController(joystick_index: winapi::ctypes::c_int) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GameControllerNameForIndex(
     joystick_index: winapi::ctypes::c_int,
   ) -> *const winapi::ctypes::c_char;
+}
+extern "C" {
+  pub fn SDL_GameControllerMappingForDeviceIndex(
+    joystick_index: winapi::ctypes::c_int,
+  ) -> *mut winapi::ctypes::c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerOpen(joystick_index: winapi::ctypes::c_int) -> *mut SDL_GameController;
@@ -4969,6 +4984,11 @@ extern "C" {
   ) -> *const winapi::ctypes::c_char;
 }
 extern "C" {
+  pub fn SDL_GameControllerGetPlayerIndex(
+    gamecontroller: *mut SDL_GameController,
+  ) -> winapi::ctypes::c_int;
+}
+extern "C" {
   pub fn SDL_GameControllerGetVendor(gamecontroller: *mut SDL_GameController) -> Uint16;
 }
 extern "C" {
@@ -4978,7 +4998,7 @@ extern "C" {
   pub fn SDL_GameControllerGetProductVersion(gamecontroller: *mut SDL_GameController) -> Uint16;
 }
 extern "C" {
-  pub fn SDL_GameControllerGetAttached(gamecontroller: *mut SDL_GameController) -> SDL_bool::Type;
+  pub fn SDL_GameControllerGetAttached(gamecontroller: *mut SDL_GameController) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GameControllerGetJoystick(
@@ -4991,80 +5011,84 @@ extern "C" {
 extern "C" {
   pub fn SDL_GameControllerUpdate();
 }
-pub mod SDL_GameControllerAxis {
-  pub type Type = i32;
-  pub const SDL_CONTROLLER_AXIS_INVALID: Type = -1;
-  pub const SDL_CONTROLLER_AXIS_LEFTX: Type = 0;
-  pub const SDL_CONTROLLER_AXIS_LEFTY: Type = 1;
-  pub const SDL_CONTROLLER_AXIS_RIGHTX: Type = 2;
-  pub const SDL_CONTROLLER_AXIS_RIGHTY: Type = 3;
-  pub const SDL_CONTROLLER_AXIS_TRIGGERLEFT: Type = 4;
-  pub const SDL_CONTROLLER_AXIS_TRIGGERRIGHT: Type = 5;
-  pub const SDL_CONTROLLER_AXIS_MAX: Type = 6;
-}
+pub const SDL_CONTROLLER_AXIS_INVALID: SDL_GameControllerAxis = -1;
+pub const SDL_CONTROLLER_AXIS_LEFTX: SDL_GameControllerAxis = 0;
+pub const SDL_CONTROLLER_AXIS_LEFTY: SDL_GameControllerAxis = 1;
+pub const SDL_CONTROLLER_AXIS_RIGHTX: SDL_GameControllerAxis = 2;
+pub const SDL_CONTROLLER_AXIS_RIGHTY: SDL_GameControllerAxis = 3;
+pub const SDL_CONTROLLER_AXIS_TRIGGERLEFT: SDL_GameControllerAxis = 4;
+pub const SDL_CONTROLLER_AXIS_TRIGGERRIGHT: SDL_GameControllerAxis = 5;
+pub const SDL_CONTROLLER_AXIS_MAX: SDL_GameControllerAxis = 6;
+pub type SDL_GameControllerAxis = i32;
 extern "C" {
   pub fn SDL_GameControllerGetAxisFromString(
     pchString: *const winapi::ctypes::c_char,
-  ) -> SDL_GameControllerAxis::Type;
+  ) -> SDL_GameControllerAxis;
 }
 extern "C" {
   pub fn SDL_GameControllerGetStringForAxis(
-    axis: SDL_GameControllerAxis::Type,
+    axis: SDL_GameControllerAxis,
   ) -> *const winapi::ctypes::c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerGetBindForAxis(
     gamecontroller: *mut SDL_GameController,
-    axis: SDL_GameControllerAxis::Type,
+    axis: SDL_GameControllerAxis,
   ) -> SDL_GameControllerButtonBind;
 }
 extern "C" {
   pub fn SDL_GameControllerGetAxis(
     gamecontroller: *mut SDL_GameController,
-    axis: SDL_GameControllerAxis::Type,
+    axis: SDL_GameControllerAxis,
   ) -> Sint16;
 }
-pub mod SDL_GameControllerButton {
-  pub type Type = i32;
-  pub const SDL_CONTROLLER_BUTTON_INVALID: Type = -1;
-  pub const SDL_CONTROLLER_BUTTON_A: Type = 0;
-  pub const SDL_CONTROLLER_BUTTON_B: Type = 1;
-  pub const SDL_CONTROLLER_BUTTON_X: Type = 2;
-  pub const SDL_CONTROLLER_BUTTON_Y: Type = 3;
-  pub const SDL_CONTROLLER_BUTTON_BACK: Type = 4;
-  pub const SDL_CONTROLLER_BUTTON_GUIDE: Type = 5;
-  pub const SDL_CONTROLLER_BUTTON_START: Type = 6;
-  pub const SDL_CONTROLLER_BUTTON_LEFTSTICK: Type = 7;
-  pub const SDL_CONTROLLER_BUTTON_RIGHTSTICK: Type = 8;
-  pub const SDL_CONTROLLER_BUTTON_LEFTSHOULDER: Type = 9;
-  pub const SDL_CONTROLLER_BUTTON_RIGHTSHOULDER: Type = 10;
-  pub const SDL_CONTROLLER_BUTTON_DPAD_UP: Type = 11;
-  pub const SDL_CONTROLLER_BUTTON_DPAD_DOWN: Type = 12;
-  pub const SDL_CONTROLLER_BUTTON_DPAD_LEFT: Type = 13;
-  pub const SDL_CONTROLLER_BUTTON_DPAD_RIGHT: Type = 14;
-  pub const SDL_CONTROLLER_BUTTON_MAX: Type = 15;
-}
+pub const SDL_CONTROLLER_BUTTON_INVALID: SDL_GameControllerButton = -1;
+pub const SDL_CONTROLLER_BUTTON_A: SDL_GameControllerButton = 0;
+pub const SDL_CONTROLLER_BUTTON_B: SDL_GameControllerButton = 1;
+pub const SDL_CONTROLLER_BUTTON_X: SDL_GameControllerButton = 2;
+pub const SDL_CONTROLLER_BUTTON_Y: SDL_GameControllerButton = 3;
+pub const SDL_CONTROLLER_BUTTON_BACK: SDL_GameControllerButton = 4;
+pub const SDL_CONTROLLER_BUTTON_GUIDE: SDL_GameControllerButton = 5;
+pub const SDL_CONTROLLER_BUTTON_START: SDL_GameControllerButton = 6;
+pub const SDL_CONTROLLER_BUTTON_LEFTSTICK: SDL_GameControllerButton = 7;
+pub const SDL_CONTROLLER_BUTTON_RIGHTSTICK: SDL_GameControllerButton = 8;
+pub const SDL_CONTROLLER_BUTTON_LEFTSHOULDER: SDL_GameControllerButton = 9;
+pub const SDL_CONTROLLER_BUTTON_RIGHTSHOULDER: SDL_GameControllerButton = 10;
+pub const SDL_CONTROLLER_BUTTON_DPAD_UP: SDL_GameControllerButton = 11;
+pub const SDL_CONTROLLER_BUTTON_DPAD_DOWN: SDL_GameControllerButton = 12;
+pub const SDL_CONTROLLER_BUTTON_DPAD_LEFT: SDL_GameControllerButton = 13;
+pub const SDL_CONTROLLER_BUTTON_DPAD_RIGHT: SDL_GameControllerButton = 14;
+pub const SDL_CONTROLLER_BUTTON_MAX: SDL_GameControllerButton = 15;
+pub type SDL_GameControllerButton = i32;
 extern "C" {
   pub fn SDL_GameControllerGetButtonFromString(
     pchString: *const winapi::ctypes::c_char,
-  ) -> SDL_GameControllerButton::Type;
+  ) -> SDL_GameControllerButton;
 }
 extern "C" {
   pub fn SDL_GameControllerGetStringForButton(
-    button: SDL_GameControllerButton::Type,
+    button: SDL_GameControllerButton,
   ) -> *const winapi::ctypes::c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerGetBindForButton(
     gamecontroller: *mut SDL_GameController,
-    button: SDL_GameControllerButton::Type,
+    button: SDL_GameControllerButton,
   ) -> SDL_GameControllerButtonBind;
 }
 extern "C" {
   pub fn SDL_GameControllerGetButton(
     gamecontroller: *mut SDL_GameController,
-    button: SDL_GameControllerButton::Type,
+    button: SDL_GameControllerButton,
   ) -> Uint8;
+}
+extern "C" {
+  pub fn SDL_GameControllerRumble(
+    gamecontroller: *mut SDL_GameController,
+    low_frequency_rumble: Uint16,
+    high_frequency_rumble: Uint16,
+    duration_ms: Uint32,
+  ) -> winapi::ctypes::c_int;
 }
 extern "C" {
   pub fn SDL_GameControllerClose(gamecontroller: *mut SDL_GameController);
@@ -5163,58 +5187,58 @@ extern "C" {
     src: *mut SDL_RWops,
   ) -> winapi::ctypes::c_int;
 }
-pub mod SDL_EventType {
-  pub type Type = i32;
-  pub const SDL_FIRSTEVENT: Type = 0;
-  pub const SDL_QUIT: Type = 256;
-  pub const SDL_APP_TERMINATING: Type = 257;
-  pub const SDL_APP_LOWMEMORY: Type = 258;
-  pub const SDL_APP_WILLENTERBACKGROUND: Type = 259;
-  pub const SDL_APP_DIDENTERBACKGROUND: Type = 260;
-  pub const SDL_APP_WILLENTERFOREGROUND: Type = 261;
-  pub const SDL_APP_DIDENTERFOREGROUND: Type = 262;
-  pub const SDL_WINDOWEVENT: Type = 512;
-  pub const SDL_SYSWMEVENT: Type = 513;
-  pub const SDL_KEYDOWN: Type = 768;
-  pub const SDL_KEYUP: Type = 769;
-  pub const SDL_TEXTEDITING: Type = 770;
-  pub const SDL_TEXTINPUT: Type = 771;
-  pub const SDL_KEYMAPCHANGED: Type = 772;
-  pub const SDL_MOUSEMOTION: Type = 1024;
-  pub const SDL_MOUSEBUTTONDOWN: Type = 1025;
-  pub const SDL_MOUSEBUTTONUP: Type = 1026;
-  pub const SDL_MOUSEWHEEL: Type = 1027;
-  pub const SDL_JOYAXISMOTION: Type = 1536;
-  pub const SDL_JOYBALLMOTION: Type = 1537;
-  pub const SDL_JOYHATMOTION: Type = 1538;
-  pub const SDL_JOYBUTTONDOWN: Type = 1539;
-  pub const SDL_JOYBUTTONUP: Type = 1540;
-  pub const SDL_JOYDEVICEADDED: Type = 1541;
-  pub const SDL_JOYDEVICEREMOVED: Type = 1542;
-  pub const SDL_CONTROLLERAXISMOTION: Type = 1616;
-  pub const SDL_CONTROLLERBUTTONDOWN: Type = 1617;
-  pub const SDL_CONTROLLERBUTTONUP: Type = 1618;
-  pub const SDL_CONTROLLERDEVICEADDED: Type = 1619;
-  pub const SDL_CONTROLLERDEVICEREMOVED: Type = 1620;
-  pub const SDL_CONTROLLERDEVICEREMAPPED: Type = 1621;
-  pub const SDL_FINGERDOWN: Type = 1792;
-  pub const SDL_FINGERUP: Type = 1793;
-  pub const SDL_FINGERMOTION: Type = 1794;
-  pub const SDL_DOLLARGESTURE: Type = 2048;
-  pub const SDL_DOLLARRECORD: Type = 2049;
-  pub const SDL_MULTIGESTURE: Type = 2050;
-  pub const SDL_CLIPBOARDUPDATE: Type = 2304;
-  pub const SDL_DROPFILE: Type = 4096;
-  pub const SDL_DROPTEXT: Type = 4097;
-  pub const SDL_DROPBEGIN: Type = 4098;
-  pub const SDL_DROPCOMPLETE: Type = 4099;
-  pub const SDL_AUDIODEVICEADDED: Type = 4352;
-  pub const SDL_AUDIODEVICEREMOVED: Type = 4353;
-  pub const SDL_RENDER_TARGETS_RESET: Type = 8192;
-  pub const SDL_RENDER_DEVICE_RESET: Type = 8193;
-  pub const SDL_USEREVENT: Type = 32768;
-  pub const SDL_LASTEVENT: Type = 65535;
-}
+pub const SDL_FIRSTEVENT: SDL_EventType = 0;
+pub const SDL_QUIT: SDL_EventType = 256;
+pub const SDL_APP_TERMINATING: SDL_EventType = 257;
+pub const SDL_APP_LOWMEMORY: SDL_EventType = 258;
+pub const SDL_APP_WILLENTERBACKGROUND: SDL_EventType = 259;
+pub const SDL_APP_DIDENTERBACKGROUND: SDL_EventType = 260;
+pub const SDL_APP_WILLENTERFOREGROUND: SDL_EventType = 261;
+pub const SDL_APP_DIDENTERFOREGROUND: SDL_EventType = 262;
+pub const SDL_DISPLAYEVENT: SDL_EventType = 336;
+pub const SDL_WINDOWEVENT: SDL_EventType = 512;
+pub const SDL_SYSWMEVENT: SDL_EventType = 513;
+pub const SDL_KEYDOWN: SDL_EventType = 768;
+pub const SDL_KEYUP: SDL_EventType = 769;
+pub const SDL_TEXTEDITING: SDL_EventType = 770;
+pub const SDL_TEXTINPUT: SDL_EventType = 771;
+pub const SDL_KEYMAPCHANGED: SDL_EventType = 772;
+pub const SDL_MOUSEMOTION: SDL_EventType = 1024;
+pub const SDL_MOUSEBUTTONDOWN: SDL_EventType = 1025;
+pub const SDL_MOUSEBUTTONUP: SDL_EventType = 1026;
+pub const SDL_MOUSEWHEEL: SDL_EventType = 1027;
+pub const SDL_JOYAXISMOTION: SDL_EventType = 1536;
+pub const SDL_JOYBALLMOTION: SDL_EventType = 1537;
+pub const SDL_JOYHATMOTION: SDL_EventType = 1538;
+pub const SDL_JOYBUTTONDOWN: SDL_EventType = 1539;
+pub const SDL_JOYBUTTONUP: SDL_EventType = 1540;
+pub const SDL_JOYDEVICEADDED: SDL_EventType = 1541;
+pub const SDL_JOYDEVICEREMOVED: SDL_EventType = 1542;
+pub const SDL_CONTROLLERAXISMOTION: SDL_EventType = 1616;
+pub const SDL_CONTROLLERBUTTONDOWN: SDL_EventType = 1617;
+pub const SDL_CONTROLLERBUTTONUP: SDL_EventType = 1618;
+pub const SDL_CONTROLLERDEVICEADDED: SDL_EventType = 1619;
+pub const SDL_CONTROLLERDEVICEREMOVED: SDL_EventType = 1620;
+pub const SDL_CONTROLLERDEVICEREMAPPED: SDL_EventType = 1621;
+pub const SDL_FINGERDOWN: SDL_EventType = 1792;
+pub const SDL_FINGERUP: SDL_EventType = 1793;
+pub const SDL_FINGERMOTION: SDL_EventType = 1794;
+pub const SDL_DOLLARGESTURE: SDL_EventType = 2048;
+pub const SDL_DOLLARRECORD: SDL_EventType = 2049;
+pub const SDL_MULTIGESTURE: SDL_EventType = 2050;
+pub const SDL_CLIPBOARDUPDATE: SDL_EventType = 2304;
+pub const SDL_DROPFILE: SDL_EventType = 4096;
+pub const SDL_DROPTEXT: SDL_EventType = 4097;
+pub const SDL_DROPBEGIN: SDL_EventType = 4098;
+pub const SDL_DROPCOMPLETE: SDL_EventType = 4099;
+pub const SDL_AUDIODEVICEADDED: SDL_EventType = 4352;
+pub const SDL_AUDIODEVICEREMOVED: SDL_EventType = 4353;
+pub const SDL_SENSORUPDATE: SDL_EventType = 4608;
+pub const SDL_RENDER_TARGETS_RESET: SDL_EventType = 8192;
+pub const SDL_RENDER_DEVICE_RESET: SDL_EventType = 8193;
+pub const SDL_USEREVENT: SDL_EventType = 32768;
+pub const SDL_LASTEVENT: SDL_EventType = 65535;
+pub type SDL_EventType = i32;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_CommonEvent {
@@ -5251,6 +5275,111 @@ fn bindgen_test_layout_SDL_CommonEvent() {
       stringify!(SDL_CommonEvent),
       "::",
       stringify!(timestamp)
+    )
+  );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct SDL_DisplayEvent {
+  pub type_: Uint32,
+  pub timestamp: Uint32,
+  pub display: Uint32,
+  pub event: Uint8,
+  pub padding1: Uint8,
+  pub padding2: Uint8,
+  pub padding3: Uint8,
+  pub data1: Sint32,
+}
+#[test]
+fn bindgen_test_layout_SDL_DisplayEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<SDL_DisplayEvent>(),
+    20usize,
+    concat!("Size of: ", stringify!(SDL_DisplayEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<SDL_DisplayEvent>(),
+    4usize,
+    concat!("Alignment of ", stringify!(SDL_DisplayEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_DisplayEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_DisplayEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_DisplayEvent>())).timestamp as *const _ as usize },
+    4usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_DisplayEvent),
+      "::",
+      stringify!(timestamp)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_DisplayEvent>())).display as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_DisplayEvent),
+      "::",
+      stringify!(display)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_DisplayEvent>())).event as *const _ as usize },
+    12usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_DisplayEvent),
+      "::",
+      stringify!(event)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_DisplayEvent>())).padding1 as *const _ as usize },
+    13usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_DisplayEvent),
+      "::",
+      stringify!(padding1)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_DisplayEvent>())).padding2 as *const _ as usize },
+    14usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_DisplayEvent),
+      "::",
+      stringify!(padding2)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_DisplayEvent>())).padding3 as *const _ as usize },
+    15usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_DisplayEvent),
+      "::",
+      stringify!(padding3)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_DisplayEvent>())).data1 as *const _ as usize },
+    16usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_DisplayEvent),
+      "::",
+      stringify!(data1)
     )
   );
 }
@@ -7194,6 +7323,67 @@ impl Default for SDL_DropEvent {
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct SDL_SensorEvent {
+  pub type_: Uint32,
+  pub timestamp: Uint32,
+  pub which: Sint32,
+  pub data: [f32; 6usize],
+}
+#[test]
+fn bindgen_test_layout_SDL_SensorEvent() {
+  assert_eq!(
+    ::core::mem::size_of::<SDL_SensorEvent>(),
+    36usize,
+    concat!("Size of: ", stringify!(SDL_SensorEvent))
+  );
+  assert_eq!(
+    ::core::mem::align_of::<SDL_SensorEvent>(),
+    4usize,
+    concat!("Alignment of ", stringify!(SDL_SensorEvent))
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_SensorEvent>())).type_ as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SensorEvent),
+      "::",
+      stringify!(type_)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_SensorEvent>())).timestamp as *const _ as usize },
+    4usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SensorEvent),
+      "::",
+      stringify!(timestamp)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_SensorEvent>())).which as *const _ as usize },
+    8usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SensorEvent),
+      "::",
+      stringify!(which)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_SensorEvent>())).data as *const _ as usize },
+    12usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_SensorEvent),
+      "::",
+      stringify!(data)
+    )
+  );
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_QuitEvent {
   pub type_: Uint32,
   pub timestamp: Uint32,
@@ -7418,6 +7608,7 @@ impl Default for SDL_SysWMEvent {
 pub union SDL_Event {
   pub type_: Uint32,
   pub common: SDL_CommonEvent,
+  pub display: SDL_DisplayEvent,
   pub window: SDL_WindowEvent,
   pub key: SDL_KeyboardEvent,
   pub edit: SDL_TextEditingEvent,
@@ -7434,6 +7625,7 @@ pub union SDL_Event {
   pub cbutton: SDL_ControllerButtonEvent,
   pub cdevice: SDL_ControllerDeviceEvent,
   pub adevice: SDL_AudioDeviceEvent,
+  pub sensor: SDL_SensorEvent,
   pub quit: SDL_QuitEvent,
   pub user: SDL_UserEvent,
   pub syswm: SDL_SysWMEvent,
@@ -7474,6 +7666,16 @@ fn bindgen_test_layout_SDL_Event() {
       stringify!(SDL_Event),
       "::",
       stringify!(common)
+    )
+  );
+  assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_Event>())).display as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_Event),
+      "::",
+      stringify!(display)
     )
   );
   assert_eq!(
@@ -7637,6 +7839,16 @@ fn bindgen_test_layout_SDL_Event() {
     )
   );
   assert_eq!(
+    unsafe { &(*(::core::ptr::null::<SDL_Event>())).sensor as *const _ as usize },
+    0usize,
+    concat!(
+      "Offset of field: ",
+      stringify!(SDL_Event),
+      "::",
+      stringify!(sensor)
+    )
+  );
+  assert_eq!(
     unsafe { &(*(::core::ptr::null::<SDL_Event>())).quit as *const _ as usize },
     0usize,
     concat!(
@@ -7730,26 +7942,24 @@ impl ::core::fmt::Debug for SDL_Event {
 extern "C" {
   pub fn SDL_PumpEvents();
 }
-pub mod SDL_eventaction {
-  pub type Type = i32;
-  pub const SDL_ADDEVENT: Type = 0;
-  pub const SDL_PEEKEVENT: Type = 1;
-  pub const SDL_GETEVENT: Type = 2;
-}
+pub const SDL_ADDEVENT: SDL_eventaction = 0;
+pub const SDL_PEEKEVENT: SDL_eventaction = 1;
+pub const SDL_GETEVENT: SDL_eventaction = 2;
+pub type SDL_eventaction = i32;
 extern "C" {
   pub fn SDL_PeepEvents(
     events: *mut SDL_Event,
     numevents: winapi::ctypes::c_int,
-    action: SDL_eventaction::Type,
+    action: SDL_eventaction,
     minType: Uint32,
     maxType: Uint32,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_HasEvent(type_: Uint32) -> SDL_bool::Type;
+  pub fn SDL_HasEvent(type_: Uint32) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_HasEvents(minType: Uint32, maxType: Uint32) -> SDL_bool::Type;
+  pub fn SDL_HasEvents(minType: Uint32, maxType: Uint32) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_FlushEvent(type_: Uint32);
@@ -7785,7 +7995,7 @@ extern "C" {
   pub fn SDL_GetEventFilter(
     filter: *mut SDL_EventFilter,
     userdata: *mut *mut winapi::ctypes::c_void,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: *mut winapi::ctypes::c_void);
@@ -8929,24 +9139,22 @@ extern "C" {
 extern "C" {
   pub fn SDL_HapticRumbleStop(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
 }
-pub mod SDL_HintPriority {
-  pub type Type = i32;
-  pub const SDL_HINT_DEFAULT: Type = 0;
-  pub const SDL_HINT_NORMAL: Type = 1;
-  pub const SDL_HINT_OVERRIDE: Type = 2;
-}
+pub const SDL_HINT_DEFAULT: SDL_HintPriority = 0;
+pub const SDL_HINT_NORMAL: SDL_HintPriority = 1;
+pub const SDL_HINT_OVERRIDE: SDL_HintPriority = 2;
+pub type SDL_HintPriority = i32;
 extern "C" {
   pub fn SDL_SetHintWithPriority(
     name: *const winapi::ctypes::c_char,
     value: *const winapi::ctypes::c_char,
-    priority: SDL_HintPriority::Type,
-  ) -> SDL_bool::Type;
+    priority: SDL_HintPriority,
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_SetHint(
     name: *const winapi::ctypes::c_char,
     value: *const winapi::ctypes::c_char,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GetHint(name: *const winapi::ctypes::c_char) -> *const winapi::ctypes::c_char;
@@ -8954,8 +9162,8 @@ extern "C" {
 extern "C" {
   pub fn SDL_GetHintBoolean(
     name: *const winapi::ctypes::c_char,
-    default_value: SDL_bool::Type,
-  ) -> SDL_bool::Type;
+    default_value: SDL_bool,
+  ) -> SDL_bool;
 }
 pub type SDL_HintCallback = ::core::option::Option<
   unsafe extern "C" fn(
@@ -8994,47 +9202,43 @@ extern "C" {
 extern "C" {
   pub fn SDL_UnloadObject(handle: *mut winapi::ctypes::c_void);
 }
-pub mod _bindgen_ty_8 {
-  pub type Type = i32;
-  pub const SDL_LOG_CATEGORY_APPLICATION: Type = 0;
-  pub const SDL_LOG_CATEGORY_ERROR: Type = 1;
-  pub const SDL_LOG_CATEGORY_ASSERT: Type = 2;
-  pub const SDL_LOG_CATEGORY_SYSTEM: Type = 3;
-  pub const SDL_LOG_CATEGORY_AUDIO: Type = 4;
-  pub const SDL_LOG_CATEGORY_VIDEO: Type = 5;
-  pub const SDL_LOG_CATEGORY_RENDER: Type = 6;
-  pub const SDL_LOG_CATEGORY_INPUT: Type = 7;
-  pub const SDL_LOG_CATEGORY_TEST: Type = 8;
-  pub const SDL_LOG_CATEGORY_RESERVED1: Type = 9;
-  pub const SDL_LOG_CATEGORY_RESERVED2: Type = 10;
-  pub const SDL_LOG_CATEGORY_RESERVED3: Type = 11;
-  pub const SDL_LOG_CATEGORY_RESERVED4: Type = 12;
-  pub const SDL_LOG_CATEGORY_RESERVED5: Type = 13;
-  pub const SDL_LOG_CATEGORY_RESERVED6: Type = 14;
-  pub const SDL_LOG_CATEGORY_RESERVED7: Type = 15;
-  pub const SDL_LOG_CATEGORY_RESERVED8: Type = 16;
-  pub const SDL_LOG_CATEGORY_RESERVED9: Type = 17;
-  pub const SDL_LOG_CATEGORY_RESERVED10: Type = 18;
-  pub const SDL_LOG_CATEGORY_CUSTOM: Type = 19;
-}
-pub mod SDL_LogPriority {
-  pub type Type = i32;
-  pub const SDL_LOG_PRIORITY_VERBOSE: Type = 1;
-  pub const SDL_LOG_PRIORITY_DEBUG: Type = 2;
-  pub const SDL_LOG_PRIORITY_INFO: Type = 3;
-  pub const SDL_LOG_PRIORITY_WARN: Type = 4;
-  pub const SDL_LOG_PRIORITY_ERROR: Type = 5;
-  pub const SDL_LOG_PRIORITY_CRITICAL: Type = 6;
-  pub const SDL_NUM_LOG_PRIORITIES: Type = 7;
+pub const SDL_LOG_CATEGORY_APPLICATION: _bindgen_ty_8 = 0;
+pub const SDL_LOG_CATEGORY_ERROR: _bindgen_ty_8 = 1;
+pub const SDL_LOG_CATEGORY_ASSERT: _bindgen_ty_8 = 2;
+pub const SDL_LOG_CATEGORY_SYSTEM: _bindgen_ty_8 = 3;
+pub const SDL_LOG_CATEGORY_AUDIO: _bindgen_ty_8 = 4;
+pub const SDL_LOG_CATEGORY_VIDEO: _bindgen_ty_8 = 5;
+pub const SDL_LOG_CATEGORY_RENDER: _bindgen_ty_8 = 6;
+pub const SDL_LOG_CATEGORY_INPUT: _bindgen_ty_8 = 7;
+pub const SDL_LOG_CATEGORY_TEST: _bindgen_ty_8 = 8;
+pub const SDL_LOG_CATEGORY_RESERVED1: _bindgen_ty_8 = 9;
+pub const SDL_LOG_CATEGORY_RESERVED2: _bindgen_ty_8 = 10;
+pub const SDL_LOG_CATEGORY_RESERVED3: _bindgen_ty_8 = 11;
+pub const SDL_LOG_CATEGORY_RESERVED4: _bindgen_ty_8 = 12;
+pub const SDL_LOG_CATEGORY_RESERVED5: _bindgen_ty_8 = 13;
+pub const SDL_LOG_CATEGORY_RESERVED6: _bindgen_ty_8 = 14;
+pub const SDL_LOG_CATEGORY_RESERVED7: _bindgen_ty_8 = 15;
+pub const SDL_LOG_CATEGORY_RESERVED8: _bindgen_ty_8 = 16;
+pub const SDL_LOG_CATEGORY_RESERVED9: _bindgen_ty_8 = 17;
+pub const SDL_LOG_CATEGORY_RESERVED10: _bindgen_ty_8 = 18;
+pub const SDL_LOG_CATEGORY_CUSTOM: _bindgen_ty_8 = 19;
+pub type _bindgen_ty_8 = i32;
+pub const SDL_LOG_PRIORITY_VERBOSE: SDL_LogPriority = 1;
+pub const SDL_LOG_PRIORITY_DEBUG: SDL_LogPriority = 2;
+pub const SDL_LOG_PRIORITY_INFO: SDL_LogPriority = 3;
+pub const SDL_LOG_PRIORITY_WARN: SDL_LogPriority = 4;
+pub const SDL_LOG_PRIORITY_ERROR: SDL_LogPriority = 5;
+pub const SDL_LOG_PRIORITY_CRITICAL: SDL_LogPriority = 6;
+pub const SDL_NUM_LOG_PRIORITIES: SDL_LogPriority = 7;
+pub type SDL_LogPriority = i32;
+extern "C" {
+  pub fn SDL_LogSetAllPriority(priority: SDL_LogPriority);
 }
 extern "C" {
-  pub fn SDL_LogSetAllPriority(priority: SDL_LogPriority::Type);
+  pub fn SDL_LogSetPriority(category: winapi::ctypes::c_int, priority: SDL_LogPriority);
 }
 extern "C" {
-  pub fn SDL_LogSetPriority(category: winapi::ctypes::c_int, priority: SDL_LogPriority::Type);
-}
-extern "C" {
-  pub fn SDL_LogGetPriority(category: winapi::ctypes::c_int) -> SDL_LogPriority::Type;
+  pub fn SDL_LogGetPriority(category: winapi::ctypes::c_int) -> SDL_LogPriority;
 }
 extern "C" {
   pub fn SDL_LogResetPriorities();
@@ -9063,7 +9267,7 @@ extern "C" {
 extern "C" {
   pub fn SDL_LogMessage(
     category: winapi::ctypes::c_int,
-    priority: SDL_LogPriority::Type,
+    priority: SDL_LogPriority,
     fmt: *const winapi::ctypes::c_char,
     ...
   );
@@ -9071,7 +9275,7 @@ extern "C" {
 extern "C" {
   pub fn SDL_LogMessageV(
     category: winapi::ctypes::c_int,
-    priority: SDL_LogPriority::Type,
+    priority: SDL_LogPriority,
     fmt: *const winapi::ctypes::c_char,
     ap: va_list,
   );
@@ -9080,7 +9284,7 @@ pub type SDL_LogOutputFunction = ::core::option::Option<
   unsafe extern "C" fn(
     userdata: *mut winapi::ctypes::c_void,
     category: winapi::ctypes::c_int,
-    priority: SDL_LogPriority::Type,
+    priority: SDL_LogPriority,
     message: *const winapi::ctypes::c_char,
   ),
 >;
@@ -9096,17 +9300,13 @@ extern "C" {
     userdata: *mut winapi::ctypes::c_void,
   );
 }
-pub mod SDL_MessageBoxFlags {
-  pub type Type = i32;
-  pub const SDL_MESSAGEBOX_ERROR: Type = 16;
-  pub const SDL_MESSAGEBOX_WARNING: Type = 32;
-  pub const SDL_MESSAGEBOX_INFORMATION: Type = 64;
-}
-pub mod SDL_MessageBoxButtonFlags {
-  pub type Type = i32;
-  pub const SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT: Type = 1;
-  pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: Type = 2;
-}
+pub const SDL_MESSAGEBOX_ERROR: SDL_MessageBoxFlags = 16;
+pub const SDL_MESSAGEBOX_WARNING: SDL_MessageBoxFlags = 32;
+pub const SDL_MESSAGEBOX_INFORMATION: SDL_MessageBoxFlags = 64;
+pub type SDL_MessageBoxFlags = i32;
+pub const SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT: SDL_MessageBoxButtonFlags = 1;
+pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: SDL_MessageBoxButtonFlags = 2;
+pub type SDL_MessageBoxButtonFlags = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_MessageBoxButtonData {
@@ -9212,15 +9412,13 @@ fn bindgen_test_layout_SDL_MessageBoxColor() {
     )
   );
 }
-pub mod SDL_MessageBoxColorType {
-  pub type Type = i32;
-  pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: Type = 0;
-  pub const SDL_MESSAGEBOX_COLOR_TEXT: Type = 1;
-  pub const SDL_MESSAGEBOX_COLOR_BUTTON_BORDER: Type = 2;
-  pub const SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND: Type = 3;
-  pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED: Type = 4;
-  pub const SDL_MESSAGEBOX_COLOR_MAX: Type = 5;
-}
+pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: SDL_MessageBoxColorType = 0;
+pub const SDL_MESSAGEBOX_COLOR_TEXT: SDL_MessageBoxColorType = 1;
+pub const SDL_MESSAGEBOX_COLOR_BUTTON_BORDER: SDL_MessageBoxColorType = 2;
+pub const SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND: SDL_MessageBoxColorType = 3;
+pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED: SDL_MessageBoxColorType = 4;
+pub const SDL_MESSAGEBOX_COLOR_MAX: SDL_MessageBoxColorType = 5;
+pub type SDL_MessageBoxColorType = i32;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_MessageBoxColorScheme {
@@ -9362,27 +9560,23 @@ extern "C" {
     window: *mut SDL_Window,
   ) -> winapi::ctypes::c_int;
 }
-pub mod SDL_PowerState {
-  pub type Type = i32;
-  pub const SDL_POWERSTATE_UNKNOWN: Type = 0;
-  pub const SDL_POWERSTATE_ON_BATTERY: Type = 1;
-  pub const SDL_POWERSTATE_NO_BATTERY: Type = 2;
-  pub const SDL_POWERSTATE_CHARGING: Type = 3;
-  pub const SDL_POWERSTATE_CHARGED: Type = 4;
-}
+pub const SDL_POWERSTATE_UNKNOWN: SDL_PowerState = 0;
+pub const SDL_POWERSTATE_ON_BATTERY: SDL_PowerState = 1;
+pub const SDL_POWERSTATE_NO_BATTERY: SDL_PowerState = 2;
+pub const SDL_POWERSTATE_CHARGING: SDL_PowerState = 3;
+pub const SDL_POWERSTATE_CHARGED: SDL_PowerState = 4;
+pub type SDL_PowerState = i32;
 extern "C" {
   pub fn SDL_GetPowerInfo(
     secs: *mut winapi::ctypes::c_int,
     pct: *mut winapi::ctypes::c_int,
-  ) -> SDL_PowerState::Type;
+  ) -> SDL_PowerState;
 }
-pub mod SDL_RendererFlags {
-  pub type Type = i32;
-  pub const SDL_RENDERER_SOFTWARE: Type = 1;
-  pub const SDL_RENDERER_ACCELERATED: Type = 2;
-  pub const SDL_RENDERER_PRESENTVSYNC: Type = 4;
-  pub const SDL_RENDERER_TARGETTEXTURE: Type = 8;
-}
+pub const SDL_RENDERER_SOFTWARE: SDL_RendererFlags = 1;
+pub const SDL_RENDERER_ACCELERATED: SDL_RendererFlags = 2;
+pub const SDL_RENDERER_PRESENTVSYNC: SDL_RendererFlags = 4;
+pub const SDL_RENDERER_TARGETTEXTURE: SDL_RendererFlags = 8;
+pub type SDL_RendererFlags = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_RendererInfo {
@@ -9475,24 +9669,18 @@ impl Default for SDL_RendererInfo {
     unsafe { ::core::mem::zeroed() }
   }
 }
-pub mod SDL_TextureAccess {
-  pub type Type = i32;
-  pub const SDL_TEXTUREACCESS_STATIC: Type = 0;
-  pub const SDL_TEXTUREACCESS_STREAMING: Type = 1;
-  pub const SDL_TEXTUREACCESS_TARGET: Type = 2;
-}
-pub mod SDL_TextureModulate {
-  pub type Type = i32;
-  pub const SDL_TEXTUREMODULATE_NONE: Type = 0;
-  pub const SDL_TEXTUREMODULATE_COLOR: Type = 1;
-  pub const SDL_TEXTUREMODULATE_ALPHA: Type = 2;
-}
-pub mod SDL_RendererFlip {
-  pub type Type = i32;
-  pub const SDL_FLIP_NONE: Type = 0;
-  pub const SDL_FLIP_HORIZONTAL: Type = 1;
-  pub const SDL_FLIP_VERTICAL: Type = 2;
-}
+pub const SDL_TEXTUREACCESS_STATIC: SDL_TextureAccess = 0;
+pub const SDL_TEXTUREACCESS_STREAMING: SDL_TextureAccess = 1;
+pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = 2;
+pub type SDL_TextureAccess = i32;
+pub const SDL_TEXTUREMODULATE_NONE: SDL_TextureModulate = 0;
+pub const SDL_TEXTUREMODULATE_COLOR: SDL_TextureModulate = 1;
+pub const SDL_TEXTUREMODULATE_ALPHA: SDL_TextureModulate = 2;
+pub type SDL_TextureModulate = i32;
+pub const SDL_FLIP_NONE: SDL_RendererFlip = 0;
+pub const SDL_FLIP_HORIZONTAL: SDL_RendererFlip = 1;
+pub const SDL_FLIP_VERTICAL: SDL_RendererFlip = 2;
+pub type SDL_RendererFlip = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct SDL_Renderer {
@@ -9599,13 +9787,13 @@ extern "C" {
 extern "C" {
   pub fn SDL_SetTextureBlendMode(
     texture: *mut SDL_Texture,
-    blendMode: SDL_BlendMode::Type,
+    blendMode: SDL_BlendMode,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
   pub fn SDL_GetTextureBlendMode(
     texture: *mut SDL_Texture,
-    blendMode: *mut SDL_BlendMode::Type,
+    blendMode: *mut SDL_BlendMode,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
@@ -9640,7 +9828,7 @@ extern "C" {
   pub fn SDL_UnlockTexture(texture: *mut SDL_Texture);
 }
 extern "C" {
-  pub fn SDL_RenderTargetSupported(renderer: *mut SDL_Renderer) -> SDL_bool::Type;
+  pub fn SDL_RenderTargetSupported(renderer: *mut SDL_Renderer) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_SetRenderTarget(
@@ -9668,11 +9856,11 @@ extern "C" {
 extern "C" {
   pub fn SDL_RenderSetIntegerScale(
     renderer: *mut SDL_Renderer,
-    enable: SDL_bool::Type,
+    enable: SDL_bool,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
-  pub fn SDL_RenderGetIntegerScale(renderer: *mut SDL_Renderer) -> SDL_bool::Type;
+  pub fn SDL_RenderGetIntegerScale(renderer: *mut SDL_Renderer) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_RenderSetViewport(
@@ -9693,7 +9881,7 @@ extern "C" {
   pub fn SDL_RenderGetClipRect(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect);
 }
 extern "C" {
-  pub fn SDL_RenderIsClipEnabled(renderer: *mut SDL_Renderer) -> SDL_bool::Type;
+  pub fn SDL_RenderIsClipEnabled(renderer: *mut SDL_Renderer) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_RenderSetScale(
@@ -9726,13 +9914,13 @@ extern "C" {
 extern "C" {
   pub fn SDL_SetRenderDrawBlendMode(
     renderer: *mut SDL_Renderer,
-    blendMode: SDL_BlendMode::Type,
+    blendMode: SDL_BlendMode,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
   pub fn SDL_GetRenderDrawBlendMode(
     renderer: *mut SDL_Renderer,
-    blendMode: *mut SDL_BlendMode::Type,
+    blendMode: *mut SDL_BlendMode,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
@@ -9810,7 +9998,7 @@ extern "C" {
     dstrect: *const SDL_Rect,
     angle: f64,
     center: *const SDL_Point,
-    flip: SDL_RendererFlip::Type,
+    flip: SDL_RendererFlip,
   ) -> winapi::ctypes::c_int;
 }
 extern "C" {
@@ -9849,6 +10037,68 @@ extern "C" {
     renderer: *mut SDL_Renderer,
   ) -> *mut winapi::ctypes::c_void;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _SDL_Sensor {
+  _unused: [u8; 0],
+}
+pub type SDL_Sensor = _SDL_Sensor;
+pub type SDL_SensorID = Sint32;
+pub const SDL_SENSOR_INVALID: SDL_SensorType = -1;
+pub const SDL_SENSOR_UNKNOWN: SDL_SensorType = 0;
+pub const SDL_SENSOR_ACCEL: SDL_SensorType = 1;
+pub const SDL_SENSOR_GYRO: SDL_SensorType = 2;
+pub type SDL_SensorType = i32;
+extern "C" {
+  pub fn SDL_NumSensors() -> winapi::ctypes::c_int;
+}
+extern "C" {
+  pub fn SDL_SensorGetDeviceName(
+    device_index: winapi::ctypes::c_int,
+  ) -> *const winapi::ctypes::c_char;
+}
+extern "C" {
+  pub fn SDL_SensorGetDeviceType(device_index: winapi::ctypes::c_int) -> SDL_SensorType;
+}
+extern "C" {
+  pub fn SDL_SensorGetDeviceNonPortableType(
+    device_index: winapi::ctypes::c_int,
+  ) -> winapi::ctypes::c_int;
+}
+extern "C" {
+  pub fn SDL_SensorGetDeviceInstanceID(device_index: winapi::ctypes::c_int) -> SDL_SensorID;
+}
+extern "C" {
+  pub fn SDL_SensorOpen(device_index: winapi::ctypes::c_int) -> *mut SDL_Sensor;
+}
+extern "C" {
+  pub fn SDL_SensorFromInstanceID(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
+}
+extern "C" {
+  pub fn SDL_SensorGetName(sensor: *mut SDL_Sensor) -> *const winapi::ctypes::c_char;
+}
+extern "C" {
+  pub fn SDL_SensorGetType(sensor: *mut SDL_Sensor) -> SDL_SensorType;
+}
+extern "C" {
+  pub fn SDL_SensorGetNonPortableType(sensor: *mut SDL_Sensor) -> winapi::ctypes::c_int;
+}
+extern "C" {
+  pub fn SDL_SensorGetInstanceID(sensor: *mut SDL_Sensor) -> SDL_SensorID;
+}
+extern "C" {
+  pub fn SDL_SensorGetData(
+    sensor: *mut SDL_Sensor,
+    data: *mut f32,
+    num_values: winapi::ctypes::c_int,
+  ) -> winapi::ctypes::c_int;
+}
+extern "C" {
+  pub fn SDL_SensorClose(sensor: *mut SDL_Sensor);
+}
+extern "C" {
+  pub fn SDL_SensorUpdate();
+}
 extern "C" {
   pub fn SDL_CreateShapedWindow(
     title: *const winapi::ctypes::c_char,
@@ -9860,15 +10110,13 @@ extern "C" {
   ) -> *mut SDL_Window;
 }
 extern "C" {
-  pub fn SDL_IsShapedWindow(window: *const SDL_Window) -> SDL_bool::Type;
+  pub fn SDL_IsShapedWindow(window: *const SDL_Window) -> SDL_bool;
 }
-pub mod WindowShapeMode {
-  pub type Type = i32;
-  pub const ShapeModeDefault: Type = 0;
-  pub const ShapeModeBinarizeAlpha: Type = 1;
-  pub const ShapeModeReverseBinarizeAlpha: Type = 2;
-  pub const ShapeModeColorKey: Type = 3;
-}
+pub const ShapeModeDefault: WindowShapeMode = 0;
+pub const ShapeModeBinarizeAlpha: WindowShapeMode = 1;
+pub const ShapeModeReverseBinarizeAlpha: WindowShapeMode = 2;
+pub const ShapeModeColorKey: WindowShapeMode = 3;
+pub type WindowShapeMode = i32;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union SDL_WindowShapeParams {
@@ -9924,7 +10172,7 @@ impl ::core::fmt::Debug for SDL_WindowShapeParams {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SDL_WindowShapeMode {
-  pub mode: WindowShapeMode::Type,
+  pub mode: WindowShapeMode,
   pub parameters: SDL_WindowShapeParams,
 }
 #[test]
@@ -10019,7 +10267,10 @@ extern "C" {
     displayIndex: winapi::ctypes::c_int,
     adapterIndex: *mut winapi::ctypes::c_int,
     outputIndex: *mut winapi::ctypes::c_int,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
+}
+extern "C" {
+  pub fn SDL_IsTablet() -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GetTicks() -> Uint32;
@@ -10045,7 +10296,7 @@ extern "C" {
   ) -> SDL_TimerID;
 }
 extern "C" {
-  pub fn SDL_RemoveTimer(id: SDL_TimerID) -> SDL_bool::Type;
+  pub fn SDL_RemoveTimer(id: SDL_TimerID) -> SDL_bool;
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
@@ -10144,14 +10395,14 @@ extern "C" {
     window: *mut SDL_Window,
     pCount: *mut winapi::ctypes::c_uint,
     pNames: *mut *const winapi::ctypes::c_char,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_Vulkan_CreateSurface(
     window: *mut SDL_Window,
     instance: VkInstance,
     surface: *mut VkSurfaceKHR,
-  ) -> SDL_bool::Type;
+  ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_Vulkan_GetDrawableSize(
@@ -10252,26 +10503,24 @@ fn bindgen_test_layout_HDC__() {
   );
 }
 pub type HDC = *mut HDC__;
-pub mod SDL_SYSWM_TYPE {
-  pub type Type = i32;
-  pub const SDL_SYSWM_UNKNOWN: Type = 0;
-  pub const SDL_SYSWM_WINDOWS: Type = 1;
-  pub const SDL_SYSWM_X11: Type = 2;
-  pub const SDL_SYSWM_DIRECTFB: Type = 3;
-  pub const SDL_SYSWM_COCOA: Type = 4;
-  pub const SDL_SYSWM_UIKIT: Type = 5;
-  pub const SDL_SYSWM_WAYLAND: Type = 6;
-  pub const SDL_SYSWM_MIR: Type = 7;
-  pub const SDL_SYSWM_WINRT: Type = 8;
-  pub const SDL_SYSWM_ANDROID: Type = 9;
-  pub const SDL_SYSWM_VIVANTE: Type = 10;
-  pub const SDL_SYSWM_OS2: Type = 11;
-}
+pub const SDL_SYSWM_UNKNOWN: SDL_SYSWM_TYPE = 0;
+pub const SDL_SYSWM_WINDOWS: SDL_SYSWM_TYPE = 1;
+pub const SDL_SYSWM_X11: SDL_SYSWM_TYPE = 2;
+pub const SDL_SYSWM_DIRECTFB: SDL_SYSWM_TYPE = 3;
+pub const SDL_SYSWM_COCOA: SDL_SYSWM_TYPE = 4;
+pub const SDL_SYSWM_UIKIT: SDL_SYSWM_TYPE = 5;
+pub const SDL_SYSWM_WAYLAND: SDL_SYSWM_TYPE = 6;
+pub const SDL_SYSWM_MIR: SDL_SYSWM_TYPE = 7;
+pub const SDL_SYSWM_WINRT: SDL_SYSWM_TYPE = 8;
+pub const SDL_SYSWM_ANDROID: SDL_SYSWM_TYPE = 9;
+pub const SDL_SYSWM_VIVANTE: SDL_SYSWM_TYPE = 10;
+pub const SDL_SYSWM_OS2: SDL_SYSWM_TYPE = 11;
+pub type SDL_SYSWM_TYPE = i32;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SDL_SysWMmsg {
   pub version: SDL_version,
-  pub subsystem: SDL_SYSWM_TYPE::Type,
+  pub subsystem: SDL_SYSWM_TYPE,
   pub msg: SDL_SysWMmsg__bindgen_ty_1,
 }
 #[repr(C)]
@@ -10468,7 +10717,7 @@ impl ::core::fmt::Debug for SDL_SysWMmsg {
 #[derive(Copy, Clone)]
 pub struct SDL_SysWMinfo {
   pub version: SDL_version,
-  pub subsystem: SDL_SYSWM_TYPE::Type,
+  pub subsystem: SDL_SYSWM_TYPE,
   pub info: SDL_SysWMinfo__bindgen_ty_1,
 }
 #[repr(C)]
@@ -10649,7 +10898,7 @@ impl ::core::fmt::Debug for SDL_SysWMinfo {
   }
 }
 extern "C" {
-  pub fn SDL_GetWindowWMInfo(window: *mut SDL_Window, info: *mut SDL_SysWMinfo) -> SDL_bool::Type;
+  pub fn SDL_GetWindowWMInfo(window: *mut SDL_Window, info: *mut SDL_SysWMinfo) -> SDL_bool;
 }
 pub type __builtin_va_list = *mut winapi::ctypes::c_char;
 #[repr(C)]

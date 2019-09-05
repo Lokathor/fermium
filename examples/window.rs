@@ -8,8 +8,7 @@
 //! It's documented quite a bit so that hopefully a Rust programmer that doesn't
 //! know about SDL2 can read it and follow along with what's going on.
 
-use fermium::{c_char, c_int, SDL_EventType::*, SDL_WindowFlags::*, *};
-//use libc::{};
+use fermium::*;
 
 // bindgen isn't perfect, and sometimes it turns C macro definitions into not
 // quite the right Rust types that we want. In this case, it has the "mask" but
@@ -72,7 +71,7 @@ fn main() {
             // field to see what other fields you should look at. It's as good
             // as a Rust enum from a data compactness standpoint, just not at
             // all type safe.
-            match event.type_ as SDL_EventType::Type {
+            match event.type_ as SDL_EventType {
               SDL_QUIT => {
                 // In this case, the quit event has a timestamp as its only
                 // field besides the tag, so we might as well print it.

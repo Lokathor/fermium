@@ -28,14 +28,20 @@ fn main() {
   println!("bind_SDL2_2_0_9: {}", bind_SDL2_2_0_9);
   println!("bind_SDL2_2_0_10: {}", bind_SDL2_2_0_10);
 
-  println!("cargo:rustc-env=TARGET={}", env::var("TARGET").expect("Couldn't read `TARGET`"));
-  println!("cargo:rustc-env=BIND_PATCH_LEVEL={}", if bind_SDL2_2_0_10 {
-    10
-  } else if bind_SDL2_2_0_9 {
-    9
-  } else {
-    8
-  });
+  println!(
+    "cargo:rustc-env=TARGET={}",
+    env::var("TARGET").expect("Couldn't read `TARGET`")
+  );
+  println!(
+    "cargo:rustc-env=BIND_PATCH_LEVEL={}",
+    if bind_SDL2_2_0_10 {
+      10
+    } else if bind_SDL2_2_0_9 {
+      9
+    } else {
+      8
+    }
+  );
 
   if cfg!(feature = "use_bindgen_bin") {
     run_bindgen_bin();
@@ -77,7 +83,6 @@ fn run_bindgen_bin() {
   let make_bindgen_command = |patch_level: i32| {
     // build up the whole bindgen command
     let mut bindgen = Command::new("bindgen");
-    // flags, TODO: investigate --generate-inline-functions
     bindgen.arg("--disable-name-namespacing");
     bindgen.arg("--impl-debug");
     bindgen.arg("--impl-partialeq");
@@ -91,7 +96,7 @@ fn run_bindgen_bin() {
     bindgen.arg("--ctypes-prefix").arg("libc");
     #[cfg(windows)]
     bindgen.arg("--ctypes-prefix").arg("winapi::ctypes");
-    bindgen.arg("--default-enum-style").arg("moduleconsts");
+    bindgen.arg("--default-enum-style").arg("consts");
     bindgen.arg("--output").arg(&format!(
       "{}",
       out_dir

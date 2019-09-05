@@ -51,34 +51,47 @@ pub use winapi::ctypes::{
 };
 
 #[cfg(feature = "use_bindgen_bin")]
-include!(concat!(env!("OUT_DIR"), "/SDL2-v2.0.", env!("BIND_PATCH_LEVEL"),"-", env!("TARGET"), ".rs"));
+include!(concat!(
+  env!("OUT_DIR"),
+  "/SDL2-v2.0.",
+  env!("BIND_PATCH_LEVEL"),
+  "-",
+  env!("TARGET"),
+  ".rs"
+));
 
 #[cfg(not(feature = "use_bindgen_bin"))]
-include!(concat!("SDL2-v2.0.", env!("BIND_PATCH_LEVEL"),"-", env!("TARGET"), ".rs"));
+include!(concat!(
+  "SDL2-v2.0.",
+  env!("BIND_PATCH_LEVEL"),
+  "-",
+  env!("TARGET"),
+  ".rs"
+));
 
-// Note(Lokathor): Bindgen doesn't parse all things properly on its own, so we
-// define a few more things here "by hand".
-
-/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
-pub type PixelType = _bindgen_ty_1::Type;
-
-/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
-pub type BitmapOrder = _bindgen_ty_2::Type;
-
-/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
-pub type PackedOrder = _bindgen_ty_3::Type;
+// Note(Lokathor): Bindgen doesn't parse all things properly on its own, and it
+// doesn't parse CPP macros at all, so we must define some more stuff here.
 
 /// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
-pub type ArrayOrder = _bindgen_ty_4::Type;
+pub type PixelType = _bindgen_ty_1;
 
 /// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
-pub type PackedLayout = _bindgen_ty_5::Type;
+pub type BitmapOrder = _bindgen_ty_2;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type PackedOrder = _bindgen_ty_3;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type ArrayOrder = _bindgen_ty_4;
+
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+pub type PackedLayout = _bindgen_ty_5;
 
 /// See [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum)
-pub type SDL_PixelFormatEnum = _bindgen_ty_6::Type;
+pub type SDL_PixelFormatEnum = _bindgen_ty_6;
 
 /// See [`SDL_LOG_CATEGORY`](https://wiki.libsdl.org/SDL_LOG_CATEGORY)
-pub type LogCategory = _bindgen_ty_8::Type;
+pub type LogCategory = _bindgen_ty_8;
 
 /// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch
 /// input
@@ -128,7 +141,6 @@ pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnu
 /// `SDL_pixels.h`: Bytes per pixel.
 #[inline(always)]
 pub fn SDL_BYTESPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
-  use _bindgen_ty_6::*;
   if SDL_ISPIXELFORMAT_FOURCC(format) {
     if format == SDL_PIXELFORMAT_YUY2
       || format == SDL_PIXELFORMAT_UYVY
@@ -146,7 +158,6 @@ pub fn SDL_BYTESPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
 /// `SDL_pixels.h`: Is this an indexed format?
 #[inline(always)]
 pub fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
-  use _bindgen_ty_1::*;
   !SDL_ISPIXELFORMAT_FOURCC(format)
     && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1
       || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4
@@ -156,7 +167,6 @@ pub fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
 /// `SDL_pixels.h`: Is this a packed format?
 #[inline(always)]
 pub fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
-  use _bindgen_ty_1::*;
   !SDL_ISPIXELFORMAT_FOURCC(format)
     && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8
       || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16
@@ -166,7 +176,6 @@ pub fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
 /// `SDL_pixels.h`: Is this an array format?
 #[inline(always)]
 pub fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
-  use _bindgen_ty_1::*;
   !SDL_ISPIXELFORMAT_FOURCC(format)
     && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8
       || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16
@@ -178,8 +187,6 @@ pub fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
 /// `SDL_pixels.h`: Does this format have an alpha channel?
 #[inline(always)]
 pub fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
-  use _bindgen_ty_3::*;
-  use _bindgen_ty_4::*;
   (SDL_ISPIXELFORMAT_PACKED(format)
     && (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB
       || SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA
