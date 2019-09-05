@@ -72,7 +72,7 @@ include!(concat!(
 // Note(Lokathor): Bindgen doesn't parse all things properly on its own, and it
 // doesn't parse CPP macros at all, so we must define some more stuff here.
 
-/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
+/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum)
 pub type PixelType = _bindgen_ty_1;
 
 /// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)

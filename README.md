@@ -63,9 +63,7 @@ This crate uses the Zlib license, the same license that SDL2 itself uses.
 * The `old-headers-only/` directory contains header files from older versions of
   SDL2 and its add-ons, for use by bindgen when needed.
 * The `full-source/` directory contains all the source needed to potentially
-  build SDL2 and its add-ons, for use with static linking on windows. A lot of
-  the test asset files (PNGs, mp3s, etc) have been removed to keep the download
-  smaller.
+  build SDL2 and its add-ons on windows, for use with static linking.
 * The `win32-devel-files/` directory has dynamic lib files for use when building
   on Windows. As with the `full-source/` directory, spare files have been
   deleted to save on space.
