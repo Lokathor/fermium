@@ -18,9 +18,9 @@ matrix:
 
 install:
   - rustup component add rustfmt
-  #- (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
-  #- (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
-  #- cargo install-update -a
+  - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
+  - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
+  - cargo install-update -a
   - |
     if [[ $TRAVIS_OS_NAME == "linux" ]]
     then
