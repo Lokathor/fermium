@@ -38,8 +38,12 @@
 //! ## Docs
 //!
 //! Bindgen doesn't understand how to convert doxygen style docs into rustdoc
-//! style docs, so instead you should look up the docs on the [SDL2
-//! Wiki](https://wiki.libsdl.org/)
+//! style docs. What it does generate makes rustdoc think there a bunch of
+//! random code block all over that it should run as test cases. Sadly, rustdoc
+//! has no way to turn this off, so I have to tell bindgen to just emit no docs
+//! at all.
+//!
+//! Instead you should check out the [SDL2 Wiki](https://wiki.libsdl.org/)
 
 #[cfg(not(windows))]
 pub use libc::{
