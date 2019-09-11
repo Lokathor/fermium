@@ -63,7 +63,7 @@ winapi = "0.3"
 [target."cfg(not(windows))".dependencies]
 libc = "0.2"
 
-[build-dependencies]
+[target."cfg(windows)".build-dependencies]
 cmake = { version = "0.1", optional = true }
 
 [badges]
