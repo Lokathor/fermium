@@ -13,6 +13,7 @@ This is bindings to the SDL2 C API.
   * armv7-unknown-linux-gnueabihf
   * i686-pc-windows-msvc
   * x86_64-apple-darwin
+  * x86_64-pc-windows-gnu
   * x86_64-pc-windows-msvc
   * x86_64-unknown-linux-gnu
 * If your platform supports SDL2 but isn't on that list, please send in a PR!
