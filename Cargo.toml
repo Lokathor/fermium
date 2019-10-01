@@ -2,7 +2,7 @@
 name = "fermium"
 description = "An opinionated crate of SDL2 bindings."
 repository = "https://github.com/Lokathor/fermium"
-version = "0.1.0-alpha.4"
+version = "0.1.0-alpha.5"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
 license = "Zlib"
@@ -60,11 +60,11 @@ bind_SDL2_2_0_10 = ["bind_SDL2_2_0_9"]
 # This allows us to get access to the ctypes we need.
 [target."cfg(windows)".dependencies]
 winapi = "0.3"
-[target."cfg(not(windows))".dependencies]
-libc = "0.2"
 
 [target."cfg(windows)".build-dependencies]
 cmake = { version = "0.1", optional = true }
+[target."cfg(not(windows))".dependencies]
+libc = "0.2"
 
 [badges]
 appveyor = { repository = "Lokathor/fermium" }
