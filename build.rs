@@ -161,9 +161,9 @@ fn win32_build_static_libs() -> PathBuf {
   cfg.profile("release");
   cfg.static_crt(true);
 
-  // Note(Lokathor): I haven't tested this, it's just what I saw in sdl2-sys.
   if cfg!(target_env = "gnu") {
     cfg.define("VIDEO_OPENGLES", "OFF");
+    cfg.generator("MinGW Makefiles");
   }
 
   if cfg!(feature = "link_dynamic") {
