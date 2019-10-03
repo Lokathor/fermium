@@ -31,11 +31,19 @@ install:
 build: false
 
 test_script:
-  # dynamic
+  # dynamic 2.0.8
   - cargo build
   - cargo test
   - cargo clean
-  # static
+  # dynamic 2.0.9
+  - cargo build --features="bind_SDL2_2_0_9"
+  - cargo test --features="bind_SDL2_2_0_9"
+  - cargo clean
+  # dynamic 2.0.10
+  - cargo build --features="bind_SDL2_2_0_10"
+  - cargo test --features="bind_SDL2_2_0_10"
+  - cargo clean
+  # static 2.0.8
   - cargo build --no-default-features --features="link_static"
   - cargo test --no-default-features --features="link_static"
   - cargo clean

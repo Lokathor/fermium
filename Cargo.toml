@@ -6,6 +6,8 @@ version = "0.1.0-alpha.5"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
 license = "Zlib"
+keywords = ["SDL2"]
+categories = ["external-ffi-bindings", "multimedia", "no-std"]
 
 links = "SDL2"
 build = "build.rs"
@@ -43,8 +45,12 @@ link_static = ["cmake"]
 
 # In terms of the API version that you want to target the bindings at, lower is
 # strictly better. If you bind to an old version you can always still compile
-# against a newer version. Ubuntu 16 is 2.0.4, Debian old-stable is 2.0.5,
-# Ubuntu 18 is 2.0.8, Debian stable is 2.0.9, actual latest is 2.0.10.
+# against a newer version.
+# * Ubuntu 16 is 2.0.4
+# * Debian old-stable is 2.0.5,
+# * Ubuntu 18 is 2.0.8
+# * Debian stable is 2.0.9
+# * actual latest is 2.0.10.
 
 # If you do not specify a `bind_version` feature then the crate assumes that you
 # want to target 2.0.8
@@ -57,12 +63,13 @@ bind_SDL2_2_0_10 = ["bind_SDL2_2_0_9"]
 # otherwise having 2.0.8 be the minimum version supported by the crate seems
 # fine to me. Anyone farther back than Debian Stable is pretty far back.
 
-# This allows us to get access to the ctypes we need.
+[dependencies]
+cfg-if = "^0.1.10"
+
 [target."cfg(windows)".dependencies]
 winapi = "0.3"
-
-[target."cfg(windows)".build-dependencies]
 cmake = { version = "0.1", optional = true }
+
 [target."cfg(not(windows))".dependencies]
 libc = "0.2"
 

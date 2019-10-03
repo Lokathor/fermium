@@ -7,13 +7,17 @@
 
 # fermium
 
-This is bindings to the SDL2 C API.
+The `fermium` crate is raw bindings to the SDL2 C API.
+
+Compared to the common alternative,
+[sdl2-sys](https://crates.io/crates/sdl2-sys), this is has consts instead of
+enums, is slightly more complete, and it works _much_ better on windows MSVC (no
+special setup at all).
 
 * There are pre-generated bindings for the following targets:
   * armv7-unknown-linux-gnueabihf
   * i686-pc-windows-msvc
   * x86_64-apple-darwin
-  * x86_64-pc-windows-gnu
   * x86_64-pc-windows-msvc
   * x86_64-unknown-linux-gnu
 * If your platform supports SDL2 but isn't on that list, please send in a PR!
@@ -36,6 +40,8 @@ You can dynamic link or static link.
     repository](https://github.com/Lokathor/fermium/blob/master/win32-devel-files/VC/lib/x64).
     Put it in your project directory for development, and ship it with your
     program when you release something.
+  * If you're feeling lazy, you can `cargo install fermium` and then just run
+    `fermium` and it'll dump `SDL2.dll` into the current directory. It will automatically use either the 32-bit or 64-bit version.
   * On not-windows you should get SDL2 through your distro package manager
     (linux) or homebrew (Mac).
 * Static linking is available.

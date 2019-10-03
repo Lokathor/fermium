@@ -6,7 +6,12 @@
 #![allow(clippy::redundant_static_lifetimes)]
 #![allow(clippy::cognitive_complexity)]
 
-//! The `fermium` crate is bindings to SDL2.
+//! The `fermium` crate is raw bindings to the SDL2 C API.
+//!
+//! Compared to the common alternative,
+//! [sdl2-sys](https://crates.io/crates/sdl2-sys), this is has consts instead of
+//! enums, is slightly more complete, and it works _much_ better on windows MSVC
+//! (no special setup at all).
 //!
 //! Depending on how you configure the crate, you can target a minimum SDL2
 //! version of 2.0.8 or later. You can compile against a later version than your
@@ -45,33 +50,45 @@
 //!
 //! Instead you should check out the [SDL2 Wiki](https://wiki.libsdl.org/)
 
-#[cfg(not(windows))]
-pub use libc::{
-  c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
-};
-#[cfg(windows)]
-pub use winapi::ctypes::{
-  c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
-};
+use cfg_if::cfg_if;
 
-#[cfg(feature = "use_bindgen_bin")]
-include!(concat!(
-  env!("OUT_DIR"),
-  "/SDL2-v2.0.",
-  env!("BIND_PATCH_LEVEL"),
-  "-",
-  env!("TARGET"),
-  ".rs"
-));
+// re-export the variable-length C types from their source crate to ease the end
+// user experience.
+cfg_if! {
+  if #[cfg(windows)] {
+    pub use winapi::ctypes::{
+      c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
+    };
+  } else {
+    pub use libc::{
+      c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
+    };
+  }
+}
 
-#[cfg(not(feature = "use_bindgen_bin"))]
-include!(concat!(
-  "SDL2-v2.0.",
-  env!("BIND_PATCH_LEVEL"),
-  "-",
-  env!("TARGET"),
-  ".rs"
-));
+// bring in the correct bindings file. The bindgen binary will place them into
+// OUT_DIR, but for the pre-generated bindings they'll be within the source
+// directory along side the lib.rs file.
+cfg_if! {
+  if #[cfg(feature = "use_bindgen_bin")] {
+    include!(concat!(
+      env!("OUT_DIR"),
+      "/SDL2-v2.0.",
+      env!("BIND_PATCH_LEVEL"),
+      "-",
+      env!("TARGET"),
+      ".rs"
+    ));
+  } else {
+    include!(concat!(
+      "SDL2-v2.0.",
+      env!("BIND_PATCH_LEVEL"),
+      "-",
+      env!("TARGET"),
+      ".rs"
+    ));
+  }
+}
 
 // Note(Lokathor): Bindgen doesn't parse all things properly on its own, and it
 // doesn't parse CPP macros at all, so we must define some more stuff here.
@@ -91,19 +108,48 @@ pub type ArrayOrder = _bindgen_ty_4;
 /// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
 pub type PackedLayout = _bindgen_ty_5;
 
-/// See [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum)
-pub type SDL_PixelFormatEnum = _bindgen_ty_6;
+// For whatever reason, bindgen processes this type properly in the 2.0.10
+// headers and later, so after ty_6 there's a discepency between what the
+// unknown types mean.
+cfg_if! {
+  if #[cfg(not(feature = "bind_SDL2_2_0_10"))] {
+    /// See [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum)
+    pub type SDL_PixelFormatEnum = _bindgen_ty_6;
+  }
+}
 
-/// See [`SDL_LOG_CATEGORY`](https://wiki.libsdl.org/SDL_LOG_CATEGORY)
-pub type LogCategory = _bindgen_ty_8;
+cfg_if! {
+  if #[cfg(not(feature = "bind_SDL2_2_0_10"))] {
+    /// See [`SDL_Keycode`](https://wiki.libsdl.org/SDL_Keycode)
+    pub type SDLK = _bindgen_ty_7;
+  } else {
+    /// See [`SDL_Keycode`](https://wiki.libsdl.org/SDL_Keycode)
+    pub type SDLK = _bindgen_ty_6;
+  }
+}
+
+cfg_if! {
+  if #[cfg(not(feature = "bind_SDL2_2_0_10"))] {
+    /// See [`SDL_LOG_CATEGORY`](https://wiki.libsdl.org/SDL_LOG_CATEGORY)
+    pub type LogCategory = _bindgen_ty_8;
+  } else {
+    /// See [`SDL_LOG_CATEGORY`](https://wiki.libsdl.org/SDL_LOG_CATEGORY)
+    pub type LogCategory = _bindgen_ty_7;
+  }
+}
 
 /// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch
 /// input
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
 
-/// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse
-/// input
-pub const SDL_MOUSE_TOUCHID: u64 = -1i64 as u64;
+// only present in 2.0.10 and later
+cfg_if! {
+  if #[cfg(feature = "bind_SDL2_2_0_10")] {
+    /// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with
+    /// mouse input
+    pub const SDL_MOUSE_TOUCHID: u64 = -1i64 as u64;
+  }
+}
 
 /// `SDL_surface.h`: Evaluates to true if the surface needs to be locked before
 /// access.
