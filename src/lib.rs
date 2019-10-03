@@ -10,8 +10,8 @@
 //!
 //! Compared to the common alternative,
 //! [sdl2-sys](https://crates.io/crates/sdl2-sys), this is has consts instead of
-//! enums, is slightly more complete, and it works _much_ better on windows MSVC
-//! (no special setup at all).
+//! enums, it is slightly more complete, and it works _much_ better on windows
+//! MSVC (no special setup at all).
 //!
 //! Depending on how you configure the crate, you can target a minimum SDL2
 //! version of 2.0.8 or later. You can compile against a later version than your

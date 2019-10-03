@@ -11,8 +11,8 @@ The `fermium` crate is raw bindings to the SDL2 C API.
 
 Compared to the common alternative,
 [sdl2-sys](https://crates.io/crates/sdl2-sys), this is has consts instead of
-enums, is slightly more complete, and it works _much_ better on windows MSVC (no
-special setup at all).
+enums, it is slightly more complete, and it works _much_ better on windows MSVC
+(no special setup at all).
 
 * There are pre-generated bindings for the following targets:
   * armv7-unknown-linux-gnueabihf

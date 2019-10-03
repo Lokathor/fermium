@@ -66,9 +66,11 @@ bind_SDL2_2_0_10 = ["bind_SDL2_2_0_9"]
 [dependencies]
 cfg-if = "^0.1.10"
 
+[target."cfg(windows)".build-dependencies]
+cmake = { version = "0.1", optional = true }
+
 [target."cfg(windows)".dependencies]
 winapi = "0.3"
-cmake = { version = "0.1", optional = true }
 
 [target."cfg(not(windows))".dependencies]
 libc = "0.2"

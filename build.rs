@@ -157,26 +157,28 @@ fn run_bindgen_bin() {
 fn win32_build_static_libs() -> PathBuf {
   let manifest_dir =
     PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read `CARGO_MANIFEST_DIR`!"));
-  let mut cfg = cmake::Config::new(manifest_dir.join("full-source").join("SDL2-v2.0.10"));
-  cfg.profile("release");
-  cfg.static_crt(true);
+  let mut cm = cmake::Config::new(manifest_dir.join("full-source").join("SDL2-v2.0.10"));
+  cm.profile("release");
+  cm.static_crt(true);
 
+  /* windows-gnu is totally unsupported at the moment
   if cfg!(target_env = "gnu") {
-    cfg.define("VIDEO_OPENGLES", "OFF");
-    cfg.generator("MinGW Makefiles");
+    cm.define("VIDEO_OPENGLES", "OFF");
+    cm.generator("MinGW Makefiles");
   }
+  */
 
   if cfg!(feature = "link_dynamic") {
-    cfg.define("SDL_SHARED", "ON");
-    cfg.define("SDL_STATIC", "OFF");
+    cm.define("SDL_SHARED", "ON");
+    cm.define("SDL_STATIC", "OFF");
   } else if cfg!(feature = "link_static") {
-    cfg.define("SDL_SHARED", "OFF");
-    cfg.define("SDL_STATIC", "ON");
+    cm.define("SDL_SHARED", "OFF");
+    cm.define("SDL_STATIC", "ON");
   } else {
     panic!("You should have selected a link mode!");
   }
 
-  cfg.build()
+  cm.build()
 }
 
 fn declare_linking() {
