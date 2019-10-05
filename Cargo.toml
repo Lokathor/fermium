@@ -7,7 +7,7 @@ authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
 license = "Zlib"
 keywords = ["SDL2"]
-categories = ["external-ffi-bindings", "multimedia", "no-std"]
+categories = ["external-ffi-bindings", "multimedia", "game-engines", "no-std"]
 
 links = "SDL2"
 build = "build.rs"
