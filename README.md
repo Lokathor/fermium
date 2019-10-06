@@ -13,6 +13,8 @@
 
 The `fermium` crate is raw bindings to the SDL2 C API.
 
+For the high-level wrapper crate, please see [beryllium](https://github.com/Lokathor/beryllium).
+
 Compared to the common alternative,
 [sdl2-sys](https://crates.io/crates/sdl2-sys), this is has consts instead of
 enums, it is slightly more complete, and it works _much_ better on windows MSVC
