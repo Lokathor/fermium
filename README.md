@@ -5,9 +5,15 @@
 [![crates.io](https://img.shields.io/crates/v/fermium.svg)](https://crates.io/crates/fermium)
 [![docs.rs](https://docs.rs/fermium/badge.svg)](https://docs.rs/fermium/)
 
+**FAQ**:
+* When is 0.2? Not before SDL2-v2.0.12 comes out, which is scheduled for "before the end of the year".
+* Does this thing work with cross compilation? No, I'm dumb, I'll fix it in 0.2
+
 # fermium
 
 The `fermium` crate is raw bindings to the SDL2 C API.
+
+For the high-level wrapper crate, please see [beryllium](https://github.com/Lokathor/beryllium).
 
 Compared to the common alternative,
 [sdl2-sys](https://crates.io/crates/sdl2-sys), this is has consts instead of
