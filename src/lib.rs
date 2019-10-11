@@ -57,12 +57,13 @@ use cfg_if::cfg_if;
 cfg_if! {
   if #[cfg(windows)] {
     pub use winapi::ctypes::{
-      c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
+      c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort, c_void
     };
   } else {
     pub use libc::{
       c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
     };
+    pub use core::ffi::c_void;
   }
 }
 
