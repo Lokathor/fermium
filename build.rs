@@ -343,7 +343,7 @@ fn declare_sd2_config_linking() {
       // Do we do anything here?
     } else if term.starts_with("-Wl,--no-undefined") {
       // Do we do anything here?
-    } else if term.starts_with("-pthreads") {
+    } else if term.starts_with("-pthread") {
       // Nothing special on the Rust side
     } else {
       panic!("Unknown term: {}", term);
