@@ -346,7 +346,7 @@ fn declare_sd2_config_linking() {
     } else if term.starts_with("-pthread") {
       // Nothing special on the Rust side
     } else {
-      panic!("Unknown term: {}", term);
+      panic!("Unknown term: >>{}<<", term);
     }
   }
   // Note(Lokathor): If you get `sdl2-config` from the package manager instead
