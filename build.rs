@@ -88,6 +88,7 @@ fn run_bindgen_bin() {
     bindgen.arg("--impl-partialeq");
     bindgen.arg("--no-doc-comments");
     bindgen.arg("--no-prepend-enum-name");
+    bindgen.arg("--no-layout-tests");
     bindgen.arg("--use-core");
     bindgen.arg("--with-derive-default");
     bindgen.arg("--with-derive-partialeq");
@@ -95,7 +96,7 @@ fn run_bindgen_bin() {
     #[cfg(not(windows))]
     bindgen.arg("--ctypes-prefix").arg("libc");
     #[cfg(windows)]
-    bindgen.arg("--ctypes-prefix").arg("winapi::ctypes");
+    bindgen.arg("--ctypes-prefix").arg("self");
     bindgen.arg("--default-enum-style").arg("consts");
     bindgen.arg("--output").arg(&format!(
       "{}",
