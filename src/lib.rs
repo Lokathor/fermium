@@ -54,16 +54,24 @@ use cfg_if::cfg_if;
 
 // re-export the variable-length C types from their source crate to ease the end
 // user experience.
+pub use core::ffi::c_void;
 cfg_if! {
   if #[cfg(windows)] {
-    pub use winapi::ctypes::{
-      c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort, c_void
-    };
+    pub type c_char = i8;
+    pub type c_schar = i8;
+    pub type c_uchar = u8;
+    pub type c_short = i16;
+    pub type c_ushort = u16;
+    pub type c_int = i32;
+    pub type c_uint = u32;
+    pub type c_long = i32;
+    pub type c_ulong = u32;
+    pub type c_longlong = i64;
+    pub type c_ulonglong = u64;
   } else {
     pub use libc::{
-      c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort,
+      c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort, c_schar, c_uchar
     };
-    pub use core::ffi::c_void;
   }
 }
 
