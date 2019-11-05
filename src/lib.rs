@@ -162,6 +162,10 @@ cfg_if! {
 
 /// `SDL_surface.h`: Evaluates to true if the surface needs to be locked before
 /// access.
+/// 
+/// ## Safety
+/// 
+/// This must be a valid `SDL_Surface` pointer.
 #[inline(always)]
 pub unsafe fn SDL_MUSTLOCK(surface: *const SDL_Surface) -> bool {
   (*surface).flags & SDL_RLEACCEL != 0
