@@ -217,9 +217,9 @@ magic! {
 
 /// `SDL_surface.h`: Evaluates to true if the surface needs to be locked before
 /// access.
-/// 
+///
 /// ## Safety
-/// 
+///
 /// This must be a valid `SDL_Surface` pointer.
 #[inline(always)]
 pub unsafe fn SDL_MUSTLOCK(surface: *const SDL_Surface) -> bool {
@@ -240,19 +240,25 @@ pub const fn SDL_PIXELTYPE(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
 
 /// `SDL_pixels.h`: Component ordering of this format.
 #[inline(always)]
-pub const fn SDL_PIXELORDER(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+pub const fn SDL_PIXELORDER(
+  format: SDL_PixelFormatEnum,
+) -> SDL_PixelFormatEnum {
   (format >> 20) & 0x0F
 }
 
 /// `SDL_pixels.h`: Channel width layout of this format.
 #[inline(always)]
-pub const fn SDL_PIXELLAYOUT(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+pub const fn SDL_PIXELLAYOUT(
+  format: SDL_PixelFormatEnum,
+) -> SDL_PixelFormatEnum {
   (format >> 16) & 0x0F
 }
 
 /// `SDL_pixels.h`: Bits per pixel.
 #[inline(always)]
-pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
+pub const fn SDL_BITSPERPIXEL(
+  format: SDL_PixelFormatEnum,
+) -> SDL_PixelFormatEnum {
   (format >> 8) & 0xFF
 }
 

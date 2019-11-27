@@ -62,9 +62,8 @@ fn run_bindgen_bin() {
   println!("bindgen --version: {}", {
     let mut bindgen_version = Command::new("bindgen");
     bindgen_version.arg("--version");
-    let version_out = bindgen_version
-      .output()
-      .expect("Couldn't execute `bindgen --version`!");
+    let version_out =
+      bindgen_version.output().expect("Couldn't execute `bindgen --version`!");
     if version_out.status.success() {
       String::from_utf8_lossy(&version_out.stdout).into_owned()
     } else {
@@ -73,11 +72,13 @@ fn run_bindgen_bin() {
   });
 
   //
-  let current_dir = env::current_dir().expect("Couldn't read the current directory.");
+  let current_dir =
+    env::current_dir().expect("Couldn't read the current directory.");
   let wrapper_filename = current_dir.join("wrapper.h");
 
   //
-  let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR`"));
+  let out_dir =
+    PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR`"));
   let target = env::var("TARGET").expect("Couldn't read `TARGET`");
 
   let make_bindgen_command = |patch_level: i32| {
@@ -131,9 +132,9 @@ fn run_bindgen_bin() {
     let mut bindgen = make_bindgen_command(patch_level);
 
     println!("executing command: {:?}", bindgen);
-    let bindgen_output = bindgen
-      .output()
-      .expect("Couldn't run 'bindgen', perhaps you need to 'cargo install bindgen'?");
+    let bindgen_output = bindgen.output().expect(
+      "Couldn't run 'bindgen', perhaps you need to 'cargo install bindgen'?",
+    );
     if bindgen_output.status.success() {
       println!("command success!")
     } else {
@@ -156,9 +157,12 @@ fn run_bindgen_bin() {
 // dependencies unless it's really gonna be used.
 #[cfg(all(windows, feature = "link_static"))]
 fn win32_build_static_libs() -> PathBuf {
-  let manifest_dir =
-    PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read `CARGO_MANIFEST_DIR`!"));
-  let mut cm = cmake::Config::new(manifest_dir.join("full-source").join("SDL2-v2.0.10"));
+  let manifest_dir = PathBuf::from(
+    env::var("CARGO_MANIFEST_DIR")
+      .expect("Could not read `CARGO_MANIFEST_DIR`!"),
+  );
+  let mut cm =
+    cmake::Config::new(manifest_dir.join("full-source").join("SDL2-v2.0.10"));
   cm.profile("release");
   cm.static_crt(true);
 
@@ -212,8 +216,10 @@ fn declare_win32_linking() {
   }
 
   // where to look
-  let manifest_dir =
-    PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Could not read `CARGO_MANIFEST_DIR`!"));
+  let manifest_dir = PathBuf::from(
+    env::var("CARGO_MANIFEST_DIR")
+      .expect("Could not read `CARGO_MANIFEST_DIR`!"),
+  );
 
   if cfg!(feature = "link_dynamic") {
     let sub_directory: &str = if cfg!(target_env = "gnu") {
@@ -249,14 +255,9 @@ fn declare_sd2_config_linking() {
   assert!(!sdl2_config_usage.status.success());
   let usage_out_string = String::from_utf8_lossy(&sdl2_config_usage.stderr);
   println!("sdl2-config: {}", usage_out_string);
-  let usage_words: Vec<String> = usage_out_string
-    .split_whitespace()
-    .map(|s| s.to_string())
-    .collect();
-  assert!(
-    &usage_words[0] == "Usage:",
-    "Unexpected usage message, aborting!"
-  );
+  let usage_words: Vec<String> =
+    usage_out_string.split_whitespace().map(|s| s.to_string()).collect();
+  assert!(&usage_words[0] == "Usage:", "Unexpected usage message, aborting!");
   if cfg!(feature = "link_dynamic") {
     assert!(
       usage_words.contains(&"[--libs]".to_string()),
@@ -307,10 +308,10 @@ fn declare_sd2_config_linking() {
   } else {
     panic!("No link mode selected!");
   };
-  let sd2_config_linking = Command::new("sdl2-config")
-    .arg(link_style_arg)
-    .output()
-    .unwrap_or_else(|_| panic!("Couldn't run `sdl2-config {}`.", link_style_arg));
+  let sd2_config_linking =
+    Command::new("sdl2-config").arg(link_style_arg).output().unwrap_or_else(
+      |_| panic!("Couldn't run `sdl2-config {}`.", link_style_arg),
+    );
   assert!(sd2_config_linking.status.success());
   let sd2_config_linking_string: String =
     String::from_utf8_lossy(&sd2_config_linking.stdout).into_owned();
@@ -356,19 +357,34 @@ fn declare_sd2_config_linking() {
   // probably is based on what Debian / Ubuntu do. Sane, right?
   println!("cargo:rustc-link-search=native=/usr/lib");
   println!("cargo:rustc-link-search=native=/usr/local/lib");
-  if cfg!(target_arch = "x86_64") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
+  if cfg!(target_arch = "x86_64")
+    && cfg!(target_os = "linux")
+    && cfg!(target_env = "gnu")
+  {
     println!("cargo:rustc-link-search=native=/usr/lib/x86_64-linux-gnu");
   }
-  if cfg!(target_arch = "aarch64") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
+  if cfg!(target_arch = "aarch64")
+    && cfg!(target_os = "linux")
+    && cfg!(target_env = "gnu")
+  {
     println!("cargo:rustc-link-search=native=/usr/lib/aarch64-linux-gnu");
   }
-  if cfg!(target_arch = "arm") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
+  if cfg!(target_arch = "arm")
+    && cfg!(target_os = "linux")
+    && cfg!(target_env = "gnu")
+  {
     println!("cargo:rustc-link-search=native=/usr/lib/arm-linux-gnueabihf");
   }
-  if cfg!(target_arch = "x86") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
+  if cfg!(target_arch = "x86")
+    && cfg!(target_os = "linux")
+    && cfg!(target_env = "gnu")
+  {
     println!("cargo:rustc-link-search=native=/usr/lib/i386-linux-gnu");
   }
-  if cfg!(target_arch = "powerpc64") && cfg!(target_os = "linux") && cfg!(target_env = "gnu") {
+  if cfg!(target_arch = "powerpc64")
+    && cfg!(target_os = "linux")
+    && cfg!(target_env = "gnu")
+  {
     println!("cargo:rustc-link-search=native=/usr/lib/powerpc64le-linux-gnu");
   }
 }
