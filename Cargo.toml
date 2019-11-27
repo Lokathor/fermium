@@ -63,14 +63,9 @@ bind_SDL2_2_0_10 = ["bind_SDL2_2_0_9"]
 # otherwise having 2.0.8 be the minimum version supported by the crate seems
 # fine to me. Anyone farther back than Debian Stable is pretty far back.
 
-[dependencies]
-cfg-if = "^0.1.10"
-
 [target."cfg(windows)".build-dependencies]
+# only actually called for static linking
 cmake = { version = "0.1", optional = true }
-
-[target."cfg(windows)".dependencies]
-winapi = "0.3"
 
 [target."cfg(not(windows))".dependencies]
 libc = "0.2"

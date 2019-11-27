@@ -270,9 +270,9 @@ pub const SDL_INIT_SENSOR: u32 = 32768;
 pub const SDL_INIT_NOPARACHUTE: u32 = 1048576;
 pub const SDL_INIT_EVERYTHING: u32 = 62001;
 extern "C" {
-  pub fn SDL_GetPlatform() -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetPlatform() -> *const c_char;
 }
-pub type wchar_t = winapi::ctypes::c_ushort;
+pub type wchar_t = c_ushort;
 pub type va_list = __builtin_va_list;
 pub const SDL_FALSE: SDL_bool = 0;
 pub const SDL_TRUE: SDL_bool = 1;
@@ -284,42 +284,42 @@ pub type Sint32 = i32;
 pub type Uint32 = u32;
 pub type Sint64 = i64;
 pub type Uint64 = u64;
-pub type SDL_compile_time_assert_uint8 = [winapi::ctypes::c_int; 1usize];
-pub type SDL_compile_time_assert_sint8 = [winapi::ctypes::c_int; 1usize];
-pub type SDL_compile_time_assert_uint16 = [winapi::ctypes::c_int; 1usize];
-pub type SDL_compile_time_assert_sint16 = [winapi::ctypes::c_int; 1usize];
-pub type SDL_compile_time_assert_uint32 = [winapi::ctypes::c_int; 1usize];
-pub type SDL_compile_time_assert_sint32 = [winapi::ctypes::c_int; 1usize];
-pub type SDL_compile_time_assert_uint64 = [winapi::ctypes::c_int; 1usize];
-pub type SDL_compile_time_assert_sint64 = [winapi::ctypes::c_int; 1usize];
+pub type SDL_compile_time_assert_uint8 = [c_int; 1usize];
+pub type SDL_compile_time_assert_sint8 = [c_int; 1usize];
+pub type SDL_compile_time_assert_uint16 = [c_int; 1usize];
+pub type SDL_compile_time_assert_sint16 = [c_int; 1usize];
+pub type SDL_compile_time_assert_uint32 = [c_int; 1usize];
+pub type SDL_compile_time_assert_sint32 = [c_int; 1usize];
+pub type SDL_compile_time_assert_uint64 = [c_int; 1usize];
+pub type SDL_compile_time_assert_sint64 = [c_int; 1usize];
 pub const DUMMY_ENUM_VALUE: SDL_DUMMY_ENUM = 0;
 pub type SDL_DUMMY_ENUM = i32;
-pub type SDL_compile_time_assert_enum = [winapi::ctypes::c_int; 1usize];
+pub type SDL_compile_time_assert_enum = [c_int; 1usize];
 extern "C" {
-  pub fn SDL_malloc(size: usize) -> *mut winapi::ctypes::c_void;
+  pub fn SDL_malloc(size: usize) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_calloc(nmemb: usize, size: usize) -> *mut winapi::ctypes::c_void;
+  pub fn SDL_calloc(nmemb: usize, size: usize) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_realloc(mem: *mut winapi::ctypes::c_void, size: usize) -> *mut winapi::ctypes::c_void;
+  pub fn SDL_realloc(mem: *mut c_void, size: usize) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_free(mem: *mut winapi::ctypes::c_void);
+  pub fn SDL_free(mem: *mut c_void);
 }
 pub type SDL_malloc_func =
-  ::core::option::Option<unsafe extern "C" fn(size: usize) -> *mut winapi::ctypes::c_void>;
+  ::core::option::Option<unsafe extern "C" fn(size: usize) -> *mut c_void>;
 pub type SDL_calloc_func = ::core::option::Option<
-  unsafe extern "C" fn(nmemb: usize, size: usize) -> *mut winapi::ctypes::c_void,
+  unsafe extern "C" fn(nmemb: usize, size: usize) -> *mut c_void,
 >;
 pub type SDL_realloc_func = ::core::option::Option<
   unsafe extern "C" fn(
-    mem: *mut winapi::ctypes::c_void,
+    mem: *mut c_void,
     size: usize,
-  ) -> *mut winapi::ctypes::c_void,
+  ) -> *mut c_void,
 >;
 pub type SDL_free_func =
-  ::core::option::Option<unsafe extern "C" fn(mem: *mut winapi::ctypes::c_void)>;
+  ::core::option::Option<unsafe extern "C" fn(mem: *mut c_void)>;
 extern "C" {
   pub fn SDL_GetMemoryFunctions(
     malloc_func: *mut SDL_malloc_func,
@@ -334,76 +334,76 @@ extern "C" {
     calloc_func: SDL_calloc_func,
     realloc_func: SDL_realloc_func,
     free_func: SDL_free_func,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetNumAllocations() -> winapi::ctypes::c_int;
+  pub fn SDL_GetNumAllocations() -> c_int;
 }
 extern "C" {
-  pub fn SDL_getenv(name: *const winapi::ctypes::c_char) -> *mut winapi::ctypes::c_char;
+  pub fn SDL_getenv(name: *const c_char) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_setenv(
-    name: *const winapi::ctypes::c_char,
-    value: *const winapi::ctypes::c_char,
-    overwrite: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    name: *const c_char,
+    value: *const c_char,
+    overwrite: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_qsort(
-    base: *mut winapi::ctypes::c_void,
+    base: *mut c_void,
     nmemb: usize,
     size: usize,
     compare: ::core::option::Option<
       unsafe extern "C" fn(
-        arg1: *const winapi::ctypes::c_void,
-        arg2: *const winapi::ctypes::c_void,
-      ) -> winapi::ctypes::c_int,
+        arg1: *const c_void,
+        arg2: *const c_void,
+      ) -> c_int,
     >,
   );
 }
 extern "C" {
-  pub fn SDL_abs(x: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_abs(x: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_isdigit(x: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_isdigit(x: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_isspace(x: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_isspace(x: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_toupper(x: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_toupper(x: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_tolower(x: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_tolower(x: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_memset(
-    dst: *mut winapi::ctypes::c_void,
-    c: winapi::ctypes::c_int,
+    dst: *mut c_void,
+    c: c_int,
     len: usize,
-  ) -> *mut winapi::ctypes::c_void;
+  ) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_memcpy(
-    dst: *mut winapi::ctypes::c_void,
-    src: *const winapi::ctypes::c_void,
+    dst: *mut c_void,
+    src: *const c_void,
     len: usize,
-  ) -> *mut winapi::ctypes::c_void;
+  ) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_memmove(
-    dst: *mut winapi::ctypes::c_void,
-    src: *const winapi::ctypes::c_void,
+    dst: *mut c_void,
+    src: *const c_void,
     len: usize,
-  ) -> *mut winapi::ctypes::c_void;
+  ) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_memcmp(
-    s1: *const winapi::ctypes::c_void,
-    s2: *const winapi::ctypes::c_void,
+    s1: *const c_void,
+    s2: *const c_void,
     len: usize,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_wcsdup(wstr: *const wchar_t) -> *mut wchar_t;
@@ -418,202 +418,202 @@ extern "C" {
   pub fn SDL_wcslcat(dst: *mut wchar_t, src: *const wchar_t, maxlen: usize) -> usize;
 }
 extern "C" {
-  pub fn SDL_wcscmp(str1: *const wchar_t, str2: *const wchar_t) -> winapi::ctypes::c_int;
+  pub fn SDL_wcscmp(str1: *const wchar_t, str2: *const wchar_t) -> c_int;
 }
 extern "C" {
-  pub fn SDL_strlen(str: *const winapi::ctypes::c_char) -> usize;
+  pub fn SDL_strlen(str: *const c_char) -> usize;
 }
 extern "C" {
   pub fn SDL_strlcpy(
-    dst: *mut winapi::ctypes::c_char,
-    src: *const winapi::ctypes::c_char,
+    dst: *mut c_char,
+    src: *const c_char,
     maxlen: usize,
   ) -> usize;
 }
 extern "C" {
   pub fn SDL_utf8strlcpy(
-    dst: *mut winapi::ctypes::c_char,
-    src: *const winapi::ctypes::c_char,
+    dst: *mut c_char,
+    src: *const c_char,
     dst_bytes: usize,
   ) -> usize;
 }
 extern "C" {
   pub fn SDL_strlcat(
-    dst: *mut winapi::ctypes::c_char,
-    src: *const winapi::ctypes::c_char,
+    dst: *mut c_char,
+    src: *const c_char,
     maxlen: usize,
   ) -> usize;
 }
 extern "C" {
-  pub fn SDL_strdup(str: *const winapi::ctypes::c_char) -> *mut winapi::ctypes::c_char;
+  pub fn SDL_strdup(str: *const c_char) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_strrev(str: *mut winapi::ctypes::c_char) -> *mut winapi::ctypes::c_char;
+  pub fn SDL_strrev(str: *mut c_char) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_strupr(str: *mut winapi::ctypes::c_char) -> *mut winapi::ctypes::c_char;
+  pub fn SDL_strupr(str: *mut c_char) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_strlwr(str: *mut winapi::ctypes::c_char) -> *mut winapi::ctypes::c_char;
+  pub fn SDL_strlwr(str: *mut c_char) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_strchr(
-    str: *const winapi::ctypes::c_char,
-    c: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    str: *const c_char,
+    c: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_strrchr(
-    str: *const winapi::ctypes::c_char,
-    c: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    str: *const c_char,
+    c: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_strstr(
-    haystack: *const winapi::ctypes::c_char,
-    needle: *const winapi::ctypes::c_char,
-  ) -> *mut winapi::ctypes::c_char;
+    haystack: *const c_char,
+    needle: *const c_char,
+  ) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_utf8strlen(str: *const winapi::ctypes::c_char) -> usize;
+  pub fn SDL_utf8strlen(str: *const c_char) -> usize;
 }
 extern "C" {
   pub fn SDL_itoa(
-    value: winapi::ctypes::c_int,
-    str: *mut winapi::ctypes::c_char,
-    radix: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    value: c_int,
+    str: *mut c_char,
+    radix: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_uitoa(
-    value: winapi::ctypes::c_uint,
-    str: *mut winapi::ctypes::c_char,
-    radix: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    value: c_uint,
+    str: *mut c_char,
+    radix: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_ltoa(
-    value: winapi::ctypes::c_long,
-    str: *mut winapi::ctypes::c_char,
-    radix: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    value: c_long,
+    str: *mut c_char,
+    radix: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_ultoa(
-    value: winapi::ctypes::c_ulong,
-    str: *mut winapi::ctypes::c_char,
-    radix: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    value: c_ulong,
+    str: *mut c_char,
+    radix: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_lltoa(
     value: Sint64,
-    str: *mut winapi::ctypes::c_char,
-    radix: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    str: *mut c_char,
+    radix: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_ulltoa(
     value: Uint64,
-    str: *mut winapi::ctypes::c_char,
-    radix: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    str: *mut c_char,
+    radix: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_atoi(str: *const winapi::ctypes::c_char) -> winapi::ctypes::c_int;
+  pub fn SDL_atoi(str: *const c_char) -> c_int;
 }
 extern "C" {
-  pub fn SDL_atof(str: *const winapi::ctypes::c_char) -> f64;
+  pub fn SDL_atof(str: *const c_char) -> f64;
 }
 extern "C" {
   pub fn SDL_strtol(
-    str: *const winapi::ctypes::c_char,
-    endp: *mut *mut winapi::ctypes::c_char,
-    base: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_long;
+    str: *const c_char,
+    endp: *mut *mut c_char,
+    base: c_int,
+  ) -> c_long;
 }
 extern "C" {
   pub fn SDL_strtoul(
-    str: *const winapi::ctypes::c_char,
-    endp: *mut *mut winapi::ctypes::c_char,
-    base: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_ulong;
+    str: *const c_char,
+    endp: *mut *mut c_char,
+    base: c_int,
+  ) -> c_ulong;
 }
 extern "C" {
   pub fn SDL_strtoll(
-    str: *const winapi::ctypes::c_char,
-    endp: *mut *mut winapi::ctypes::c_char,
-    base: winapi::ctypes::c_int,
+    str: *const c_char,
+    endp: *mut *mut c_char,
+    base: c_int,
   ) -> Sint64;
 }
 extern "C" {
   pub fn SDL_strtoull(
-    str: *const winapi::ctypes::c_char,
-    endp: *mut *mut winapi::ctypes::c_char,
-    base: winapi::ctypes::c_int,
+    str: *const c_char,
+    endp: *mut *mut c_char,
+    base: c_int,
   ) -> Uint64;
 }
 extern "C" {
   pub fn SDL_strtod(
-    str: *const winapi::ctypes::c_char,
-    endp: *mut *mut winapi::ctypes::c_char,
+    str: *const c_char,
+    endp: *mut *mut c_char,
   ) -> f64;
 }
 extern "C" {
   pub fn SDL_strcmp(
-    str1: *const winapi::ctypes::c_char,
-    str2: *const winapi::ctypes::c_char,
-  ) -> winapi::ctypes::c_int;
+    str1: *const c_char,
+    str2: *const c_char,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_strncmp(
-    str1: *const winapi::ctypes::c_char,
-    str2: *const winapi::ctypes::c_char,
+    str1: *const c_char,
+    str2: *const c_char,
     maxlen: usize,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_strcasecmp(
-    str1: *const winapi::ctypes::c_char,
-    str2: *const winapi::ctypes::c_char,
-  ) -> winapi::ctypes::c_int;
+    str1: *const c_char,
+    str2: *const c_char,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_strncasecmp(
-    str1: *const winapi::ctypes::c_char,
-    str2: *const winapi::ctypes::c_char,
+    str1: *const c_char,
+    str2: *const c_char,
     len: usize,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_sscanf(
-    text: *const winapi::ctypes::c_char,
-    fmt: *const winapi::ctypes::c_char,
+    text: *const c_char,
+    fmt: *const c_char,
     ...
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_vsscanf(
-    text: *const winapi::ctypes::c_char,
-    fmt: *const winapi::ctypes::c_char,
+    text: *const c_char,
+    fmt: *const c_char,
     ap: va_list,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_snprintf(
-    text: *mut winapi::ctypes::c_char,
+    text: *mut c_char,
     maxlen: usize,
-    fmt: *const winapi::ctypes::c_char,
+    fmt: *const c_char,
     ...
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_vsnprintf(
-    text: *mut winapi::ctypes::c_char,
+    text: *mut c_char,
     maxlen: usize,
-    fmt: *const winapi::ctypes::c_char,
+    fmt: *const c_char,
     ap: va_list,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_acos(x: f64) -> f64;
@@ -700,10 +700,10 @@ extern "C" {
   pub fn SDL_powf(x: f32, y: f32) -> f32;
 }
 extern "C" {
-  pub fn SDL_scalbn(x: f64, n: winapi::ctypes::c_int) -> f64;
+  pub fn SDL_scalbn(x: f64, n: c_int) -> f64;
 }
 extern "C" {
-  pub fn SDL_scalbnf(x: f32, n: winapi::ctypes::c_int) -> f32;
+  pub fn SDL_scalbnf(x: f32, n: c_int) -> f32;
 }
 extern "C" {
   pub fn SDL_sin(x: f64) -> f64;
@@ -731,51 +731,51 @@ pub struct _SDL_iconv_t {
 pub type SDL_iconv_t = *mut _SDL_iconv_t;
 extern "C" {
   pub fn SDL_iconv_open(
-    tocode: *const winapi::ctypes::c_char,
-    fromcode: *const winapi::ctypes::c_char,
+    tocode: *const c_char,
+    fromcode: *const c_char,
   ) -> SDL_iconv_t;
 }
 extern "C" {
-  pub fn SDL_iconv_close(cd: SDL_iconv_t) -> winapi::ctypes::c_int;
+  pub fn SDL_iconv_close(cd: SDL_iconv_t) -> c_int;
 }
 extern "C" {
   pub fn SDL_iconv(
     cd: SDL_iconv_t,
-    inbuf: *mut *const winapi::ctypes::c_char,
+    inbuf: *mut *const c_char,
     inbytesleft: *mut usize,
-    outbuf: *mut *mut winapi::ctypes::c_char,
+    outbuf: *mut *mut c_char,
     outbytesleft: *mut usize,
   ) -> usize;
 }
 extern "C" {
   pub fn SDL_iconv_string(
-    tocode: *const winapi::ctypes::c_char,
-    fromcode: *const winapi::ctypes::c_char,
-    inbuf: *const winapi::ctypes::c_char,
+    tocode: *const c_char,
+    fromcode: *const c_char,
+    inbuf: *const c_char,
     inbytesleft: usize,
-  ) -> *mut winapi::ctypes::c_char;
+  ) -> *mut c_char;
 }
 pub type SDL_main_func = ::core::option::Option<
   unsafe extern "C" fn(
-    argc: winapi::ctypes::c_int,
-    argv: *mut *mut winapi::ctypes::c_char,
-  ) -> winapi::ctypes::c_int,
+    argc: c_int,
+    argv: *mut *mut c_char,
+  ) -> c_int,
 >;
 extern "C" {
   pub fn SDL_main(
-    argc: winapi::ctypes::c_int,
-    argv: *mut *mut winapi::ctypes::c_char,
-  ) -> winapi::ctypes::c_int;
+    argc: c_int,
+    argv: *mut *mut c_char,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetMainReady();
 }
 extern "C" {
   pub fn SDL_RegisterApp(
-    name: *mut winapi::ctypes::c_char,
+    name: *mut c_char,
     style: Uint32,
-    hInst: *mut winapi::ctypes::c_void,
-  ) -> winapi::ctypes::c_int;
+    hInst: *mut c_void,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_UnregisterApp();
@@ -789,12 +789,12 @@ pub type SDL_AssertState = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_AssertData {
-  pub always_ignore: winapi::ctypes::c_int,
-  pub trigger_count: winapi::ctypes::c_uint,
-  pub condition: *const winapi::ctypes::c_char,
-  pub filename: *const winapi::ctypes::c_char,
-  pub linenum: winapi::ctypes::c_int,
-  pub function: *const winapi::ctypes::c_char,
+  pub always_ignore: c_int,
+  pub trigger_count: c_uint,
+  pub condition: *const c_char,
+  pub filename: *const c_char,
+  pub linenum: c_int,
+  pub function: *const c_char,
   pub next: *const SDL_AssertData,
 }
 #[test]
@@ -888,21 +888,21 @@ impl Default for SDL_AssertData {
 extern "C" {
   pub fn SDL_ReportAssertion(
     arg1: *mut SDL_AssertData,
-    arg2: *const winapi::ctypes::c_char,
-    arg3: *const winapi::ctypes::c_char,
-    arg4: winapi::ctypes::c_int,
+    arg2: *const c_char,
+    arg3: *const c_char,
+    arg4: c_int,
   ) -> SDL_AssertState;
 }
 pub type SDL_AssertionHandler = ::core::option::Option<
   unsafe extern "C" fn(
     data: *const SDL_AssertData,
-    userdata: *mut winapi::ctypes::c_void,
+    userdata: *mut c_void,
   ) -> SDL_AssertState,
 >;
 extern "C" {
   pub fn SDL_SetAssertionHandler(
     handler: SDL_AssertionHandler,
-    userdata: *mut winapi::ctypes::c_void,
+    userdata: *mut c_void,
   );
 }
 extern "C" {
@@ -910,7 +910,7 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_GetAssertionHandler(
-    puserdata: *mut *mut winapi::ctypes::c_void,
+    puserdata: *mut *mut c_void,
   ) -> SDL_AssertionHandler;
 }
 extern "C" {
@@ -919,7 +919,7 @@ extern "C" {
 extern "C" {
   pub fn SDL_ResetAssertionReport();
 }
-pub type SDL_SpinLock = winapi::ctypes::c_int;
+pub type SDL_SpinLock = c_int;
 extern "C" {
   pub fn SDL_AtomicTryLock(lock: *mut SDL_SpinLock) -> SDL_bool;
 }
@@ -938,7 +938,7 @@ extern "C" {
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_atomic_t {
-  pub value: winapi::ctypes::c_int,
+  pub value: c_int,
 }
 #[test]
 fn bindgen_test_layout_SDL_atomic_t() {
@@ -966,40 +966,40 @@ fn bindgen_test_layout_SDL_atomic_t() {
 extern "C" {
   pub fn SDL_AtomicCAS(
     a: *mut SDL_atomic_t,
-    oldval: winapi::ctypes::c_int,
-    newval: winapi::ctypes::c_int,
+    oldval: c_int,
+    newval: c_int,
   ) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_AtomicSet(a: *mut SDL_atomic_t, v: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_AtomicSet(a: *mut SDL_atomic_t, v: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_AtomicGet(a: *mut SDL_atomic_t) -> winapi::ctypes::c_int;
+  pub fn SDL_AtomicGet(a: *mut SDL_atomic_t) -> c_int;
 }
 extern "C" {
-  pub fn SDL_AtomicAdd(a: *mut SDL_atomic_t, v: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_AtomicAdd(a: *mut SDL_atomic_t, v: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_AtomicCASPtr(
-    a: *mut *mut winapi::ctypes::c_void,
-    oldval: *mut winapi::ctypes::c_void,
-    newval: *mut winapi::ctypes::c_void,
+    a: *mut *mut c_void,
+    oldval: *mut c_void,
+    newval: *mut c_void,
   ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_AtomicSetPtr(
-    a: *mut *mut winapi::ctypes::c_void,
-    v: *mut winapi::ctypes::c_void,
-  ) -> *mut winapi::ctypes::c_void;
+    a: *mut *mut c_void,
+    v: *mut c_void,
+  ) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_AtomicGetPtr(a: *mut *mut winapi::ctypes::c_void) -> *mut winapi::ctypes::c_void;
+  pub fn SDL_AtomicGetPtr(a: *mut *mut c_void) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_SetError(fmt: *const winapi::ctypes::c_char, ...) -> winapi::ctypes::c_int;
+  pub fn SDL_SetError(fmt: *const c_char, ...) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetError() -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetError() -> *const c_char;
 }
 extern "C" {
   pub fn SDL_ClearError();
@@ -1012,7 +1012,7 @@ pub const SDL_UNSUPPORTED: SDL_errorcode = 4;
 pub const SDL_LASTERROR: SDL_errorcode = 5;
 pub type SDL_errorcode = i32;
 extern "C" {
-  pub fn SDL_Error(code: SDL_errorcode) -> winapi::ctypes::c_int;
+  pub fn SDL_Error(code: SDL_errorcode) -> c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1023,13 +1023,13 @@ extern "C" {
   pub fn SDL_CreateMutex() -> *mut SDL_mutex;
 }
 extern "C" {
-  pub fn SDL_LockMutex(mutex: *mut SDL_mutex) -> winapi::ctypes::c_int;
+  pub fn SDL_LockMutex(mutex: *mut SDL_mutex) -> c_int;
 }
 extern "C" {
-  pub fn SDL_TryLockMutex(mutex: *mut SDL_mutex) -> winapi::ctypes::c_int;
+  pub fn SDL_TryLockMutex(mutex: *mut SDL_mutex) -> c_int;
 }
 extern "C" {
-  pub fn SDL_UnlockMutex(mutex: *mut SDL_mutex) -> winapi::ctypes::c_int;
+  pub fn SDL_UnlockMutex(mutex: *mut SDL_mutex) -> c_int;
 }
 extern "C" {
   pub fn SDL_DestroyMutex(mutex: *mut SDL_mutex);
@@ -1047,16 +1047,16 @@ extern "C" {
   pub fn SDL_DestroySemaphore(sem: *mut SDL_sem);
 }
 extern "C" {
-  pub fn SDL_SemWait(sem: *mut SDL_sem) -> winapi::ctypes::c_int;
+  pub fn SDL_SemWait(sem: *mut SDL_sem) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SemTryWait(sem: *mut SDL_sem) -> winapi::ctypes::c_int;
+  pub fn SDL_SemTryWait(sem: *mut SDL_sem) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SemWaitTimeout(sem: *mut SDL_sem, ms: Uint32) -> winapi::ctypes::c_int;
+  pub fn SDL_SemWaitTimeout(sem: *mut SDL_sem, ms: Uint32) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SemPost(sem: *mut SDL_sem) -> winapi::ctypes::c_int;
+  pub fn SDL_SemPost(sem: *mut SDL_sem) -> c_int;
 }
 extern "C" {
   pub fn SDL_SemValue(sem: *mut SDL_sem) -> Uint32;
@@ -1073,55 +1073,55 @@ extern "C" {
   pub fn SDL_DestroyCond(cond: *mut SDL_cond);
 }
 extern "C" {
-  pub fn SDL_CondSignal(cond: *mut SDL_cond) -> winapi::ctypes::c_int;
+  pub fn SDL_CondSignal(cond: *mut SDL_cond) -> c_int;
 }
 extern "C" {
-  pub fn SDL_CondBroadcast(cond: *mut SDL_cond) -> winapi::ctypes::c_int;
+  pub fn SDL_CondBroadcast(cond: *mut SDL_cond) -> c_int;
 }
 extern "C" {
-  pub fn SDL_CondWait(cond: *mut SDL_cond, mutex: *mut SDL_mutex) -> winapi::ctypes::c_int;
+  pub fn SDL_CondWait(cond: *mut SDL_cond, mutex: *mut SDL_mutex) -> c_int;
 }
 extern "C" {
   pub fn SDL_CondWaitTimeout(
     cond: *mut SDL_cond,
     mutex: *mut SDL_mutex,
     ms: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct SDL_Thread {
   _unused: [u8; 0],
 }
-pub type SDL_threadID = winapi::ctypes::c_ulong;
-pub type SDL_TLSID = winapi::ctypes::c_uint;
+pub type SDL_threadID = c_ulong;
+pub type SDL_TLSID = c_uint;
 pub const SDL_THREAD_PRIORITY_LOW: SDL_ThreadPriority = 0;
 pub const SDL_THREAD_PRIORITY_NORMAL: SDL_ThreadPriority = 1;
 pub const SDL_THREAD_PRIORITY_HIGH: SDL_ThreadPriority = 2;
 pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = 3;
 pub type SDL_ThreadPriority = i32;
 pub type SDL_ThreadFunction = ::core::option::Option<
-  unsafe extern "C" fn(data: *mut winapi::ctypes::c_void) -> winapi::ctypes::c_int,
+  unsafe extern "C" fn(data: *mut c_void) -> c_int,
 >;
 pub type pfnSDL_CurrentBeginThread = ::core::option::Option<
   unsafe extern "C" fn(
-    arg1: *mut winapi::ctypes::c_void,
-    arg2: winapi::ctypes::c_uint,
+    arg1: *mut c_void,
+    arg2: c_uint,
     func: ::core::option::Option<
-      unsafe extern "C" fn(arg1: *mut winapi::ctypes::c_void) -> winapi::ctypes::c_uint,
+      unsafe extern "C" fn(arg1: *mut c_void) -> c_uint,
     >,
-    arg3: *mut winapi::ctypes::c_void,
-    arg4: winapi::ctypes::c_uint,
-    arg5: *mut winapi::ctypes::c_uint,
+    arg3: *mut c_void,
+    arg4: c_uint,
+    arg5: *mut c_uint,
   ) -> usize,
 >;
 pub type pfnSDL_CurrentEndThread =
-  ::core::option::Option<unsafe extern "C" fn(code: winapi::ctypes::c_uint)>;
+  ::core::option::Option<unsafe extern "C" fn(code: c_uint)>;
 extern "C" {
   pub fn SDL_CreateThread(
     fn_: SDL_ThreadFunction,
-    name: *const winapi::ctypes::c_char,
-    data: *mut winapi::ctypes::c_void,
+    name: *const c_char,
+    data: *mut c_void,
     pfnBeginThread: pfnSDL_CurrentBeginThread,
     pfnEndThread: pfnSDL_CurrentEndThread,
   ) -> *mut SDL_Thread;
@@ -1129,17 +1129,17 @@ extern "C" {
 extern "C" {
   pub fn SDL_CreateThreadWithStackSize(
     fn_: ::core::option::Option<
-      unsafe extern "C" fn(arg1: *mut winapi::ctypes::c_void) -> winapi::ctypes::c_int,
+      unsafe extern "C" fn(arg1: *mut c_void) -> c_int,
     >,
-    name: *const winapi::ctypes::c_char,
+    name: *const c_char,
     stacksize: usize,
-    data: *mut winapi::ctypes::c_void,
+    data: *mut c_void,
     pfnBeginThread: pfnSDL_CurrentBeginThread,
     pfnEndThread: pfnSDL_CurrentEndThread,
   ) -> *mut SDL_Thread;
 }
 extern "C" {
-  pub fn SDL_GetThreadName(thread: *mut SDL_Thread) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetThreadName(thread: *mut SDL_Thread) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_ThreadID() -> SDL_threadID;
@@ -1148,10 +1148,10 @@ extern "C" {
   pub fn SDL_GetThreadID(thread: *mut SDL_Thread) -> SDL_threadID;
 }
 extern "C" {
-  pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority) -> winapi::ctypes::c_int;
+  pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority) -> c_int;
 }
 extern "C" {
-  pub fn SDL_WaitThread(thread: *mut SDL_Thread, status: *mut winapi::ctypes::c_int);
+  pub fn SDL_WaitThread(thread: *mut SDL_Thread, status: *mut c_int);
 }
 extern "C" {
   pub fn SDL_DetachThread(thread: *mut SDL_Thread);
@@ -1160,14 +1160,14 @@ extern "C" {
   pub fn SDL_TLSCreate() -> SDL_TLSID;
 }
 extern "C" {
-  pub fn SDL_TLSGet(id: SDL_TLSID) -> *mut winapi::ctypes::c_void;
+  pub fn SDL_TLSGet(id: SDL_TLSID) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_TLSSet(
     id: SDL_TLSID,
-    value: *const winapi::ctypes::c_void,
-    destructor: ::core::option::Option<unsafe extern "C" fn(arg1: *mut winapi::ctypes::c_void)>,
-  ) -> winapi::ctypes::c_int;
+    value: *const c_void,
+    destructor: ::core::option::Option<unsafe extern "C" fn(arg1: *mut c_void)>,
+  ) -> c_int;
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -1177,13 +1177,13 @@ pub struct SDL_RWops {
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
       offset: Sint64,
-      whence: winapi::ctypes::c_int,
+      whence: c_int,
     ) -> Sint64,
   >,
   pub read: ::core::option::Option<
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
-      ptr: *mut winapi::ctypes::c_void,
+      ptr: *mut c_void,
       size: usize,
       maxnum: usize,
     ) -> usize,
@@ -1191,13 +1191,13 @@ pub struct SDL_RWops {
   pub write: ::core::option::Option<
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
-      ptr: *const winapi::ctypes::c_void,
+      ptr: *const c_void,
       size: usize,
       num: usize,
     ) -> usize,
   >,
   pub close:
-    ::core::option::Option<unsafe extern "C" fn(context: *mut SDL_RWops) -> winapi::ctypes::c_int>,
+    ::core::option::Option<unsafe extern "C" fn(context: *mut SDL_RWops) -> c_int>,
   pub type_: Uint32,
   pub hidden: SDL_RWops__bindgen_ty_1,
 }
@@ -1213,13 +1213,13 @@ pub union SDL_RWops__bindgen_ty_1 {
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_RWops__bindgen_ty_1__bindgen_ty_1 {
   pub append: SDL_bool,
-  pub h: *mut winapi::ctypes::c_void,
+  pub h: *mut c_void,
   pub buffer: SDL_RWops__bindgen_ty_1__bindgen_ty_1__bindgen_ty_1,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_RWops__bindgen_ty_1__bindgen_ty_1__bindgen_ty_1 {
-  pub data: *mut winapi::ctypes::c_void,
+  pub data: *mut c_void,
   pub size: usize,
   pub left: usize,
 }
@@ -1416,8 +1416,8 @@ impl Default for SDL_RWops__bindgen_ty_1__bindgen_ty_2 {
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_RWops__bindgen_ty_1__bindgen_ty_3 {
-  pub data1: *mut winapi::ctypes::c_void,
-  pub data2: *mut winapi::ctypes::c_void,
+  pub data1: *mut c_void,
+  pub data2: *mut c_void,
 }
 #[test]
 fn bindgen_test_layout_SDL_RWops__bindgen_ty_1__bindgen_ty_3() {
@@ -1615,23 +1615,23 @@ impl ::core::fmt::Debug for SDL_RWops {
 }
 extern "C" {
   pub fn SDL_RWFromFile(
-    file: *const winapi::ctypes::c_char,
-    mode: *const winapi::ctypes::c_char,
+    file: *const c_char,
+    mode: *const c_char,
   ) -> *mut SDL_RWops;
 }
 extern "C" {
-  pub fn SDL_RWFromFP(fp: *mut winapi::ctypes::c_void, autoclose: SDL_bool) -> *mut SDL_RWops;
+  pub fn SDL_RWFromFP(fp: *mut c_void, autoclose: SDL_bool) -> *mut SDL_RWops;
 }
 extern "C" {
   pub fn SDL_RWFromMem(
-    mem: *mut winapi::ctypes::c_void,
-    size: winapi::ctypes::c_int,
+    mem: *mut c_void,
+    size: c_int,
   ) -> *mut SDL_RWops;
 }
 extern "C" {
   pub fn SDL_RWFromConstMem(
-    mem: *const winapi::ctypes::c_void,
-    size: winapi::ctypes::c_int,
+    mem: *const c_void,
+    size: c_int,
   ) -> *mut SDL_RWops;
 }
 extern "C" {
@@ -1647,7 +1647,7 @@ extern "C" {
   pub fn SDL_RWseek(
     context: *mut SDL_RWops,
     offset: Sint64,
-    whence: winapi::ctypes::c_int,
+    whence: c_int,
   ) -> Sint64;
 }
 extern "C" {
@@ -1656,7 +1656,7 @@ extern "C" {
 extern "C" {
   pub fn SDL_RWread(
     context: *mut SDL_RWops,
-    ptr: *mut winapi::ctypes::c_void,
+    ptr: *mut c_void,
     size: usize,
     maxnum: usize,
   ) -> usize;
@@ -1664,26 +1664,26 @@ extern "C" {
 extern "C" {
   pub fn SDL_RWwrite(
     context: *mut SDL_RWops,
-    ptr: *const winapi::ctypes::c_void,
+    ptr: *const c_void,
     size: usize,
     num: usize,
   ) -> usize;
 }
 extern "C" {
-  pub fn SDL_RWclose(context: *mut SDL_RWops) -> winapi::ctypes::c_int;
+  pub fn SDL_RWclose(context: *mut SDL_RWops) -> c_int;
 }
 extern "C" {
   pub fn SDL_LoadFile_RW(
     src: *mut SDL_RWops,
     datasize: *mut usize,
-    freesrc: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_void;
+    freesrc: c_int,
+  ) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_LoadFile(
-    file: *const winapi::ctypes::c_char,
+    file: *const c_char,
     datasize: *mut usize,
-  ) -> *mut winapi::ctypes::c_void;
+  ) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_ReadU8(src: *mut SDL_RWops) -> Uint8;
@@ -1730,15 +1730,15 @@ extern "C" {
 pub type SDL_AudioFormat = Uint16;
 pub type SDL_AudioCallback = ::core::option::Option<
   unsafe extern "C" fn(
-    userdata: *mut winapi::ctypes::c_void,
+    userdata: *mut c_void,
     stream: *mut Uint8,
-    len: winapi::ctypes::c_int,
+    len: c_int,
   ),
 >;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_AudioSpec {
-  pub freq: winapi::ctypes::c_int,
+  pub freq: c_int,
   pub format: SDL_AudioFormat,
   pub channels: Uint8,
   pub silence: Uint8,
@@ -1746,7 +1746,7 @@ pub struct SDL_AudioSpec {
   pub padding: Uint16,
   pub size: Uint32,
   pub callback: SDL_AudioCallback,
-  pub userdata: *mut winapi::ctypes::c_void,
+  pub userdata: *mut c_void,
 }
 #[test]
 fn bindgen_test_layout_SDL_AudioSpec() {
@@ -1861,17 +1861,17 @@ pub type SDL_AudioFilter =
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_AudioCVT {
-  pub needed: winapi::ctypes::c_int,
+  pub needed: c_int,
   pub src_format: SDL_AudioFormat,
   pub dst_format: SDL_AudioFormat,
   pub rate_incr: f64,
   pub buf: *mut Uint8,
-  pub len: winapi::ctypes::c_int,
-  pub len_cvt: winapi::ctypes::c_int,
-  pub len_mult: winapi::ctypes::c_int,
+  pub len: c_int,
+  pub len_cvt: c_int,
+  pub len_mult: c_int,
   pub len_ratio: f64,
   pub filters: [SDL_AudioFilter; 10usize],
-  pub filter_index: winapi::ctypes::c_int,
+  pub filter_index: c_int,
 }
 #[test]
 fn bindgen_test_layout_SDL_AudioCVT() {
@@ -2002,43 +2002,43 @@ impl Default for SDL_AudioCVT {
   }
 }
 extern "C" {
-  pub fn SDL_GetNumAudioDrivers() -> winapi::ctypes::c_int;
+  pub fn SDL_GetNumAudioDrivers() -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetAudioDriver(index: winapi::ctypes::c_int) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetAudioDriver(index: c_int) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_AudioInit(driver_name: *const winapi::ctypes::c_char) -> winapi::ctypes::c_int;
+  pub fn SDL_AudioInit(driver_name: *const c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_AudioQuit();
 }
 extern "C" {
-  pub fn SDL_GetCurrentAudioDriver() -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetCurrentAudioDriver() -> *const c_char;
 }
 extern "C" {
   pub fn SDL_OpenAudio(
     desired: *mut SDL_AudioSpec,
     obtained: *mut SDL_AudioSpec,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 pub type SDL_AudioDeviceID = Uint32;
 extern "C" {
-  pub fn SDL_GetNumAudioDevices(iscapture: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_GetNumAudioDevices(iscapture: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetAudioDeviceName(
-    index: winapi::ctypes::c_int,
-    iscapture: winapi::ctypes::c_int,
-  ) -> *const winapi::ctypes::c_char;
+    index: c_int,
+    iscapture: c_int,
+  ) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_OpenAudioDevice(
-    device: *const winapi::ctypes::c_char,
-    iscapture: winapi::ctypes::c_int,
+    device: *const c_char,
+    iscapture: c_int,
     desired: *const SDL_AudioSpec,
     obtained: *mut SDL_AudioSpec,
-    allowed_changes: winapi::ctypes::c_int,
+    allowed_changes: c_int,
   ) -> SDL_AudioDeviceID;
 }
 pub const SDL_AUDIO_STOPPED: SDL_AudioStatus = 0;
@@ -2052,15 +2052,15 @@ extern "C" {
   pub fn SDL_GetAudioDeviceStatus(dev: SDL_AudioDeviceID) -> SDL_AudioStatus;
 }
 extern "C" {
-  pub fn SDL_PauseAudio(pause_on: winapi::ctypes::c_int);
+  pub fn SDL_PauseAudio(pause_on: c_int);
 }
 extern "C" {
-  pub fn SDL_PauseAudioDevice(dev: SDL_AudioDeviceID, pause_on: winapi::ctypes::c_int);
+  pub fn SDL_PauseAudioDevice(dev: SDL_AudioDeviceID, pause_on: c_int);
 }
 extern "C" {
   pub fn SDL_LoadWAV_RW(
     src: *mut SDL_RWops,
-    freesrc: winapi::ctypes::c_int,
+    freesrc: c_int,
     spec: *mut SDL_AudioSpec,
     audio_buf: *mut *mut Uint8,
     audio_len: *mut Uint32,
@@ -2074,14 +2074,14 @@ extern "C" {
     cvt: *mut SDL_AudioCVT,
     src_format: SDL_AudioFormat,
     src_channels: Uint8,
-    src_rate: winapi::ctypes::c_int,
+    src_rate: c_int,
     dst_format: SDL_AudioFormat,
     dst_channels: Uint8,
-    dst_rate: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    dst_rate: c_int,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_ConvertAudio(cvt: *mut SDL_AudioCVT) -> winapi::ctypes::c_int;
+  pub fn SDL_ConvertAudio(cvt: *mut SDL_AudioCVT) -> c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2093,31 +2093,31 @@ extern "C" {
   pub fn SDL_NewAudioStream(
     src_format: SDL_AudioFormat,
     src_channels: Uint8,
-    src_rate: winapi::ctypes::c_int,
+    src_rate: c_int,
     dst_format: SDL_AudioFormat,
     dst_channels: Uint8,
-    dst_rate: winapi::ctypes::c_int,
+    dst_rate: c_int,
   ) -> *mut SDL_AudioStream;
 }
 extern "C" {
   pub fn SDL_AudioStreamPut(
     stream: *mut SDL_AudioStream,
-    buf: *const winapi::ctypes::c_void,
-    len: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    buf: *const c_void,
+    len: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_AudioStreamGet(
     stream: *mut SDL_AudioStream,
-    buf: *mut winapi::ctypes::c_void,
-    len: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    buf: *mut c_void,
+    len: c_int,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_AudioStreamAvailable(stream: *mut SDL_AudioStream) -> winapi::ctypes::c_int;
+  pub fn SDL_AudioStreamAvailable(stream: *mut SDL_AudioStream) -> c_int;
 }
 extern "C" {
-  pub fn SDL_AudioStreamFlush(stream: *mut SDL_AudioStream) -> winapi::ctypes::c_int;
+  pub fn SDL_AudioStreamFlush(stream: *mut SDL_AudioStream) -> c_int;
 }
 extern "C" {
   pub fn SDL_AudioStreamClear(stream: *mut SDL_AudioStream);
@@ -2130,7 +2130,7 @@ extern "C" {
     dst: *mut Uint8,
     src: *const Uint8,
     len: Uint32,
-    volume: winapi::ctypes::c_int,
+    volume: c_int,
   );
 }
 extern "C" {
@@ -2139,20 +2139,20 @@ extern "C" {
     src: *const Uint8,
     format: SDL_AudioFormat,
     len: Uint32,
-    volume: winapi::ctypes::c_int,
+    volume: c_int,
   );
 }
 extern "C" {
   pub fn SDL_QueueAudio(
     dev: SDL_AudioDeviceID,
-    data: *const winapi::ctypes::c_void,
+    data: *const c_void,
     len: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_DequeueAudio(
     dev: SDL_AudioDeviceID,
-    data: *mut winapi::ctypes::c_void,
+    data: *mut c_void,
     len: Uint32,
   ) -> Uint32;
 }
@@ -2181,19 +2181,19 @@ extern "C" {
   pub fn SDL_CloseAudioDevice(dev: SDL_AudioDeviceID);
 }
 extern "C" {
-  pub fn SDL_SetClipboardText(text: *const winapi::ctypes::c_char) -> winapi::ctypes::c_int;
+  pub fn SDL_SetClipboardText(text: *const c_char) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetClipboardText() -> *mut winapi::ctypes::c_char;
+  pub fn SDL_GetClipboardText() -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_HasClipboardText() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_GetCPUCount() -> winapi::ctypes::c_int;
+  pub fn SDL_GetCPUCount() -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetCPUCacheLineSize() -> winapi::ctypes::c_int;
+  pub fn SDL_GetCPUCacheLineSize() -> c_int;
 }
 extern "C" {
   pub fn SDL_HasRDTSC() -> SDL_bool;
@@ -2235,16 +2235,16 @@ extern "C" {
   pub fn SDL_HasNEON() -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_GetSystemRAM() -> winapi::ctypes::c_int;
+  pub fn SDL_GetSystemRAM() -> c_int;
 }
 extern "C" {
   pub fn SDL_SIMDGetAlignment() -> usize;
 }
 extern "C" {
-  pub fn SDL_SIMDAlloc(len: usize) -> *mut winapi::ctypes::c_void;
+  pub fn SDL_SIMDAlloc(len: usize) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_SIMDFree(ptr: *mut winapi::ctypes::c_void);
+  pub fn SDL_SIMDFree(ptr: *mut c_void);
 }
 pub const SDL_PIXELTYPE_UNKNOWN: _bindgen_ty_1 = 0;
 pub const SDL_PIXELTYPE_INDEX1: _bindgen_ty_1 = 1;
@@ -2399,10 +2399,10 @@ fn bindgen_test_layout_SDL_Color() {
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_Palette {
-  pub ncolors: winapi::ctypes::c_int,
+  pub ncolors: c_int,
   pub colors: *mut SDL_Color,
   pub version: Uint32,
-  pub refcount: winapi::ctypes::c_int,
+  pub refcount: c_int,
 }
 #[test]
 fn bindgen_test_layout_SDL_Palette() {
@@ -2482,7 +2482,7 @@ pub struct SDL_PixelFormat {
   pub Gshift: Uint8,
   pub Bshift: Uint8,
   pub Ashift: Uint8,
-  pub refcount: winapi::ctypes::c_int,
+  pub refcount: c_int,
   pub next: *mut SDL_PixelFormat,
 }
 #[test]
@@ -2694,12 +2694,12 @@ impl Default for SDL_PixelFormat {
   }
 }
 extern "C" {
-  pub fn SDL_GetPixelFormatName(format: Uint32) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetPixelFormatName(format: Uint32) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_PixelFormatEnumToMasks(
     format: Uint32,
-    bpp: *mut winapi::ctypes::c_int,
+    bpp: *mut c_int,
     Rmask: *mut Uint32,
     Gmask: *mut Uint32,
     Bmask: *mut Uint32,
@@ -2708,7 +2708,7 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_MasksToPixelFormatEnum(
-    bpp: winapi::ctypes::c_int,
+    bpp: c_int,
     Rmask: Uint32,
     Gmask: Uint32,
     Bmask: Uint32,
@@ -2722,21 +2722,21 @@ extern "C" {
   pub fn SDL_FreeFormat(format: *mut SDL_PixelFormat);
 }
 extern "C" {
-  pub fn SDL_AllocPalette(ncolors: winapi::ctypes::c_int) -> *mut SDL_Palette;
+  pub fn SDL_AllocPalette(ncolors: c_int) -> *mut SDL_Palette;
 }
 extern "C" {
   pub fn SDL_SetPixelFormatPalette(
     format: *mut SDL_PixelFormat,
     palette: *mut SDL_Palette,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetPaletteColors(
     palette: *mut SDL_Palette,
     colors: *const SDL_Color,
-    firstcolor: winapi::ctypes::c_int,
-    ncolors: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    firstcolor: c_int,
+    ncolors: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_FreePalette(palette: *mut SDL_Palette);
@@ -2778,8 +2778,8 @@ extern "C" {
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_Point {
-  pub x: winapi::ctypes::c_int,
-  pub y: winapi::ctypes::c_int,
+  pub x: c_int,
+  pub y: c_int,
 }
 #[test]
 fn bindgen_test_layout_SDL_Point() {
@@ -2856,10 +2856,10 @@ fn bindgen_test_layout_SDL_FPoint() {
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_Rect {
-  pub x: winapi::ctypes::c_int,
-  pub y: winapi::ctypes::c_int,
-  pub w: winapi::ctypes::c_int,
-  pub h: winapi::ctypes::c_int,
+  pub x: c_int,
+  pub y: c_int,
+  pub w: c_int,
+  pub h: c_int,
 }
 #[test]
 fn bindgen_test_layout_SDL_Rect() {
@@ -2991,7 +2991,7 @@ extern "C" {
 extern "C" {
   pub fn SDL_EnclosePoints(
     points: *const SDL_Point,
-    count: winapi::ctypes::c_int,
+    count: c_int,
     clip: *const SDL_Rect,
     result: *mut SDL_Rect,
   ) -> SDL_bool;
@@ -2999,10 +2999,10 @@ extern "C" {
 extern "C" {
   pub fn SDL_IntersectRectAndLine(
     rect: *const SDL_Rect,
-    X1: *mut winapi::ctypes::c_int,
-    Y1: *mut winapi::ctypes::c_int,
-    X2: *mut winapi::ctypes::c_int,
-    Y2: *mut winapi::ctypes::c_int,
+    X1: *mut c_int,
+    Y1: *mut c_int,
+    X2: *mut c_int,
+    Y2: *mut c_int,
   ) -> SDL_bool;
 }
 pub const SDL_BLENDMODE_NONE: SDL_BlendMode = 0;
@@ -3043,16 +3043,16 @@ extern "C" {
 pub struct SDL_Surface {
   pub flags: Uint32,
   pub format: *mut SDL_PixelFormat,
-  pub w: winapi::ctypes::c_int,
-  pub h: winapi::ctypes::c_int,
-  pub pitch: winapi::ctypes::c_int,
-  pub pixels: *mut winapi::ctypes::c_void,
-  pub userdata: *mut winapi::ctypes::c_void,
-  pub locked: winapi::ctypes::c_int,
-  pub lock_data: *mut winapi::ctypes::c_void,
+  pub w: c_int,
+  pub h: c_int,
+  pub pitch: c_int,
+  pub pixels: *mut c_void,
+  pub userdata: *mut c_void,
+  pub locked: c_int,
+  pub lock_data: *mut c_void,
   pub clip_rect: SDL_Rect,
   pub map: *mut SDL_BlitMap,
-  pub refcount: winapi::ctypes::c_int,
+  pub refcount: c_int,
 }
 #[test]
 fn bindgen_test_layout_SDL_Surface() {
@@ -3198,7 +3198,7 @@ pub type SDL_blit = ::core::option::Option<
     srcrect: *mut SDL_Rect,
     dst: *mut SDL_Surface,
     dstrect: *mut SDL_Rect,
-  ) -> winapi::ctypes::c_int,
+  ) -> c_int,
 >;
 pub const SDL_YUV_CONVERSION_JPEG: SDL_YUV_CONVERSION_MODE = 0;
 pub const SDL_YUV_CONVERSION_BT601: SDL_YUV_CONVERSION_MODE = 1;
@@ -3208,9 +3208,9 @@ pub type SDL_YUV_CONVERSION_MODE = i32;
 extern "C" {
   pub fn SDL_CreateRGBSurface(
     flags: Uint32,
-    width: winapi::ctypes::c_int,
-    height: winapi::ctypes::c_int,
-    depth: winapi::ctypes::c_int,
+    width: c_int,
+    height: c_int,
+    depth: c_int,
     Rmask: Uint32,
     Gmask: Uint32,
     Bmask: Uint32,
@@ -3220,19 +3220,19 @@ extern "C" {
 extern "C" {
   pub fn SDL_CreateRGBSurfaceWithFormat(
     flags: Uint32,
-    width: winapi::ctypes::c_int,
-    height: winapi::ctypes::c_int,
-    depth: winapi::ctypes::c_int,
+    width: c_int,
+    height: c_int,
+    depth: c_int,
     format: Uint32,
   ) -> *mut SDL_Surface;
 }
 extern "C" {
   pub fn SDL_CreateRGBSurfaceFrom(
-    pixels: *mut winapi::ctypes::c_void,
-    width: winapi::ctypes::c_int,
-    height: winapi::ctypes::c_int,
-    depth: winapi::ctypes::c_int,
-    pitch: winapi::ctypes::c_int,
+    pixels: *mut c_void,
+    width: c_int,
+    height: c_int,
+    depth: c_int,
+    pitch: c_int,
     Rmask: Uint32,
     Gmask: Uint32,
     Bmask: Uint32,
@@ -3241,11 +3241,11 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_CreateRGBSurfaceWithFormatFrom(
-    pixels: *mut winapi::ctypes::c_void,
-    width: winapi::ctypes::c_int,
-    height: winapi::ctypes::c_int,
-    depth: winapi::ctypes::c_int,
-    pitch: winapi::ctypes::c_int,
+    pixels: *mut c_void,
+    width: c_int,
+    height: c_int,
+    depth: c_int,
+    pitch: c_int,
     format: Uint32,
   ) -> *mut SDL_Surface;
 }
@@ -3256,42 +3256,42 @@ extern "C" {
   pub fn SDL_SetSurfacePalette(
     surface: *mut SDL_Surface,
     palette: *mut SDL_Palette,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_LockSurface(surface: *mut SDL_Surface) -> winapi::ctypes::c_int;
+  pub fn SDL_LockSurface(surface: *mut SDL_Surface) -> c_int;
 }
 extern "C" {
   pub fn SDL_UnlockSurface(surface: *mut SDL_Surface);
 }
 extern "C" {
-  pub fn SDL_LoadBMP_RW(src: *mut SDL_RWops, freesrc: winapi::ctypes::c_int) -> *mut SDL_Surface;
+  pub fn SDL_LoadBMP_RW(src: *mut SDL_RWops, freesrc: c_int) -> *mut SDL_Surface;
 }
 extern "C" {
   pub fn SDL_SaveBMP_RW(
     surface: *mut SDL_Surface,
     dst: *mut SDL_RWops,
-    freedst: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    freedst: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetSurfaceRLE(
     surface: *mut SDL_Surface,
-    flag: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    flag: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetColorKey(
     surface: *mut SDL_Surface,
-    flag: winapi::ctypes::c_int,
+    flag: c_int,
     key: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_HasColorKey(surface: *mut SDL_Surface) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_GetColorKey(surface: *mut SDL_Surface, key: *mut Uint32) -> winapi::ctypes::c_int;
+  pub fn SDL_GetColorKey(surface: *mut SDL_Surface, key: *mut Uint32) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetSurfaceColorMod(
@@ -3299,7 +3299,7 @@ extern "C" {
     r: Uint8,
     g: Uint8,
     b: Uint8,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetSurfaceColorMod(
@@ -3307,28 +3307,28 @@ extern "C" {
     r: *mut Uint8,
     g: *mut Uint8,
     b: *mut Uint8,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SetSurfaceAlphaMod(surface: *mut SDL_Surface, alpha: Uint8) -> winapi::ctypes::c_int;
+  pub fn SDL_SetSurfaceAlphaMod(surface: *mut SDL_Surface, alpha: Uint8) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetSurfaceAlphaMod(
     surface: *mut SDL_Surface,
     alpha: *mut Uint8,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetSurfaceBlendMode(
     surface: *mut SDL_Surface,
     blendMode: SDL_BlendMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetSurfaceBlendMode(
     surface: *mut SDL_Surface,
     blendMode: *mut SDL_BlendMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetClipRect(surface: *mut SDL_Surface, rect: *const SDL_Rect) -> SDL_bool;
@@ -3355,30 +3355,30 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_ConvertPixels(
-    width: winapi::ctypes::c_int,
-    height: winapi::ctypes::c_int,
+    width: c_int,
+    height: c_int,
     src_format: Uint32,
-    src: *const winapi::ctypes::c_void,
-    src_pitch: winapi::ctypes::c_int,
+    src: *const c_void,
+    src_pitch: c_int,
     dst_format: Uint32,
-    dst: *mut winapi::ctypes::c_void,
-    dst_pitch: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    dst: *mut c_void,
+    dst_pitch: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_FillRect(
     dst: *mut SDL_Surface,
     rect: *const SDL_Rect,
     color: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_FillRects(
     dst: *mut SDL_Surface,
     rects: *const SDL_Rect,
-    count: winapi::ctypes::c_int,
+    count: c_int,
     color: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_UpperBlit(
@@ -3386,7 +3386,7 @@ extern "C" {
     srcrect: *const SDL_Rect,
     dst: *mut SDL_Surface,
     dstrect: *mut SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_LowerBlit(
@@ -3394,7 +3394,7 @@ extern "C" {
     srcrect: *mut SDL_Rect,
     dst: *mut SDL_Surface,
     dstrect: *mut SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SoftStretch(
@@ -3402,7 +3402,7 @@ extern "C" {
     srcrect: *const SDL_Rect,
     dst: *mut SDL_Surface,
     dstrect: *const SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_UpperBlitScaled(
@@ -3410,7 +3410,7 @@ extern "C" {
     srcrect: *const SDL_Rect,
     dst: *mut SDL_Surface,
     dstrect: *mut SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_LowerBlitScaled(
@@ -3418,7 +3418,7 @@ extern "C" {
     srcrect: *mut SDL_Rect,
     dst: *mut SDL_Surface,
     dstrect: *mut SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetYUVConversionMode(mode: SDL_YUV_CONVERSION_MODE);
@@ -3428,18 +3428,18 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_GetYUVConversionModeForResolution(
-    width: winapi::ctypes::c_int,
-    height: winapi::ctypes::c_int,
+    width: c_int,
+    height: c_int,
   ) -> SDL_YUV_CONVERSION_MODE;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_DisplayMode {
   pub format: Uint32,
-  pub w: winapi::ctypes::c_int,
-  pub h: winapi::ctypes::c_int,
-  pub refresh_rate: winapi::ctypes::c_int,
-  pub driverdata: *mut winapi::ctypes::c_void,
+  pub w: c_int,
+  pub h: c_int,
+  pub refresh_rate: c_int,
+  pub driverdata: *mut c_void,
 }
 #[test]
 fn bindgen_test_layout_SDL_DisplayMode() {
@@ -3563,7 +3563,7 @@ pub const SDL_ORIENTATION_LANDSCAPE_FLIPPED: SDL_DisplayOrientation = 2;
 pub const SDL_ORIENTATION_PORTRAIT: SDL_DisplayOrientation = 3;
 pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation = 4;
 pub type SDL_DisplayOrientation = i32;
-pub type SDL_GLContext = *mut winapi::ctypes::c_void;
+pub type SDL_GLContext = *mut c_void;
 pub const SDL_GL_RED_SIZE: SDL_GLattr = 0;
 pub const SDL_GL_GREEN_SIZE: SDL_GLattr = 1;
 pub const SDL_GL_BLUE_SIZE: SDL_GLattr = 2;
@@ -3608,108 +3608,108 @@ pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
 pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification = 1;
 pub type SDL_GLContextResetNotification = i32;
 extern "C" {
-  pub fn SDL_GetNumVideoDrivers() -> winapi::ctypes::c_int;
+  pub fn SDL_GetNumVideoDrivers() -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetVideoDriver(index: winapi::ctypes::c_int) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetVideoDriver(index: c_int) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_VideoInit(driver_name: *const winapi::ctypes::c_char) -> winapi::ctypes::c_int;
+  pub fn SDL_VideoInit(driver_name: *const c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_VideoQuit();
 }
 extern "C" {
-  pub fn SDL_GetCurrentVideoDriver() -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetCurrentVideoDriver() -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_GetNumVideoDisplays() -> winapi::ctypes::c_int;
+  pub fn SDL_GetNumVideoDisplays() -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetDisplayName(displayIndex: winapi::ctypes::c_int) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetDisplayName(displayIndex: c_int) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_GetDisplayBounds(
-    displayIndex: winapi::ctypes::c_int,
+    displayIndex: c_int,
     rect: *mut SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetDisplayUsableBounds(
-    displayIndex: winapi::ctypes::c_int,
+    displayIndex: c_int,
     rect: *mut SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetDisplayDPI(
-    displayIndex: winapi::ctypes::c_int,
+    displayIndex: c_int,
     ddpi: *mut f32,
     hdpi: *mut f32,
     vdpi: *mut f32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetDisplayOrientation(displayIndex: winapi::ctypes::c_int) -> SDL_DisplayOrientation;
+  pub fn SDL_GetDisplayOrientation(displayIndex: c_int) -> SDL_DisplayOrientation;
 }
 extern "C" {
-  pub fn SDL_GetNumDisplayModes(displayIndex: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_GetNumDisplayModes(displayIndex: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetDisplayMode(
-    displayIndex: winapi::ctypes::c_int,
-    modeIndex: winapi::ctypes::c_int,
+    displayIndex: c_int,
+    modeIndex: c_int,
     mode: *mut SDL_DisplayMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetDesktopDisplayMode(
-    displayIndex: winapi::ctypes::c_int,
+    displayIndex: c_int,
     mode: *mut SDL_DisplayMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetCurrentDisplayMode(
-    displayIndex: winapi::ctypes::c_int,
+    displayIndex: c_int,
     mode: *mut SDL_DisplayMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetClosestDisplayMode(
-    displayIndex: winapi::ctypes::c_int,
+    displayIndex: c_int,
     mode: *const SDL_DisplayMode,
     closest: *mut SDL_DisplayMode,
   ) -> *mut SDL_DisplayMode;
 }
 extern "C" {
-  pub fn SDL_GetWindowDisplayIndex(window: *mut SDL_Window) -> winapi::ctypes::c_int;
+  pub fn SDL_GetWindowDisplayIndex(window: *mut SDL_Window) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetWindowDisplayMode(
     window: *mut SDL_Window,
     mode: *const SDL_DisplayMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetWindowDisplayMode(
     window: *mut SDL_Window,
     mode: *mut SDL_DisplayMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> Uint32;
 }
 extern "C" {
   pub fn SDL_CreateWindow(
-    title: *const winapi::ctypes::c_char,
-    x: winapi::ctypes::c_int,
-    y: winapi::ctypes::c_int,
-    w: winapi::ctypes::c_int,
-    h: winapi::ctypes::c_int,
+    title: *const c_char,
+    x: c_int,
+    y: c_int,
+    w: c_int,
+    h: c_int,
     flags: Uint32,
   ) -> *mut SDL_Window;
 }
 extern "C" {
-  pub fn SDL_CreateWindowFrom(data: *const winapi::ctypes::c_void) -> *mut SDL_Window;
+  pub fn SDL_CreateWindowFrom(data: *const c_void) -> *mut SDL_Window;
 }
 extern "C" {
   pub fn SDL_GetWindowID(window: *mut SDL_Window) -> Uint32;
@@ -3721,10 +3721,10 @@ extern "C" {
   pub fn SDL_GetWindowFlags(window: *mut SDL_Window) -> Uint32;
 }
 extern "C" {
-  pub fn SDL_SetWindowTitle(window: *mut SDL_Window, title: *const winapi::ctypes::c_char);
+  pub fn SDL_SetWindowTitle(window: *mut SDL_Window, title: *const c_char);
 }
 extern "C" {
-  pub fn SDL_GetWindowTitle(window: *mut SDL_Window) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetWindowTitle(window: *mut SDL_Window) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_SetWindowIcon(window: *mut SDL_Window, icon: *mut SDL_Surface);
@@ -3732,79 +3732,79 @@ extern "C" {
 extern "C" {
   pub fn SDL_SetWindowData(
     window: *mut SDL_Window,
-    name: *const winapi::ctypes::c_char,
-    userdata: *mut winapi::ctypes::c_void,
-  ) -> *mut winapi::ctypes::c_void;
+    name: *const c_char,
+    userdata: *mut c_void,
+  ) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_GetWindowData(
     window: *mut SDL_Window,
-    name: *const winapi::ctypes::c_char,
-  ) -> *mut winapi::ctypes::c_void;
+    name: *const c_char,
+  ) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_SetWindowPosition(
     window: *mut SDL_Window,
-    x: winapi::ctypes::c_int,
-    y: winapi::ctypes::c_int,
+    x: c_int,
+    y: c_int,
   );
 }
 extern "C" {
   pub fn SDL_GetWindowPosition(
     window: *mut SDL_Window,
-    x: *mut winapi::ctypes::c_int,
-    y: *mut winapi::ctypes::c_int,
+    x: *mut c_int,
+    y: *mut c_int,
   );
 }
 extern "C" {
   pub fn SDL_SetWindowSize(
     window: *mut SDL_Window,
-    w: winapi::ctypes::c_int,
-    h: winapi::ctypes::c_int,
+    w: c_int,
+    h: c_int,
   );
 }
 extern "C" {
   pub fn SDL_GetWindowSize(
     window: *mut SDL_Window,
-    w: *mut winapi::ctypes::c_int,
-    h: *mut winapi::ctypes::c_int,
+    w: *mut c_int,
+    h: *mut c_int,
   );
 }
 extern "C" {
   pub fn SDL_GetWindowBordersSize(
     window: *mut SDL_Window,
-    top: *mut winapi::ctypes::c_int,
-    left: *mut winapi::ctypes::c_int,
-    bottom: *mut winapi::ctypes::c_int,
-    right: *mut winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    top: *mut c_int,
+    left: *mut c_int,
+    bottom: *mut c_int,
+    right: *mut c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetWindowMinimumSize(
     window: *mut SDL_Window,
-    min_w: winapi::ctypes::c_int,
-    min_h: winapi::ctypes::c_int,
+    min_w: c_int,
+    min_h: c_int,
   );
 }
 extern "C" {
   pub fn SDL_GetWindowMinimumSize(
     window: *mut SDL_Window,
-    w: *mut winapi::ctypes::c_int,
-    h: *mut winapi::ctypes::c_int,
+    w: *mut c_int,
+    h: *mut c_int,
   );
 }
 extern "C" {
   pub fn SDL_SetWindowMaximumSize(
     window: *mut SDL_Window,
-    max_w: winapi::ctypes::c_int,
-    max_h: winapi::ctypes::c_int,
+    max_w: c_int,
+    max_h: c_int,
   );
 }
 extern "C" {
   pub fn SDL_GetWindowMaximumSize(
     window: *mut SDL_Window,
-    w: *mut winapi::ctypes::c_int,
-    h: *mut winapi::ctypes::c_int,
+    w: *mut c_int,
+    h: *mut c_int,
   );
 }
 extern "C" {
@@ -3832,20 +3832,20 @@ extern "C" {
   pub fn SDL_RestoreWindow(window: *mut SDL_Window);
 }
 extern "C" {
-  pub fn SDL_SetWindowFullscreen(window: *mut SDL_Window, flags: Uint32) -> winapi::ctypes::c_int;
+  pub fn SDL_SetWindowFullscreen(window: *mut SDL_Window, flags: Uint32) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetWindowSurface(window: *mut SDL_Window) -> *mut SDL_Surface;
 }
 extern "C" {
-  pub fn SDL_UpdateWindowSurface(window: *mut SDL_Window) -> winapi::ctypes::c_int;
+  pub fn SDL_UpdateWindowSurface(window: *mut SDL_Window) -> c_int;
 }
 extern "C" {
   pub fn SDL_UpdateWindowSurfaceRects(
     window: *mut SDL_Window,
     rects: *const SDL_Rect,
-    numrects: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    numrects: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetWindowGrab(window: *mut SDL_Window, grabbed: SDL_bool);
@@ -3858,28 +3858,28 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_SetWindowBrightness(window: *mut SDL_Window, brightness: f32)
-    -> winapi::ctypes::c_int;
+    -> c_int;
 }
 extern "C" {
   pub fn SDL_GetWindowBrightness(window: *mut SDL_Window) -> f32;
 }
 extern "C" {
-  pub fn SDL_SetWindowOpacity(window: *mut SDL_Window, opacity: f32) -> winapi::ctypes::c_int;
+  pub fn SDL_SetWindowOpacity(window: *mut SDL_Window, opacity: f32) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetWindowOpacity(
     window: *mut SDL_Window,
     out_opacity: *mut f32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetWindowModalFor(
     modal_window: *mut SDL_Window,
     parent_window: *mut SDL_Window,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SetWindowInputFocus(window: *mut SDL_Window) -> winapi::ctypes::c_int;
+  pub fn SDL_SetWindowInputFocus(window: *mut SDL_Window) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetWindowGammaRamp(
@@ -3887,7 +3887,7 @@ extern "C" {
     red: *const Uint16,
     green: *const Uint16,
     blue: *const Uint16,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetWindowGammaRamp(
@@ -3895,7 +3895,7 @@ extern "C" {
     red: *mut Uint16,
     green: *mut Uint16,
     blue: *mut Uint16,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 pub const SDL_HITTEST_NORMAL: SDL_HitTestResult = 0;
 pub const SDL_HITTEST_DRAGGABLE: SDL_HitTestResult = 1;
@@ -3912,15 +3912,15 @@ pub type SDL_HitTest = ::core::option::Option<
   unsafe extern "C" fn(
     win: *mut SDL_Window,
     area: *const SDL_Point,
-    data: *mut winapi::ctypes::c_void,
+    data: *mut c_void,
   ) -> SDL_HitTestResult,
 >;
 extern "C" {
   pub fn SDL_SetWindowHitTest(
     window: *mut SDL_Window,
     callback: SDL_HitTest,
-    callback_data: *mut winapi::ctypes::c_void,
-  ) -> winapi::ctypes::c_int;
+    callback_data: *mut c_void,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_DestroyWindow(window: *mut SDL_Window);
@@ -3935,17 +3935,17 @@ extern "C" {
   pub fn SDL_DisableScreenSaver();
 }
 extern "C" {
-  pub fn SDL_GL_LoadLibrary(path: *const winapi::ctypes::c_char) -> winapi::ctypes::c_int;
+  pub fn SDL_GL_LoadLibrary(path: *const c_char) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GL_GetProcAddress(proc_: *const winapi::ctypes::c_char)
-    -> *mut winapi::ctypes::c_void;
+  pub fn SDL_GL_GetProcAddress(proc_: *const c_char)
+    -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_GL_UnloadLibrary();
 }
 extern "C" {
-  pub fn SDL_GL_ExtensionSupported(extension: *const winapi::ctypes::c_char) -> SDL_bool;
+  pub fn SDL_GL_ExtensionSupported(extension: *const c_char) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GL_ResetAttributes();
@@ -3953,14 +3953,14 @@ extern "C" {
 extern "C" {
   pub fn SDL_GL_SetAttribute(
     attr: SDL_GLattr,
-    value: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    value: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GL_GetAttribute(
     attr: SDL_GLattr,
-    value: *mut winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    value: *mut c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GL_CreateContext(window: *mut SDL_Window) -> SDL_GLContext;
@@ -3969,7 +3969,7 @@ extern "C" {
   pub fn SDL_GL_MakeCurrent(
     window: *mut SDL_Window,
     context: SDL_GLContext,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GL_GetCurrentWindow() -> *mut SDL_Window;
@@ -3980,15 +3980,15 @@ extern "C" {
 extern "C" {
   pub fn SDL_GL_GetDrawableSize(
     window: *mut SDL_Window,
-    w: *mut winapi::ctypes::c_int,
-    h: *mut winapi::ctypes::c_int,
+    w: *mut c_int,
+    h: *mut c_int,
   );
 }
 extern "C" {
-  pub fn SDL_GL_SetSwapInterval(interval: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_GL_SetSwapInterval(interval: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GL_GetSwapInterval() -> winapi::ctypes::c_int;
+  pub fn SDL_GL_GetSwapInterval() -> c_int;
 }
 extern "C" {
   pub fn SDL_GL_SwapWindow(window: *mut SDL_Window);
@@ -4567,7 +4567,7 @@ extern "C" {
   pub fn SDL_GetKeyboardFocus() -> *mut SDL_Window;
 }
 extern "C" {
-  pub fn SDL_GetKeyboardState(numkeys: *mut winapi::ctypes::c_int) -> *const Uint8;
+  pub fn SDL_GetKeyboardState(numkeys: *mut c_int) -> *const Uint8;
 }
 extern "C" {
   pub fn SDL_GetModState() -> SDL_Keymod;
@@ -4582,16 +4582,16 @@ extern "C" {
   pub fn SDL_GetScancodeFromKey(key: SDL_Keycode) -> SDL_Scancode;
 }
 extern "C" {
-  pub fn SDL_GetScancodeName(scancode: SDL_Scancode) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetScancodeName(scancode: SDL_Scancode) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_GetScancodeFromName(name: *const winapi::ctypes::c_char) -> SDL_Scancode;
+  pub fn SDL_GetScancodeFromName(name: *const c_char) -> SDL_Scancode;
 }
 extern "C" {
-  pub fn SDL_GetKeyName(key: SDL_Keycode) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetKeyName(key: SDL_Keycode) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_GetKeyFromName(name: *const winapi::ctypes::c_char) -> SDL_Keycode;
+  pub fn SDL_GetKeyFromName(name: *const c_char) -> SDL_Keycode;
 }
 extern "C" {
   pub fn SDL_StartTextInput();
@@ -4637,38 +4637,38 @@ extern "C" {
   pub fn SDL_GetMouseFocus() -> *mut SDL_Window;
 }
 extern "C" {
-  pub fn SDL_GetMouseState(x: *mut winapi::ctypes::c_int, y: *mut winapi::ctypes::c_int) -> Uint32;
+  pub fn SDL_GetMouseState(x: *mut c_int, y: *mut c_int) -> Uint32;
 }
 extern "C" {
   pub fn SDL_GetGlobalMouseState(
-    x: *mut winapi::ctypes::c_int,
-    y: *mut winapi::ctypes::c_int,
+    x: *mut c_int,
+    y: *mut c_int,
   ) -> Uint32;
 }
 extern "C" {
   pub fn SDL_GetRelativeMouseState(
-    x: *mut winapi::ctypes::c_int,
-    y: *mut winapi::ctypes::c_int,
+    x: *mut c_int,
+    y: *mut c_int,
   ) -> Uint32;
 }
 extern "C" {
   pub fn SDL_WarpMouseInWindow(
     window: *mut SDL_Window,
-    x: winapi::ctypes::c_int,
-    y: winapi::ctypes::c_int,
+    x: c_int,
+    y: c_int,
   );
 }
 extern "C" {
   pub fn SDL_WarpMouseGlobal(
-    x: winapi::ctypes::c_int,
-    y: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    x: c_int,
+    y: c_int,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SetRelativeMouseMode(enabled: SDL_bool) -> winapi::ctypes::c_int;
+  pub fn SDL_SetRelativeMouseMode(enabled: SDL_bool) -> c_int;
 }
 extern "C" {
-  pub fn SDL_CaptureMouse(enabled: SDL_bool) -> winapi::ctypes::c_int;
+  pub fn SDL_CaptureMouse(enabled: SDL_bool) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetRelativeMouseMode() -> SDL_bool;
@@ -4677,17 +4677,17 @@ extern "C" {
   pub fn SDL_CreateCursor(
     data: *const Uint8,
     mask: *const Uint8,
-    w: winapi::ctypes::c_int,
-    h: winapi::ctypes::c_int,
-    hot_x: winapi::ctypes::c_int,
-    hot_y: winapi::ctypes::c_int,
+    w: c_int,
+    h: c_int,
+    hot_x: c_int,
+    hot_y: c_int,
   ) -> *mut SDL_Cursor;
 }
 extern "C" {
   pub fn SDL_CreateColorCursor(
     surface: *mut SDL_Surface,
-    hot_x: winapi::ctypes::c_int,
-    hot_y: winapi::ctypes::c_int,
+    hot_x: c_int,
+    hot_y: c_int,
   ) -> *mut SDL_Cursor;
 }
 extern "C" {
@@ -4706,7 +4706,7 @@ extern "C" {
   pub fn SDL_FreeCursor(cursor: *mut SDL_Cursor);
 }
 extern "C" {
-  pub fn SDL_ShowCursor(toggle: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_ShowCursor(toggle: c_int) -> c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -4769,47 +4769,47 @@ extern "C" {
   pub fn SDL_UnlockJoysticks();
 }
 extern "C" {
-  pub fn SDL_NumJoysticks() -> winapi::ctypes::c_int;
+  pub fn SDL_NumJoysticks() -> c_int;
 }
 extern "C" {
   pub fn SDL_JoystickNameForIndex(
-    device_index: winapi::ctypes::c_int,
-  ) -> *const winapi::ctypes::c_char;
+    device_index: c_int,
+  ) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_JoystickGetDevicePlayerIndex(
-    device_index: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    device_index: c_int,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceGUID(device_index: winapi::ctypes::c_int) -> SDL_JoystickGUID;
+  pub fn SDL_JoystickGetDeviceGUID(device_index: c_int) -> SDL_JoystickGUID;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceVendor(device_index: winapi::ctypes::c_int) -> Uint16;
+  pub fn SDL_JoystickGetDeviceVendor(device_index: c_int) -> Uint16;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceProduct(device_index: winapi::ctypes::c_int) -> Uint16;
+  pub fn SDL_JoystickGetDeviceProduct(device_index: c_int) -> Uint16;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceProductVersion(device_index: winapi::ctypes::c_int) -> Uint16;
+  pub fn SDL_JoystickGetDeviceProductVersion(device_index: c_int) -> Uint16;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceType(device_index: winapi::ctypes::c_int) -> SDL_JoystickType;
+  pub fn SDL_JoystickGetDeviceType(device_index: c_int) -> SDL_JoystickType;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceInstanceID(device_index: winapi::ctypes::c_int) -> SDL_JoystickID;
+  pub fn SDL_JoystickGetDeviceInstanceID(device_index: c_int) -> SDL_JoystickID;
 }
 extern "C" {
-  pub fn SDL_JoystickOpen(device_index: winapi::ctypes::c_int) -> *mut SDL_Joystick;
+  pub fn SDL_JoystickOpen(device_index: c_int) -> *mut SDL_Joystick;
 }
 extern "C" {
   pub fn SDL_JoystickFromInstanceID(joyid: SDL_JoystickID) -> *mut SDL_Joystick;
 }
 extern "C" {
-  pub fn SDL_JoystickName(joystick: *mut SDL_Joystick) -> *const winapi::ctypes::c_char;
+  pub fn SDL_JoystickName(joystick: *mut SDL_Joystick) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_JoystickGetPlayerIndex(joystick: *mut SDL_Joystick) -> winapi::ctypes::c_int;
+  pub fn SDL_JoystickGetPlayerIndex(joystick: *mut SDL_Joystick) -> c_int;
 }
 extern "C" {
   pub fn SDL_JoystickGetGUID(joystick: *mut SDL_Joystick) -> SDL_JoystickGUID;
@@ -4829,12 +4829,12 @@ extern "C" {
 extern "C" {
   pub fn SDL_JoystickGetGUIDString(
     guid: SDL_JoystickGUID,
-    pszGUID: *mut winapi::ctypes::c_char,
-    cbGUID: winapi::ctypes::c_int,
+    pszGUID: *mut c_char,
+    cbGUID: c_int,
   );
 }
 extern "C" {
-  pub fn SDL_JoystickGetGUIDFromString(pchGUID: *const winapi::ctypes::c_char) -> SDL_JoystickGUID;
+  pub fn SDL_JoystickGetGUIDFromString(pchGUID: *const c_char) -> SDL_JoystickGUID;
 }
 extern "C" {
   pub fn SDL_JoystickGetAttached(joystick: *mut SDL_Joystick) -> SDL_bool;
@@ -4843,46 +4843,46 @@ extern "C" {
   pub fn SDL_JoystickInstanceID(joystick: *mut SDL_Joystick) -> SDL_JoystickID;
 }
 extern "C" {
-  pub fn SDL_JoystickNumAxes(joystick: *mut SDL_Joystick) -> winapi::ctypes::c_int;
+  pub fn SDL_JoystickNumAxes(joystick: *mut SDL_Joystick) -> c_int;
 }
 extern "C" {
-  pub fn SDL_JoystickNumBalls(joystick: *mut SDL_Joystick) -> winapi::ctypes::c_int;
+  pub fn SDL_JoystickNumBalls(joystick: *mut SDL_Joystick) -> c_int;
 }
 extern "C" {
-  pub fn SDL_JoystickNumHats(joystick: *mut SDL_Joystick) -> winapi::ctypes::c_int;
+  pub fn SDL_JoystickNumHats(joystick: *mut SDL_Joystick) -> c_int;
 }
 extern "C" {
-  pub fn SDL_JoystickNumButtons(joystick: *mut SDL_Joystick) -> winapi::ctypes::c_int;
+  pub fn SDL_JoystickNumButtons(joystick: *mut SDL_Joystick) -> c_int;
 }
 extern "C" {
   pub fn SDL_JoystickUpdate();
 }
 extern "C" {
-  pub fn SDL_JoystickEventState(state: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_JoystickEventState(state: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_JoystickGetAxis(joystick: *mut SDL_Joystick, axis: winapi::ctypes::c_int) -> Sint16;
+  pub fn SDL_JoystickGetAxis(joystick: *mut SDL_Joystick, axis: c_int) -> Sint16;
 }
 extern "C" {
   pub fn SDL_JoystickGetAxisInitialState(
     joystick: *mut SDL_Joystick,
-    axis: winapi::ctypes::c_int,
+    axis: c_int,
     state: *mut Sint16,
   ) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_JoystickGetHat(joystick: *mut SDL_Joystick, hat: winapi::ctypes::c_int) -> Uint8;
+  pub fn SDL_JoystickGetHat(joystick: *mut SDL_Joystick, hat: c_int) -> Uint8;
 }
 extern "C" {
   pub fn SDL_JoystickGetBall(
     joystick: *mut SDL_Joystick,
-    ball: winapi::ctypes::c_int,
-    dx: *mut winapi::ctypes::c_int,
-    dy: *mut winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    ball: c_int,
+    dx: *mut c_int,
+    dy: *mut c_int,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_JoystickGetButton(joystick: *mut SDL_Joystick, button: winapi::ctypes::c_int)
+  pub fn SDL_JoystickGetButton(joystick: *mut SDL_Joystick, button: c_int)
     -> Uint8;
 }
 extern "C" {
@@ -4891,7 +4891,7 @@ extern "C" {
     low_frequency_rumble: Uint16,
     high_frequency_rumble: Uint16,
     duration_ms: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_JoystickClose(joystick: *mut SDL_Joystick);
@@ -4919,16 +4919,16 @@ pub struct SDL_GameControllerButtonBind {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union SDL_GameControllerButtonBind__bindgen_ty_1 {
-  pub button: winapi::ctypes::c_int,
-  pub axis: winapi::ctypes::c_int,
+  pub button: c_int,
+  pub axis: c_int,
   pub hat: SDL_GameControllerButtonBind__bindgen_ty_1__bindgen_ty_1,
   _bindgen_union_align: [u32; 2usize],
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_GameControllerButtonBind__bindgen_ty_1__bindgen_ty_1 {
-  pub hat: winapi::ctypes::c_int,
-  pub hat_mask: winapi::ctypes::c_int,
+  pub hat: c_int,
+  pub hat_mask: c_int,
 }
 #[test]
 fn bindgen_test_layout_SDL_GameControllerButtonBind__bindgen_ty_1__bindgen_ty_1() {
@@ -5095,45 +5095,45 @@ impl ::core::fmt::Debug for SDL_GameControllerButtonBind {
 extern "C" {
   pub fn SDL_GameControllerAddMappingsFromRW(
     rw: *mut SDL_RWops,
-    freerw: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    freerw: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GameControllerAddMapping(
-    mappingString: *const winapi::ctypes::c_char,
-  ) -> winapi::ctypes::c_int;
+    mappingString: *const c_char,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GameControllerNumMappings() -> winapi::ctypes::c_int;
+  pub fn SDL_GameControllerNumMappings() -> c_int;
 }
 extern "C" {
   pub fn SDL_GameControllerMappingForIndex(
-    mapping_index: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    mapping_index: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_GameControllerMappingForGUID(guid: SDL_JoystickGUID) -> *mut winapi::ctypes::c_char;
+  pub fn SDL_GameControllerMappingForGUID(guid: SDL_JoystickGUID) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerMapping(
     gamecontroller: *mut SDL_GameController,
-  ) -> *mut winapi::ctypes::c_char;
+  ) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_IsGameController(joystick_index: winapi::ctypes::c_int) -> SDL_bool;
+  pub fn SDL_IsGameController(joystick_index: c_int) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GameControllerNameForIndex(
-    joystick_index: winapi::ctypes::c_int,
-  ) -> *const winapi::ctypes::c_char;
+    joystick_index: c_int,
+  ) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerMappingForDeviceIndex(
-    joystick_index: winapi::ctypes::c_int,
-  ) -> *mut winapi::ctypes::c_char;
+    joystick_index: c_int,
+  ) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_GameControllerOpen(joystick_index: winapi::ctypes::c_int) -> *mut SDL_GameController;
+  pub fn SDL_GameControllerOpen(joystick_index: c_int) -> *mut SDL_GameController;
 }
 extern "C" {
   pub fn SDL_GameControllerFromInstanceID(joyid: SDL_JoystickID) -> *mut SDL_GameController;
@@ -5141,12 +5141,12 @@ extern "C" {
 extern "C" {
   pub fn SDL_GameControllerName(
     gamecontroller: *mut SDL_GameController,
-  ) -> *const winapi::ctypes::c_char;
+  ) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerGetPlayerIndex(
     gamecontroller: *mut SDL_GameController,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GameControllerGetVendor(gamecontroller: *mut SDL_GameController) -> Uint16;
@@ -5166,7 +5166,7 @@ extern "C" {
   ) -> *mut SDL_Joystick;
 }
 extern "C" {
-  pub fn SDL_GameControllerEventState(state: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_GameControllerEventState(state: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_GameControllerUpdate();
@@ -5182,13 +5182,13 @@ pub const SDL_CONTROLLER_AXIS_MAX: SDL_GameControllerAxis = 6;
 pub type SDL_GameControllerAxis = i32;
 extern "C" {
   pub fn SDL_GameControllerGetAxisFromString(
-    pchString: *const winapi::ctypes::c_char,
+    pchString: *const c_char,
   ) -> SDL_GameControllerAxis;
 }
 extern "C" {
   pub fn SDL_GameControllerGetStringForAxis(
     axis: SDL_GameControllerAxis,
-  ) -> *const winapi::ctypes::c_char;
+  ) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerGetBindForAxis(
@@ -5222,13 +5222,13 @@ pub const SDL_CONTROLLER_BUTTON_MAX: SDL_GameControllerButton = 15;
 pub type SDL_GameControllerButton = i32;
 extern "C" {
   pub fn SDL_GameControllerGetButtonFromString(
-    pchString: *const winapi::ctypes::c_char,
+    pchString: *const c_char,
   ) -> SDL_GameControllerButton;
 }
 extern "C" {
   pub fn SDL_GameControllerGetStringForButton(
     button: SDL_GameControllerButton,
-  ) -> *const winapi::ctypes::c_char;
+  ) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerGetBindForButton(
@@ -5248,7 +5248,7 @@ extern "C" {
     low_frequency_rumble: Uint16,
     high_frequency_rumble: Uint16,
     duration_ms: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GameControllerClose(gamecontroller: *mut SDL_GameController);
@@ -5322,38 +5322,38 @@ fn bindgen_test_layout_SDL_Finger() {
   );
 }
 extern "C" {
-  pub fn SDL_GetNumTouchDevices() -> winapi::ctypes::c_int;
+  pub fn SDL_GetNumTouchDevices() -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetTouchDevice(index: winapi::ctypes::c_int) -> SDL_TouchID;
+  pub fn SDL_GetTouchDevice(index: c_int) -> SDL_TouchID;
 }
 extern "C" {
   pub fn SDL_GetTouchDeviceType(touchID: SDL_TouchID) -> SDL_TouchDeviceType;
 }
 extern "C" {
-  pub fn SDL_GetNumTouchFingers(touchID: SDL_TouchID) -> winapi::ctypes::c_int;
+  pub fn SDL_GetNumTouchFingers(touchID: SDL_TouchID) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetTouchFinger(touchID: SDL_TouchID, index: winapi::ctypes::c_int) -> *mut SDL_Finger;
+  pub fn SDL_GetTouchFinger(touchID: SDL_TouchID, index: c_int) -> *mut SDL_Finger;
 }
 pub type SDL_GestureID = Sint64;
 extern "C" {
-  pub fn SDL_RecordGesture(touchId: SDL_TouchID) -> winapi::ctypes::c_int;
+  pub fn SDL_RecordGesture(touchId: SDL_TouchID) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SaveAllDollarTemplates(dst: *mut SDL_RWops) -> winapi::ctypes::c_int;
+  pub fn SDL_SaveAllDollarTemplates(dst: *mut SDL_RWops) -> c_int;
 }
 extern "C" {
   pub fn SDL_SaveDollarTemplate(
     gestureId: SDL_GestureID,
     dst: *mut SDL_RWops,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_LoadDollarTemplates(
     touchId: SDL_TouchID,
     src: *mut SDL_RWops,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 pub const SDL_FIRSTEVENT: SDL_EventType = 0;
 pub const SDL_QUIT: SDL_EventType = 256;
@@ -5783,7 +5783,7 @@ pub struct SDL_TextEditingEvent {
   pub type_: Uint32,
   pub timestamp: Uint32,
   pub windowID: Uint32,
-  pub text: [winapi::ctypes::c_char; 32usize],
+  pub text: [c_char; 32usize],
   pub start: Sint32,
   pub length: Sint32,
 }
@@ -5866,7 +5866,7 @@ pub struct SDL_TextInputEvent {
   pub type_: Uint32,
   pub timestamp: Uint32,
   pub windowID: Uint32,
-  pub text: [winapi::ctypes::c_char; 32usize],
+  pub text: [c_char; 32usize],
 }
 #[test]
 fn bindgen_test_layout_SDL_TextInputEvent() {
@@ -7428,7 +7428,7 @@ fn bindgen_test_layout_SDL_DollarGestureEvent() {
 pub struct SDL_DropEvent {
   pub type_: Uint32,
   pub timestamp: Uint32,
-  pub file: *mut winapi::ctypes::c_char,
+  pub file: *mut c_char,
   pub windowID: Uint32,
 }
 #[test]
@@ -7635,8 +7635,8 @@ pub struct SDL_UserEvent {
   pub timestamp: Uint32,
   pub windowID: Uint32,
   pub code: Sint32,
-  pub data1: *mut winapi::ctypes::c_void,
-  pub data2: *mut winapi::ctypes::c_void,
+  pub data1: *mut c_void,
+  pub data2: *mut c_void,
 }
 #[test]
 fn bindgen_test_layout_SDL_UserEvent() {
@@ -8107,7 +8107,7 @@ impl ::core::fmt::Debug for SDL_Event {
     write!(f, "SDL_Event {{ union }}")
   }
 }
-pub type SDL_compile_time_assert_SDL_Event = [winapi::ctypes::c_int; 1usize];
+pub type SDL_compile_time_assert_SDL_Event = [c_int; 1usize];
 extern "C" {
   pub fn SDL_PumpEvents();
 }
@@ -8118,11 +8118,11 @@ pub type SDL_eventaction = i32;
 extern "C" {
   pub fn SDL_PeepEvents(
     events: *mut SDL_Event,
-    numevents: winapi::ctypes::c_int,
+    numevents: c_int,
     action: SDL_eventaction,
     minType: Uint32,
     maxType: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_HasEvent(type_: Uint32) -> SDL_bool;
@@ -8137,58 +8137,58 @@ extern "C" {
   pub fn SDL_FlushEvents(minType: Uint32, maxType: Uint32);
 }
 extern "C" {
-  pub fn SDL_PollEvent(event: *mut SDL_Event) -> winapi::ctypes::c_int;
+  pub fn SDL_PollEvent(event: *mut SDL_Event) -> c_int;
 }
 extern "C" {
-  pub fn SDL_WaitEvent(event: *mut SDL_Event) -> winapi::ctypes::c_int;
+  pub fn SDL_WaitEvent(event: *mut SDL_Event) -> c_int;
 }
 extern "C" {
   pub fn SDL_WaitEventTimeout(
     event: *mut SDL_Event,
-    timeout: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    timeout: c_int,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_PushEvent(event: *mut SDL_Event) -> winapi::ctypes::c_int;
+  pub fn SDL_PushEvent(event: *mut SDL_Event) -> c_int;
 }
 pub type SDL_EventFilter = ::core::option::Option<
   unsafe extern "C" fn(
-    userdata: *mut winapi::ctypes::c_void,
+    userdata: *mut c_void,
     event: *mut SDL_Event,
-  ) -> winapi::ctypes::c_int,
+  ) -> c_int,
 >;
 extern "C" {
-  pub fn SDL_SetEventFilter(filter: SDL_EventFilter, userdata: *mut winapi::ctypes::c_void);
+  pub fn SDL_SetEventFilter(filter: SDL_EventFilter, userdata: *mut c_void);
 }
 extern "C" {
   pub fn SDL_GetEventFilter(
     filter: *mut SDL_EventFilter,
-    userdata: *mut *mut winapi::ctypes::c_void,
+    userdata: *mut *mut c_void,
   ) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: *mut winapi::ctypes::c_void);
+  pub fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: *mut c_void);
 }
 extern "C" {
-  pub fn SDL_DelEventWatch(filter: SDL_EventFilter, userdata: *mut winapi::ctypes::c_void);
+  pub fn SDL_DelEventWatch(filter: SDL_EventFilter, userdata: *mut c_void);
 }
 extern "C" {
-  pub fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: *mut winapi::ctypes::c_void);
+  pub fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: *mut c_void);
 }
 extern "C" {
-  pub fn SDL_EventState(type_: Uint32, state: winapi::ctypes::c_int) -> Uint8;
+  pub fn SDL_EventState(type_: Uint32, state: c_int) -> Uint8;
 }
 extern "C" {
-  pub fn SDL_RegisterEvents(numevents: winapi::ctypes::c_int) -> Uint32;
+  pub fn SDL_RegisterEvents(numevents: c_int) -> Uint32;
 }
 extern "C" {
-  pub fn SDL_GetBasePath() -> *mut winapi::ctypes::c_char;
+  pub fn SDL_GetBasePath() -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_GetPrefPath(
-    org: *const winapi::ctypes::c_char,
-    app: *const winapi::ctypes::c_char,
-  ) -> *mut winapi::ctypes::c_char;
+    org: *const c_char,
+    app: *const c_char,
+  ) -> *mut c_char;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -9189,28 +9189,28 @@ impl ::core::fmt::Debug for SDL_HapticEffect {
   }
 }
 extern "C" {
-  pub fn SDL_NumHaptics() -> winapi::ctypes::c_int;
+  pub fn SDL_NumHaptics() -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticName(device_index: winapi::ctypes::c_int) -> *const winapi::ctypes::c_char;
+  pub fn SDL_HapticName(device_index: c_int) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_HapticOpen(device_index: winapi::ctypes::c_int) -> *mut SDL_Haptic;
+  pub fn SDL_HapticOpen(device_index: c_int) -> *mut SDL_Haptic;
 }
 extern "C" {
-  pub fn SDL_HapticOpened(device_index: winapi::ctypes::c_int) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticOpened(device_index: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticIndex(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticIndex(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
-  pub fn SDL_MouseIsHaptic() -> winapi::ctypes::c_int;
+  pub fn SDL_MouseIsHaptic() -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticOpenFromMouse() -> *mut SDL_Haptic;
 }
 extern "C" {
-  pub fn SDL_JoystickIsHaptic(joystick: *mut SDL_Joystick) -> winapi::ctypes::c_int;
+  pub fn SDL_JoystickIsHaptic(joystick: *mut SDL_Joystick) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticOpenFromJoystick(joystick: *mut SDL_Joystick) -> *mut SDL_Haptic;
@@ -9219,94 +9219,94 @@ extern "C" {
   pub fn SDL_HapticClose(haptic: *mut SDL_Haptic);
 }
 extern "C" {
-  pub fn SDL_HapticNumEffects(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticNumEffects(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticNumEffectsPlaying(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticNumEffectsPlaying(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticQuery(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_uint;
+  pub fn SDL_HapticQuery(haptic: *mut SDL_Haptic) -> c_uint;
 }
 extern "C" {
-  pub fn SDL_HapticNumAxes(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticNumAxes(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticEffectSupported(
     haptic: *mut SDL_Haptic,
     effect: *mut SDL_HapticEffect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticNewEffect(
     haptic: *mut SDL_Haptic,
     effect: *mut SDL_HapticEffect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticUpdateEffect(
     haptic: *mut SDL_Haptic,
-    effect: winapi::ctypes::c_int,
+    effect: c_int,
     data: *mut SDL_HapticEffect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticRunEffect(
     haptic: *mut SDL_Haptic,
-    effect: winapi::ctypes::c_int,
+    effect: c_int,
     iterations: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticStopEffect(
     haptic: *mut SDL_Haptic,
-    effect: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    effect: c_int,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticDestroyEffect(haptic: *mut SDL_Haptic, effect: winapi::ctypes::c_int);
+  pub fn SDL_HapticDestroyEffect(haptic: *mut SDL_Haptic, effect: c_int);
 }
 extern "C" {
   pub fn SDL_HapticGetEffectStatus(
     haptic: *mut SDL_Haptic,
-    effect: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    effect: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticSetGain(
     haptic: *mut SDL_Haptic,
-    gain: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    gain: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticSetAutocenter(
     haptic: *mut SDL_Haptic,
-    autocenter: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    autocenter: c_int,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticPause(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticPause(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticUnpause(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticUnpause(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticStopAll(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticStopAll(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticRumbleSupported(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticRumbleSupported(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticRumbleInit(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticRumbleInit(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticRumblePlay(
     haptic: *mut SDL_Haptic,
     strength: f32,
     length: Uint32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticRumbleStop(haptic: *mut SDL_Haptic) -> winapi::ctypes::c_int;
+  pub fn SDL_HapticRumbleStop(haptic: *mut SDL_Haptic) -> c_int;
 }
 pub const SDL_HINT_DEFAULT: SDL_HintPriority = 0;
 pub const SDL_HINT_NORMAL: SDL_HintPriority = 1;
@@ -9314,62 +9314,62 @@ pub const SDL_HINT_OVERRIDE: SDL_HintPriority = 2;
 pub type SDL_HintPriority = i32;
 extern "C" {
   pub fn SDL_SetHintWithPriority(
-    name: *const winapi::ctypes::c_char,
-    value: *const winapi::ctypes::c_char,
+    name: *const c_char,
+    value: *const c_char,
     priority: SDL_HintPriority,
   ) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_SetHint(
-    name: *const winapi::ctypes::c_char,
-    value: *const winapi::ctypes::c_char,
+    name: *const c_char,
+    value: *const c_char,
   ) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_GetHint(name: *const winapi::ctypes::c_char) -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetHint(name: *const c_char) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_GetHintBoolean(
-    name: *const winapi::ctypes::c_char,
+    name: *const c_char,
     default_value: SDL_bool,
   ) -> SDL_bool;
 }
 pub type SDL_HintCallback = ::core::option::Option<
   unsafe extern "C" fn(
-    userdata: *mut winapi::ctypes::c_void,
-    name: *const winapi::ctypes::c_char,
-    oldValue: *const winapi::ctypes::c_char,
-    newValue: *const winapi::ctypes::c_char,
+    userdata: *mut c_void,
+    name: *const c_char,
+    oldValue: *const c_char,
+    newValue: *const c_char,
   ),
 >;
 extern "C" {
   pub fn SDL_AddHintCallback(
-    name: *const winapi::ctypes::c_char,
+    name: *const c_char,
     callback: SDL_HintCallback,
-    userdata: *mut winapi::ctypes::c_void,
+    userdata: *mut c_void,
   );
 }
 extern "C" {
   pub fn SDL_DelHintCallback(
-    name: *const winapi::ctypes::c_char,
+    name: *const c_char,
     callback: SDL_HintCallback,
-    userdata: *mut winapi::ctypes::c_void,
+    userdata: *mut c_void,
   );
 }
 extern "C" {
   pub fn SDL_ClearHints();
 }
 extern "C" {
-  pub fn SDL_LoadObject(sofile: *const winapi::ctypes::c_char) -> *mut winapi::ctypes::c_void;
+  pub fn SDL_LoadObject(sofile: *const c_char) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_LoadFunction(
-    handle: *mut winapi::ctypes::c_void,
-    name: *const winapi::ctypes::c_char,
-  ) -> *mut winapi::ctypes::c_void;
+    handle: *mut c_void,
+    name: *const c_char,
+  ) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_UnloadObject(handle: *mut winapi::ctypes::c_void);
+  pub fn SDL_UnloadObject(handle: *mut c_void);
 }
 pub const SDL_LOG_CATEGORY_APPLICATION: _bindgen_ty_7 = 0;
 pub const SDL_LOG_CATEGORY_ERROR: _bindgen_ty_7 = 1;
@@ -9404,69 +9404,69 @@ extern "C" {
   pub fn SDL_LogSetAllPriority(priority: SDL_LogPriority);
 }
 extern "C" {
-  pub fn SDL_LogSetPriority(category: winapi::ctypes::c_int, priority: SDL_LogPriority);
+  pub fn SDL_LogSetPriority(category: c_int, priority: SDL_LogPriority);
 }
 extern "C" {
-  pub fn SDL_LogGetPriority(category: winapi::ctypes::c_int) -> SDL_LogPriority;
+  pub fn SDL_LogGetPriority(category: c_int) -> SDL_LogPriority;
 }
 extern "C" {
   pub fn SDL_LogResetPriorities();
 }
 extern "C" {
-  pub fn SDL_Log(fmt: *const winapi::ctypes::c_char, ...);
+  pub fn SDL_Log(fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogVerbose(category: winapi::ctypes::c_int, fmt: *const winapi::ctypes::c_char, ...);
+  pub fn SDL_LogVerbose(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogDebug(category: winapi::ctypes::c_int, fmt: *const winapi::ctypes::c_char, ...);
+  pub fn SDL_LogDebug(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogInfo(category: winapi::ctypes::c_int, fmt: *const winapi::ctypes::c_char, ...);
+  pub fn SDL_LogInfo(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogWarn(category: winapi::ctypes::c_int, fmt: *const winapi::ctypes::c_char, ...);
+  pub fn SDL_LogWarn(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogError(category: winapi::ctypes::c_int, fmt: *const winapi::ctypes::c_char, ...);
+  pub fn SDL_LogError(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogCritical(category: winapi::ctypes::c_int, fmt: *const winapi::ctypes::c_char, ...);
+  pub fn SDL_LogCritical(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
   pub fn SDL_LogMessage(
-    category: winapi::ctypes::c_int,
+    category: c_int,
     priority: SDL_LogPriority,
-    fmt: *const winapi::ctypes::c_char,
+    fmt: *const c_char,
     ...
   );
 }
 extern "C" {
   pub fn SDL_LogMessageV(
-    category: winapi::ctypes::c_int,
+    category: c_int,
     priority: SDL_LogPriority,
-    fmt: *const winapi::ctypes::c_char,
+    fmt: *const c_char,
     ap: va_list,
   );
 }
 pub type SDL_LogOutputFunction = ::core::option::Option<
   unsafe extern "C" fn(
-    userdata: *mut winapi::ctypes::c_void,
-    category: winapi::ctypes::c_int,
+    userdata: *mut c_void,
+    category: c_int,
     priority: SDL_LogPriority,
-    message: *const winapi::ctypes::c_char,
+    message: *const c_char,
   ),
 >;
 extern "C" {
   pub fn SDL_LogGetOutputFunction(
     callback: *mut SDL_LogOutputFunction,
-    userdata: *mut *mut winapi::ctypes::c_void,
+    userdata: *mut *mut c_void,
   );
 }
 extern "C" {
   pub fn SDL_LogSetOutputFunction(
     callback: SDL_LogOutputFunction,
-    userdata: *mut winapi::ctypes::c_void,
+    userdata: *mut c_void,
   );
 }
 pub const SDL_MESSAGEBOX_ERROR: SDL_MessageBoxFlags = 16;
@@ -9480,8 +9480,8 @@ pub type SDL_MessageBoxButtonFlags = i32;
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_MessageBoxButtonData {
   pub flags: Uint32,
-  pub buttonid: winapi::ctypes::c_int,
-  pub text: *const winapi::ctypes::c_char,
+  pub buttonid: c_int,
+  pub text: *const c_char,
 }
 #[test]
 fn bindgen_test_layout_SDL_MessageBoxButtonData() {
@@ -9621,9 +9621,9 @@ fn bindgen_test_layout_SDL_MessageBoxColorScheme() {
 pub struct SDL_MessageBoxData {
   pub flags: Uint32,
   pub window: *mut SDL_Window,
-  pub title: *const winapi::ctypes::c_char,
-  pub message: *const winapi::ctypes::c_char,
-  pub numbuttons: winapi::ctypes::c_int,
+  pub title: *const c_char,
+  pub message: *const c_char,
+  pub numbuttons: c_int,
   pub buttons: *const SDL_MessageBoxButtonData,
   pub colorScheme: *const SDL_MessageBoxColorScheme,
 }
@@ -9718,16 +9718,16 @@ impl Default for SDL_MessageBoxData {
 extern "C" {
   pub fn SDL_ShowMessageBox(
     messageboxdata: *const SDL_MessageBoxData,
-    buttonid: *mut winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    buttonid: *mut c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_ShowSimpleMessageBox(
     flags: Uint32,
-    title: *const winapi::ctypes::c_char,
-    message: *const winapi::ctypes::c_char,
+    title: *const c_char,
+    message: *const c_char,
     window: *mut SDL_Window,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 pub const SDL_POWERSTATE_UNKNOWN: SDL_PowerState = 0;
 pub const SDL_POWERSTATE_ON_BATTERY: SDL_PowerState = 1;
@@ -9737,8 +9737,8 @@ pub const SDL_POWERSTATE_CHARGED: SDL_PowerState = 4;
 pub type SDL_PowerState = i32;
 extern "C" {
   pub fn SDL_GetPowerInfo(
-    secs: *mut winapi::ctypes::c_int,
-    pct: *mut winapi::ctypes::c_int,
+    secs: *mut c_int,
+    pct: *mut c_int,
   ) -> SDL_PowerState;
 }
 pub const SDL_RENDERER_SOFTWARE: SDL_RendererFlags = 1;
@@ -9749,12 +9749,12 @@ pub type SDL_RendererFlags = i32;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_RendererInfo {
-  pub name: *const winapi::ctypes::c_char,
+  pub name: *const c_char,
   pub flags: Uint32,
   pub num_texture_formats: Uint32,
   pub texture_formats: [Uint32; 16usize],
-  pub max_texture_width: winapi::ctypes::c_int,
-  pub max_texture_height: winapi::ctypes::c_int,
+  pub max_texture_width: c_int,
+  pub max_texture_height: c_int,
 }
 #[test]
 fn bindgen_test_layout_SDL_RendererInfo() {
@@ -9861,27 +9861,27 @@ pub struct SDL_Texture {
   _unused: [u8; 0],
 }
 extern "C" {
-  pub fn SDL_GetNumRenderDrivers() -> winapi::ctypes::c_int;
+  pub fn SDL_GetNumRenderDrivers() -> c_int;
 }
 extern "C" {
   pub fn SDL_GetRenderDriverInfo(
-    index: winapi::ctypes::c_int,
+    index: c_int,
     info: *mut SDL_RendererInfo,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_CreateWindowAndRenderer(
-    width: winapi::ctypes::c_int,
-    height: winapi::ctypes::c_int,
+    width: c_int,
+    height: c_int,
     window_flags: Uint32,
     window: *mut *mut SDL_Window,
     renderer: *mut *mut SDL_Renderer,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_CreateRenderer(
     window: *mut SDL_Window,
-    index: winapi::ctypes::c_int,
+    index: c_int,
     flags: Uint32,
   ) -> *mut SDL_Renderer;
 }
@@ -9895,22 +9895,22 @@ extern "C" {
   pub fn SDL_GetRendererInfo(
     renderer: *mut SDL_Renderer,
     info: *mut SDL_RendererInfo,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetRendererOutputSize(
     renderer: *mut SDL_Renderer,
-    w: *mut winapi::ctypes::c_int,
-    h: *mut winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    w: *mut c_int,
+    h: *mut c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_CreateTexture(
     renderer: *mut SDL_Renderer,
     format: Uint32,
-    access: winapi::ctypes::c_int,
-    w: winapi::ctypes::c_int,
-    h: winapi::ctypes::c_int,
+    access: c_int,
+    w: c_int,
+    h: c_int,
   ) -> *mut SDL_Texture;
 }
 extern "C" {
@@ -9923,10 +9923,10 @@ extern "C" {
   pub fn SDL_QueryTexture(
     texture: *mut SDL_Texture,
     format: *mut Uint32,
-    access: *mut winapi::ctypes::c_int,
-    w: *mut winapi::ctypes::c_int,
-    h: *mut winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    access: *mut c_int,
+    w: *mut c_int,
+    h: *mut c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetTextureColorMod(
@@ -9934,7 +9934,7 @@ extern "C" {
     r: Uint8,
     g: Uint8,
     b: Uint8,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetTextureColorMod(
@@ -9942,56 +9942,56 @@ extern "C" {
     r: *mut Uint8,
     g: *mut Uint8,
     b: *mut Uint8,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SetTextureAlphaMod(texture: *mut SDL_Texture, alpha: Uint8) -> winapi::ctypes::c_int;
+  pub fn SDL_SetTextureAlphaMod(texture: *mut SDL_Texture, alpha: Uint8) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetTextureAlphaMod(
     texture: *mut SDL_Texture,
     alpha: *mut Uint8,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetTextureBlendMode(
     texture: *mut SDL_Texture,
     blendMode: SDL_BlendMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetTextureBlendMode(
     texture: *mut SDL_Texture,
     blendMode: *mut SDL_BlendMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_UpdateTexture(
     texture: *mut SDL_Texture,
     rect: *const SDL_Rect,
-    pixels: *const winapi::ctypes::c_void,
-    pitch: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    pixels: *const c_void,
+    pitch: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_UpdateYUVTexture(
     texture: *mut SDL_Texture,
     rect: *const SDL_Rect,
     Yplane: *const Uint8,
-    Ypitch: winapi::ctypes::c_int,
+    Ypitch: c_int,
     Uplane: *const Uint8,
-    Upitch: winapi::ctypes::c_int,
+    Upitch: c_int,
     Vplane: *const Uint8,
-    Vpitch: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    Vpitch: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_LockTexture(
     texture: *mut SDL_Texture,
     rect: *const SDL_Rect,
-    pixels: *mut *mut winapi::ctypes::c_void,
-    pitch: *mut winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    pixels: *mut *mut c_void,
+    pitch: *mut c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_UnlockTexture(texture: *mut SDL_Texture);
@@ -10003,7 +10003,7 @@ extern "C" {
   pub fn SDL_SetRenderTarget(
     renderer: *mut SDL_Renderer,
     texture: *mut SDL_Texture,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetRenderTarget(renderer: *mut SDL_Renderer) -> *mut SDL_Texture;
@@ -10011,22 +10011,22 @@ extern "C" {
 extern "C" {
   pub fn SDL_RenderSetLogicalSize(
     renderer: *mut SDL_Renderer,
-    w: winapi::ctypes::c_int,
-    h: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    w: c_int,
+    h: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderGetLogicalSize(
     renderer: *mut SDL_Renderer,
-    w: *mut winapi::ctypes::c_int,
-    h: *mut winapi::ctypes::c_int,
+    w: *mut c_int,
+    h: *mut c_int,
   );
 }
 extern "C" {
   pub fn SDL_RenderSetIntegerScale(
     renderer: *mut SDL_Renderer,
     enable: SDL_bool,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderGetIntegerScale(renderer: *mut SDL_Renderer) -> SDL_bool;
@@ -10035,7 +10035,7 @@ extern "C" {
   pub fn SDL_RenderSetViewport(
     renderer: *mut SDL_Renderer,
     rect: *const SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderGetViewport(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect);
@@ -10044,7 +10044,7 @@ extern "C" {
   pub fn SDL_RenderSetClipRect(
     renderer: *mut SDL_Renderer,
     rect: *const SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderGetClipRect(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect);
@@ -10057,7 +10057,7 @@ extern "C" {
     renderer: *mut SDL_Renderer,
     scaleX: f32,
     scaleY: f32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderGetScale(renderer: *mut SDL_Renderer, scaleX: *mut f32, scaleY: *mut f32);
@@ -10069,7 +10069,7 @@ extern "C" {
     g: Uint8,
     b: Uint8,
     a: Uint8,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetRenderDrawColor(
@@ -10078,78 +10078,78 @@ extern "C" {
     g: *mut Uint8,
     b: *mut Uint8,
     a: *mut Uint8,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetRenderDrawBlendMode(
     renderer: *mut SDL_Renderer,
     blendMode: SDL_BlendMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetRenderDrawBlendMode(
     renderer: *mut SDL_Renderer,
     blendMode: *mut SDL_BlendMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_RenderClear(renderer: *mut SDL_Renderer) -> winapi::ctypes::c_int;
+  pub fn SDL_RenderClear(renderer: *mut SDL_Renderer) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawPoint(
     renderer: *mut SDL_Renderer,
-    x: winapi::ctypes::c_int,
-    y: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    x: c_int,
+    y: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawPoints(
     renderer: *mut SDL_Renderer,
     points: *const SDL_Point,
-    count: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    count: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawLine(
     renderer: *mut SDL_Renderer,
-    x1: winapi::ctypes::c_int,
-    y1: winapi::ctypes::c_int,
-    x2: winapi::ctypes::c_int,
-    y2: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    x1: c_int,
+    y1: c_int,
+    x2: c_int,
+    y2: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawLines(
     renderer: *mut SDL_Renderer,
     points: *const SDL_Point,
-    count: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    count: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawRect(
     renderer: *mut SDL_Renderer,
     rect: *const SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawRects(
     renderer: *mut SDL_Renderer,
     rects: *const SDL_Rect,
-    count: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    count: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderFillRect(
     renderer: *mut SDL_Renderer,
     rect: *const SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderFillRects(
     renderer: *mut SDL_Renderer,
     rects: *const SDL_Rect,
-    count: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    count: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderCopy(
@@ -10157,7 +10157,7 @@ extern "C" {
     texture: *mut SDL_Texture,
     srcrect: *const SDL_Rect,
     dstrect: *const SDL_Rect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderCopyEx(
@@ -10168,18 +10168,18 @@ extern "C" {
     angle: f64,
     center: *const SDL_Point,
     flip: SDL_RendererFlip,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawPointF(renderer: *mut SDL_Renderer, x: f32, y: f32)
-    -> winapi::ctypes::c_int;
+    -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawPointsF(
     renderer: *mut SDL_Renderer,
     points: *const SDL_FPoint,
-    count: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    count: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawLineF(
@@ -10188,40 +10188,40 @@ extern "C" {
     y1: f32,
     x2: f32,
     y2: f32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawLinesF(
     renderer: *mut SDL_Renderer,
     points: *const SDL_FPoint,
-    count: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    count: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawRectF(
     renderer: *mut SDL_Renderer,
     rect: *const SDL_FRect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderDrawRectsF(
     renderer: *mut SDL_Renderer,
     rects: *const SDL_FRect,
-    count: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    count: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderFillRectF(
     renderer: *mut SDL_Renderer,
     rect: *const SDL_FRect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderFillRectsF(
     renderer: *mut SDL_Renderer,
     rects: *const SDL_FRect,
-    count: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    count: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderCopyF(
@@ -10229,7 +10229,7 @@ extern "C" {
     texture: *mut SDL_Texture,
     srcrect: *const SDL_Rect,
     dstrect: *const SDL_FRect,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderCopyExF(
@@ -10240,16 +10240,16 @@ extern "C" {
     angle: f64,
     center: *const SDL_FPoint,
     flip: SDL_RendererFlip,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderReadPixels(
     renderer: *mut SDL_Renderer,
     rect: *const SDL_Rect,
     format: Uint32,
-    pixels: *mut winapi::ctypes::c_void,
-    pitch: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    pixels: *mut c_void,
+    pitch: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_RenderPresent(renderer: *mut SDL_Renderer);
@@ -10261,25 +10261,25 @@ extern "C" {
   pub fn SDL_DestroyRenderer(renderer: *mut SDL_Renderer);
 }
 extern "C" {
-  pub fn SDL_RenderFlush(renderer: *mut SDL_Renderer) -> winapi::ctypes::c_int;
+  pub fn SDL_RenderFlush(renderer: *mut SDL_Renderer) -> c_int;
 }
 extern "C" {
   pub fn SDL_GL_BindTexture(
     texture: *mut SDL_Texture,
     texw: *mut f32,
     texh: *mut f32,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GL_UnbindTexture(texture: *mut SDL_Texture) -> winapi::ctypes::c_int;
+  pub fn SDL_GL_UnbindTexture(texture: *mut SDL_Texture) -> c_int;
 }
 extern "C" {
-  pub fn SDL_RenderGetMetalLayer(renderer: *mut SDL_Renderer) -> *mut winapi::ctypes::c_void;
+  pub fn SDL_RenderGetMetalLayer(renderer: *mut SDL_Renderer) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_RenderGetMetalCommandEncoder(
     renderer: *mut SDL_Renderer,
-  ) -> *mut winapi::ctypes::c_void;
+  ) -> *mut c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -10294,38 +10294,38 @@ pub const SDL_SENSOR_ACCEL: SDL_SensorType = 1;
 pub const SDL_SENSOR_GYRO: SDL_SensorType = 2;
 pub type SDL_SensorType = i32;
 extern "C" {
-  pub fn SDL_NumSensors() -> winapi::ctypes::c_int;
+  pub fn SDL_NumSensors() -> c_int;
 }
 extern "C" {
   pub fn SDL_SensorGetDeviceName(
-    device_index: winapi::ctypes::c_int,
-  ) -> *const winapi::ctypes::c_char;
+    device_index: c_int,
+  ) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_SensorGetDeviceType(device_index: winapi::ctypes::c_int) -> SDL_SensorType;
+  pub fn SDL_SensorGetDeviceType(device_index: c_int) -> SDL_SensorType;
 }
 extern "C" {
   pub fn SDL_SensorGetDeviceNonPortableType(
-    device_index: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    device_index: c_int,
+  ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SensorGetDeviceInstanceID(device_index: winapi::ctypes::c_int) -> SDL_SensorID;
+  pub fn SDL_SensorGetDeviceInstanceID(device_index: c_int) -> SDL_SensorID;
 }
 extern "C" {
-  pub fn SDL_SensorOpen(device_index: winapi::ctypes::c_int) -> *mut SDL_Sensor;
+  pub fn SDL_SensorOpen(device_index: c_int) -> *mut SDL_Sensor;
 }
 extern "C" {
   pub fn SDL_SensorFromInstanceID(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
 }
 extern "C" {
-  pub fn SDL_SensorGetName(sensor: *mut SDL_Sensor) -> *const winapi::ctypes::c_char;
+  pub fn SDL_SensorGetName(sensor: *mut SDL_Sensor) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_SensorGetType(sensor: *mut SDL_Sensor) -> SDL_SensorType;
 }
 extern "C" {
-  pub fn SDL_SensorGetNonPortableType(sensor: *mut SDL_Sensor) -> winapi::ctypes::c_int;
+  pub fn SDL_SensorGetNonPortableType(sensor: *mut SDL_Sensor) -> c_int;
 }
 extern "C" {
   pub fn SDL_SensorGetInstanceID(sensor: *mut SDL_Sensor) -> SDL_SensorID;
@@ -10334,8 +10334,8 @@ extern "C" {
   pub fn SDL_SensorGetData(
     sensor: *mut SDL_Sensor,
     data: *mut f32,
-    num_values: winapi::ctypes::c_int,
-  ) -> winapi::ctypes::c_int;
+    num_values: c_int,
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_SensorClose(sensor: *mut SDL_Sensor);
@@ -10345,11 +10345,11 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_CreateShapedWindow(
-    title: *const winapi::ctypes::c_char,
-    x: winapi::ctypes::c_uint,
-    y: winapi::ctypes::c_uint,
-    w: winapi::ctypes::c_uint,
-    h: winapi::ctypes::c_uint,
+    title: *const c_char,
+    x: c_uint,
+    y: c_uint,
+    w: c_uint,
+    h: c_uint,
     flags: Uint32,
   ) -> *mut SDL_Window;
 }
@@ -10471,19 +10471,19 @@ extern "C" {
     window: *mut SDL_Window,
     shape: *mut SDL_Surface,
     shape_mode: *mut SDL_WindowShapeMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetShapedWindowMode(
     window: *mut SDL_Window,
     shape_mode: *mut SDL_WindowShapeMode,
-  ) -> winapi::ctypes::c_int;
+  ) -> c_int;
 }
 pub type SDL_WindowsMessageHook = ::core::option::Option<
   unsafe extern "C" fn(
-    userdata: *mut winapi::ctypes::c_void,
-    hWnd: *mut winapi::ctypes::c_void,
-    message: winapi::ctypes::c_uint,
+    userdata: *mut c_void,
+    hWnd: *mut c_void,
+    message: c_uint,
     wParam: Uint64,
     lParam: Sint64,
   ),
@@ -10491,12 +10491,12 @@ pub type SDL_WindowsMessageHook = ::core::option::Option<
 extern "C" {
   pub fn SDL_SetWindowsMessageHook(
     callback: SDL_WindowsMessageHook,
-    userdata: *mut winapi::ctypes::c_void,
+    userdata: *mut c_void,
   );
 }
 extern "C" {
-  pub fn SDL_Direct3D9GetAdapterIndex(displayIndex: winapi::ctypes::c_int)
-    -> winapi::ctypes::c_int;
+  pub fn SDL_Direct3D9GetAdapterIndex(displayIndex: c_int)
+    -> c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -10508,9 +10508,9 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_DXGIGetOutputInfo(
-    displayIndex: winapi::ctypes::c_int,
-    adapterIndex: *mut winapi::ctypes::c_int,
-    outputIndex: *mut winapi::ctypes::c_int,
+    displayIndex: c_int,
+    adapterIndex: *mut c_int,
+    outputIndex: *mut c_int,
   ) -> SDL_bool;
 }
 extern "C" {
@@ -10529,14 +10529,14 @@ extern "C" {
   pub fn SDL_Delay(ms: Uint32);
 }
 pub type SDL_TimerCallback = ::core::option::Option<
-  unsafe extern "C" fn(interval: Uint32, param: *mut winapi::ctypes::c_void) -> Uint32,
+  unsafe extern "C" fn(interval: Uint32, param: *mut c_void) -> Uint32,
 >;
-pub type SDL_TimerID = winapi::ctypes::c_int;
+pub type SDL_TimerID = c_int;
 extern "C" {
   pub fn SDL_AddTimer(
     interval: Uint32,
     callback: SDL_TimerCallback,
-    param: *mut winapi::ctypes::c_void,
+    param: *mut c_void,
   ) -> SDL_TimerID;
 }
 extern "C" {
@@ -10596,16 +10596,16 @@ extern "C" {
   pub fn SDL_GetVersion(ver: *mut SDL_version);
 }
 extern "C" {
-  pub fn SDL_GetRevision() -> *const winapi::ctypes::c_char;
+  pub fn SDL_GetRevision() -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_GetRevisionNumber() -> winapi::ctypes::c_int;
+  pub fn SDL_GetRevisionNumber() -> c_int;
 }
 extern "C" {
-  pub fn SDL_Init(flags: Uint32) -> winapi::ctypes::c_int;
+  pub fn SDL_Init(flags: Uint32) -> c_int;
 }
 extern "C" {
-  pub fn SDL_InitSubSystem(flags: Uint32) -> winapi::ctypes::c_int;
+  pub fn SDL_InitSubSystem(flags: Uint32) -> c_int;
 }
 extern "C" {
   pub fn SDL_QuitSubSystem(flags: Uint32);
@@ -10631,10 +10631,10 @@ pub type VkSurfaceKHR = *mut VkSurfaceKHR_T;
 pub type SDL_vulkanInstance = VkInstance;
 pub type SDL_vulkanSurface = VkSurfaceKHR;
 extern "C" {
-  pub fn SDL_Vulkan_LoadLibrary(path: *const winapi::ctypes::c_char) -> winapi::ctypes::c_int;
+  pub fn SDL_Vulkan_LoadLibrary(path: *const c_char) -> c_int;
 }
 extern "C" {
-  pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> *mut winapi::ctypes::c_void;
+  pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_Vulkan_UnloadLibrary();
@@ -10642,8 +10642,8 @@ extern "C" {
 extern "C" {
   pub fn SDL_Vulkan_GetInstanceExtensions(
     window: *mut SDL_Window,
-    pCount: *mut winapi::ctypes::c_uint,
-    pNames: *mut *const winapi::ctypes::c_char,
+    pCount: *mut c_uint,
+    pNames: *mut *const c_char,
   ) -> SDL_bool;
 }
 extern "C" {
@@ -10656,19 +10656,19 @@ extern "C" {
 extern "C" {
   pub fn SDL_Vulkan_GetDrawableSize(
     window: *mut SDL_Window,
-    w: *mut winapi::ctypes::c_int,
-    h: *mut winapi::ctypes::c_int,
+    w: *mut c_int,
+    h: *mut c_int,
   );
 }
-pub type UINT = winapi::ctypes::c_uint;
-pub type UINT_PTR = winapi::ctypes::c_ulonglong;
-pub type LONG_PTR = winapi::ctypes::c_longlong;
+pub type UINT = c_uint;
+pub type UINT_PTR = c_ulonglong;
+pub type LONG_PTR = c_longlong;
 pub type WPARAM = UINT_PTR;
 pub type LPARAM = LONG_PTR;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct HINSTANCE__ {
-  pub unused: winapi::ctypes::c_int,
+  pub unused: c_int,
 }
 #[test]
 fn bindgen_test_layout_HINSTANCE__() {
@@ -10697,7 +10697,7 @@ pub type HINSTANCE = *mut HINSTANCE__;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct HWND__ {
-  pub unused: winapi::ctypes::c_int,
+  pub unused: c_int,
 }
 #[test]
 fn bindgen_test_layout_HWND__() {
@@ -10726,7 +10726,7 @@ pub type HWND = *mut HWND__;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct HDC__ {
-  pub unused: winapi::ctypes::c_int,
+  pub unused: c_int,
 }
 #[test]
 fn bindgen_test_layout_HDC__() {
@@ -10776,7 +10776,7 @@ pub struct SDL_SysWMmsg {
 #[derive(Copy, Clone)]
 pub union SDL_SysWMmsg__bindgen_ty_1 {
   pub win: SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1,
-  pub dummy: winapi::ctypes::c_int,
+  pub dummy: c_int,
   _bindgen_union_align: [u64; 4usize],
 }
 #[repr(C)]
@@ -11149,7 +11149,7 @@ impl ::core::fmt::Debug for SDL_SysWMinfo {
 extern "C" {
   pub fn SDL_GetWindowWMInfo(window: *mut SDL_Window, info: *mut SDL_SysWMinfo) -> SDL_bool;
 }
-pub type __builtin_va_list = *mut winapi::ctypes::c_char;
+pub type __builtin_va_list = *mut c_char;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_BlitMap {

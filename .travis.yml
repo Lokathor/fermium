@@ -20,7 +20,7 @@ install:
   - rustup component add rustfmt
   - (test -x $HOME/.cargo/bin/cargo-install-update || cargo install cargo-update)
   - (test -x $HOME/.cargo/bin/bindgen || cargo install bindgen)
-  - cargo install-update -a
+  #- cargo install-update -a
   - |
     if [[ $TRAVIS_OS_NAME == "linux" ]]
     then
@@ -28,6 +28,7 @@ install:
       sudo apt-get -qq install libsdl2-dev
     else
       # https://formulae.brew.sh/formula/sdl2#default
+      brew update
       brew install sdl2
     fi
   # Run these to confirm that the SDL2 installation is working
