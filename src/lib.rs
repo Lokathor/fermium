@@ -50,12 +50,67 @@
 //!
 //! Instead you should check out the [SDL2 Wiki](https://wiki.libsdl.org/)
 
-use cfg_if::cfg_if;
+/// Does all our conditional compilation selection.
+macro_rules! magic {
+  (
+    $(if #[cfg($($test:meta),*)] {
+      $($if_tokens:tt)*
+    })else* else {
+      $($else_tokens:tt)*
+    }
+  ) => {
+    magic!{
+      @__forests [ ] ;
+      $( [ {$($test),*} {$($if_tokens)*} ], )*
+      [ { } {$($else_tokens)*} ],
+    }
+  };
+
+  (
+    if #[cfg($($if_meta:meta),*)] {
+      $($if_tokens:tt)*
+    } $(else if #[cfg($($else_meta:meta),*)] {
+      $($else_tokens:tt)*
+    })*
+  ) => {
+    magic!{
+      @__forests [ ] ;
+      [ {$($if_meta),*} {$($if_tokens)*} ],
+      $( [ {$($else_meta),*} {$($else_tokens)*} ], )*
+    }
+  };
+
+  (
+    @__forests [ $($not:meta,)* ] ;
+  ) => {
+    /* halt expansion */
+  };
+
+  (
+    @__forests [ $($not:meta,)* ] ;
+    [ { $($m:meta),* } { $($tokens:tt)* } ],
+    $($rest:tt)*
+  ) => {
+    #[cfg(all( $($m,)* not(any($($not),*)) ))]
+    magic!{ @__identity $($tokens)* }
+
+    magic!{
+      @__forests [ $($not,)* $($m,)* ] ;
+      $($rest)*
+    }
+  };
+
+  (
+    @__identity $($tokens:tt)*
+  ) => {
+    $($tokens)*
+  };
+}
 
 // re-export the variable-length C types from their source crate to ease the end
 // user experience.
 pub use core::ffi::c_void;
-cfg_if! {
+magic! {
   if #[cfg(windows)] {
     pub type c_char = i8;
     pub type c_schar = i8;
@@ -78,7 +133,7 @@ cfg_if! {
 // bring in the correct bindings file. The bindgen binary will place them into
 // OUT_DIR, but for the pre-generated bindings they'll be within the source
 // directory along side the lib.rs file.
-cfg_if! {
+magic! {
   if #[cfg(feature = "use_bindgen_bin")] {
     include!(concat!(
       env!("OUT_DIR"),
@@ -120,14 +175,14 @@ pub type PackedLayout = _bindgen_ty_5;
 // For whatever reason, bindgen processes this type properly in the 2.0.10
 // headers and later, so after ty_6 there's a discepency between what the
 // unknown types mean.
-cfg_if! {
+magic! {
   if #[cfg(not(feature = "bind_SDL2_2_0_10"))] {
     /// See [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum)
     pub type SDL_PixelFormatEnum = _bindgen_ty_6;
   }
 }
 
-cfg_if! {
+magic! {
   if #[cfg(not(feature = "bind_SDL2_2_0_10"))] {
     /// See [`SDL_Keycode`](https://wiki.libsdl.org/SDL_Keycode)
     pub type SDLK = _bindgen_ty_7;
@@ -137,7 +192,7 @@ cfg_if! {
   }
 }
 
-cfg_if! {
+magic! {
   if #[cfg(not(feature = "bind_SDL2_2_0_10"))] {
     /// See [`SDL_LOG_CATEGORY`](https://wiki.libsdl.org/SDL_LOG_CATEGORY)
     pub type LogCategory = _bindgen_ty_8;
@@ -152,7 +207,7 @@ cfg_if! {
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
 
 // only present in 2.0.10 and later
-cfg_if! {
+magic! {
   if #[cfg(feature = "bind_SDL2_2_0_10")] {
     /// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with
     /// mouse input
