@@ -2,74 +2,32 @@
 name = "fermium"
 description = "An opinionated crate of SDL2 bindings."
 repository = "https://github.com/Lokathor/fermium"
-version = "0.1.5-alpha.0"
+# Targets SDL2 version 2.0.12
+version = "200.12.0-alpha.0"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
 license = "Zlib"
 keywords = ["SDL2"]
-categories = ["external-ffi-bindings", "multimedia", "game-engines", "no-std"]
+categories = ["external-ffi-bindings", "no-std"]
 
 links = "SDL2"
 build = "build.rs"
 
-# This forces docs.rs to build us on windows, which has the simplest build for
-# docs.rs to perform.
-[package.metadata.docs.rs]
-default-target = "x86_64-pc-windows-msvc"
-
 [features]
-default = ["link_dynamic"]
-
-# You can enable the `use_bindgen_bin` feature to override the use of the
-# included pre-generated files. Instead, it will run the `bindgen` CLI
-# application (currently targeting v0.51). If you don't have that you can follow
-# their guide: https://rust-lang.github.io/rust-bindgen/requirements.html
-use_bindgen_bin = []
-
-# You must select how you wish the project to link to SDL2. Dynamic linking
-# makes your program depend on an external shared library file (eg: `SDL2.dll`)
-# being present, but it lets people upgrade their SDL2 more easily, and so you
-# should prefer it unless having the entire program in just a single EXE with no
-# support files is a major goal. Static linking makes your program not depend on
-# the dynamic library, but it's a few MB larger as a result. SDL2 files for
-# static and/or dynamic linking are generally provided by your package manager
-# on Linux and Mac. For Windows, the dynamic library files are found on the SDL2
-# website download page: https://libsdl.org/download-2.0.php and the necessary
-# files for building are provided within the crate. Note that, due to soundness
-# concerns with ABI breakage in MSCV versions, the static lib files cannot be
-# pre-compiled, and if you use a static link on windows the crate will have to
-# build SDL2 from source.
-
 link_dynamic = []
 link_static = ["cmake"]
+default = ["link_dynamic"]
 
-# In terms of the API version that you want to target the bindings at, lower is
-# strictly better. If you bind to an old version you can always still compile
-# against a newer version.
-# * Ubuntu 16 is 2.0.4
-# * Debian old-stable is 2.0.5,
-# * Ubuntu 18 is 2.0.8
-# * Debian stable is 2.0.9
-# * actual latest is 2.0.10.
-
-# If you do not specify a `bind_version` feature then the crate assumes that you
-# want to target 2.0.8
-
-bind_SDL2_2_0_9 = []
-bind_SDL2_2_0_10 = ["bind_SDL2_2_0_9"]
-
-# I'll accept a PR that sets up the features and file support for the bindings
-# to work with versions older than 2.0.8 if someone really wants to do that, but
-# otherwise having 2.0.8 be the minimum version supported by the crate seems
-# fine to me. Anyone farther back than Debian Stable is pretty far back.
+[dependencies]
+chlorine = "1"
 
 [target."cfg(windows)".build-dependencies]
-# only actually called for static linking
+# This is necessary for the static build on windows. On Mac/Linux I just assume
+# that you've already installed SDL2 via your method of choice.
 cmake = { version = "0.1", optional = true }
 
-[target."cfg(not(windows))".dependencies]
-libc = "0.2"
-
+[package.metadata.docs.rs]
+default-target = "x86_64-pc-windows-msvc"
 [badges]
 appveyor = { repository = "Lokathor/fermium" }
 travis-ci = { repository = "Lokathor/fermium" }
