@@ -23,24 +23,9 @@ fn main() {
     );
   }
 
-  let bind_SDL2_2_0_9 = cfg!(feature = "bind_SDL2_2_0_9");
-  let bind_SDL2_2_0_10 = cfg!(feature = "bind_SDL2_2_0_10");
-  println!("bind_SDL2_2_0_9: {}", bind_SDL2_2_0_9);
-  println!("bind_SDL2_2_0_10: {}", bind_SDL2_2_0_10);
-
   println!(
     "cargo:rustc-env=TARGET={}",
     env::var("TARGET").expect("Couldn't read `TARGET`")
-  );
-  println!(
-    "cargo:rustc-env=BIND_PATCH_LEVEL={}",
-    if bind_SDL2_2_0_10 {
-      10
-    } else if bind_SDL2_2_0_9 {
-      9
-    } else {
-      8
-    }
   );
 
   if cfg!(feature = "use_bindgen_bin") {
@@ -268,25 +253,6 @@ fn declare_sd2_config_linking() {
   assert!(sdl2_config_version.status.success());
   let version_out_string = String::from_utf8_lossy(&sdl2_config_version.stdout);
   println!("sdl2-config --version: {}", version_out_string);
-  let version_parts: Vec<u32> = version_out_string
-    .trim()
-    .split('.')
-    .map(|s| s.parse::<u32>().unwrap())
-    .collect();
-  // exact matches
-  assert_eq!(version_parts[0], 2);
-  assert_eq!(version_parts[1], 0);
-  // greater than or equal to!
-  assert!(
-    version_parts[2]
-      >= if cfg!(feature = "bind_SDL2_2_0_10") {
-        10
-      } else if cfg!(feature = "bind_SDL2_2_0_9") {
-        9
-      } else {
-        8
-      }
-  );
 
   // Call sdl2-config for real and do what it says to do.
   let link_style_arg: &str = if cfg!(feature = "link_dynamic") {
