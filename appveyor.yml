@@ -5,8 +5,6 @@ matrix:
   fast_finish: true
 
 environment:
-  # Note(Lokathor): When someone submits the GNU files we can add the GNU stuff
-  # into our CI. Until then, no GNU CI support.
   matrix:
     # 32-bit MSVC
     - channel: 1.33.0
