@@ -51,16 +51,17 @@ either.
     minor versions are "dev", similar to how the Linux kernel works.
   * They update the final value when there's new functions or improvements to
     old functions. In this case, there's no actual ABI breaks to any part of the
-    library.
-  * _Not that there ever has been_, but if there were to be an ABI break to the
+    library. Sometimes hints or other constants get added and removed, but they
+    explicitly _don't_ consider such a small thing to be a breaking change even if it does mean you have to edit your source a tiny bit.
+  * _Not that there ever has been_, but if there _were_ to be an ABI break to the
     library, then they would update the major version.
 
-So, to try and make the `fermium` version indicate the SDL2 version that it's
-trying to bind to, while also trying to play nice with cargo, we'll have a major
-version of `200` to represent the `2.0.` part of things, and then we'll set the
-minor version to be the SDL2 minor version (such as `12`), and then we'll use
-patch releases if we need to put out an update in between when SDL2 does
-releases.
+To try and make the `fermium` version indicate the SDL2 version that it's trying
+to bind to, while also trying to play nice with cargo's semver expectations,
+we'll have a major version of `200` to represent the `2.0.` part of things, and
+then we'll set the minor version to be the SDL2 minor version (such as `12`),
+and then we'll use patch releases if we need to put out an update in between
+when SDL2 does releases.
 
 ## Project Logo
 
