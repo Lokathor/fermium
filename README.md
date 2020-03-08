@@ -34,7 +34,7 @@ On **Mac** or **Linux** you'll need to already have SDL2 installed via your
 method of choice. Homebrew or apt-get or pacman or whatever other thing. It's
 been tested with Mac/Homebrew and Debian/apt-get. The location of the files
 varies from system to system, but the `build.rs` will do its best to guess. If
-it doesn't build on your flavor of Linux file send in a PR.
+it doesn't build on your flavor of Linux send in a PR.
 
 This does not work with iOS, Android, or Emscripten. Mostly because I don't know
 anything about setting up those dev environments at all. PRs accepted if you
