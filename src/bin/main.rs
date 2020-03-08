@@ -4,10 +4,10 @@ fn main() {
 
   #[cfg(target_pointer_width = "32")]
   const DLL_BYTES: &[u8] =
-    include_bytes!("../../win32-devel-files/VC/lib/x86/SDL2.dll");
+    include_bytes!("../../win32-dynamic-link-files/x86/SDL2.dll");
   #[cfg(target_pointer_width = "64")]
   const DLL_BYTES: &[u8] =
-    include_bytes!("../../win32-devel-files/VC/lib/x64/SDL2.dll");
+    include_bytes!("../../win32-dynamic-link-files/x64/SDL2.dll");
 
   let out_path = current_dir()
     .expect("Failed to read the current directory!")
