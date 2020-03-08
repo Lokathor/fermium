@@ -16,7 +16,11 @@ build = "build.rs"
 [features]
 link_dynamic = []
 link_static = ["cmake"]
-default = ["link_dynamic"]
+
+# You probably don't need to use this.
+use_bindgen_bin = []
+
+default = []
 
 [dependencies]
 chlorine = "1"

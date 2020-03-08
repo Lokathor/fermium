@@ -17,9 +17,9 @@ environment:
 
 install:
   # Put our DLL in place, depending on 32-bit/64-bit
-  - if %target%==i686-pc-windows-msvc cp win32-devel-files\VC\lib\x86\SDL2.dll .
+  - if %target%==i686-pc-windows-msvc cp win32-dynamic-link-files\x86\SDL2.dll .
   - if %target%==i686-pc-windows-msvc dir *.dll
-  - if %target%==x86_64-pc-windows-msvc cp win32-devel-files\VC\lib\x64\SDL2.dll .
+  - if %target%==x86_64-pc-windows-msvc cp win32-dynamic-link-files\x64\SDL2.dll .
   - if %target%==x86_64-pc-windows-msvc dir *.dll
   # Setup Rust
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
@@ -31,19 +31,11 @@ install:
 build: false
 
 test_script:
-  # dynamic 2.0.8
-  - cargo build
-  - cargo test
+  # dynamic
+  - cargo build --features="link_dynamic"
+  - cargo test --features="link_dynamic"
   - cargo clean
-  # dynamic 2.0.9
-  - cargo build --features="bind_SDL2_2_0_9"
-  - cargo test --features="bind_SDL2_2_0_9"
-  - cargo clean
-  # dynamic 2.0.10
-  - cargo build --features="bind_SDL2_2_0_10"
-  - cargo test --features="bind_SDL2_2_0_10"
-  - cargo clean
-  # static 2.0.8
-  - cargo build --no-default-features --features="link_static"
-  - cargo test --no-default-features --features="link_static"
+  # static
+  - cargo build --features="link_static"
+  - cargo test --features="link_static"
   - cargo clean
