@@ -24,7 +24,7 @@ For the high-level wrapper crate, please see
 On **Windows MSVC**, this crate will "just work" all on its own. The necessary
 files are packaged into the crate and you don't need to do anything special.
 Windows is the platform for video games, so naturally gamedev library developers
-should make sure that gamedev libraries have top quality support on windows.
+should make sure that gamedev libraries have top quality support on Windows.
 They absolutely _shouldn't_ require you to get files and unpack them yourselves
 into a bunch of special directories and then [use a custom build
 script](https://github.com/Rust-SDL2/rust-sdl2#windows-with-build-script), that
