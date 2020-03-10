@@ -23,8 +23,9 @@ pick! {
 /// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch input
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
 
-/// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse input
-/// 
+/// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse
+/// input
+///
 /// * 2.0.10 or later
 pub const SDL_MOUSE_TOUCHID: u32 = -1i32 as u32;
 
