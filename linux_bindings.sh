@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cargo clean
-cargo build --features="link_dynamic, use_bindgen_bin"
+cargo build --features="dynamic_link, use_bindgen_bin"

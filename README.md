@@ -7,8 +7,8 @@
 
 # fermium
 
-The `fermium` crate is raw bindings to the SDL2 C API. For the "high-level"
-wrapper crate, please see [beryllium](https://github.com/Lokathor/beryllium).
+The `fermium` crate is raw bindings to the SDL2 C API. For the "high-level
+wrapper" crate, please see [beryllium](https://github.com/Lokathor/beryllium).
 
 Currently this targets `SDL2-2.0.12`.
 
@@ -17,6 +17,12 @@ It uses a bundled copy of SDL2 on Windows, and the system version on Mac/Linux.
 The bindings are not generated at compile time, and you do not need to have
 `bindgen` or any of its dependencies installed. Instead, bindings files have
 been pre-generated for select common build targets.
+
+* You must select how to link to SDL2 via the `static_link` or `dynamic_link`
+  cargo feature.
+* This crate does not select a default linking style.
+* If both link modes are selected then the crate will refuse to build, so only
+  select one or the other.
 
 ## Platforms Supported
 
