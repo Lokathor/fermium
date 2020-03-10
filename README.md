@@ -16,13 +16,18 @@ It uses a bundled copy of SDL2 on Windows, and the system version on Mac/Linux.
 
 The bindings are not generated at compile time, and you do not need to have
 `bindgen` or any of its dependencies installed. Instead, bindings files have
-been pre-generated for select common build targets.
+been pre-generated for select common build targets (and I'm happy to accept PRs
+for more!).
 
 * You must select how to link to SDL2 via the `static_link` or `dynamic_link`
   cargo feature.
 * This crate does not select a default linking style.
 * If both link modes are selected then the crate will refuse to build, so only
   select one or the other.
+* Yes, this does mean that those two features are not "purely additive" like how
+  cargo features are supposed to be. However, this is a truly "one or the other"
+  decision, and cargo has no support for such a thing right now. Don't blame me,
+  blame cargo.
 
 ## Platforms Supported
 
