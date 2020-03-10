@@ -14,8 +14,8 @@ links = "SDL2"
 build = "build.rs"
 
 [features]
-link_dynamic = []
-link_static = ["cmake"]
+dynamic_link = []
+static_link = ["cmake"]
 
 # You probably don't need to use this.
 use_bindgen_bin = []
