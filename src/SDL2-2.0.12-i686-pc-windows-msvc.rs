@@ -206,6 +206,8 @@ pub const SDL_HINT_XINPUT_ENABLED: &'static [u8; 19usize] =
   b"SDL_XINPUT_ENABLED\0";
 pub const SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING: &'static [u8; 36usize] =
   b"SDL_XINPUT_USE_OLD_JOYSTICK_MAPPING\0";
+pub const SDL_HINT_GAMECONTROLLERTYPE: &'static [u8; 23usize] =
+  b"SDL_GAMECONTROLLERTYPE\0";
 pub const SDL_HINT_GAMECONTROLLERCONFIG: &'static [u8; 25usize] =
   b"SDL_GAMECONTROLLERCONFIG\0";
 pub const SDL_HINT_GAMECONTROLLERCONFIG_FILE: &'static [u8; 30usize] =
@@ -430,6 +432,12 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_isspace(x: chlorine::c_int) -> chlorine::c_int;
+}
+extern "C" {
+  pub fn SDL_isupper(x: chlorine::c_int) -> chlorine::c_int;
+}
+extern "C" {
+  pub fn SDL_islower(x: chlorine::c_int) -> chlorine::c_int;
 }
 extern "C" {
   pub fn SDL_toupper(x: chlorine::c_int) -> chlorine::c_int;

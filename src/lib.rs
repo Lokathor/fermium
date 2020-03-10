@@ -20,7 +20,8 @@ pick! {
   }
 }
 
-/// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch input
+/// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch
+/// input
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
 
 /// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse
@@ -40,7 +41,8 @@ pub unsafe fn SDL_MUSTLOCK(surface: *const SDL_Surface) -> bool {
   (*surface).flags & SDL_RLEACCEL != 0
 }
 
-/// `SDL_pixels.h`: "internal" macro to check if a value is a pixel format value.
+/// `SDL_pixels.h`: "internal" macro to check if a value is a pixel format
+/// value.
 #[inline(always)]
 pub const fn SDL_PIXELFLAG(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
   (format >> 28) & 0x0F

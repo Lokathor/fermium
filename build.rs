@@ -134,8 +134,7 @@ fn win32_build_static_libs() -> PathBuf {
     env::var("CARGO_MANIFEST_DIR")
       .expect("Could not read `CARGO_MANIFEST_DIR`!"),
   );
-  let mut cm =
-    cmake::Config::new(manifest_dir.join("SDL2-2.0.12"));
+  let mut cm = cmake::Config::new(manifest_dir.join("SDL2-2.0.12"));
   cm.profile("release");
   cm.static_crt(true);
 
