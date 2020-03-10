@@ -11,11 +11,11 @@ fn main() {
   let use_bindgen_bin = cfg!(feature = "use_bindgen_bin");
   println!("use_bindgen_bin: {}", use_bindgen_bin);
 
-  let link_dynamic = cfg!(feature = "link_dynamic");
-  let link_static = cfg!(feature = "link_static");
-  println!("link_dynamic: {}", link_dynamic);
-  println!("link_static: {}", link_static);
-  let link_count = link_dynamic as usize + link_static as usize;
+  let dynamic_link = cfg!(feature = "dynamic_link");
+  let static_link = cfg!(feature = "static_link");
+  println!("dynamic_link: {}", dynamic_link);
+  println!("static_link: {}", static_link);
+  let link_count = dynamic_link as usize + static_link as usize;
   if link_count != 1 {
     panic!(
       "You must select exactly one linking type, you selected {}",
@@ -34,7 +34,7 @@ fn main() {
 
   // If we're on windows with static linking, do the build. cmake returns the
   // link location to use, so we declare that right away.
-  #[cfg(all(windows, feature = "link_static"))]
+  #[cfg(all(windows, feature = "static_link"))]
   println!(
     "cargo:rustc-link-search=native={}",
     win32_build_static_libs().join("lib").display()
@@ -128,7 +128,7 @@ fn run_bindgen_bin() {
 // Note: In addition to only calling this as needed, we must also cfg it to only
 // exist as needed so that we can avoid building in the `cmake` crate and its
 // dependencies unless it's really gonna be used.
-#[cfg(all(windows, feature = "link_static"))]
+#[cfg(all(windows, feature = "static_link"))]
 fn win32_build_static_libs() -> PathBuf {
   let manifest_dir = PathBuf::from(
     env::var("CARGO_MANIFEST_DIR")
@@ -145,10 +145,10 @@ fn win32_build_static_libs() -> PathBuf {
   }
   */
 
-  if cfg!(feature = "link_dynamic") {
+  if cfg!(feature = "dynamic_link") {
     cm.define("SDL_SHARED", "ON");
     cm.define("SDL_STATIC", "OFF");
-  } else if cfg!(feature = "link_static") {
+  } else if cfg!(feature = "static_link") {
     cm.define("SDL_SHARED", "OFF");
     cm.define("SDL_STATIC", "ON");
   } else {
@@ -168,7 +168,7 @@ fn declare_linking() {
 
 fn declare_win32_linking() {
   // What to link
-  if cfg!(feature = "link_dynamic") {
+  if cfg!(feature = "dynamic_link") {
     println!("cargo:rustc-link-lib=SDL2");
   } else {
     println!("cargo:rustc-link-lib=static=SDL2");
@@ -193,7 +193,7 @@ fn declare_win32_linking() {
       .expect("Could not read `CARGO_MANIFEST_DIR`!"),
   );
 
-  if cfg!(feature = "link_dynamic") {
+  if cfg!(feature = "dynamic_link") {
     let sub_directory: &str = if cfg!(target_env = "gnu") {
       panic!("No provided library files for the gnu toolchain. File a PR.")
     } else if cfg!(target_env = "msvc") {
@@ -211,7 +211,7 @@ fn declare_win32_linking() {
       "cargo:rustc-link-search=native={}",
       manifest_dir.join(sub_directory).display()
     );
-  } else if cfg!(feature = "link_static") {
+  } else if cfg!(feature = "static_link") {
     println!("link search should have been emitted during the cmake build.");
   } else {
     panic!("You didn't select a link mode!");
@@ -230,13 +230,13 @@ fn declare_sd2_config_linking() {
   let usage_words: Vec<String> =
     usage_out_string.split_whitespace().map(|s| s.to_string()).collect();
   assert!(&usage_words[0] == "Usage:", "Unexpected usage message, aborting!");
-  if cfg!(feature = "link_dynamic") {
+  if cfg!(feature = "dynamic_link") {
     assert!(
       usage_words.contains(&"[--libs]".to_string()),
       "This SDL2 install is not built for dynamic linking!"
     );
   }
-  if cfg!(feature = "link_static") {
+  if cfg!(feature = "static_link") {
     assert!(
       usage_words.contains(&"[--static-libs]".to_string()),
       "This SDL2 install is not built for dynamic linking!"
@@ -254,9 +254,9 @@ fn declare_sd2_config_linking() {
   println!("sdl2-config --version: {}", version_out_string);
 
   // Call sdl2-config for real and do what it says to do.
-  let link_style_arg: &str = if cfg!(feature = "link_dynamic") {
+  let link_style_arg: &str = if cfg!(feature = "dynamic_link") {
     "--libs"
-  } else if cfg!(feature = "link_static") {
+  } else if cfg!(feature = "static_link") {
     "--static-libs"
   } else {
     panic!("No link mode selected!");
@@ -274,9 +274,9 @@ fn declare_sd2_config_linking() {
     if term.starts_with("-L") {
       println!("cargo:rustc-link-search=native={}", &term[2..]);
     } else if term.starts_with("-lSDL2") {
-      if cfg!(feature = "link_dynamic") {
+      if cfg!(feature = "dynamic_link") {
         println!("cargo:rustc-link-lib=SDL2")
-      } else if cfg!(feature = "link_static") {
+      } else if cfg!(feature = "static_link") {
         println!("cargo:rustc-link-lib=static=SDL2")
       } else {
         panic!("No link mode selected!");
