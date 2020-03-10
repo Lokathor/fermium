@@ -7,17 +7,16 @@
 
 # fermium
 
-The `fermium` crate is raw bindings to the SDL2 C API.
+The `fermium` crate is raw bindings to the SDL2 C API. For the "high-level"
+wrapper crate, please see [beryllium](https://github.com/Lokathor/beryllium).
 
-Currently this targets `SDL2-2.0.12`, though older versions should also
-generally work as long as you don't call functions that didn't exist in those
-older versions.
+Currently this targets `SDL2-2.0.12`.
 
-The bindings have been pre-generated for select common build targets and you do
-not need to have `bindgen` installed yourself.
+It uses a bundled copy of SDL2 on Windows, and the system version on Mac/Linux.
 
-For the high-level wrapper crate, please see
-[beryllium](https://github.com/Lokathor/beryllium).
+The bindings are not generated at compile time, and you do not need to have
+`bindgen` or any of its dependencies installed. Instead, bindings files have
+been pre-generated for select common build targets.
 
 ## Platforms Supported
 
@@ -26,8 +25,7 @@ files are packaged into the crate and you don't need to do anything special.
 Windows is the platform for video games, so naturally gamedev library developers
 should make sure that gamedev libraries have top quality support on Windows.
 They absolutely _shouldn't_ require you to get files and unpack them yourselves
-into a bunch of special directories and then [use a custom build
-script](https://github.com/Rust-SDL2/rust-sdl2#windows-with-build-script), that
+into a bunch of special directories and then use a custom build script, that
 would obviously just be a terrible user experience.
 
 On **Mac** or **Linux** you'll need to already have SDL2 installed via your
