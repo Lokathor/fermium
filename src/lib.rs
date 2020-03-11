@@ -1,6 +1,19 @@
 #![no_std]
 #![allow(bad_style)]
 
+//! Bindings to SDL2.
+//!
+//! This version exposes bindings for `SDL2-2.0.12`, and if you avoid calling
+//! any of the newer functions you can also use older versions of SDL2.
+//!
+//! The default docs are for the x86_64 Windows MSVC version, but this crate
+//! also works just fine on Mac and Linux. Things are about 95% the same from
+//! target to target, but there are some places where the OS differences come
+//! through.
+//!
+//! [The SDL2 Wiki](https://wiki.libsdl.org/) has information on function usage.
+//! What's here is just the function signatures and structs.
+
 use core::fmt::Debug;
 
 pub use chlorine::*;
