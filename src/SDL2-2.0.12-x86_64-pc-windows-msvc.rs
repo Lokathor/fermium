@@ -359,28 +359,18 @@ extern "C" {
   pub fn SDL_calloc(nmemb: size_t, size: size_t) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_realloc(
-    mem: *mut c_void,
-    size: size_t,
-  ) -> *mut c_void;
+  pub fn SDL_realloc(mem: *mut c_void, size: size_t) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_free(mem: *mut c_void);
 }
-pub type SDL_malloc_func = Option<
-  unsafe extern "C" fn(size: size_t) -> *mut c_void,
->;
-pub type SDL_calloc_func = Option<
-  unsafe extern "C" fn(nmemb: size_t, size: size_t) -> *mut c_void,
->;
-pub type SDL_realloc_func = Option<
-  unsafe extern "C" fn(
-    mem: *mut c_void,
-    size: size_t,
-  ) -> *mut c_void,
->;
-pub type SDL_free_func =
-  Option<unsafe extern "C" fn(mem: *mut c_void)>;
+pub type SDL_malloc_func =
+  Option<unsafe extern "C" fn(size: size_t) -> *mut c_void>;
+pub type SDL_calloc_func =
+  Option<unsafe extern "C" fn(nmemb: size_t, size: size_t) -> *mut c_void>;
+pub type SDL_realloc_func =
+  Option<unsafe extern "C" fn(mem: *mut c_void, size: size_t) -> *mut c_void>;
+pub type SDL_free_func = Option<unsafe extern "C" fn(mem: *mut c_void)>;
 extern "C" {
   pub fn SDL_GetMemoryFunctions(
     malloc_func: *mut SDL_malloc_func,
@@ -416,10 +406,7 @@ extern "C" {
     nmemb: size_t,
     size: size_t,
     compare: Option<
-      unsafe extern "C" fn(
-        arg1: *const c_void,
-        arg2: *const c_void,
-      ) -> c_int,
+      unsafe extern "C" fn(arg1: *const c_void, arg2: *const c_void) -> c_int,
     >,
   );
 }
@@ -445,11 +432,7 @@ extern "C" {
   pub fn SDL_tolower(x: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_memset(
-    dst: *mut c_void,
-    c: c_int,
-    len: size_t,
-  ) -> *mut c_void;
+  pub fn SDL_memset(dst: *mut c_void, c: c_int, len: size_t) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_memcpy(
@@ -466,11 +449,8 @@ extern "C" {
   ) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_memcmp(
-    s1: *const c_void,
-    s2: *const c_void,
-    len: size_t,
-  ) -> c_int;
+  pub fn SDL_memcmp(s1: *const c_void, s2: *const c_void, len: size_t)
+    -> c_int;
 }
 extern "C" {
   pub fn SDL_wcslen(wstr: *const wchar_t) -> size_t;
@@ -499,10 +479,7 @@ extern "C" {
   ) -> *mut wchar_t;
 }
 extern "C" {
-  pub fn SDL_wcscmp(
-    str1: *const wchar_t,
-    str2: *const wchar_t,
-  ) -> c_int;
+  pub fn SDL_wcscmp(str1: *const wchar_t, str2: *const wchar_t) -> c_int;
 }
 extern "C" {
   pub fn SDL_wcsncmp(
@@ -548,16 +525,10 @@ extern "C" {
   pub fn SDL_strlwr(str: *mut c_char) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_strchr(
-    str: *const c_char,
-    c: c_int,
-  ) -> *mut c_char;
+  pub fn SDL_strchr(str: *const c_char, c: c_int) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_strrchr(
-    str: *const c_char,
-    c: c_int,
-  ) -> *mut c_char;
+  pub fn SDL_strrchr(str: *const c_char, c: c_int) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_strstr(
@@ -576,11 +547,7 @@ extern "C" {
   pub fn SDL_utf8strlen(str: *const c_char) -> size_t;
 }
 extern "C" {
-  pub fn SDL_itoa(
-    value: c_int,
-    str: *mut c_char,
-    radix: c_int,
-  ) -> *mut c_char;
+  pub fn SDL_itoa(value: c_int, str: *mut c_char, radix: c_int) -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_uitoa(
@@ -590,11 +557,8 @@ extern "C" {
   ) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_ltoa(
-    value: c_long,
-    str: *mut c_char,
-    radix: c_int,
-  ) -> *mut c_char;
+  pub fn SDL_ltoa(value: c_long, str: *mut c_char, radix: c_int)
+    -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_ultoa(
@@ -652,16 +616,10 @@ extern "C" {
   ) -> Uint64;
 }
 extern "C" {
-  pub fn SDL_strtod(
-    str: *const c_char,
-    endp: *mut *mut c_char,
-  ) -> f64;
+  pub fn SDL_strtod(str: *const c_char, endp: *mut *mut c_char) -> f64;
 }
 extern "C" {
-  pub fn SDL_strcmp(
-    str1: *const c_char,
-    str2: *const c_char,
-  ) -> c_int;
+  pub fn SDL_strcmp(str1: *const c_char, str2: *const c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_strncmp(
@@ -671,10 +629,7 @@ extern "C" {
   ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_strcasecmp(
-    str1: *const c_char,
-    str2: *const c_char,
-  ) -> c_int;
+  pub fn SDL_strcasecmp(str1: *const c_char, str2: *const c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_strncasecmp(
@@ -684,11 +639,7 @@ extern "C" {
   ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_sscanf(
-    text: *const c_char,
-    fmt: *const c_char,
-    ...
-  ) -> c_int;
+  pub fn SDL_sscanf(text: *const c_char, fmt: *const c_char, ...) -> c_int;
 }
 extern "C" {
   pub fn SDL_vsscanf(
@@ -853,17 +804,10 @@ extern "C" {
     inbytesleft: size_t,
   ) -> *mut c_char;
 }
-pub type SDL_main_func = Option<
-  unsafe extern "C" fn(
-    argc: c_int,
-    argv: *mut *mut c_char,
-  ) -> c_int,
->;
+pub type SDL_main_func =
+  Option<unsafe extern "C" fn(argc: c_int, argv: *mut *mut c_char) -> c_int>;
 extern "C" {
-  pub fn SDL_main(
-    argc: c_int,
-    argv: *mut *mut c_char,
-  ) -> c_int;
+  pub fn SDL_main(argc: c_int, argv: *mut *mut c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetMainReady();
@@ -963,19 +907,13 @@ extern "C" {
   ) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_AtomicSet(
-    a: *mut SDL_atomic_t,
-    v: c_int,
-  ) -> c_int;
+  pub fn SDL_AtomicSet(a: *mut SDL_atomic_t, v: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_AtomicGet(a: *mut SDL_atomic_t) -> c_int;
 }
 extern "C" {
-  pub fn SDL_AtomicAdd(
-    a: *mut SDL_atomic_t,
-    v: c_int,
-  ) -> c_int;
+  pub fn SDL_AtomicAdd(a: *mut SDL_atomic_t, v: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_AtomicCASPtr(
@@ -985,15 +923,10 @@ extern "C" {
   ) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_AtomicSetPtr(
-    a: *mut *mut c_void,
-    v: *mut c_void,
-  ) -> *mut c_void;
+  pub fn SDL_AtomicSetPtr(a: *mut *mut c_void, v: *mut c_void) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_AtomicGetPtr(
-    a: *mut *mut c_void,
-  ) -> *mut c_void;
+  pub fn SDL_AtomicGetPtr(a: *mut *mut c_void) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_SetError(fmt: *const c_char, ...) -> c_int;
@@ -1079,10 +1012,7 @@ extern "C" {
   pub fn SDL_CondBroadcast(cond: *mut SDL_cond) -> c_int;
 }
 extern "C" {
-  pub fn SDL_CondWait(
-    cond: *mut SDL_cond,
-    mutex: *mut SDL_mutex,
-  ) -> c_int;
+  pub fn SDL_CondWait(cond: *mut SDL_cond, mutex: *mut SDL_mutex) -> c_int;
 }
 extern "C" {
   pub fn SDL_CondWaitTimeout(
@@ -1103,23 +1033,19 @@ pub const SDL_THREAD_PRIORITY_NORMAL: SDL_ThreadPriority = 1;
 pub const SDL_THREAD_PRIORITY_HIGH: SDL_ThreadPriority = 2;
 pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = 3;
 pub type SDL_ThreadPriority = i32;
-pub type SDL_ThreadFunction = Option<
-  unsafe extern "C" fn(data: *mut c_void) -> c_int,
->;
+pub type SDL_ThreadFunction =
+  Option<unsafe extern "C" fn(data: *mut c_void) -> c_int>;
 pub type pfnSDL_CurrentBeginThread = Option<
   unsafe extern "C" fn(
     arg1: *mut c_void,
     arg2: c_uint,
-    func: Option<
-      unsafe extern "C" fn(arg1: *mut c_void) -> c_uint,
-    >,
+    func: Option<unsafe extern "C" fn(arg1: *mut c_void) -> c_uint>,
     arg3: *mut c_void,
     arg4: c_uint,
     arg5: *mut c_uint,
   ) -> usize,
 >;
-pub type pfnSDL_CurrentEndThread =
-  Option<unsafe extern "C" fn(code: c_uint)>;
+pub type pfnSDL_CurrentEndThread = Option<unsafe extern "C" fn(code: c_uint)>;
 extern "C" {
   pub fn SDL_CreateThread(
     fn_: SDL_ThreadFunction,
@@ -1131,9 +1057,7 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_CreateThreadWithStackSize(
-    fn_: Option<
-      unsafe extern "C" fn(arg1: *mut c_void) -> c_int,
-    >,
+    fn_: Option<unsafe extern "C" fn(arg1: *mut c_void) -> c_int>,
     name: *const c_char,
     stacksize: size_t,
     data: *mut c_void,
@@ -1151,8 +1075,7 @@ extern "C" {
   pub fn SDL_GetThreadID(thread: *mut SDL_Thread) -> SDL_threadID;
 }
 extern "C" {
-  pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority)
-    -> c_int;
+  pub fn SDL_SetThreadPriority(priority: SDL_ThreadPriority) -> c_int;
 }
 extern "C" {
   pub fn SDL_WaitThread(thread: *mut SDL_Thread, status: *mut c_int);
@@ -1170,17 +1093,13 @@ extern "C" {
   pub fn SDL_TLSSet(
     id: SDL_TLSID,
     value: *const c_void,
-    destructor: Option<
-      unsafe extern "C" fn(arg1: *mut c_void),
-    >,
+    destructor: Option<unsafe extern "C" fn(arg1: *mut c_void)>,
   ) -> c_int;
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SDL_RWops {
-  pub size: Option<
-    unsafe extern "C" fn(context: *mut SDL_RWops) -> Sint64,
-  >,
+  pub size: Option<unsafe extern "C" fn(context: *mut SDL_RWops) -> Sint64>,
   pub seek: Option<
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
@@ -1204,9 +1123,7 @@ pub struct SDL_RWops {
       num: size_t,
     ) -> size_t,
   >,
-  pub close: Option<
-    unsafe extern "C" fn(context: *mut SDL_RWops) -> c_int,
-  >,
+  pub close: Option<unsafe extern "C" fn(context: *mut SDL_RWops) -> c_int>,
   pub type_: Uint32,
   pub hidden: SDL_RWops__bindgen_ty_1,
 }
@@ -1292,22 +1209,13 @@ extern "C" {
   ) -> *mut SDL_RWops;
 }
 extern "C" {
-  pub fn SDL_RWFromFP(
-    fp: *mut c_void,
-    autoclose: SDL_bool,
-  ) -> *mut SDL_RWops;
+  pub fn SDL_RWFromFP(fp: *mut c_void, autoclose: SDL_bool) -> *mut SDL_RWops;
 }
 extern "C" {
-  pub fn SDL_RWFromMem(
-    mem: *mut c_void,
-    size: c_int,
-  ) -> *mut SDL_RWops;
+  pub fn SDL_RWFromMem(mem: *mut c_void, size: c_int) -> *mut SDL_RWops;
 }
 extern "C" {
-  pub fn SDL_RWFromConstMem(
-    mem: *const c_void,
-    size: c_int,
-  ) -> *mut SDL_RWops;
+  pub fn SDL_RWFromConstMem(mem: *const c_void, size: c_int) -> *mut SDL_RWops;
 }
 extern "C" {
   pub fn SDL_AllocRW() -> *mut SDL_RWops;
@@ -1404,11 +1312,7 @@ extern "C" {
 }
 pub type SDL_AudioFormat = Uint16;
 pub type SDL_AudioCallback = Option<
-  unsafe extern "C" fn(
-    userdata: *mut c_void,
-    stream: *mut Uint8,
-    len: c_int,
-  ),
+  unsafe extern "C" fn(userdata: *mut c_void, stream: *mut Uint8, len: c_int),
 >;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -1428,9 +1332,8 @@ impl Default for SDL_AudioSpec {
     unsafe { ::core::mem::zeroed() }
   }
 }
-pub type SDL_AudioFilter = Option<
-  unsafe extern "C" fn(cvt: *mut SDL_AudioCVT, format: SDL_AudioFormat),
->;
+pub type SDL_AudioFilter =
+  Option<unsafe extern "C" fn(cvt: *mut SDL_AudioCVT, format: SDL_AudioFormat)>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_AudioCVT {
@@ -1458,8 +1361,7 @@ extern "C" {
   pub fn SDL_GetAudioDriver(index: c_int) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_AudioInit(driver_name: *const c_char)
-    -> c_int;
+  pub fn SDL_AudioInit(driver_name: *const c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_AudioQuit();
@@ -1506,10 +1408,7 @@ extern "C" {
   pub fn SDL_PauseAudio(pause_on: c_int);
 }
 extern "C" {
-  pub fn SDL_PauseAudioDevice(
-    dev: SDL_AudioDeviceID,
-    pause_on: c_int,
-  );
+  pub fn SDL_PauseAudioDevice(dev: SDL_AudioDeviceID, pause_on: c_int);
 }
 extern "C" {
   pub fn SDL_LoadWAV_RW(
@@ -1568,9 +1467,7 @@ extern "C" {
   ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_AudioStreamAvailable(
-    stream: *mut SDL_AudioStream,
-  ) -> c_int;
+  pub fn SDL_AudioStreamAvailable(stream: *mut SDL_AudioStream) -> c_int;
 }
 extern "C" {
   pub fn SDL_AudioStreamFlush(stream: *mut SDL_AudioStream) -> c_int;
@@ -1637,8 +1534,7 @@ extern "C" {
   pub fn SDL_CloseAudioDevice(dev: SDL_AudioDeviceID);
 }
 extern "C" {
-  pub fn SDL_SetClipboardText(text: *const c_char)
-    -> c_int;
+  pub fn SDL_SetClipboardText(text: *const c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetClipboardText() -> *mut c_char;
@@ -2138,10 +2034,7 @@ extern "C" {
   ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SetSurfaceRLE(
-    surface: *mut SDL_Surface,
-    flag: c_int,
-  ) -> c_int;
+  pub fn SDL_SetSurfaceRLE(surface: *mut SDL_Surface, flag: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetColorKey(
@@ -2154,10 +2047,7 @@ extern "C" {
   pub fn SDL_HasColorKey(surface: *mut SDL_Surface) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_GetColorKey(
-    surface: *mut SDL_Surface,
-    key: *mut Uint32,
-  ) -> c_int;
+  pub fn SDL_GetColorKey(surface: *mut SDL_Surface, key: *mut Uint32) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetSurfaceColorMod(
@@ -2424,8 +2314,7 @@ extern "C" {
   pub fn SDL_GetVideoDriver(index: c_int) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_VideoInit(driver_name: *const c_char)
-    -> c_int;
+  pub fn SDL_VideoInit(driver_name: *const c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_VideoQuit();
@@ -2437,9 +2326,7 @@ extern "C" {
   pub fn SDL_GetNumVideoDisplays() -> c_int;
 }
 extern "C" {
-  pub fn SDL_GetDisplayName(
-    displayIndex: c_int,
-  ) -> *const c_char;
+  pub fn SDL_GetDisplayName(displayIndex: c_int) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_GetDisplayBounds(
@@ -2467,9 +2354,7 @@ extern "C" {
   ) -> SDL_DisplayOrientation;
 }
 extern "C" {
-  pub fn SDL_GetNumDisplayModes(
-    displayIndex: c_int,
-  ) -> c_int;
+  pub fn SDL_GetNumDisplayModes(displayIndex: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetDisplayMode(
@@ -2526,8 +2411,7 @@ extern "C" {
   ) -> *mut SDL_Window;
 }
 extern "C" {
-  pub fn SDL_CreateWindowFrom(data: *const c_void)
-    -> *mut SDL_Window;
+  pub fn SDL_CreateWindowFrom(data: *const c_void) -> *mut SDL_Window;
 }
 extern "C" {
   pub fn SDL_GetWindowID(window: *mut SDL_Window) -> Uint32;
@@ -2539,14 +2423,10 @@ extern "C" {
   pub fn SDL_GetWindowFlags(window: *mut SDL_Window) -> Uint32;
 }
 extern "C" {
-  pub fn SDL_SetWindowTitle(
-    window: *mut SDL_Window,
-    title: *const c_char,
-  );
+  pub fn SDL_SetWindowTitle(window: *mut SDL_Window, title: *const c_char);
 }
 extern "C" {
-  pub fn SDL_GetWindowTitle(window: *mut SDL_Window)
-    -> *const c_char;
+  pub fn SDL_GetWindowTitle(window: *mut SDL_Window) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_SetWindowIcon(window: *mut SDL_Window, icon: *mut SDL_Surface);
@@ -2565,11 +2445,7 @@ extern "C" {
   ) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_SetWindowPosition(
-    window: *mut SDL_Window,
-    x: c_int,
-    y: c_int,
-  );
+  pub fn SDL_SetWindowPosition(window: *mut SDL_Window, x: c_int, y: c_int);
 }
 extern "C" {
   pub fn SDL_GetWindowPosition(
@@ -2579,11 +2455,7 @@ extern "C" {
   );
 }
 extern "C" {
-  pub fn SDL_SetWindowSize(
-    window: *mut SDL_Window,
-    w: c_int,
-    h: c_int,
-  );
+  pub fn SDL_SetWindowSize(window: *mut SDL_Window, w: c_int, h: c_int);
 }
 extern "C" {
   pub fn SDL_GetWindowSize(
@@ -2691,10 +2563,7 @@ extern "C" {
   pub fn SDL_GetWindowBrightness(window: *mut SDL_Window) -> f32;
 }
 extern "C" {
-  pub fn SDL_SetWindowOpacity(
-    window: *mut SDL_Window,
-    opacity: f32,
-  ) -> c_int;
+  pub fn SDL_SetWindowOpacity(window: *mut SDL_Window, opacity: f32) -> c_int;
 }
 extern "C" {
   pub fn SDL_GetWindowOpacity(
@@ -2768,32 +2637,22 @@ extern "C" {
   pub fn SDL_GL_LoadLibrary(path: *const c_char) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GL_GetProcAddress(
-    proc_: *const c_char,
-  ) -> *mut c_void;
+  pub fn SDL_GL_GetProcAddress(proc_: *const c_char) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_GL_UnloadLibrary();
 }
 extern "C" {
-  pub fn SDL_GL_ExtensionSupported(
-    extension: *const c_char,
-  ) -> SDL_bool;
+  pub fn SDL_GL_ExtensionSupported(extension: *const c_char) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GL_ResetAttributes();
 }
 extern "C" {
-  pub fn SDL_GL_SetAttribute(
-    attr: SDL_GLattr,
-    value: c_int,
-  ) -> c_int;
+  pub fn SDL_GL_SetAttribute(attr: SDL_GLattr, value: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GL_GetAttribute(
-    attr: SDL_GLattr,
-    value: *mut c_int,
-  ) -> c_int;
+  pub fn SDL_GL_GetAttribute(attr: SDL_GLattr, value: *mut c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_GL_CreateContext(window: *mut SDL_Window) -> SDL_GLContext;
@@ -3362,12 +3221,10 @@ extern "C" {
   pub fn SDL_GetScancodeFromKey(key: SDL_Keycode) -> SDL_Scancode;
 }
 extern "C" {
-  pub fn SDL_GetScancodeName(scancode: SDL_Scancode)
-    -> *const c_char;
+  pub fn SDL_GetScancodeName(scancode: SDL_Scancode) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_GetScancodeFromName(name: *const c_char)
-    -> SDL_Scancode;
+  pub fn SDL_GetScancodeFromName(name: *const c_char) -> SDL_Scancode;
 }
 extern "C" {
   pub fn SDL_GetKeyName(key: SDL_Keycode) -> *const c_char;
@@ -3419,35 +3276,19 @@ extern "C" {
   pub fn SDL_GetMouseFocus() -> *mut SDL_Window;
 }
 extern "C" {
-  pub fn SDL_GetMouseState(
-    x: *mut c_int,
-    y: *mut c_int,
-  ) -> Uint32;
+  pub fn SDL_GetMouseState(x: *mut c_int, y: *mut c_int) -> Uint32;
 }
 extern "C" {
-  pub fn SDL_GetGlobalMouseState(
-    x: *mut c_int,
-    y: *mut c_int,
-  ) -> Uint32;
+  pub fn SDL_GetGlobalMouseState(x: *mut c_int, y: *mut c_int) -> Uint32;
 }
 extern "C" {
-  pub fn SDL_GetRelativeMouseState(
-    x: *mut c_int,
-    y: *mut c_int,
-  ) -> Uint32;
+  pub fn SDL_GetRelativeMouseState(x: *mut c_int, y: *mut c_int) -> Uint32;
 }
 extern "C" {
-  pub fn SDL_WarpMouseInWindow(
-    window: *mut SDL_Window,
-    x: c_int,
-    y: c_int,
-  );
+  pub fn SDL_WarpMouseInWindow(window: *mut SDL_Window, x: c_int, y: c_int);
 }
 extern "C" {
-  pub fn SDL_WarpMouseGlobal(
-    x: c_int,
-    y: c_int,
-  ) -> c_int;
+  pub fn SDL_WarpMouseGlobal(x: c_int, y: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_SetRelativeMouseMode(enabled: SDL_bool) -> c_int;
@@ -3534,19 +3375,13 @@ extern "C" {
   pub fn SDL_NumJoysticks() -> c_int;
 }
 extern "C" {
-  pub fn SDL_JoystickNameForIndex(
-    device_index: c_int,
-  ) -> *const c_char;
+  pub fn SDL_JoystickNameForIndex(device_index: c_int) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDevicePlayerIndex(
-    device_index: c_int,
-  ) -> c_int;
+  pub fn SDL_JoystickGetDevicePlayerIndex(device_index: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceGUID(
-    device_index: c_int,
-  ) -> SDL_JoystickGUID;
+  pub fn SDL_JoystickGetDeviceGUID(device_index: c_int) -> SDL_JoystickGUID;
 }
 extern "C" {
   pub fn SDL_JoystickGetDeviceVendor(device_index: c_int) -> Uint16;
@@ -3555,19 +3390,14 @@ extern "C" {
   pub fn SDL_JoystickGetDeviceProduct(device_index: c_int) -> Uint16;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceProductVersion(
-    device_index: c_int,
-  ) -> Uint16;
+  pub fn SDL_JoystickGetDeviceProductVersion(device_index: c_int) -> Uint16;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceType(
-    device_index: c_int,
-  ) -> SDL_JoystickType;
+  pub fn SDL_JoystickGetDeviceType(device_index: c_int) -> SDL_JoystickType;
 }
 extern "C" {
-  pub fn SDL_JoystickGetDeviceInstanceID(
-    device_index: c_int,
-  ) -> SDL_JoystickID;
+  pub fn SDL_JoystickGetDeviceInstanceID(device_index: c_int)
+    -> SDL_JoystickID;
 }
 extern "C" {
   pub fn SDL_JoystickOpen(device_index: c_int) -> *mut SDL_Joystick;
@@ -3578,19 +3408,13 @@ extern "C" {
   ) -> *mut SDL_Joystick;
 }
 extern "C" {
-  pub fn SDL_JoystickFromPlayerIndex(
-    player_index: c_int,
-  ) -> *mut SDL_Joystick;
+  pub fn SDL_JoystickFromPlayerIndex(player_index: c_int) -> *mut SDL_Joystick;
 }
 extern "C" {
-  pub fn SDL_JoystickName(
-    joystick: *mut SDL_Joystick,
-  ) -> *const c_char;
+  pub fn SDL_JoystickName(joystick: *mut SDL_Joystick) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_JoystickGetPlayerIndex(
-    joystick: *mut SDL_Joystick,
-  ) -> c_int;
+  pub fn SDL_JoystickGetPlayerIndex(joystick: *mut SDL_Joystick) -> c_int;
 }
 extern "C" {
   pub fn SDL_JoystickSetPlayerIndex(
@@ -3641,8 +3465,7 @@ extern "C" {
   pub fn SDL_JoystickNumHats(joystick: *mut SDL_Joystick) -> c_int;
 }
 extern "C" {
-  pub fn SDL_JoystickNumButtons(joystick: *mut SDL_Joystick)
-    -> c_int;
+  pub fn SDL_JoystickNumButtons(joystick: *mut SDL_Joystick) -> c_int;
 }
 extern "C" {
   pub fn SDL_JoystickUpdate();
@@ -3664,10 +3487,7 @@ extern "C" {
   ) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_JoystickGetHat(
-    joystick: *mut SDL_Joystick,
-    hat: c_int,
-  ) -> Uint8;
+  pub fn SDL_JoystickGetHat(joystick: *mut SDL_Joystick, hat: c_int) -> Uint8;
 }
 extern "C" {
   pub fn SDL_JoystickGetBall(
@@ -3768,17 +3588,14 @@ extern "C" {
   ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_GameControllerAddMapping(
-    mappingString: *const c_char,
-  ) -> c_int;
+  pub fn SDL_GameControllerAddMapping(mappingString: *const c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_GameControllerNumMappings() -> c_int;
 }
 extern "C" {
-  pub fn SDL_GameControllerMappingForIndex(
-    mapping_index: c_int,
-  ) -> *mut c_char;
+  pub fn SDL_GameControllerMappingForIndex(mapping_index: c_int)
+    -> *mut c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerMappingForGUID(
@@ -3794,9 +3611,8 @@ extern "C" {
   pub fn SDL_IsGameController(joystick_index: c_int) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_GameControllerNameForIndex(
-    joystick_index: c_int,
-  ) -> *const c_char;
+  pub fn SDL_GameControllerNameForIndex(joystick_index: c_int)
+    -> *const c_char;
 }
 extern "C" {
   pub fn SDL_GameControllerTypeForIndex(
@@ -3870,9 +3686,7 @@ extern "C" {
   ) -> *mut SDL_Joystick;
 }
 extern "C" {
-  pub fn SDL_GameControllerEventState(
-    state: c_int,
-  ) -> c_int;
+  pub fn SDL_GameControllerEventState(state: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_GameControllerUpdate();
@@ -4442,25 +4256,16 @@ extern "C" {
   pub fn SDL_WaitEvent(event: *mut SDL_Event) -> c_int;
 }
 extern "C" {
-  pub fn SDL_WaitEventTimeout(
-    event: *mut SDL_Event,
-    timeout: c_int,
-  ) -> c_int;
+  pub fn SDL_WaitEventTimeout(event: *mut SDL_Event, timeout: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_PushEvent(event: *mut SDL_Event) -> c_int;
 }
 pub type SDL_EventFilter = Option<
-  unsafe extern "C" fn(
-    userdata: *mut c_void,
-    event: *mut SDL_Event,
-  ) -> c_int,
+  unsafe extern "C" fn(userdata: *mut c_void, event: *mut SDL_Event) -> c_int,
 >;
 extern "C" {
-  pub fn SDL_SetEventFilter(
-    filter: SDL_EventFilter,
-    userdata: *mut c_void,
-  );
+  pub fn SDL_SetEventFilter(filter: SDL_EventFilter, userdata: *mut c_void);
 }
 extern "C" {
   pub fn SDL_GetEventFilter(
@@ -4469,22 +4274,13 @@ extern "C" {
   ) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_AddEventWatch(
-    filter: SDL_EventFilter,
-    userdata: *mut c_void,
-  );
+  pub fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: *mut c_void);
 }
 extern "C" {
-  pub fn SDL_DelEventWatch(
-    filter: SDL_EventFilter,
-    userdata: *mut c_void,
-  );
+  pub fn SDL_DelEventWatch(filter: SDL_EventFilter, userdata: *mut c_void);
 }
 extern "C" {
-  pub fn SDL_FilterEvents(
-    filter: SDL_EventFilter,
-    userdata: *mut c_void,
-  );
+  pub fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: *mut c_void);
 }
 extern "C" {
   pub fn SDL_EventState(type_: Uint32, state: c_int) -> Uint8;
@@ -4496,10 +4292,8 @@ extern "C" {
   pub fn SDL_GetBasePath() -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_GetPrefPath(
-    org: *const c_char,
-    app: *const c_char,
-  ) -> *mut c_char;
+  pub fn SDL_GetPrefPath(org: *const c_char, app: *const c_char)
+    -> *mut c_char;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -4635,9 +4429,7 @@ extern "C" {
   pub fn SDL_NumHaptics() -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticName(
-    device_index: c_int,
-  ) -> *const c_char;
+  pub fn SDL_HapticName(device_index: c_int) -> *const c_char;
 }
 extern "C" {
   pub fn SDL_HapticOpen(device_index: c_int) -> *mut SDL_Haptic;
@@ -4669,9 +4461,7 @@ extern "C" {
   pub fn SDL_HapticNumEffects(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticNumEffectsPlaying(
-    haptic: *mut SDL_Haptic,
-  ) -> c_int;
+  pub fn SDL_HapticNumEffectsPlaying(haptic: *mut SDL_Haptic) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticQuery(haptic: *mut SDL_Haptic) -> c_uint;
@@ -4706,16 +4496,10 @@ extern "C" {
   ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticStopEffect(
-    haptic: *mut SDL_Haptic,
-    effect: c_int,
-  ) -> c_int;
+  pub fn SDL_HapticStopEffect(haptic: *mut SDL_Haptic, effect: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticDestroyEffect(
-    haptic: *mut SDL_Haptic,
-    effect: c_int,
-  );
+  pub fn SDL_HapticDestroyEffect(haptic: *mut SDL_Haptic, effect: c_int);
 }
 extern "C" {
   pub fn SDL_HapticGetEffectStatus(
@@ -4724,10 +4508,7 @@ extern "C" {
   ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_HapticSetGain(
-    haptic: *mut SDL_Haptic,
-    gain: c_int,
-  ) -> c_int;
+  pub fn SDL_HapticSetGain(haptic: *mut SDL_Haptic, gain: c_int) -> c_int;
 }
 extern "C" {
   pub fn SDL_HapticSetAutocenter(
@@ -4772,10 +4553,7 @@ extern "C" {
   ) -> SDL_bool;
 }
 extern "C" {
-  pub fn SDL_SetHint(
-    name: *const c_char,
-    value: *const c_char,
-  ) -> SDL_bool;
+  pub fn SDL_SetHint(name: *const c_char, value: *const c_char) -> SDL_bool;
 }
 extern "C" {
   pub fn SDL_GetHint(name: *const c_char) -> *const c_char;
@@ -4812,9 +4590,7 @@ extern "C" {
   pub fn SDL_ClearHints();
 }
 extern "C" {
-  pub fn SDL_LoadObject(
-    sofile: *const c_char,
-  ) -> *mut c_void;
+  pub fn SDL_LoadObject(sofile: *const c_char) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_LoadFunction(
@@ -4858,10 +4634,7 @@ extern "C" {
   pub fn SDL_LogSetAllPriority(priority: SDL_LogPriority);
 }
 extern "C" {
-  pub fn SDL_LogSetPriority(
-    category: c_int,
-    priority: SDL_LogPriority,
-  );
+  pub fn SDL_LogSetPriority(category: c_int, priority: SDL_LogPriority);
 }
 extern "C" {
   pub fn SDL_LogGetPriority(category: c_int) -> SDL_LogPriority;
@@ -4873,46 +4646,22 @@ extern "C" {
   pub fn SDL_Log(fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogVerbose(
-    category: c_int,
-    fmt: *const c_char,
-    ...
-  );
+  pub fn SDL_LogVerbose(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogDebug(
-    category: c_int,
-    fmt: *const c_char,
-    ...
-  );
+  pub fn SDL_LogDebug(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogInfo(
-    category: c_int,
-    fmt: *const c_char,
-    ...
-  );
+  pub fn SDL_LogInfo(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogWarn(
-    category: c_int,
-    fmt: *const c_char,
-    ...
-  );
+  pub fn SDL_LogWarn(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogError(
-    category: c_int,
-    fmt: *const c_char,
-    ...
-  );
+  pub fn SDL_LogError(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
-  pub fn SDL_LogCritical(
-    category: c_int,
-    fmt: *const c_char,
-    ...
-  );
+  pub fn SDL_LogCritical(category: c_int, fmt: *const c_char, ...);
 }
 extern "C" {
   pub fn SDL_LogMessage(
@@ -5036,10 +4785,7 @@ pub const SDL_POWERSTATE_CHARGING: SDL_PowerState = 3;
 pub const SDL_POWERSTATE_CHARGED: SDL_PowerState = 4;
 pub type SDL_PowerState = i32;
 extern "C" {
-  pub fn SDL_GetPowerInfo(
-    secs: *mut c_int,
-    pct: *mut c_int,
-  ) -> SDL_PowerState;
+  pub fn SDL_GetPowerInfo(secs: *mut c_int, pct: *mut c_int) -> SDL_PowerState;
 }
 pub const SDL_RENDERER_SOFTWARE: SDL_RendererFlags = 1;
 pub const SDL_RENDERER_ACCELERATED: SDL_RendererFlags = 2;
@@ -5538,9 +5284,7 @@ extern "C" {
   pub fn SDL_GL_UnbindTexture(texture: *mut SDL_Texture) -> c_int;
 }
 extern "C" {
-  pub fn SDL_RenderGetMetalLayer(
-    renderer: *mut SDL_Renderer,
-  ) -> *mut c_void;
+  pub fn SDL_RenderGetMetalLayer(renderer: *mut SDL_Renderer) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_RenderGetMetalCommandEncoder(
@@ -5563,24 +5307,16 @@ extern "C" {
   pub fn SDL_NumSensors() -> c_int;
 }
 extern "C" {
-  pub fn SDL_SensorGetDeviceName(
-    device_index: c_int,
-  ) -> *const c_char;
+  pub fn SDL_SensorGetDeviceName(device_index: c_int) -> *const c_char;
 }
 extern "C" {
-  pub fn SDL_SensorGetDeviceType(
-    device_index: c_int,
-  ) -> SDL_SensorType;
+  pub fn SDL_SensorGetDeviceType(device_index: c_int) -> SDL_SensorType;
 }
 extern "C" {
-  pub fn SDL_SensorGetDeviceNonPortableType(
-    device_index: c_int,
-  ) -> c_int;
+  pub fn SDL_SensorGetDeviceNonPortableType(device_index: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_SensorGetDeviceInstanceID(
-    device_index: c_int,
-  ) -> SDL_SensorID;
+  pub fn SDL_SensorGetDeviceInstanceID(device_index: c_int) -> SDL_SensorID;
 }
 extern "C" {
   pub fn SDL_SensorOpen(device_index: c_int) -> *mut SDL_Sensor;
@@ -5596,9 +5332,7 @@ extern "C" {
   pub fn SDL_SensorGetType(sensor: *mut SDL_Sensor) -> SDL_SensorType;
 }
 extern "C" {
-  pub fn SDL_SensorGetNonPortableType(
-    sensor: *mut SDL_Sensor,
-  ) -> c_int;
+  pub fn SDL_SensorGetNonPortableType(sensor: *mut SDL_Sensor) -> c_int;
 }
 extern "C" {
   pub fn SDL_SensorGetInstanceID(sensor: *mut SDL_Sensor) -> SDL_SensorID;
@@ -5700,9 +5434,7 @@ extern "C" {
   );
 }
 extern "C" {
-  pub fn SDL_Direct3D9GetAdapterIndex(
-    displayIndex: c_int,
-  ) -> c_int;
+  pub fn SDL_Direct3D9GetAdapterIndex(displayIndex: c_int) -> c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -5754,12 +5486,8 @@ extern "C" {
 extern "C" {
   pub fn SDL_Delay(ms: Uint32);
 }
-pub type SDL_TimerCallback = Option<
-  unsafe extern "C" fn(
-    interval: Uint32,
-    param: *mut c_void,
-  ) -> Uint32,
->;
+pub type SDL_TimerCallback =
+  Option<unsafe extern "C" fn(interval: Uint32, param: *mut c_void) -> Uint32>;
 pub type SDL_TimerID = c_int;
 extern "C" {
   pub fn SDL_AddTimer(
@@ -5817,9 +5545,7 @@ pub type VkSurfaceKHR = *mut VkSurfaceKHR_T;
 pub type SDL_vulkanInstance = VkInstance;
 pub type SDL_vulkanSurface = VkSurfaceKHR;
 extern "C" {
-  pub fn SDL_Vulkan_LoadLibrary(
-    path: *const c_char,
-  ) -> c_int;
+  pub fn SDL_Vulkan_LoadLibrary(path: *const c_char) -> c_int;
 }
 extern "C" {
   pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> *mut c_void;
