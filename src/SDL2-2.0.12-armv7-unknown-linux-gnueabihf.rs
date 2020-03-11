@@ -9,10 +9,10 @@ pub const SDL_THREADS_DISABLED: u32 = 1;
 pub const SDL_TIMERS_DISABLED: u32 = 1;
 pub const SDL_VIDEO_DRIVER_DUMMY: u32 = 1;
 pub const SDL_FILESYSTEM_DUMMY: u32 = 1;
-pub const SDL_PRIs64: &'static [u8; 4usize] = b"lld\0";
-pub const SDL_PRIu64: &'static [u8; 4usize] = b"llu\0";
-pub const SDL_PRIx64: &'static [u8; 4usize] = b"llx\0";
-pub const SDL_PRIX64: &'static [u8; 4usize] = b"llX\0";
+pub const SDL_PRIs64: &'static [u8; 4] = b"lld\0";
+pub const SDL_PRIu64: &'static [u8; 4] = b"llu\0";
+pub const SDL_PRIx64: &'static [u8; 4] = b"llx\0";
+pub const SDL_PRIX64: &'static [u8; 4] = b"llX\0";
 pub const SDL_ASSERT_LEVEL: u32 = 2;
 pub const SDL_NULL_WHILE_LOOP_CONDITION: u32 = 0;
 pub const SDL_LIL_ENDIAN: u32 = 1234;
@@ -109,186 +109,186 @@ pub const SDL_HAPTIC_POLAR: u32 = 0;
 pub const SDL_HAPTIC_CARTESIAN: u32 = 1;
 pub const SDL_HAPTIC_SPHERICAL: u32 = 2;
 pub const SDL_HAPTIC_INFINITY: u32 = 4294967295;
-pub const SDL_HINT_FRAMEBUFFER_ACCELERATION: &'static [u8; 29usize] =
+pub const SDL_HINT_FRAMEBUFFER_ACCELERATION: &'static [u8; 29] =
   b"SDL_FRAMEBUFFER_ACCELERATION\0";
-pub const SDL_HINT_RENDER_DRIVER: &'static [u8; 18usize] =
+pub const SDL_HINT_RENDER_DRIVER: &'static [u8; 18] =
   b"SDL_RENDER_DRIVER\0";
-pub const SDL_HINT_RENDER_OPENGL_SHADERS: &'static [u8; 26usize] =
+pub const SDL_HINT_RENDER_OPENGL_SHADERS: &'static [u8; 26] =
   b"SDL_RENDER_OPENGL_SHADERS\0";
-pub const SDL_HINT_RENDER_DIRECT3D_THREADSAFE: &'static [u8; 31usize] =
+pub const SDL_HINT_RENDER_DIRECT3D_THREADSAFE: &'static [u8; 31] =
   b"SDL_RENDER_DIRECT3D_THREADSAFE\0";
-pub const SDL_HINT_RENDER_DIRECT3D11_DEBUG: &'static [u8; 28usize] =
+pub const SDL_HINT_RENDER_DIRECT3D11_DEBUG: &'static [u8; 28] =
   b"SDL_RENDER_DIRECT3D11_DEBUG\0";
-pub const SDL_HINT_RENDER_LOGICAL_SIZE_MODE: &'static [u8; 29usize] =
+pub const SDL_HINT_RENDER_LOGICAL_SIZE_MODE: &'static [u8; 29] =
   b"SDL_RENDER_LOGICAL_SIZE_MODE\0";
-pub const SDL_HINT_RENDER_SCALE_QUALITY: &'static [u8; 25usize] =
+pub const SDL_HINT_RENDER_SCALE_QUALITY: &'static [u8; 25] =
   b"SDL_RENDER_SCALE_QUALITY\0";
-pub const SDL_HINT_RENDER_VSYNC: &'static [u8; 17usize] = b"SDL_RENDER_VSYNC\0";
-pub const SDL_HINT_VIDEO_ALLOW_SCREENSAVER: &'static [u8; 28usize] =
+pub const SDL_HINT_RENDER_VSYNC: &'static [u8; 17] = b"SDL_RENDER_VSYNC\0";
+pub const SDL_HINT_VIDEO_ALLOW_SCREENSAVER: &'static [u8; 28] =
   b"SDL_VIDEO_ALLOW_SCREENSAVER\0";
-pub const SDL_HINT_VIDEO_EXTERNAL_CONTEXT: &'static [u8; 27usize] =
+pub const SDL_HINT_VIDEO_EXTERNAL_CONTEXT: &'static [u8; 27] =
   b"SDL_VIDEO_EXTERNAL_CONTEXT\0";
-pub const SDL_HINT_VIDEO_X11_XVIDMODE: &'static [u8; 23usize] =
+pub const SDL_HINT_VIDEO_X11_XVIDMODE: &'static [u8; 23] =
   b"SDL_VIDEO_X11_XVIDMODE\0";
-pub const SDL_HINT_VIDEO_X11_XINERAMA: &'static [u8; 23usize] =
+pub const SDL_HINT_VIDEO_X11_XINERAMA: &'static [u8; 23] =
   b"SDL_VIDEO_X11_XINERAMA\0";
-pub const SDL_HINT_VIDEO_X11_XRANDR: &'static [u8; 21usize] =
+pub const SDL_HINT_VIDEO_X11_XRANDR: &'static [u8; 21] =
   b"SDL_VIDEO_X11_XRANDR\0";
-pub const SDL_HINT_VIDEO_X11_WINDOW_VISUALID: &'static [u8; 30usize] =
+pub const SDL_HINT_VIDEO_X11_WINDOW_VISUALID: &'static [u8; 30] =
   b"SDL_VIDEO_X11_WINDOW_VISUALID\0";
-pub const SDL_HINT_VIDEO_X11_NET_WM_PING: &'static [u8; 26usize] =
+pub const SDL_HINT_VIDEO_X11_NET_WM_PING: &'static [u8; 26] =
   b"SDL_VIDEO_X11_NET_WM_PING\0";
-pub const SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR: &'static [u8; 39usize] =
+pub const SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR: &'static [u8; 39] =
   b"SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR\0";
-pub const SDL_HINT_VIDEO_X11_FORCE_EGL: &'static [u8; 24usize] =
+pub const SDL_HINT_VIDEO_X11_FORCE_EGL: &'static [u8; 24] =
   b"SDL_VIDEO_X11_FORCE_EGL\0";
 pub const SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN: &'static [u8;
-           44usize] = b"SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN\0";
-pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON: &'static [u8; 29usize] =
+           44] = b"SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN\0";
+pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON: &'static [u8; 29] =
   b"SDL_WINDOWS_INTRESOURCE_ICON\0";
-pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL: &'static [u8; 35usize] =
+pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL: &'static [u8; 35] =
   b"SDL_WINDOWS_INTRESOURCE_ICON_SMALL\0";
-pub const SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP: &'static [u8; 31usize] =
+pub const SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP: &'static [u8; 31] =
   b"SDL_WINDOWS_ENABLE_MESSAGELOOP\0";
-pub const SDL_HINT_GRAB_KEYBOARD: &'static [u8; 18usize] =
+pub const SDL_HINT_GRAB_KEYBOARD: &'static [u8; 18] =
   b"SDL_GRAB_KEYBOARD\0";
-pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME: &'static [u8; 28usize] =
+pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME: &'static [u8; 28] =
   b"SDL_MOUSE_DOUBLE_CLICK_TIME\0";
-pub const SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS: &'static [u8; 30usize] =
+pub const SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS: &'static [u8; 30] =
   b"SDL_MOUSE_DOUBLE_CLICK_RADIUS\0";
-pub const SDL_HINT_MOUSE_NORMAL_SPEED_SCALE: &'static [u8; 29usize] =
+pub const SDL_HINT_MOUSE_NORMAL_SPEED_SCALE: &'static [u8; 29] =
   b"SDL_MOUSE_NORMAL_SPEED_SCALE\0";
-pub const SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE: &'static [u8; 31usize] =
+pub const SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE: &'static [u8; 31] =
   b"SDL_MOUSE_RELATIVE_SPEED_SCALE\0";
-pub const SDL_HINT_MOUSE_RELATIVE_MODE_WARP: &'static [u8; 29usize] =
+pub const SDL_HINT_MOUSE_RELATIVE_MODE_WARP: &'static [u8; 29] =
   b"SDL_MOUSE_RELATIVE_MODE_WARP\0";
-pub const SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH: &'static [u8; 29usize] =
+pub const SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH: &'static [u8; 29] =
   b"SDL_MOUSE_FOCUS_CLICKTHROUGH\0";
-pub const SDL_HINT_TOUCH_MOUSE_EVENTS: &'static [u8; 23usize] =
+pub const SDL_HINT_TOUCH_MOUSE_EVENTS: &'static [u8; 23] =
   b"SDL_TOUCH_MOUSE_EVENTS\0";
-pub const SDL_HINT_MOUSE_TOUCH_EVENTS: &'static [u8; 23usize] =
+pub const SDL_HINT_MOUSE_TOUCH_EVENTS: &'static [u8; 23] =
   b"SDL_MOUSE_TOUCH_EVENTS\0";
-pub const SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS: &'static [u8; 33usize] =
+pub const SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS: &'static [u8; 33] =
   b"SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS\0";
-pub const SDL_HINT_IDLE_TIMER_DISABLED: &'static [u8; 28usize] =
+pub const SDL_HINT_IDLE_TIMER_DISABLED: &'static [u8; 28] =
   b"SDL_IOS_IDLE_TIMER_DISABLED\0";
-pub const SDL_HINT_ORIENTATIONS: &'static [u8; 21usize] =
+pub const SDL_HINT_ORIENTATIONS: &'static [u8; 21] =
   b"SDL_IOS_ORIENTATIONS\0";
-pub const SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS: &'static [u8; 34usize] =
+pub const SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS: &'static [u8; 34] =
   b"SDL_APPLE_TV_CONTROLLER_UI_EVENTS\0";
-pub const SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION: &'static [u8; 35usize] =
+pub const SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION: &'static [u8; 35] =
   b"SDL_APPLE_TV_REMOTE_ALLOW_ROTATION\0";
-pub const SDL_HINT_IOS_HIDE_HOME_INDICATOR: &'static [u8; 28usize] =
+pub const SDL_HINT_IOS_HIDE_HOME_INDICATOR: &'static [u8; 28] =
   b"SDL_IOS_HIDE_HOME_INDICATOR\0";
-pub const SDL_HINT_ACCELEROMETER_AS_JOYSTICK: &'static [u8; 30usize] =
+pub const SDL_HINT_ACCELEROMETER_AS_JOYSTICK: &'static [u8; 30] =
   b"SDL_ACCELEROMETER_AS_JOYSTICK\0";
-pub const SDL_HINT_TV_REMOTE_AS_JOYSTICK: &'static [u8; 26usize] =
+pub const SDL_HINT_TV_REMOTE_AS_JOYSTICK: &'static [u8; 26] =
   b"SDL_TV_REMOTE_AS_JOYSTICK\0";
-pub const SDL_HINT_XINPUT_ENABLED: &'static [u8; 19usize] =
+pub const SDL_HINT_XINPUT_ENABLED: &'static [u8; 19] =
   b"SDL_XINPUT_ENABLED\0";
-pub const SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING: &'static [u8; 36usize] =
+pub const SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING: &'static [u8; 36] =
   b"SDL_XINPUT_USE_OLD_JOYSTICK_MAPPING\0";
-pub const SDL_HINT_GAMECONTROLLERTYPE: &'static [u8; 23usize] =
+pub const SDL_HINT_GAMECONTROLLERTYPE: &'static [u8; 23] =
   b"SDL_GAMECONTROLLERTYPE\0";
-pub const SDL_HINT_GAMECONTROLLERCONFIG: &'static [u8; 25usize] =
+pub const SDL_HINT_GAMECONTROLLERCONFIG: &'static [u8; 25] =
   b"SDL_GAMECONTROLLERCONFIG\0";
-pub const SDL_HINT_GAMECONTROLLERCONFIG_FILE: &'static [u8; 30usize] =
+pub const SDL_HINT_GAMECONTROLLERCONFIG_FILE: &'static [u8; 30] =
   b"SDL_GAMECONTROLLERCONFIG_FILE\0";
-pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES: &'static [u8; 34usize] =
+pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES: &'static [u8; 34] =
   b"SDL_GAMECONTROLLER_IGNORE_DEVICES\0";
 pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT: &'static [u8;
-           41usize] = b"SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT\0";
-pub const SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS: &'static [u8; 37usize] =
+           41] = b"SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT\0";
+pub const SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS: &'static [u8; 37] =
   b"SDL_GAMECONTROLLER_USE_BUTTON_LABELS\0";
-pub const SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS: &'static [u8; 37usize] =
+pub const SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS: &'static [u8; 37] =
   b"SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS\0";
-pub const SDL_HINT_JOYSTICK_HIDAPI: &'static [u8; 20usize] =
+pub const SDL_HINT_JOYSTICK_HIDAPI: &'static [u8; 20] =
   b"SDL_JOYSTICK_HIDAPI\0";
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS4: &'static [u8; 24usize] =
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS4: &'static [u8; 24] =
   b"SDL_JOYSTICK_HIDAPI_PS4\0";
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE: &'static [u8; 31usize] =
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE: &'static [u8; 31] =
   b"SDL_JOYSTICK_HIDAPI_PS4_RUMBLE\0";
-pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM: &'static [u8; 26usize] =
+pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM: &'static [u8; 26] =
   b"SDL_JOYSTICK_HIDAPI_STEAM\0";
-pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH: &'static [u8; 27usize] =
+pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH: &'static [u8; 27] =
   b"SDL_JOYSTICK_HIDAPI_SWITCH\0";
-pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX: &'static [u8; 25usize] =
+pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX: &'static [u8; 25] =
   b"SDL_JOYSTICK_HIDAPI_XBOX\0";
-pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE: &'static [u8; 29usize] =
+pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE: &'static [u8; 29] =
   b"SDL_JOYSTICK_HIDAPI_GAMECUBE\0";
-pub const SDL_HINT_ENABLE_STEAM_CONTROLLERS: &'static [u8; 29usize] =
+pub const SDL_HINT_ENABLE_STEAM_CONTROLLERS: &'static [u8; 29] =
   b"SDL_ENABLE_STEAM_CONTROLLERS\0";
-pub const SDL_HINT_ALLOW_TOPMOST: &'static [u8; 18usize] =
+pub const SDL_HINT_ALLOW_TOPMOST: &'static [u8; 18] =
   b"SDL_ALLOW_TOPMOST\0";
-pub const SDL_HINT_TIMER_RESOLUTION: &'static [u8; 21usize] =
+pub const SDL_HINT_TIMER_RESOLUTION: &'static [u8; 21] =
   b"SDL_TIMER_RESOLUTION\0";
-pub const SDL_HINT_QTWAYLAND_CONTENT_ORIENTATION: &'static [u8; 34usize] =
+pub const SDL_HINT_QTWAYLAND_CONTENT_ORIENTATION: &'static [u8; 34] =
   b"SDL_QTWAYLAND_CONTENT_ORIENTATION\0";
-pub const SDL_HINT_QTWAYLAND_WINDOW_FLAGS: &'static [u8; 27usize] =
+pub const SDL_HINT_QTWAYLAND_WINDOW_FLAGS: &'static [u8; 27] =
   b"SDL_QTWAYLAND_WINDOW_FLAGS\0";
-pub const SDL_HINT_THREAD_STACK_SIZE: &'static [u8; 22usize] =
+pub const SDL_HINT_THREAD_STACK_SIZE: &'static [u8; 22] =
   b"SDL_THREAD_STACK_SIZE\0";
-pub const SDL_HINT_VIDEO_HIGHDPI_DISABLED: &'static [u8; 27usize] =
+pub const SDL_HINT_VIDEO_HIGHDPI_DISABLED: &'static [u8; 27] =
   b"SDL_VIDEO_HIGHDPI_DISABLED\0";
-pub const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK: &'static [u8; 39usize] =
+pub const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK: &'static [u8; 39] =
   b"SDL_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK\0";
-pub const SDL_HINT_VIDEO_WIN_D3DCOMPILER: &'static [u8; 26usize] =
+pub const SDL_HINT_VIDEO_WIN_D3DCOMPILER: &'static [u8; 26] =
   b"SDL_VIDEO_WIN_D3DCOMPILER\0";
-pub const SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT: &'static [u8; 36usize] =
+pub const SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT: &'static [u8; 36] =
   b"SDL_VIDEO_WINDOW_SHARE_PIXEL_FORMAT\0";
-pub const SDL_HINT_WINRT_PRIVACY_POLICY_URL: &'static [u8; 29usize] =
+pub const SDL_HINT_WINRT_PRIVACY_POLICY_URL: &'static [u8; 29] =
   b"SDL_WINRT_PRIVACY_POLICY_URL\0";
-pub const SDL_HINT_WINRT_PRIVACY_POLICY_LABEL: &'static [u8; 31usize] =
+pub const SDL_HINT_WINRT_PRIVACY_POLICY_LABEL: &'static [u8; 31] =
   b"SDL_WINRT_PRIVACY_POLICY_LABEL\0";
-pub const SDL_HINT_WINRT_HANDLE_BACK_BUTTON: &'static [u8; 29usize] =
+pub const SDL_HINT_WINRT_HANDLE_BACK_BUTTON: &'static [u8; 29] =
   b"SDL_WINRT_HANDLE_BACK_BUTTON\0";
-pub const SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES: &'static [u8; 32usize] =
+pub const SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES: &'static [u8; 32] =
   b"SDL_VIDEO_MAC_FULLSCREEN_SPACES\0";
-pub const SDL_HINT_MAC_BACKGROUND_APP: &'static [u8; 23usize] =
+pub const SDL_HINT_MAC_BACKGROUND_APP: &'static [u8; 23] =
   b"SDL_MAC_BACKGROUND_APP\0";
 pub const SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION: &'static [u8;
-           44usize] = b"SDL_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION\0";
+           44] = b"SDL_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION\0";
 pub const SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION:
-  &'static [u8; 45usize] = b"SDL_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION\0";
-pub const SDL_HINT_IME_INTERNAL_EDITING: &'static [u8; 25usize] =
+  &'static [u8; 45] = b"SDL_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION\0";
+pub const SDL_HINT_IME_INTERNAL_EDITING: &'static [u8; 25] =
   b"SDL_IME_INTERNAL_EDITING\0";
-pub const SDL_HINT_ANDROID_TRAP_BACK_BUTTON: &'static [u8; 29usize] =
+pub const SDL_HINT_ANDROID_TRAP_BACK_BUTTON: &'static [u8; 29] =
   b"SDL_ANDROID_TRAP_BACK_BUTTON\0";
-pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE: &'static [u8; 27usize] =
+pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE: &'static [u8; 27] =
   b"SDL_ANDROID_BLOCK_ON_PAUSE\0";
-pub const SDL_HINT_RETURN_KEY_HIDES_IME: &'static [u8; 25usize] =
+pub const SDL_HINT_RETURN_KEY_HIDES_IME: &'static [u8; 25] =
   b"SDL_RETURN_KEY_HIDES_IME\0";
-pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: &'static [u8; 32usize] =
+pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: &'static [u8; 32] =
   b"SDL_EMSCRIPTEN_KEYBOARD_ELEMENT\0";
-pub const SDL_HINT_NO_SIGNAL_HANDLERS: &'static [u8; 23usize] =
+pub const SDL_HINT_NO_SIGNAL_HANDLERS: &'static [u8; 23] =
   b"SDL_NO_SIGNAL_HANDLERS\0";
-pub const SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4: &'static [u8; 31usize] =
+pub const SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4: &'static [u8; 31] =
   b"SDL_WINDOWS_NO_CLOSE_ON_ALT_F4\0";
-pub const SDL_HINT_BMP_SAVE_LEGACY_FORMAT: &'static [u8; 27usize] =
+pub const SDL_HINT_BMP_SAVE_LEGACY_FORMAT: &'static [u8; 27] =
   b"SDL_BMP_SAVE_LEGACY_FORMAT\0";
-pub const SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING: &'static [u8; 34usize] =
+pub const SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING: &'static [u8; 34] =
   b"SDL_WINDOWS_DISABLE_THREAD_NAMING\0";
-pub const SDL_HINT_RPI_VIDEO_LAYER: &'static [u8; 20usize] =
+pub const SDL_HINT_RPI_VIDEO_LAYER: &'static [u8; 20] =
   b"SDL_RPI_VIDEO_LAYER\0";
-pub const SDL_HINT_VIDEO_DOUBLE_BUFFER: &'static [u8; 24usize] =
+pub const SDL_HINT_VIDEO_DOUBLE_BUFFER: &'static [u8; 24] =
   b"SDL_VIDEO_DOUBLE_BUFFER\0";
-pub const SDL_HINT_OPENGL_ES_DRIVER: &'static [u8; 21usize] =
+pub const SDL_HINT_OPENGL_ES_DRIVER: &'static [u8; 21] =
   b"SDL_OPENGL_ES_DRIVER\0";
-pub const SDL_HINT_AUDIO_RESAMPLING_MODE: &'static [u8; 26usize] =
+pub const SDL_HINT_AUDIO_RESAMPLING_MODE: &'static [u8; 26] =
   b"SDL_AUDIO_RESAMPLING_MODE\0";
-pub const SDL_HINT_AUDIO_CATEGORY: &'static [u8; 19usize] =
+pub const SDL_HINT_AUDIO_CATEGORY: &'static [u8; 19] =
   b"SDL_AUDIO_CATEGORY\0";
-pub const SDL_HINT_RENDER_BATCHING: &'static [u8; 20usize] =
+pub const SDL_HINT_RENDER_BATCHING: &'static [u8; 20] =
   b"SDL_RENDER_BATCHING\0";
-pub const SDL_HINT_EVENT_LOGGING: &'static [u8; 18usize] =
+pub const SDL_HINT_EVENT_LOGGING: &'static [u8; 18] =
   b"SDL_EVENT_LOGGING\0";
-pub const SDL_HINT_WAVE_RIFF_CHUNK_SIZE: &'static [u8; 25usize] =
+pub const SDL_HINT_WAVE_RIFF_CHUNK_SIZE: &'static [u8; 25] =
   b"SDL_WAVE_RIFF_CHUNK_SIZE\0";
-pub const SDL_HINT_WAVE_TRUNCATION: &'static [u8; 20usize] =
+pub const SDL_HINT_WAVE_TRUNCATION: &'static [u8; 20] =
   b"SDL_WAVE_TRUNCATION\0";
-pub const SDL_HINT_WAVE_FACT_CHUNK: &'static [u8; 20usize] =
+pub const SDL_HINT_WAVE_FACT_CHUNK: &'static [u8; 20] =
   b"SDL_WAVE_FACT_CHUNK\0";
-pub const SDL_HINT_DISPLAY_USABLE_BOUNDS: &'static [u8; 26usize] =
+pub const SDL_HINT_DISPLAY_USABLE_BOUNDS: &'static [u8; 26] =
   b"SDL_DISPLAY_USABLE_BOUNDS\0";
 pub const SDL_MAX_LOG_MESSAGE: u32 = 4096;
 pub const SDL_STANDARD_GRAVITY: f64 = 9.80665;
@@ -331,17 +331,17 @@ pub type Sint32 = i32;
 pub type Uint32 = u32;
 pub type Sint64 = i64;
 pub type Uint64 = u64;
-pub type SDL_compile_time_assert_uint8 = [c_int; 1usize];
-pub type SDL_compile_time_assert_sint8 = [c_int; 1usize];
-pub type SDL_compile_time_assert_uint16 = [c_int; 1usize];
-pub type SDL_compile_time_assert_sint16 = [c_int; 1usize];
-pub type SDL_compile_time_assert_uint32 = [c_int; 1usize];
-pub type SDL_compile_time_assert_sint32 = [c_int; 1usize];
-pub type SDL_compile_time_assert_uint64 = [c_int; 1usize];
-pub type SDL_compile_time_assert_sint64 = [c_int; 1usize];
+pub type SDL_compile_time_assert_uint8 = [c_int; 1];
+pub type SDL_compile_time_assert_sint8 = [c_int; 1];
+pub type SDL_compile_time_assert_uint16 = [c_int; 1];
+pub type SDL_compile_time_assert_sint16 = [c_int; 1];
+pub type SDL_compile_time_assert_uint32 = [c_int; 1];
+pub type SDL_compile_time_assert_sint32 = [c_int; 1];
+pub type SDL_compile_time_assert_uint64 = [c_int; 1];
+pub type SDL_compile_time_assert_sint64 = [c_int; 1];
 pub const DUMMY_ENUM_VALUE: SDL_DUMMY_ENUM = 0;
 pub type SDL_DUMMY_ENUM = u32;
-pub type SDL_compile_time_assert_enum = [c_int; 1usize];
+pub type SDL_compile_time_assert_enum = [c_int; 1];
 extern "C" {
   pub fn SDL_malloc(size: size_t) -> *mut c_void;
 }
@@ -1097,7 +1097,7 @@ pub struct SDL_RWops {
 pub union SDL_RWops__bindgen_ty_1 {
   pub mem: SDL_RWops__bindgen_ty_1__bindgen_ty_1,
   pub unknown: SDL_RWops__bindgen_ty_1__bindgen_ty_2,
-  _bindgen_union_align: [u32; 3usize],
+  _bindgen_union_align: [u32; 3],
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -1286,7 +1286,7 @@ pub struct SDL_AudioCVT {
   pub len_cvt: c_int,
   pub len_mult: c_int,
   pub len_ratio: f64,
-  pub filters: [SDL_AudioFilter; 10usize],
+  pub filters: [SDL_AudioFilter; 10],
   pub filter_index: c_int,
 }
 impl Default for SDL_AudioCVT {
@@ -1660,7 +1660,7 @@ pub struct SDL_PixelFormat {
   pub palette: *mut SDL_Palette,
   pub BitsPerPixel: Uint8,
   pub BytesPerPixel: Uint8,
-  pub padding: [Uint8; 2usize],
+  pub padding: [Uint8; 2],
   pub Rmask: Uint32,
   pub Gmask: Uint32,
   pub Bmask: Uint32,
@@ -3283,7 +3283,7 @@ pub type SDL_Joystick = _SDL_Joystick;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_JoystickGUID {
-  pub data: [Uint8; 16usize],
+  pub data: [Uint8; 16],
 }
 pub type SDL_JoystickID = Sint32;
 pub const SDL_JOYSTICK_TYPE_UNKNOWN: SDL_JoystickType = 0;
@@ -3489,7 +3489,7 @@ pub union SDL_GameControllerButtonBind__bindgen_ty_1 {
   pub button: c_int,
   pub axis: c_int,
   pub hat: SDL_GameControllerButtonBind__bindgen_ty_1__bindgen_ty_1,
-  _bindgen_union_align: [u32; 2usize],
+  _bindgen_union_align: [u32; 2],
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
@@ -3871,7 +3871,7 @@ pub struct SDL_TextEditingEvent {
   pub type_: Uint32,
   pub timestamp: Uint32,
   pub windowID: Uint32,
-  pub text: [c_char; 32usize],
+  pub text: [c_char; 32],
   pub start: Sint32,
   pub length: Sint32,
 }
@@ -3881,7 +3881,7 @@ pub struct SDL_TextInputEvent {
   pub type_: Uint32,
   pub timestamp: Uint32,
   pub windowID: Uint32,
-  pub text: [c_char; 32usize],
+  pub text: [c_char; 32],
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
@@ -4076,7 +4076,7 @@ pub struct SDL_SensorEvent {
   pub type_: Uint32,
   pub timestamp: Uint32,
   pub which: Sint32,
-  pub data: [f32; 6usize],
+  pub data: [f32; 6],
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
@@ -4147,8 +4147,8 @@ pub union SDL_Event {
   pub mgesture: SDL_MultiGestureEvent,
   pub dgesture: SDL_DollarGestureEvent,
   pub drop: SDL_DropEvent,
-  pub padding: [Uint8; 56usize],
-  _bindgen_union_align: [u64; 7usize],
+  pub padding: [Uint8; 56],
+  _bindgen_union_align: [u64; 7],
 }
 impl Default for SDL_Event {
   fn default() -> Self {
@@ -4160,7 +4160,7 @@ impl Debug for SDL_Event {
     write!(f, "SDL_Event {{ union }}")
   }
 }
-pub type SDL_compile_time_assert_SDL_Event = [c_int; 1usize];
+pub type SDL_compile_time_assert_SDL_Event = [c_int; 1];
 extern "C" {
   pub fn SDL_PumpEvents();
 }
@@ -4245,7 +4245,7 @@ pub type SDL_Haptic = _SDL_Haptic;
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_HapticDirection {
   pub type_: Uint8,
-  pub dir: [Sint32; 3usize],
+  pub dir: [Sint32; 3],
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
@@ -4289,12 +4289,12 @@ pub struct SDL_HapticCondition {
   pub delay: Uint16,
   pub button: Uint16,
   pub interval: Uint16,
-  pub right_sat: [Uint16; 3usize],
-  pub left_sat: [Uint16; 3usize],
-  pub right_coeff: [Sint16; 3usize],
-  pub left_coeff: [Sint16; 3usize],
-  pub deadband: [Uint16; 3usize],
-  pub center: [Sint16; 3usize],
+  pub right_sat: [Uint16; 3],
+  pub left_sat: [Uint16; 3],
+  pub right_coeff: [Sint16; 3],
+  pub left_coeff: [Sint16; 3],
+  pub deadband: [Uint16; 3],
+  pub center: [Sint16; 3],
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
@@ -4353,7 +4353,7 @@ pub union SDL_HapticEffect {
   pub ramp: SDL_HapticRamp,
   pub leftright: SDL_HapticLeftRight,
   pub custom: SDL_HapticCustom,
-  _bindgen_union_align: [u32; 17usize],
+  _bindgen_union_align: [u32; 17],
 }
 impl Default for SDL_HapticEffect {
   fn default() -> Self {
@@ -4679,7 +4679,7 @@ pub type SDL_MessageBoxColorType = u32;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
 pub struct SDL_MessageBoxColorScheme {
-  pub colors: [SDL_MessageBoxColor; 5usize],
+  pub colors: [SDL_MessageBoxColor; 5],
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -4738,7 +4738,7 @@ pub struct SDL_RendererInfo {
   pub name: *const c_char,
   pub flags: Uint32,
   pub num_texture_formats: Uint32,
-  pub texture_formats: [Uint32; 16usize],
+  pub texture_formats: [Uint32; 16],
   pub max_texture_width: c_int,
   pub max_texture_height: c_int,
 }
@@ -5313,7 +5313,7 @@ pub type WindowShapeMode = u32;
 pub union SDL_WindowShapeParams {
   pub binarizationCutoff: Uint8,
   pub colorKey: SDL_Color,
-  _bindgen_union_align: [u8; 4usize],
+  _bindgen_union_align: [u8; 4],
 }
 impl Default for SDL_WindowShapeParams {
   fn default() -> Self {
@@ -5612,7 +5612,7 @@ pub struct XKeymapEvent {
   pub send_event: c_int,
   pub display: *mut Display,
   pub window: Window,
-  pub key_vector: [c_char; 32usize],
+  pub key_vector: [c_char; 32],
 }
 impl Default for XKeymapEvent {
   fn default() -> Self {
@@ -6004,10 +6004,10 @@ pub struct XClientMessageEvent {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union XClientMessageEvent__bindgen_ty_1 {
-  pub b: [c_char; 20usize],
-  pub s: [c_short; 10usize],
-  pub l: [c_long; 5usize],
-  _bindgen_union_align: [u32; 5usize],
+  pub b: [c_char; 20],
+  pub s: [c_short; 10],
+  pub l: [c_long; 5],
+  _bindgen_union_align: [u32; 5],
 }
 impl Default for XClientMessageEvent__bindgen_ty_1 {
   fn default() -> Self {
@@ -6145,8 +6145,8 @@ pub union _XEvent {
   pub xkeymap: XKeymapEvent,
   pub xgeneric: XGenericEvent,
   pub xcookie: XGenericEventCookie,
-  pub pad: [c_long; 24usize],
-  _bindgen_union_align: [u32; 24usize],
+  pub pad: [c_long; 24],
+  _bindgen_union_align: [u32; 24],
 }
 impl Default for _XEvent {
   fn default() -> Self {
@@ -6185,7 +6185,7 @@ pub struct SDL_SysWMmsg {
 pub union SDL_SysWMmsg__bindgen_ty_1 {
   pub x11: SDL_SysWMmsg__bindgen_ty_1__bindgen_ty_1,
   pub dummy: c_int,
-  _bindgen_union_align: [u32; 24usize],
+  _bindgen_union_align: [u32; 24],
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6242,8 +6242,8 @@ pub struct SDL_SysWMinfo {
 pub union SDL_SysWMinfo__bindgen_ty_1 {
   pub x11: SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_1,
   pub wl: SDL_SysWMinfo__bindgen_ty_1__bindgen_ty_2,
-  pub dummy: [Uint8; 64usize],
-  _bindgen_union_align: [u32; 16usize],
+  pub dummy: [Uint8; 64],
+  _bindgen_union_align: [u32; 16],
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
