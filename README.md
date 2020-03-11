@@ -19,10 +19,10 @@ The bindings are not generated at compile time, and you do not need to have
 been pre-generated for select common build targets (and I'm happy to accept PRs
 for more!).
 
-* You must select how to link to SDL2 via the `static_link` or `dynamic_link`
-  cargo feature.
-* This crate does not select a default linking style.
-* If both link modes are selected then the crate will refuse to build, so only
+* By default the `dynamic_link` feature is active.
+* If you'd like to do a static link then you can disable default features and
+  enable the `static_link` feature.
+* If _both_ link modes are selected then the crate will refuse to build, so only
   select one or the other.
 * Yes, this does mean that those two features are not "purely additive" like how
   cargo features are supposed to be. However, this is a truly "one or the other"

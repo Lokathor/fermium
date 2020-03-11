@@ -20,7 +20,7 @@ static_link = ["cmake"]
 # You probably don't need to use this.
 use_bindgen_bin = []
 
-default = []
+default = ["dynamic_link"]
 
 [dependencies]
 chlorine = "1"
