@@ -39,10 +39,10 @@ install:
 
 script:
   # dynamic
-  - cargo build --features="dynamic_link"
-  - cargo test --features="dynamic_link"
+  - cargo build
+  - cargo test
   - cargo clean
   # static
-  - cargo build --features="static_link"
-  - cargo test --features="static_link"
+  - cargo build --no-default-features --features="static_link"
+  - cargo test --no-default-features --features="static_link"
   - cargo clean
