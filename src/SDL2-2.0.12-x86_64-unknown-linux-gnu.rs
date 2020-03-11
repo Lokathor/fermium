@@ -356,20 +356,20 @@ extern "C" {
 extern "C" {
   pub fn SDL_free(mem: *mut c_void);
 }
-pub type SDL_malloc_func = ::core::option::Option<
+pub type SDL_malloc_func = Option<
   unsafe extern "C" fn(size: usize) -> *mut c_void,
 >;
-pub type SDL_calloc_func = ::core::option::Option<
+pub type SDL_calloc_func = Option<
   unsafe extern "C" fn(nmemb: usize, size: usize) -> *mut c_void,
 >;
-pub type SDL_realloc_func = ::core::option::Option<
+pub type SDL_realloc_func = Option<
   unsafe extern "C" fn(
     mem: *mut c_void,
     size: usize,
   ) -> *mut c_void,
 >;
 pub type SDL_free_func =
-  ::core::option::Option<unsafe extern "C" fn(mem: *mut c_void)>;
+  Option<unsafe extern "C" fn(mem: *mut c_void)>;
 extern "C" {
   pub fn SDL_GetMemoryFunctions(
     malloc_func: *mut SDL_malloc_func,
@@ -404,7 +404,7 @@ extern "C" {
     base: *mut c_void,
     nmemb: usize,
     size: usize,
-    compare: ::core::option::Option<
+    compare: Option<
       unsafe extern "C" fn(
         arg1: *const c_void,
         arg2: *const c_void,
@@ -842,7 +842,7 @@ extern "C" {
     inbytesleft: usize,
   ) -> *mut c_char;
 }
-pub type SDL_main_func = ::core::option::Option<
+pub type SDL_main_func = Option<
   unsafe extern "C" fn(
     argc: c_int,
     argv: *mut *mut c_char,
@@ -887,7 +887,7 @@ extern "C" {
     arg4: c_int,
   ) -> SDL_AssertState;
 }
-pub type SDL_AssertionHandler = ::core::option::Option<
+pub type SDL_AssertionHandler = Option<
   unsafe extern "C" fn(
     data: *const SDL_AssertData,
     userdata: *mut c_void,
@@ -1082,7 +1082,7 @@ pub const SDL_THREAD_PRIORITY_NORMAL: SDL_ThreadPriority = 1;
 pub const SDL_THREAD_PRIORITY_HIGH: SDL_ThreadPriority = 2;
 pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = 3;
 pub type SDL_ThreadPriority = u32;
-pub type SDL_ThreadFunction = ::core::option::Option<
+pub type SDL_ThreadFunction = Option<
   unsafe extern "C" fn(data: *mut c_void) -> c_int,
 >;
 extern "C" {
@@ -1129,7 +1129,7 @@ extern "C" {
   pub fn SDL_TLSSet(
     id: SDL_TLSID,
     value: *const c_void,
-    destructor: ::core::option::Option<
+    destructor: Option<
       unsafe extern "C" fn(arg1: *mut c_void),
     >,
   ) -> c_int;
@@ -1137,17 +1137,17 @@ extern "C" {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SDL_RWops {
-  pub size: ::core::option::Option<
+  pub size: Option<
     unsafe extern "C" fn(context: *mut SDL_RWops) -> Sint64,
   >,
-  pub seek: ::core::option::Option<
+  pub seek: Option<
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
       offset: Sint64,
       whence: c_int,
     ) -> Sint64,
   >,
-  pub read: ::core::option::Option<
+  pub read: Option<
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
       ptr: *mut c_void,
@@ -1155,7 +1155,7 @@ pub struct SDL_RWops {
       maxnum: usize,
     ) -> usize,
   >,
-  pub write: ::core::option::Option<
+  pub write: Option<
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
       ptr: *const c_void,
@@ -1163,7 +1163,7 @@ pub struct SDL_RWops {
       num: usize,
     ) -> usize,
   >,
-  pub close: ::core::option::Option<
+  pub close: Option<
     unsafe extern "C" fn(context: *mut SDL_RWops) -> c_int,
   >,
   pub type_: Uint32,
@@ -1337,7 +1337,7 @@ extern "C" {
   pub fn SDL_WriteBE64(dst: *mut SDL_RWops, value: Uint64) -> usize;
 }
 pub type SDL_AudioFormat = Uint16;
-pub type SDL_AudioCallback = ::core::option::Option<
+pub type SDL_AudioCallback = Option<
   unsafe extern "C" fn(
     userdata: *mut c_void,
     stream: *mut Uint8,
@@ -1362,7 +1362,7 @@ impl Default for SDL_AudioSpec {
     unsafe { ::core::mem::zeroed() }
   }
 }
-pub type SDL_AudioFilter = ::core::option::Option<
+pub type SDL_AudioFilter = Option<
   unsafe extern "C" fn(cvt: *mut SDL_AudioCVT, format: SDL_AudioFormat),
 >;
 #[repr(C, packed)]
@@ -1986,7 +1986,7 @@ impl Default for SDL_Surface {
     unsafe { ::core::mem::zeroed() }
   }
 }
-pub type SDL_blit = ::core::option::Option<
+pub type SDL_blit = Option<
   unsafe extern "C" fn(
     src: *mut SDL_Surface,
     srcrect: *mut SDL_Rect,
@@ -2672,7 +2672,7 @@ pub const SDL_HITTEST_RESIZE_BOTTOM: SDL_HitTestResult = 7;
 pub const SDL_HITTEST_RESIZE_BOTTOMLEFT: SDL_HitTestResult = 8;
 pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = 9;
 pub type SDL_HitTestResult = u32;
-pub type SDL_HitTest = ::core::option::Option<
+pub type SDL_HitTest = Option<
   unsafe extern "C" fn(
     win: *mut SDL_Window,
     area: *const SDL_Point,
@@ -4384,7 +4384,7 @@ extern "C" {
 extern "C" {
   pub fn SDL_PushEvent(event: *mut SDL_Event) -> c_int;
 }
-pub type SDL_EventFilter = ::core::option::Option<
+pub type SDL_EventFilter = Option<
   unsafe extern "C" fn(
     userdata: *mut c_void,
     event: *mut SDL_Event,
@@ -4720,7 +4720,7 @@ extern "C" {
     default_value: SDL_bool,
   ) -> SDL_bool;
 }
-pub type SDL_HintCallback = ::core::option::Option<
+pub type SDL_HintCallback = Option<
   unsafe extern "C" fn(
     userdata: *mut c_void,
     name: *const c_char,
@@ -4864,7 +4864,7 @@ extern "C" {
     ap: *mut __va_list_tag,
   );
 }
-pub type SDL_LogOutputFunction = ::core::option::Option<
+pub type SDL_LogOutputFunction = Option<
   unsafe extern "C" fn(
     userdata: *mut c_void,
     category: c_int,
@@ -5657,7 +5657,7 @@ extern "C" {
 extern "C" {
   pub fn SDL_Delay(ms: Uint32);
 }
-pub type SDL_TimerCallback = ::core::option::Option<
+pub type SDL_TimerCallback = Option<
   unsafe extern "C" fn(
     interval: Uint32,
     param: *mut c_void,
