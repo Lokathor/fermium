@@ -1323,7 +1323,7 @@ impl Default for SDL_RWops__bindgen_ty_1 {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_RWops__bindgen_ty_1 {
+impl Debug for SDL_RWops__bindgen_ty_1 {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(f, "SDL_RWops__bindgen_ty_1 {{ union }}")
   }
@@ -1333,7 +1333,7 @@ impl Default for SDL_RWops {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_RWops {
+impl Debug for SDL_RWops {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write ! ( f , "SDL_RWops {{ size: {:?}, seek: {:?}, read: {:?}, write: {:?}, close: {:?}, type: {:?}, hidden: {:?} }}" , self . size , self . seek , self . read , self . write , self . close , self . type_ , self . hidden )
   }
@@ -3792,7 +3792,7 @@ impl Default for SDL_GameControllerButtonBind__bindgen_ty_1 {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_GameControllerButtonBind__bindgen_ty_1 {
+impl Debug for SDL_GameControllerButtonBind__bindgen_ty_1 {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(f, "SDL_GameControllerButtonBind__bindgen_ty_1 {{ union }}")
   }
@@ -3802,7 +3802,7 @@ impl Default for SDL_GameControllerButtonBind {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_GameControllerButtonBind {
+impl Debug for SDL_GameControllerButtonBind {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(
       f,
@@ -4451,7 +4451,7 @@ impl Default for SDL_Event {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_Event {
+impl Debug for SDL_Event {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(f, "SDL_Event {{ union }}")
   }
@@ -4676,7 +4676,7 @@ impl Default for SDL_HapticEffect {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_HapticEffect {
+impl Debug for SDL_HapticEffect {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(f, "SDL_HapticEffect {{ union }}")
   }
@@ -5696,7 +5696,7 @@ impl Default for SDL_WindowShapeParams {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_WindowShapeParams {
+impl Debug for SDL_WindowShapeParams {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(f, "SDL_WindowShapeParams {{ union }}")
   }
@@ -5712,7 +5712,7 @@ impl Default for SDL_WindowShapeMode {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_WindowShapeMode {
+impl Debug for SDL_WindowShapeMode {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(
       f,
@@ -5905,7 +5905,7 @@ impl Default for SDL_SysWMmsg__bindgen_ty_1 {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_SysWMmsg__bindgen_ty_1 {
+impl Debug for SDL_SysWMmsg__bindgen_ty_1 {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(f, "SDL_SysWMmsg__bindgen_ty_1 {{ union }}")
   }
@@ -5915,7 +5915,7 @@ impl Default for SDL_SysWMmsg {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_SysWMmsg {
+impl Debug for SDL_SysWMmsg {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(
       f,
@@ -5953,7 +5953,7 @@ impl Default for SDL_SysWMinfo__bindgen_ty_1 {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_SysWMinfo__bindgen_ty_1 {
+impl Debug for SDL_SysWMinfo__bindgen_ty_1 {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(f, "SDL_SysWMinfo__bindgen_ty_1 {{ union }}")
   }
@@ -5963,7 +5963,7 @@ impl Default for SDL_SysWMinfo {
     unsafe { ::core::mem::zeroed() }
   }
 }
-impl ::core::fmt::Debug for SDL_SysWMinfo {
+impl Debug for SDL_SysWMinfo {
   fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
     write!(
       f,

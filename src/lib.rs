@@ -1,6 +1,8 @@
 #![no_std]
 #![allow(bad_style)]
 
+use core::fmt::Debug;
+
 pub use chlorine::*;
 
 pick! {
