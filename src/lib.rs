@@ -1,204 +1,24 @@
 #![no_std]
-#![allow(non_upper_case_globals)]
-#![allow(non_camel_case_types)]
-#![allow(non_snake_case)]
-#![allow(clippy::unreadable_literal)]
-#![allow(clippy::redundant_static_lifetimes)]
-#![allow(clippy::cognitive_complexity)]
+#![allow(bad_style)]
 
-//! The `fermium` crate is raw bindings to the SDL2 C API.
-//!
-//! Compared to the common alternative,
-//! [sdl2-sys](https://crates.io/crates/sdl2-sys), this is has consts instead of
-//! enums, it is slightly more complete, and it works _much_ better on windows
-//! MSVC (no special setup at all).
-//!
-//! Depending on how you configure the crate, you can target a minimum SDL2
-//! version of 2.0.8 or later. You can compile against a later version than your
-//! minimum bind version, but not an earlier one, so for best compatability you
-//! should target the earliest SDL2 API version you can. The current version of
-//! SDL2 in Ubuntu 18 is 2.0.8, and Debian Stable has 2.0.9, so we don't at this
-//! time bother to support SDL2 versions before 2.0.8.
-//!
-//! `bindgen` is used to generate the bindings from the official SDL2 include
-//! files. At the moment we include the following SDL2 headers:
-//!
-//! * `SDL2.h`
-//! * `SDL_syswm.h`
-//! * `SDL_vulkan.h`
-//!
-//! However, `SDL_syswm.h` in particular pulls in a bunch of extra code and it
-//! overwhelms the generated bindings. To avoid this, we only keep the following
-//! whitelist of items:
-//!
-//! * `SDL_` (functions, types, and vars)
-//! * `SDLK_` (vars)
-//! * `AUDIO_` (vars)
-//! * Any other items that the above depend on.
-//!
-//! It is thought that this will expose all needed functionality, but if you
-//! think something should be added to the whitelist please [submit an
-//! issue](https://github.com/Lokathor/fermium/issues).
-//!
-//! ## Docs
-//!
-//! Bindgen doesn't understand how to convert doxygen style docs into rustdoc
-//! style docs. What it does generate makes rustdoc think there a bunch of
-//! random code block all over that it should run as test cases. Sadly, rustdoc
-//! has no way to turn this off, so I have to tell bindgen to just emit no docs
-//! at all.
-//!
-//! Instead you should check out the [SDL2 Wiki](https://wiki.libsdl.org/)
+use core::fmt::Debug;
 
-/// Does all our conditional compilation selection.
-macro_rules! magic {
-  (
-    $(if #[cfg($($test:meta),*)] {
-      $($if_tokens:tt)*
-    })else* else {
-      $($else_tokens:tt)*
-    }
-  ) => {
-    magic!{
-      @__forests [ ] ;
-      $( [ {$($test),*} {$($if_tokens)*} ], )*
-      [ { } {$($else_tokens)*} ],
-    }
-  };
+pub use chlorine::*;
 
-  (
-    if #[cfg($($if_meta:meta),*)] {
-      $($if_tokens:tt)*
-    } $(else if #[cfg($($else_meta:meta),*)] {
-      $($else_tokens:tt)*
-    })*
-  ) => {
-    magic!{
-      @__forests [ ] ;
-      [ {$($if_meta),*} {$($if_tokens)*} ],
-      $( [ {$($else_meta),*} {$($else_tokens)*} ], )*
-    }
-  };
-
-  (
-    @__forests [ $($not:meta,)* ] ;
-  ) => {
-    /* halt expansion */
-  };
-
-  (
-    @__forests [ $($not:meta,)* ] ;
-    [ { $($m:meta),* } { $($tokens:tt)* } ],
-    $($rest:tt)*
-  ) => {
-    #[cfg(all( $($m,)* not(any($($not),*)) ))]
-    magic!{ @__identity $($tokens)* }
-
-    magic!{
-      @__forests [ $($not,)* $($m,)* ] ;
-      $($rest)*
-    }
-  };
-
-  (
-    @__identity $($tokens:tt)*
-  ) => {
-    $($tokens)*
-  };
-}
-
-// re-export the variable-length C types from their source crate to ease the end
-// user experience.
-pub use core::ffi::c_void;
-magic! {
-  if #[cfg(windows)] {
-    pub type c_char = i8;
-    pub type c_schar = i8;
-    pub type c_uchar = u8;
-    pub type c_short = i16;
-    pub type c_ushort = u16;
-    pub type c_int = i32;
-    pub type c_uint = u32;
-    pub type c_long = i32;
-    pub type c_ulong = u32;
-    pub type c_longlong = i64;
-    pub type c_ulonglong = u64;
-  } else {
-    pub use libc::{
-      c_char, c_int, c_long, c_longlong, c_short, c_uint, c_ulong, c_ulonglong, c_ushort, c_schar, c_uchar
-    };
-  }
-}
-
-// bring in the correct bindings file. The bindgen binary will place them into
-// OUT_DIR, but for the pre-generated bindings they'll be within the source
-// directory along side the lib.rs file.
-magic! {
+pick! {
   if #[cfg(feature = "use_bindgen_bin")] {
     include!(concat!(
       env!("OUT_DIR"),
-      "/SDL2-v2.0.",
-      env!("BIND_PATCH_LEVEL"),
-      "-",
+      "/SDL2-2.0.12-",
       env!("TARGET"),
       ".rs"
     ));
   } else {
     include!(concat!(
-      "SDL2-v2.0.",
-      env!("BIND_PATCH_LEVEL"),
-      "-",
+      "SDL2-2.0.12-",
       env!("TARGET"),
       ".rs"
     ));
-  }
-}
-
-// Note(Lokathor): Bindgen doesn't parse all things properly on its own, and it
-// doesn't parse CPP macros at all, so we must define some more stuff here.
-
-/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum)
-pub type PixelType = _bindgen_ty_1;
-
-/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
-pub type BitmapOrder = _bindgen_ty_2;
-
-/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
-pub type PackedOrder = _bindgen_ty_3;
-
-/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
-pub type ArrayOrder = _bindgen_ty_4;
-
-/// See remarks of [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum#Remarks)
-pub type PackedLayout = _bindgen_ty_5;
-
-// For whatever reason, bindgen processes this type properly in the 2.0.10
-// headers and later, so after ty_6 there's a discepency between what the
-// unknown types mean.
-magic! {
-  if #[cfg(not(feature = "bind_SDL2_2_0_10"))] {
-    /// See [`SDL_PixelFormatEnum`](https://wiki.libsdl.org/SDL_PixelFormatEnum)
-    pub type SDL_PixelFormatEnum = _bindgen_ty_6;
-  }
-}
-
-magic! {
-  if #[cfg(not(feature = "bind_SDL2_2_0_10"))] {
-    /// See [`SDL_Keycode`](https://wiki.libsdl.org/SDL_Keycode)
-    pub type SDLK = _bindgen_ty_7;
-  } else {
-    /// See [`SDL_Keycode`](https://wiki.libsdl.org/SDL_Keycode)
-    pub type SDLK = _bindgen_ty_6;
-  }
-}
-
-magic! {
-  if #[cfg(not(feature = "bind_SDL2_2_0_10"))] {
-    /// See [`SDL_LOG_CATEGORY`](https://wiki.libsdl.org/SDL_LOG_CATEGORY)
-    pub type LogCategory = _bindgen_ty_8;
-  } else {
-    /// See [`SDL_LOG_CATEGORY`](https://wiki.libsdl.org/SDL_LOG_CATEGORY)
-    pub type LogCategory = _bindgen_ty_7;
   }
 }
 
@@ -206,14 +26,11 @@ magic! {
 /// input
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
 
-// only present in 2.0.10 and later
-magic! {
-  if #[cfg(feature = "bind_SDL2_2_0_10")] {
-    /// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with
-    /// mouse input
-    pub const SDL_MOUSE_TOUCHID: u64 = -1i64 as u64;
-  }
-}
+/// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse
+/// input
+///
+/// * 2.0.10 or later
+pub const SDL_MOUSE_TOUCHID: i64 = -1i64;
 
 /// `SDL_surface.h`: Evaluates to true if the surface needs to be locked before
 /// access.
@@ -226,7 +43,8 @@ pub unsafe fn SDL_MUSTLOCK(surface: *const SDL_Surface) -> bool {
   (*surface).flags & SDL_RLEACCEL != 0
 }
 
-/// `SDL_pixels.h`: "internal" macro to check if a value is a pixel format value.
+/// `SDL_pixels.h`: "internal" macro to check if a value is a pixel format
+/// value.
 #[inline(always)]
 pub const fn SDL_PIXELFLAG(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
   (format >> 28) & 0x0F

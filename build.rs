@@ -11,11 +11,11 @@ fn main() {
   let use_bindgen_bin = cfg!(feature = "use_bindgen_bin");
   println!("use_bindgen_bin: {}", use_bindgen_bin);
 
-  let link_dynamic = cfg!(feature = "link_dynamic");
-  let link_static = cfg!(feature = "link_static");
-  println!("link_dynamic: {}", link_dynamic);
-  println!("link_static: {}", link_static);
-  let link_count = link_dynamic as usize + link_static as usize;
+  let dynamic_link = cfg!(feature = "dynamic_link");
+  let static_link = cfg!(feature = "static_link");
+  println!("dynamic_link: {}", dynamic_link);
+  println!("static_link: {}", static_link);
+  let link_count = dynamic_link as usize + static_link as usize;
   if link_count != 1 {
     panic!(
       "You must select exactly one linking type, you selected {}",
@@ -23,24 +23,9 @@ fn main() {
     );
   }
 
-  let bind_SDL2_2_0_9 = cfg!(feature = "bind_SDL2_2_0_9");
-  let bind_SDL2_2_0_10 = cfg!(feature = "bind_SDL2_2_0_10");
-  println!("bind_SDL2_2_0_9: {}", bind_SDL2_2_0_9);
-  println!("bind_SDL2_2_0_10: {}", bind_SDL2_2_0_10);
-
   println!(
     "cargo:rustc-env=TARGET={}",
     env::var("TARGET").expect("Couldn't read `TARGET`")
-  );
-  println!(
-    "cargo:rustc-env=BIND_PATCH_LEVEL={}",
-    if bind_SDL2_2_0_10 {
-      10
-    } else if bind_SDL2_2_0_9 {
-      9
-    } else {
-      8
-    }
   );
 
   if cfg!(feature = "use_bindgen_bin") {
@@ -49,7 +34,7 @@ fn main() {
 
   // If we're on windows with static linking, do the build. cmake returns the
   // link location to use, so we declare that right away.
-  #[cfg(all(windows, feature = "link_static"))]
+  #[cfg(all(windows, feature = "static_link"))]
   println!(
     "cargo:rustc-link-search=native={}",
     win32_build_static_libs().join("lib").display()
@@ -81,88 +66,75 @@ fn run_bindgen_bin() {
     PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR`"));
   let target = env::var("TARGET").expect("Couldn't read `TARGET`");
 
-  let make_bindgen_command = |patch_level: i32| {
-    // build up the whole bindgen command
-    let mut bindgen = Command::new("bindgen");
-    bindgen.arg("--disable-name-namespacing");
-    bindgen.arg("--impl-debug");
-    bindgen.arg("--impl-partialeq");
-    bindgen.arg("--no-doc-comments");
-    bindgen.arg("--no-prepend-enum-name");
-    bindgen.arg("--no-layout-tests");
-    bindgen.arg("--use-core");
-    bindgen.arg("--with-derive-default");
-    bindgen.arg("--with-derive-partialeq");
-    // options
-    #[cfg(not(windows))]
-    bindgen.arg("--ctypes-prefix").arg("libc");
-    #[cfg(windows)]
-    bindgen.arg("--ctypes-prefix").arg("self");
-    bindgen.arg("--default-enum-style").arg("consts");
-    bindgen.arg("--output").arg(&format!(
-      "{}",
-      out_dir
-        .join(format!("SDL2-v2.0.{}-{}.rs", patch_level, target))
-        .display()
-    ));
-    bindgen.arg("--rust-target").arg("1.33");
-    bindgen.arg("--rustfmt-configuration-file").arg(
-      std::env::current_dir()
-        .expect("couldn't get current directory!")
-        .join("rustfmt.toml")
-        .to_str()
-        .expect("rustfmt.toml file path isn't valid utf8, stop that"),
-    );
-    bindgen.arg("--whitelist-function").arg("SDL_.*");
-    bindgen.arg("--whitelist-type").arg("SDL_.*");
-    bindgen.arg("--whitelist-var").arg("SDL_.*");
-    bindgen.arg("--whitelist-var").arg("AUDIO_.*");
-    bindgen.arg("--whitelist-var").arg("SDLK_.*");
-    // header
-    bindgen.arg(&wrapper_filename);
-    // mario kart double dash
-    bindgen.arg("--");
-    // clang args
-    bindgen.arg("--no-warnings");
-    bindgen.arg(format!("-DBINDGEN_2_0_{}", patch_level));
-    bindgen
-  };
+  // build up the whole bindgen command
+  let mut bindgen = Command::new("bindgen");
+  // args
+  bindgen.arg("--disable-name-namespacing");
+  bindgen.arg("--impl-debug");
+  bindgen.arg("--impl-partialeq");
+  bindgen.arg("--no-doc-comments");
+  bindgen.arg("--no-prepend-enum-name");
+  bindgen.arg("--no-layout-tests");
+  bindgen.arg("--use-core");
+  bindgen.arg("--with-derive-default");
+  bindgen.arg("--with-derive-partialeq");
+  // options
+  bindgen.arg("--ctypes-prefix").arg("chlorine");
+  bindgen.arg("--default-enum-style").arg("consts");
+  bindgen.arg("--output").arg(&format!(
+    "{}",
+    out_dir.join(format!("SDL2-2.0.12-{}.rs", target)).display()
+  ));
+  bindgen.arg("--rust-target").arg("1.30");
+  bindgen.arg("--rustfmt-configuration-file").arg(
+    std::env::current_dir()
+      .expect("couldn't get current directory!")
+      .join("rustfmt.toml")
+      .to_str()
+      .expect("rustfmt.toml file path isn't valid utf8, stop that"),
+  );
+  bindgen.arg("--whitelist-function").arg("SDL_.*");
+  bindgen.arg("--whitelist-type").arg("SDL_.*");
+  bindgen.arg("--whitelist-var").arg("SDL_.*");
+  bindgen.arg("--whitelist-var").arg("AUDIO_.*");
+  bindgen.arg("--whitelist-var").arg("SDLK_.*");
+  // header
+  bindgen.arg(&wrapper_filename);
+  // mario kart double dash
+  bindgen.arg("--");
+  // clang args
+  bindgen.arg("--no-warnings");
 
-  for &patch_level in [8, 9, 10].iter() {
-    let mut bindgen = make_bindgen_command(patch_level);
-
-    println!("executing command: {:?}", bindgen);
-    let bindgen_output = bindgen.output().expect(
-      "Couldn't run 'bindgen', perhaps you need to 'cargo install bindgen'?",
-    );
-    if bindgen_output.status.success() {
-      println!("command success!")
-    } else {
-      println!("command failure!")
-    }
-    for line in String::from_utf8_lossy(&bindgen_output.stdout).lines() {
-      println!("OUT:{}", line);
-    }
-    for line in String::from_utf8_lossy(&bindgen_output.stderr).lines() {
-      println!("ERR:{}", line);
-    }
-    if !bindgen_output.status.success() {
-      panic!("The 'bindgen' command failed! (see output log for details)");
-    }
+  println!("executing command: {:?}", bindgen);
+  let bindgen_output = bindgen.output().expect(
+    "Couldn't run 'bindgen', perhaps you need to 'cargo install bindgen'?",
+  );
+  if bindgen_output.status.success() {
+    println!("command success!")
+  } else {
+    println!("command failure!")
+  }
+  for line in String::from_utf8_lossy(&bindgen_output.stdout).lines() {
+    println!("OUT:{}", line);
+  }
+  for line in String::from_utf8_lossy(&bindgen_output.stderr).lines() {
+    println!("ERR:{}", line);
+  }
+  if !bindgen_output.status.success() {
+    panic!("The 'bindgen' command failed! (see output log for details)");
   }
 }
 
 // Note: In addition to only calling this as needed, we must also cfg it to only
 // exist as needed so that we can avoid building in the `cmake` crate and its
 // dependencies unless it's really gonna be used.
-#[cfg(all(windows, feature = "link_static"))]
+#[cfg(all(windows, feature = "static_link"))]
 fn win32_build_static_libs() -> PathBuf {
   let manifest_dir = PathBuf::from(
     env::var("CARGO_MANIFEST_DIR")
       .expect("Could not read `CARGO_MANIFEST_DIR`!"),
   );
-  let mut cm =
-    cmake::Config::new(manifest_dir.join("full-source").join("SDL2-v2.0.10"));
+  let mut cm = cmake::Config::new(manifest_dir.join("SDL2-2.0.12"));
   cm.profile("release");
   cm.static_crt(true);
 
@@ -173,10 +145,10 @@ fn win32_build_static_libs() -> PathBuf {
   }
   */
 
-  if cfg!(feature = "link_dynamic") {
+  if cfg!(feature = "dynamic_link") {
     cm.define("SDL_SHARED", "ON");
     cm.define("SDL_STATIC", "OFF");
-  } else if cfg!(feature = "link_static") {
+  } else if cfg!(feature = "static_link") {
     cm.define("SDL_SHARED", "OFF");
     cm.define("SDL_STATIC", "ON");
   } else {
@@ -196,7 +168,7 @@ fn declare_linking() {
 
 fn declare_win32_linking() {
   // What to link
-  if cfg!(feature = "link_dynamic") {
+  if cfg!(feature = "dynamic_link") {
     println!("cargo:rustc-link-lib=SDL2");
   } else {
     println!("cargo:rustc-link-lib=static=SDL2");
@@ -221,14 +193,14 @@ fn declare_win32_linking() {
       .expect("Could not read `CARGO_MANIFEST_DIR`!"),
   );
 
-  if cfg!(feature = "link_dynamic") {
+  if cfg!(feature = "dynamic_link") {
     let sub_directory: &str = if cfg!(target_env = "gnu") {
       panic!("No provided library files for the gnu toolchain. File a PR.")
     } else if cfg!(target_env = "msvc") {
       if cfg!(target_arch = "x86") {
-        "win32-devel-files\\VC\\lib\\x86"
+        "win32-dynamic-link-files\\x86"
       } else if cfg!(target_arch = "x86_64") {
-        "win32-devel-files\\VC\\lib\\x64"
+        "win32-dynamic-link-files\\x64"
       } else {
         panic!("No provided library files for this CPU type.")
       }
@@ -239,7 +211,7 @@ fn declare_win32_linking() {
       "cargo:rustc-link-search=native={}",
       manifest_dir.join(sub_directory).display()
     );
-  } else if cfg!(feature = "link_static") {
+  } else if cfg!(feature = "static_link") {
     println!("link search should have been emitted during the cmake build.");
   } else {
     panic!("You didn't select a link mode!");
@@ -258,13 +230,13 @@ fn declare_sd2_config_linking() {
   let usage_words: Vec<String> =
     usage_out_string.split_whitespace().map(|s| s.to_string()).collect();
   assert!(&usage_words[0] == "Usage:", "Unexpected usage message, aborting!");
-  if cfg!(feature = "link_dynamic") {
+  if cfg!(feature = "dynamic_link") {
     assert!(
       usage_words.contains(&"[--libs]".to_string()),
       "This SDL2 install is not built for dynamic linking!"
     );
   }
-  if cfg!(feature = "link_static") {
+  if cfg!(feature = "static_link") {
     assert!(
       usage_words.contains(&"[--static-libs]".to_string()),
       "This SDL2 install is not built for dynamic linking!"
@@ -280,30 +252,11 @@ fn declare_sd2_config_linking() {
   assert!(sdl2_config_version.status.success());
   let version_out_string = String::from_utf8_lossy(&sdl2_config_version.stdout);
   println!("sdl2-config --version: {}", version_out_string);
-  let version_parts: Vec<u32> = version_out_string
-    .trim()
-    .split('.')
-    .map(|s| s.parse::<u32>().unwrap())
-    .collect();
-  // exact matches
-  assert_eq!(version_parts[0], 2);
-  assert_eq!(version_parts[1], 0);
-  // greater than or equal to!
-  assert!(
-    version_parts[2]
-      >= if cfg!(feature = "bind_SDL2_2_0_10") {
-        10
-      } else if cfg!(feature = "bind_SDL2_2_0_9") {
-        9
-      } else {
-        8
-      }
-  );
 
   // Call sdl2-config for real and do what it says to do.
-  let link_style_arg: &str = if cfg!(feature = "link_dynamic") {
+  let link_style_arg: &str = if cfg!(feature = "dynamic_link") {
     "--libs"
-  } else if cfg!(feature = "link_static") {
+  } else if cfg!(feature = "static_link") {
     "--static-libs"
   } else {
     panic!("No link mode selected!");
@@ -321,9 +274,9 @@ fn declare_sd2_config_linking() {
     if term.starts_with("-L") {
       println!("cargo:rustc-link-search=native={}", &term[2..]);
     } else if term.starts_with("-lSDL2") {
-      if cfg!(feature = "link_dynamic") {
+      if cfg!(feature = "dynamic_link") {
         println!("cargo:rustc-link-lib=SDL2")
-      } else if cfg!(feature = "link_static") {
+      } else if cfg!(feature = "static_link") {
         println!("cargo:rustc-link-lib=static=SDL2")
       } else {
         panic!("No link mode selected!");

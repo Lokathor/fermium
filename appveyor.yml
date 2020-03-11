@@ -5,8 +5,6 @@ matrix:
   fast_finish: true
 
 environment:
-  # Note(Lokathor): When someone submits the GNU files we can add the GNU stuff
-  # into our CI. Until then, no GNU CI support.
   matrix:
     # 32-bit MSVC
     - channel: 1.33.0
@@ -17,9 +15,9 @@ environment:
 
 install:
   # Put our DLL in place, depending on 32-bit/64-bit
-  - if %target%==i686-pc-windows-msvc cp win32-devel-files\VC\lib\x86\SDL2.dll .
+  - if %target%==i686-pc-windows-msvc cp win32-dynamic-link-files\x86\SDL2.dll .
   - if %target%==i686-pc-windows-msvc dir *.dll
-  - if %target%==x86_64-pc-windows-msvc cp win32-devel-files\VC\lib\x64\SDL2.dll .
+  - if %target%==x86_64-pc-windows-msvc cp win32-dynamic-link-files\x64\SDL2.dll .
   - if %target%==x86_64-pc-windows-msvc dir *.dll
   # Setup Rust
   - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
@@ -31,19 +29,11 @@ install:
 build: false
 
 test_script:
-  # dynamic 2.0.8
-  - cargo build
-  - cargo test
+  # dynamic
+  - cargo build --features="dynamic_link"
+  - cargo test --features="dynamic_link"
   - cargo clean
-  # dynamic 2.0.9
-  - cargo build --features="bind_SDL2_2_0_9"
-  - cargo test --features="bind_SDL2_2_0_9"
-  - cargo clean
-  # dynamic 2.0.10
-  - cargo build --features="bind_SDL2_2_0_10"
-  - cargo test --features="bind_SDL2_2_0_10"
-  - cargo clean
-  # static 2.0.8
-  - cargo build --no-default-features --features="link_static"
-  - cargo test --no-default-features --features="link_static"
+  # static
+  - cargo build --features="static_link"
+  - cargo test --features="static_link"
   - cargo clean

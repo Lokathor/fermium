@@ -62,8 +62,8 @@ fn main() {
           // https://wiki.libsdl.org/SDL_Event
           let mut event = SDL_Event::default();
           // This polls for one event out of the window's event queue and writes
-          // it to the event pointer we give it (if there's an event to write). It
-          // returns 1 on success and 0 on failure,
+          // it to the event pointer we give it (if there's an event to write).
+          // It returns 1 on success and 0 on failure,
           // https://wiki.libsdl.org/SDL_PollEvent
           while SDL_PollEvent(&mut event) != 0 {
             // Every possible union variant also starts with the tag field as
