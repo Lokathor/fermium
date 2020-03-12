@@ -402,15 +402,6 @@ assert_fn!(
 );
 assert_fn!(SDL_SetMainReady: unsafe extern "C" fn());
 assert_fn!(
-  SDL_RegisterApp:
-    unsafe extern "C" fn(
-      name: *mut c_char,
-      style: Uint32,
-      hInst: *mut c_void,
-    ) -> c_int
-);
-assert_fn!(SDL_UnregisterApp: unsafe extern "C" fn());
-assert_fn!(
   SDL_ReportAssertion:
     unsafe extern "C" fn(
       arg1: *mut SDL_AssertData,
@@ -517,27 +508,6 @@ assert_fn!(
       mutex: *mut SDL_mutex,
       ms: Uint32,
     ) -> c_int
-);
-assert_fn!(
-  SDL_CreateThread:
-    unsafe extern "C" fn(
-      fn_: SDL_ThreadFunction,
-      name: *const c_char,
-      data: *mut c_void,
-      pfnBeginThread: pfnSDL_CurrentBeginThread,
-      pfnEndThread: pfnSDL_CurrentEndThread,
-    ) -> *mut SDL_Thread
-);
-assert_fn!(
-  SDL_CreateThreadWithStackSize:
-    unsafe extern "C" fn(
-      fn_: Option<unsafe extern "C" fn(arg1: *mut c_void) -> c_int>,
-      name: *const c_char,
-      stacksize: size_t,
-      data: *mut c_void,
-      pfnBeginThread: pfnSDL_CurrentBeginThread,
-      pfnEndThread: pfnSDL_CurrentEndThread,
-    ) -> *mut SDL_Thread
 );
 assert_fn!(
   SDL_GetThreadName:
@@ -2897,27 +2867,8 @@ assert_fn!(
     ) -> c_int
 );
 assert_fn!(
-  SDL_SetWindowsMessageHook:
-    unsafe extern "C" fn(
-      callback: SDL_WindowsMessageHook,
-      userdata: *mut c_void,
-    )
-);
-assert_fn!(
   SDL_Direct3D9GetAdapterIndex:
     unsafe extern "C" fn(displayIndex: c_int) -> c_int
-);
-assert_fn!(
-  SDL_RenderGetD3D9Device:
-    unsafe extern "C" fn(renderer: *mut SDL_Renderer) -> *mut IDirect3DDevice9
-);
-assert_fn!(
-  SDL_DXGIGetOutputInfo:
-    unsafe extern "C" fn(
-      displayIndex: c_int,
-      adapterIndex: *mut c_int,
-      outputIndex: *mut c_int,
-    ) -> SDL_bool
 );
 assert_fn!(SDL_IsTablet: unsafe extern "C" fn() -> SDL_bool);
 assert_fn!(SDL_OnApplicationWillTerminate: unsafe extern "C" fn());
