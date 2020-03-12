@@ -40,9 +40,9 @@ install:
 script:
   # dynamic
   - cargo build
-  - cargo test
+  - cargo +nightly test
   - cargo clean
   # static
   - cargo build --no-default-features --features="static_link"
-  - cargo test --no-default-features --features="static_link"
+  - cargo +nightly test --no-default-features --features="static_link"
   - cargo clean
