@@ -520,13 +520,6 @@ assert_fn!(
     ) -> *mut SDL_RWops
 );
 assert_fn!(
-  SDL_RWFromFP:
-    unsafe extern "C" fn(
-      fp: *mut c_void,
-      autoclose: SDL_bool,
-    ) -> *mut SDL_RWops
-);
-assert_fn!(
   SDL_RWFromMem:
     unsafe extern "C" fn(mem: *mut c_void, size: c_int) -> *mut SDL_RWops
 );
