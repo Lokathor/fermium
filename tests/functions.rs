@@ -1,3 +1,8 @@
+
+//! This module tests that specific functions exist with specific signatures.
+//! It's more of a guard against possible breaks when we do future releases than
+//! it is a check of specific functionality.
+
 use fermium::*;
 
 /// Asserts the existence of a function with a given name and type.

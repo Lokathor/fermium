@@ -6,10 +6,11 @@
 //! This version exposes bindings for `SDL2-2.0.12`, and if you avoid calling
 //! any of the newer functions you can also use older versions of SDL2.
 //!
-//! The default docs are for the x86_64 Windows MSVC version, but this crate
-//! also works just fine on Mac and Linux. Things are about 95% the same from
-//! target to target, but there are some places where the OS differences come
-//! through.
+//! The default docs are for the x86_64 **Windows** MSVC version, but this crate
+//! also works just fine on **Mac** and **Linux**. Things are about 95% the same
+//! from target to target. Some functions only exist on specific platforms (eg:
+//! getting DirectX or Metal info), and others have signatures that vary by
+//! platform (eg: creating a thread).
 //!
 //! [The SDL2 Wiki](https://wiki.libsdl.org/) has information on function usage.
 //! What's here is just the function signatures and structs.
@@ -20,18 +21,9 @@ pub use chlorine::*;
 
 pick! {
   if #[cfg(feature = "use_bindgen_bin")] {
-    include!(concat!(
-      env!("OUT_DIR"),
-      "/SDL2-2.0.12-",
-      env!("TARGET"),
-      ".rs"
-    ));
+    include!(concat!(env!("OUT_DIR"),"/SDL2-2.0.12-",env!("TARGET"),".rs"));
   } else {
-    include!(concat!(
-      "SDL2-2.0.12-",
-      env!("TARGET"),
-      ".rs"
-    ));
+    include!(concat!("SDL2-2.0.12-",env!("TARGET"),".rs"));
   }
 }
 
