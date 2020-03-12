@@ -31,6 +31,7 @@ install:
       brew update
       brew install sdl2
     fi
+  - rustup toolchain install nightly
   # Run these to confirm that the SDL2 installation is working
   - sdl2-config --version
   - sdl2-config --cflags
