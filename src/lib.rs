@@ -48,7 +48,7 @@ pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
 /// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse
 /// input
 ///
-/// * 2.0.10 or later
+/// * `2.0.10` or later
 pub const SDL_MOUSE_TOUCHID: i64 = -1i64;
 
 /// `SDL_surface.h`: Evaluates to true if the surface needs to be locked before
