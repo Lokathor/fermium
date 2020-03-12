@@ -1,5 +1,9 @@
 
-## Windows specific functions that I had to cut for the moment
+The notes below use the windows functions,
+
+There's probably also linux and mac functions to find that dont' exist on windows.
+
+## Windows specific functions that don't make sense on mac/linux
 
 assert_fn!(
   SDL_RegisterApp:
@@ -37,6 +41,37 @@ assert_fn!(
 
 ## Functions that had platform-specific variations
 
+### Here, bindgen is probably being weird with the va_list
+
+assert_fn!(
+  SDL_LogMessageV:
+    unsafe extern "C" fn(
+      category: c_int,
+      priority: SDL_LogPriority,
+      fmt: *const c_char,
+      ap: va_list,
+    )
+);
+assert_fn!(
+  SDL_vsscanf:
+    unsafe extern "C" fn(
+      text: *const c_char,
+      fmt: *const c_char,
+      ap: va_list,
+    ) -> c_int
+);
+assert_fn!(
+  SDL_vsnprintf:
+    unsafe extern "C" fn(
+      text: *mut c_char,
+      maxlen: size_t,
+      fmt: *const c_char,
+      ap: va_list,
+    ) -> c_int
+);
+
+### Here there's actual OS differences
+
 assert_fn!(
   SDL_CreateThread:
     unsafe extern "C" fn(
@@ -59,35 +94,9 @@ assert_fn!(
     ) -> *mut SDL_Thread
 );
 assert_fn!(
-  SDL_LogMessageV:
-    unsafe extern "C" fn(
-      category: c_int,
-      priority: SDL_LogPriority,
-      fmt: *const c_char,
-      ap: va_list,
-    )
-);
-assert_fn!(
   SDL_RWFromFP:
     unsafe extern "C" fn(
       fp: *mut c_void,
       autoclose: SDL_bool,
     ) -> *mut SDL_RWops
-);
-assert_fn!(
-  SDL_vsscanf:
-    unsafe extern "C" fn(
-      text: *const c_char,
-      fmt: *const c_char,
-      ap: va_list,
-    ) -> c_int
-);
-assert_fn!(
-  SDL_vsnprintf:
-    unsafe extern "C" fn(
-      text: *mut c_char,
-      maxlen: size_t,
-      fmt: *const c_char,
-      ap: va_list,
-    ) -> c_int
 );
