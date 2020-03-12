@@ -309,29 +309,12 @@ assert_fn!(
     unsafe extern "C" fn(text: *const c_char, fmt: *const c_char, ...) -> c_int
 );
 assert_fn!(
-  SDL_vsscanf:
-    unsafe extern "C" fn(
-      text: *const c_char,
-      fmt: *const c_char,
-      ap: va_list,
-    ) -> c_int
-);
-assert_fn!(
   SDL_snprintf:
     unsafe extern "C" fn(
       text: *mut c_char,
       maxlen: size_t,
       fmt: *const c_char,
       ...
-    ) -> c_int
-);
-assert_fn!(
-  SDL_vsnprintf:
-    unsafe extern "C" fn(
-      text: *mut c_char,
-      maxlen: size_t,
-      fmt: *const c_char,
-      ap: va_list,
     ) -> c_int
 );
 assert_fn!(SDL_acos: unsafe extern "C" fn(x: f64) -> f64);
@@ -2242,15 +2225,6 @@ assert_fn!(
       priority: SDL_LogPriority,
       fmt: *const c_char,
       ...
-    )
-);
-assert_fn!(
-  SDL_LogMessageV:
-    unsafe extern "C" fn(
-      category: c_int,
-      priority: SDL_LogPriority,
-      fmt: *const c_char,
-      ap: va_list,
     )
 );
 assert_fn!(
