@@ -2840,10 +2840,6 @@ assert_fn!(
       shape_mode: *mut SDL_WindowShapeMode,
     ) -> c_int
 );
-assert_fn!(
-  SDL_Direct3D9GetAdapterIndex:
-    unsafe extern "C" fn(displayIndex: c_int) -> c_int
-);
 assert_fn!(SDL_IsTablet: unsafe extern "C" fn() -> SDL_bool);
 assert_fn!(SDL_OnApplicationWillTerminate: unsafe extern "C" fn());
 assert_fn!(SDL_OnApplicationDidReceiveMemoryWarning: unsafe extern "C" fn());
