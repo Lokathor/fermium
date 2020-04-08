@@ -7,10 +7,12 @@
 //! any of the newer functions you can also use older versions of SDL2.
 //!
 //! The default docs are for the x86_64 **Windows** MSVC version, but this crate
-//! also works just fine on **Mac** and **Linux**. Things are about 95% the same
-//! from target to target. Some functions only exist on specific platforms (eg:
-//! getting DirectX or Metal info), and others have signatures that vary by
-//! platform (eg: creating a thread).
+//! also works just fine on **Mac** and **Linux**.
+//!
+//! Things are about 95% the same from target to target. Some functions only
+//! exist on specific platforms (eg: getting DirectX or Metal info), and others
+//! have signatures that vary by platform (eg: creating a thread). Usually
+//! nothing a little `cfg` can't fix.
 //!
 //! [The SDL2 Wiki](https://wiki.libsdl.org/) has information on function usage.
 //! What's here is just the function signatures and structs.
@@ -42,6 +44,12 @@ pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
 ///
 /// * `2.0.10` or later
 pub const SDL_MOUSE_TOUCHID: i64 = -1i64;
+
+/// This is the common alias for the `SDL_WINDOWPOS_CENTERED_MASK` value.
+///
+/// It's `i32` rather than `u32` because the primary use for it is to be passed
+/// to `SDL_CreateWindow`.
+pub const SDL_WINDOWPOS_CENTERED: i32 = SDL_WINDOWPOS_CENTERED_MASK as i32;
 
 /// `SDL_surface.h`: Evaluates to true if the surface needs to be locked before
 /// access.
