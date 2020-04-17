@@ -19,9 +19,28 @@ The bindings are not generated at compile time, and you do not need to have
 been pre-generated for select common build targets (and I'm happy to accept PRs
 for more!).
 
+For the bindings to work the program obviously has to be linked against the SDL2
+library written in C. You have to select if you want to perform a dynamic link
+or a static link.
+
 * By default the `dynamic_link` feature is active.
+  * When a dynamic link is performed your program will depend on having the SDL2
+    shared library available at runtime. This means that the user will have to
+    have it installed. On Windows you can place `SDL2.dll` directly into the
+    same directory as the binary you send to people.
+  * If you're on Windows and feeling lazy you can `cargo install fermium` and
+    then you'll get a binary named `fermium` available and it'll write the
+    32-bit or 64-bit `SDL2.dll` file into the current directory, so setting up a
+    new project is a snap. If you have `SDL2.dll` in the project root then
+    `cargo run` will work normally, you only have to fiddle with moving files
+    around when you go to do your final release.
 * If you'd like to do a static link then you can disable default features and
   enable the `static_link` feature.
+  * If you enable static linking on Windows then you will need to have `cmake`
+    installed for it to build the SDL2 static library. The source code is
+    already bundled into the crate, but unfortunately Visual Studio doesn't keep
+    stability between versions so you have to actually build the library with
+    your own version of Visual Studio.
 * If _both_ link modes are selected then the crate will refuse to build, so only
   select one or the other.
 * Yes, this does mean that those two features are not "purely additive" like how
