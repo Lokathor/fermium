@@ -304,7 +304,6 @@ pub const SDL_INIT_EVERYTHING: u32 = 62001;
 extern "C" {
   pub fn SDL_GetPlatform() -> *const c_char;
 }
-pub type size_t = c_uint;
 pub type wchar_t = c_uint;
 pub type va_list = __builtin_va_list;
 pub type __uint8_t = c_uchar;
