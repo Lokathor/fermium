@@ -142,6 +142,7 @@ fn run_bindgen_bin() {
 // dependencies unless it's really gonna be used.
 #[cfg(all(windows, feature = "static_link"))]
 fn win32_build_static_libs() -> PathBuf {
+  let target = env::var("TARGET").expect("Couldn't read `TARGET`");
   let manifest_dir = PathBuf::from(
     env::var("CARGO_MANIFEST_DIR")
       .expect("Could not read `CARGO_MANIFEST_DIR`!"),
@@ -149,6 +150,7 @@ fn win32_build_static_libs() -> PathBuf {
   let mut cm = cmake::Config::new(manifest_dir.join("SDL2-2.0.12"));
   cm.profile("release");
   cm.static_crt(true);
+  cm.target(&target);
 
   /* windows-gnu is totally unsupported at the moment
   if cfg!(target_env = "gnu") {
