@@ -2,21 +2,28 @@ name: Rust
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
-
-env:
-  CARGO_TERM_COLOR: always
+    branches: [ main ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        - { os: windows-latest, target: x86_64-pc-windows-msvc, toolchain: stable }
+        - { os: windows-latest, target: i686-pc-windows-msvc, toolchain: stable }
+        - { os: macOS-latest, target: x86_64-apple-darwin, toolchain: stable }
+        - { os: ubuntu-latest, target: x86_64-pc-windows-msvc, toolchain: stable }
+        - { os: ubuntu-latest, target: x86_64-pc-windows-msvc, toolchain: stable }
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+    - uses: actions/checkout@v1
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: ${{ matrix.toolchain }}
+        target:  ${{ matrix.target }}
+        profile: minimal
+    - uses: actions-rs/cargo@v1
+      with:
+        toolchain: ${{ matrix.toolchain }}
+        command: test

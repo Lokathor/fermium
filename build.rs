@@ -62,12 +62,15 @@ fn run_bindgen_bin() {
   let wrapper_filename = current_dir.join("wrapper.h");
 
   //
+  let target = env::var("TARGET").expect("Couldn't read `TARGET`");
   let out_dir =
     PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR`"));
-  let target = env::var("TARGET").expect("Couldn't read `TARGET`");
+  let out_filename =
+    format!("{}", out_dir.join(format!("SDL2-2.0.12-{}.rs", target)).display());
 
   // build up the whole bindgen command
   let mut bindgen = Command::new("bindgen");
+
   // args
   bindgen.arg("--disable-name-namespacing");
   bindgen.arg("--impl-debug");
@@ -78,14 +81,14 @@ fn run_bindgen_bin() {
   bindgen.arg("--use-core");
   bindgen.arg("--with-derive-default");
   bindgen.arg("--with-derive-partialeq");
+  bindgen.arg("--size_t-is-usize");
+
   // options
   bindgen.arg("--ctypes-prefix").arg("chlorine");
   bindgen.arg("--default-enum-style").arg("consts");
-  bindgen.arg("--output").arg(&format!(
-    "{}",
-    out_dir.join(format!("SDL2-2.0.12-{}.rs", target)).display()
-  ));
+  bindgen.arg("--output").arg(&out_filename);
   bindgen.arg("--rust-target").arg("1.30");
+  /*
   bindgen.arg("--rustfmt-configuration-file").arg(
     std::env::current_dir()
       .expect("couldn't get current directory!")
@@ -93,17 +96,22 @@ fn run_bindgen_bin() {
       .to_str()
       .expect("rustfmt.toml file path isn't valid utf8, stop that"),
   );
+  */
   bindgen.arg("--whitelist-function").arg("SDL_.*");
   bindgen.arg("--whitelist-type").arg("SDL_.*");
   bindgen.arg("--whitelist-var").arg("SDL_.*");
   bindgen.arg("--whitelist-var").arg("AUDIO_.*");
   bindgen.arg("--whitelist-var").arg("SDLK_.*");
+
   // header
   bindgen.arg(&wrapper_filename);
+
   // mario kart double dash
   bindgen.arg("--");
+
   // clang args
   bindgen.arg("--no-warnings");
+  bindgen.arg("-target").arg(&target);
 
   println!("executing command: {:?}", bindgen);
   let bindgen_output = bindgen.output().expect(
@@ -120,7 +128,12 @@ fn run_bindgen_bin() {
   for line in String::from_utf8_lossy(&bindgen_output.stderr).lines() {
     println!("ERR:{}", line);
   }
-  if !bindgen_output.status.success() {
+  if bindgen_output.status.success() {
+    // bindgen doesn't actually rustfmt it seems. we'll give it a try.
+    let mut rustfmt = Command::new("rustfmt");
+    rustfmt.arg(&out_filename);
+    let _ = rustfmt.output();
+  } else {
     panic!("The 'bindgen' command failed! (see output log for details)");
   }
 }
