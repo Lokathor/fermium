@@ -212,9 +212,9 @@ fn declare_win32_linking() {
       panic!("No provided library files for the gnu toolchain. File a PR.")
     } else if cfg!(target_env = "msvc") {
       if cfg!(target_arch = "x86") {
-        "win32-dynamic-link-files\\x86"
+        r#"win32-dynamic-link-files\x86"#
       } else if cfg!(target_arch = "x86_64") {
-        "win32-dynamic-link-files\\x64"
+        r#"win32-dynamic-link-files\x64"#
       } else {
         panic!("No provided library files for this CPU type.")
       }
