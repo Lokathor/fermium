@@ -34,7 +34,7 @@ fn main() {
 
   // If we're on windows with static linking, do the build. cmake returns the
   // link location to use, so we declare that right away.
-  #[cfg(all(windows, feature = "static_link"))]
+  #[cfg(all(windows, feature = "static_link"))] // TODO: base this on target
   println!(
     "cargo:rustc-link-search=native={}",
     win32_build_static_libs().join("lib").display()
@@ -140,7 +140,7 @@ fn run_bindgen_bin() {
 // Note: In addition to only calling this as needed, we must also cfg it to only
 // exist as needed so that we can avoid building in the `cmake` crate and its
 // dependencies unless it's really gonna be used.
-#[cfg(all(windows, feature = "static_link"))]
+#[cfg(all(windows, feature = "static_link"))] // TODO: base this on target
 fn win32_build_static_libs() -> PathBuf {
   let target = env::var("TARGET").expect("Couldn't read `TARGET`");
   let manifest_dir = PathBuf::from(
