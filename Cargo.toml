@@ -2,8 +2,8 @@
 name = "fermium"
 description = "An opinionated crate of SDL2 bindings."
 repository = "https://github.com/Lokathor/fermium"
-# Targets SDL2 version 2.0.12
-version = "200.12.3-alpha.0"
+# Targets SDL2 version 2.0.14
+version = "20014.0.0-alpha.0"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
 license = "Zlib"
@@ -14,13 +14,14 @@ links = "SDL2"
 build = "build.rs"
 
 [features]
+# Link with the dynamic library files.
 dynamic_link = []
+
+# Link with the static library files.
 static_link = ["cmake"]
 
-# You probably don't need to use this.
+# Run the `bindgen` CLI to generate bindings. Probably don't use this.
 use_bindgen_bin = []
-
-default = ["dynamic_link"]
 
 [dependencies]
 chlorine = "1"
@@ -32,6 +33,4 @@ cmake = { version = "0.1", optional = true }
 
 [package.metadata.docs.rs]
 default-target = "x86_64-pc-windows-msvc"
-[badges]
-appveyor = { repository = "Lokathor/fermium" }
-travis-ci = { repository = "Lokathor/fermium" }
+features = ["dynamic_link"]
