@@ -84,6 +84,7 @@ fn run_bindgen_bin() {
   bindgen.arg("--use-core");
   bindgen.arg("--with-derive-default");
   bindgen.arg("--with-derive-partialeq");
+  bindgen.arg("--size_t-is-usize");
 
   // options
   bindgen.arg("--ctypes-prefix").arg("chlorine");
