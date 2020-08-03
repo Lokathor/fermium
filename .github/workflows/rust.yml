@@ -38,9 +38,11 @@ jobs:
       uses: actions-rs/cargo@v1
       with:
         toolchain: ${{ matrix.rust.toolchain }}
-        command: test --feature="dynamic_link"
+        command: test
+        args: --feature="dynamic_link"
     - name: Run Tests with Static Link
       uses: actions-rs/cargo@v1
       with:
         toolchain: ${{ matrix.rust.toolchain }}
-        command: test --feature="static_link"
+        command: test
+        args: --feature="static_link"
