@@ -23,22 +23,22 @@ fn main() {
     );
   }
 
-  println!(
-    "cargo:rustc-env=TARGET={}",
-    env::var("TARGET").expect("Couldn't read `TARGET`")
-  );
+  let target = env::var("TARGET").expect("Couldn't read `TARGET`");
+  println!("cargo:rustc-env=TARGET={}", target);
 
   if cfg!(feature = "use_bindgen_bin") {
     run_bindgen_bin();
   }
 
-  // If we're on windows with static linking, do the build. cmake returns the
-  // link location to use, so we declare that right away.
-  #[cfg(all(windows, feature = "static_link"))] // TODO: base this on target
-  println!(
-    "cargo:rustc-link-search=native={}",
-    win32_build_static_libs().join("lib").display()
-  );
+  #[cfg(feature = "cmake")]
+  {
+    if cfg!(feature = "static_link") && target.contains("windows") {
+      println!(
+        "cargo:rustc-link-search=native={}",
+        build_the_c_library().join("lib").display()
+      );
+    }
+  }
 
   declare_linking();
 }
@@ -47,8 +47,9 @@ fn run_bindgen_bin() {
   println!("bindgen --version: {}", {
     let mut bindgen_version = Command::new("bindgen");
     bindgen_version.arg("--version");
-    let version_out =
-      bindgen_version.output().expect("Couldn't execute `bindgen --version`!");
+    let version_out = bindgen_version
+      .output()
+      .expect("Couldn't execute `bindgen --version`!");
     if version_out.status.success() {
       String::from_utf8_lossy(&version_out.stdout).into_owned()
     } else {
@@ -65,8 +66,10 @@ fn run_bindgen_bin() {
   let target = env::var("TARGET").expect("Couldn't read `TARGET`");
   let out_dir =
     PathBuf::from(env::var("OUT_DIR").expect("Couldn't read `OUT_DIR`"));
-  let out_filename =
-    format!("{}", out_dir.join(format!("SDL2-2.0.12-{}.rs", target)).display());
+  let out_filename = format!(
+    "{}",
+    out_dir.join(format!("SDL2-2.0.12-{}.rs", target)).display()
+  );
 
   // build up the whole bindgen command
   let mut bindgen = Command::new("bindgen");
@@ -137,11 +140,8 @@ fn run_bindgen_bin() {
   }
 }
 
-// Note: In addition to only calling this as needed, we must also cfg it to only
-// exist as needed so that we can avoid building in the `cmake` crate and its
-// dependencies unless it's really gonna be used.
-#[cfg(all(windows, feature = "static_link"))] // TODO: base this on target
-fn win32_build_static_libs() -> PathBuf {
+#[cfg(feature = "cmake")]
+fn build_the_c_library() -> PathBuf {
   let target = env::var("TARGET").expect("Couldn't read `TARGET`");
   let manifest_dir = PathBuf::from(
     env::var("CARGO_MANIFEST_DIR")
@@ -151,13 +151,6 @@ fn win32_build_static_libs() -> PathBuf {
   cm.profile("release");
   cm.static_crt(true);
   cm.target(&target);
-
-  /* windows-gnu is totally unsupported at the moment
-  if cfg!(target_env = "gnu") {
-    cm.define("VIDEO_OPENGLES", "OFF");
-    cm.generator("MinGW Makefiles");
-  }
-  */
 
   if cfg!(feature = "dynamic_link") {
     cm.define("SDL_SHARED", "ON");
@@ -186,8 +179,8 @@ fn declare_win32_linking() {
     println!("cargo:rustc-link-lib=SDL2");
   } else {
     println!("cargo:rustc-link-lib=static=SDL2");
-    // Note(Lokathor): this magical seeming list comes from the CMakeLists.txt,
-    // if you search for "Libraries for Win32" you'll find it.
+    // Note(Lokathor): this comes from the CMakeLists.txt, search for "Libraries
+    // for Win32 native and MinGW"
     println!("cargo:rustc-link-lib=user32");
     println!("cargo:rustc-link-lib=gdi32");
     println!("cargo:rustc-link-lib=winmm");
@@ -241,9 +234,14 @@ fn declare_sd2_config_linking() {
   assert!(!sdl2_config_usage.status.success());
   let usage_out_string = String::from_utf8_lossy(&sdl2_config_usage.stderr);
   println!("sdl2-config: {}", usage_out_string);
-  let usage_words: Vec<String> =
-    usage_out_string.split_whitespace().map(|s| s.to_string()).collect();
-  assert!(&usage_words[0] == "Usage:", "Unexpected usage message, aborting!");
+  let usage_words: Vec<String> = usage_out_string
+    .split_whitespace()
+    .map(|s| s.to_string())
+    .collect();
+  assert!(
+    &usage_words[0] == "Usage:",
+    "Unexpected usage message, aborting!"
+  );
   if cfg!(feature = "dynamic_link") {
     assert!(
       usage_words.contains(&"[--libs]".to_string()),
@@ -275,10 +273,12 @@ fn declare_sd2_config_linking() {
   } else {
     panic!("No link mode selected!");
   };
-  let sd2_config_linking =
-    Command::new("sdl2-config").arg(link_style_arg).output().unwrap_or_else(
-      |_| panic!("Couldn't run `sdl2-config {}`.", link_style_arg),
-    );
+  let sd2_config_linking = Command::new("sdl2-config")
+    .arg(link_style_arg)
+    .output()
+    .unwrap_or_else(|_| {
+      panic!("Couldn't run `sdl2-config {}`.", link_style_arg)
+    });
   assert!(sd2_config_linking.status.success());
   let sd2_config_linking_string: String =
     String::from_utf8_lossy(&sd2_config_linking.stdout).into_owned();
