@@ -2309,9 +2309,9 @@ extern "C" {
 }
 pub const SDL_HITTEST_NORMAL: SDL_HitTestResult = 0;
 pub const SDL_HITTEST_DRAGGABLE: SDL_HitTestResult = 1;
-pub const SDL_HITTEST_REusizeOPLEFT: SDL_HitTestResult = 2;
-pub const SDL_HITTEST_REusizeOP: SDL_HitTestResult = 3;
-pub const SDL_HITTEST_REusizeOPRIGHT: SDL_HitTestResult = 4;
+pub const SDL_HITTEST_RESIZE_TOPLEFT: SDL_HitTestResult = 2;
+pub const SDL_HITTEST_RESIZE_TOP: SDL_HitTestResult = 3;
+pub const SDL_HITTEST_RESIZE_TOPRIGHT: SDL_HitTestResult = 4;
 pub const SDL_HITTEST_RESIZE_RIGHT: SDL_HitTestResult = 5;
 pub const SDL_HITTEST_RESIZE_BOTTOMRIGHT: SDL_HitTestResult = 6;
 pub const SDL_HITTEST_RESIZE_BOTTOM: SDL_HitTestResult = 7;
