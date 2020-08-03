@@ -19,13 +19,13 @@ macro_rules! assert_fn {
 }
 
 assert_fn!(SDL_GetPlatform: unsafe extern "C" fn() -> *const c_char);
-assert_fn!(SDL_malloc: unsafe extern "C" fn(size: size_t) -> *mut c_void);
+assert_fn!(SDL_malloc: unsafe extern "C" fn(size: usize) -> *mut c_void);
 assert_fn!(
-  SDL_calloc: unsafe extern "C" fn(nmemb: size_t, size: size_t) -> *mut c_void
+  SDL_calloc: unsafe extern "C" fn(nmemb: usize, size: usize) -> *mut c_void
 );
 assert_fn!(
   SDL_realloc:
-    unsafe extern "C" fn(mem: *mut c_void, size: size_t) -> *mut c_void
+    unsafe extern "C" fn(mem: *mut c_void, size: usize) -> *mut c_void
 );
 assert_fn!(SDL_free: unsafe extern "C" fn(mem: *mut c_void));
 assert_fn!(
@@ -62,8 +62,8 @@ assert_fn!(
   SDL_qsort:
     unsafe extern "C" fn(
       base: *mut c_void,
-      nmemb: size_t,
-      size: size_t,
+      nmemb: usize,
+      size: usize,
       compare: Option<
         unsafe extern "C" fn(arg1: *const c_void, arg2: *const c_void) -> c_int,
       >,
@@ -78,18 +78,14 @@ assert_fn!(SDL_toupper: unsafe extern "C" fn(x: c_int) -> c_int);
 assert_fn!(SDL_tolower: unsafe extern "C" fn(x: c_int) -> c_int);
 assert_fn!(
   SDL_memset:
-    unsafe extern "C" fn(
-      dst: *mut c_void,
-      c: c_int,
-      len: size_t,
-    ) -> *mut c_void
+    unsafe extern "C" fn(dst: *mut c_void, c: c_int, len: usize) -> *mut c_void
 );
 assert_fn!(
   SDL_memcpy:
     unsafe extern "C" fn(
       dst: *mut c_void,
       src: *const c_void,
-      len: size_t,
+      len: usize,
     ) -> *mut c_void
 );
 assert_fn!(
@@ -97,7 +93,7 @@ assert_fn!(
     unsafe extern "C" fn(
       dst: *mut c_void,
       src: *const c_void,
-      len: size_t,
+      len: usize,
     ) -> *mut c_void
 );
 assert_fn!(
@@ -105,25 +101,25 @@ assert_fn!(
     unsafe extern "C" fn(
       s1: *const c_void,
       s2: *const c_void,
-      len: size_t,
+      len: usize,
     ) -> c_int
 );
-assert_fn!(SDL_wcslen: unsafe extern "C" fn(wstr: *const wchar_t) -> size_t);
+assert_fn!(SDL_wcslen: unsafe extern "C" fn(wstr: *const wchar_t) -> usize);
 assert_fn!(
   SDL_wcslcpy:
     unsafe extern "C" fn(
       dst: *mut wchar_t,
       src: *const wchar_t,
-      maxlen: size_t,
-    ) -> size_t
+      maxlen: usize,
+    ) -> usize
 );
 assert_fn!(
   SDL_wcslcat:
     unsafe extern "C" fn(
       dst: *mut wchar_t,
       src: *const wchar_t,
-      maxlen: size_t,
-    ) -> size_t
+      maxlen: usize,
+    ) -> usize
 );
 assert_fn!(
   SDL_wcsdup: unsafe extern "C" fn(wstr: *const wchar_t) -> *mut wchar_t
@@ -144,33 +140,33 @@ assert_fn!(
     unsafe extern "C" fn(
       str1: *const wchar_t,
       str2: *const wchar_t,
-      maxlen: size_t,
+      maxlen: usize,
     ) -> c_int
 );
-assert_fn!(SDL_strlen: unsafe extern "C" fn(str: *const c_char) -> size_t);
+assert_fn!(SDL_strlen: unsafe extern "C" fn(str: *const c_char) -> usize);
 assert_fn!(
   SDL_strlcpy:
     unsafe extern "C" fn(
       dst: *mut c_char,
       src: *const c_char,
-      maxlen: size_t,
-    ) -> size_t
+      maxlen: usize,
+    ) -> usize
 );
 assert_fn!(
   SDL_utf8strlcpy:
     unsafe extern "C" fn(
       dst: *mut c_char,
       src: *const c_char,
-      dst_bytes: size_t,
-    ) -> size_t
+      dst_bytes: usize,
+    ) -> usize
 );
 assert_fn!(
   SDL_strlcat:
     unsafe extern "C" fn(
       dst: *mut c_char,
       src: *const c_char,
-      maxlen: size_t,
-    ) -> size_t
+      maxlen: usize,
+    ) -> usize
 );
 assert_fn!(SDL_strdup: unsafe extern "C" fn(str: *const c_char) -> *mut c_char);
 assert_fn!(SDL_strrev: unsafe extern "C" fn(str: *mut c_char) -> *mut c_char);
@@ -198,7 +194,7 @@ assert_fn!(
       saveptr: *mut *mut c_char,
     ) -> *mut c_char
 );
-assert_fn!(SDL_utf8strlen: unsafe extern "C" fn(str: *const c_char) -> size_t);
+assert_fn!(SDL_utf8strlen: unsafe extern "C" fn(str: *const c_char) -> usize);
 assert_fn!(
   SDL_itoa:
     unsafe extern "C" fn(
@@ -294,7 +290,7 @@ assert_fn!(
     unsafe extern "C" fn(
       str1: *const c_char,
       str2: *const c_char,
-      maxlen: size_t,
+      maxlen: usize,
     ) -> c_int
 );
 assert_fn!(
@@ -306,7 +302,7 @@ assert_fn!(
     unsafe extern "C" fn(
       str1: *const c_char,
       str2: *const c_char,
-      len: size_t,
+      len: usize,
     ) -> c_int
 );
 assert_fn!(
@@ -317,7 +313,7 @@ assert_fn!(
   SDL_snprintf:
     unsafe extern "C" fn(
       text: *mut c_char,
-      maxlen: size_t,
+      maxlen: usize,
       fmt: *const c_char,
       ...
     ) -> c_int
@@ -371,10 +367,10 @@ assert_fn!(
     unsafe extern "C" fn(
       cd: SDL_iconv_t,
       inbuf: *mut *const c_char,
-      inbytesleft: *mut size_t,
+      inbytesleft: *mut usize,
       outbuf: *mut *mut c_char,
-      outbytesleft: *mut size_t,
-    ) -> size_t
+      outbytesleft: *mut usize,
+    ) -> usize
 );
 assert_fn!(
   SDL_iconv_string:
@@ -382,7 +378,7 @@ assert_fn!(
       tocode: *const c_char,
       fromcode: *const c_char,
       inbuf: *const c_char,
-      inbytesleft: size_t,
+      inbytesleft: usize,
     ) -> *mut c_char
 );
 assert_fn!(
@@ -549,25 +545,25 @@ assert_fn!(
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
       ptr: *mut c_void,
-      size: size_t,
-      maxnum: size_t,
-    ) -> size_t
+      size: usize,
+      maxnum: usize,
+    ) -> usize
 );
 assert_fn!(
   SDL_RWwrite:
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
       ptr: *const c_void,
-      size: size_t,
-      num: size_t,
-    ) -> size_t
+      size: usize,
+      num: usize,
+    ) -> usize
 );
 assert_fn!(SDL_RWclose: unsafe extern "C" fn(context: *mut SDL_RWops) -> c_int);
 assert_fn!(
   SDL_LoadFile_RW:
     unsafe extern "C" fn(
       src: *mut SDL_RWops,
-      datasize: *mut size_t,
+      datasize: *mut usize,
       freesrc: c_int,
     ) -> *mut c_void
 );
@@ -575,7 +571,7 @@ assert_fn!(
   SDL_LoadFile:
     unsafe extern "C" fn(
       file: *const c_char,
-      datasize: *mut size_t,
+      datasize: *mut usize,
     ) -> *mut c_void
 );
 assert_fn!(SDL_ReadU8: unsafe extern "C" fn(src: *mut SDL_RWops) -> Uint8);
@@ -586,32 +582,31 @@ assert_fn!(SDL_ReadBE32: unsafe extern "C" fn(src: *mut SDL_RWops) -> Uint32);
 assert_fn!(SDL_ReadLE64: unsafe extern "C" fn(src: *mut SDL_RWops) -> Uint64);
 assert_fn!(SDL_ReadBE64: unsafe extern "C" fn(src: *mut SDL_RWops) -> Uint64);
 assert_fn!(
-  SDL_WriteU8:
-    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint8) -> size_t
+  SDL_WriteU8: unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint8) -> usize
 );
 assert_fn!(
   SDL_WriteLE16:
-    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint16) -> size_t
+    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint16) -> usize
 );
 assert_fn!(
   SDL_WriteBE16:
-    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint16) -> size_t
+    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint16) -> usize
 );
 assert_fn!(
   SDL_WriteLE32:
-    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint32) -> size_t
+    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint32) -> usize
 );
 assert_fn!(
   SDL_WriteBE32:
-    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint32) -> size_t
+    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint32) -> usize
 );
 assert_fn!(
   SDL_WriteLE64:
-    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint64) -> size_t
+    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint64) -> usize
 );
 assert_fn!(
   SDL_WriteBE64:
-    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint64) -> size_t
+    unsafe extern "C" fn(dst: *mut SDL_RWops, value: Uint64) -> usize
 );
 assert_fn!(SDL_GetNumAudioDrivers: unsafe extern "C" fn() -> c_int);
 assert_fn!(
@@ -791,8 +786,8 @@ assert_fn!(SDL_HasAVX512F: unsafe extern "C" fn() -> SDL_bool);
 assert_fn!(SDL_HasARMSIMD: unsafe extern "C" fn() -> SDL_bool);
 assert_fn!(SDL_HasNEON: unsafe extern "C" fn() -> SDL_bool);
 assert_fn!(SDL_GetSystemRAM: unsafe extern "C" fn() -> c_int);
-assert_fn!(SDL_SIMDGetAlignment: unsafe extern "C" fn() -> size_t);
-assert_fn!(SDL_SIMDAlloc: unsafe extern "C" fn(len: size_t) -> *mut c_void);
+assert_fn!(SDL_SIMDGetAlignment: unsafe extern "C" fn() -> usize);
+assert_fn!(SDL_SIMDAlloc: unsafe extern "C" fn(len: usize) -> *mut c_void);
 assert_fn!(SDL_SIMDFree: unsafe extern "C" fn(ptr: *mut c_void));
 assert_fn!(
   SDL_GetPixelFormatName: unsafe extern "C" fn(format: Uint32) -> *const c_char
