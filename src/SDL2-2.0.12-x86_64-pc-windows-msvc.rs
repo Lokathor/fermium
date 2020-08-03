@@ -321,7 +321,7 @@ pub const SDL_INIT_EVERYTHING: u32 = 62001;
 extern "C" {
   pub fn SDL_GetPlatform() -> *const c_char;
 }
-//pub type size_t = c_ulonglong;
+//pub type usize = c_ulonglong;
 pub type wchar_t = c_ushort;
 pub type va_list = __builtin_va_list;
 pub const SDL_FALSE: SDL_bool = 0;
@@ -346,23 +346,23 @@ pub const DUMMY_ENUM_VALUE: SDL_DUMMY_ENUM = 0;
 pub type SDL_DUMMY_ENUM = i32;
 pub type SDL_compile_time_assert_enum = [c_int; 1];
 extern "C" {
-  pub fn SDL_malloc(size: size_t) -> *mut c_void;
+  pub fn SDL_malloc(size: usize) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_calloc(nmemb: size_t, size: size_t) -> *mut c_void;
+  pub fn SDL_calloc(nmemb: usize, size: usize) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_realloc(mem: *mut c_void, size: size_t) -> *mut c_void;
+  pub fn SDL_realloc(mem: *mut c_void, size: usize) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_free(mem: *mut c_void);
 }
 pub type SDL_malloc_func =
-  Option<unsafe extern "C" fn(size: size_t) -> *mut c_void>;
+  Option<unsafe extern "C" fn(size: usize) -> *mut c_void>;
 pub type SDL_calloc_func =
-  Option<unsafe extern "C" fn(nmemb: size_t, size: size_t) -> *mut c_void>;
+  Option<unsafe extern "C" fn(nmemb: usize, size: usize) -> *mut c_void>;
 pub type SDL_realloc_func =
-  Option<unsafe extern "C" fn(mem: *mut c_void, size: size_t) -> *mut c_void>;
+  Option<unsafe extern "C" fn(mem: *mut c_void, size: usize) -> *mut c_void>;
 pub type SDL_free_func = Option<unsafe extern "C" fn(mem: *mut c_void)>;
 extern "C" {
   pub fn SDL_GetMemoryFunctions(
@@ -389,7 +389,7 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_qsort(
-    base: *mut c_void, nmemb: size_t, size: size_t,
+    base: *mut c_void, nmemb: usize, size: usize,
     compare: Option<
       unsafe extern "C" fn(arg1: *const c_void, arg2: *const c_void) -> c_int,
     >,
@@ -417,34 +417,33 @@ extern "C" {
   pub fn SDL_tolower(x: c_int) -> c_int;
 }
 extern "C" {
-  pub fn SDL_memset(dst: *mut c_void, c: c_int, len: size_t) -> *mut c_void;
+  pub fn SDL_memset(dst: *mut c_void, c: c_int, len: usize) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_memcpy(
-    dst: *mut c_void, src: *const c_void, len: size_t,
+    dst: *mut c_void, src: *const c_void, len: usize,
   ) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_memmove(
-    dst: *mut c_void, src: *const c_void, len: size_t,
+    dst: *mut c_void, src: *const c_void, len: usize,
   ) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_memcmp(s1: *const c_void, s2: *const c_void, len: size_t)
-    -> c_int;
+  pub fn SDL_memcmp(s1: *const c_void, s2: *const c_void, len: usize) -> c_int;
 }
 extern "C" {
-  pub fn SDL_wcslen(wstr: *const wchar_t) -> size_t;
+  pub fn SDL_wcslen(wstr: *const wchar_t) -> usize;
 }
 extern "C" {
   pub fn SDL_wcslcpy(
-    dst: *mut wchar_t, src: *const wchar_t, maxlen: size_t,
-  ) -> size_t;
+    dst: *mut wchar_t, src: *const wchar_t, maxlen: usize,
+  ) -> usize;
 }
 extern "C" {
   pub fn SDL_wcslcat(
-    dst: *mut wchar_t, src: *const wchar_t, maxlen: size_t,
-  ) -> size_t;
+    dst: *mut wchar_t, src: *const wchar_t, maxlen: usize,
+  ) -> usize;
 }
 extern "C" {
   pub fn SDL_wcsdup(wstr: *const wchar_t) -> *mut wchar_t;
@@ -459,26 +458,26 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_wcsncmp(
-    str1: *const wchar_t, str2: *const wchar_t, maxlen: size_t,
+    str1: *const wchar_t, str2: *const wchar_t, maxlen: usize,
   ) -> c_int;
 }
 extern "C" {
-  pub fn SDL_strlen(str: *const c_char) -> size_t;
+  pub fn SDL_strlen(str: *const c_char) -> usize;
 }
 extern "C" {
   pub fn SDL_strlcpy(
-    dst: *mut c_char, src: *const c_char, maxlen: size_t,
-  ) -> size_t;
+    dst: *mut c_char, src: *const c_char, maxlen: usize,
+  ) -> usize;
 }
 extern "C" {
   pub fn SDL_utf8strlcpy(
-    dst: *mut c_char, src: *const c_char, dst_bytes: size_t,
-  ) -> size_t;
+    dst: *mut c_char, src: *const c_char, dst_bytes: usize,
+  ) -> usize;
 }
 extern "C" {
   pub fn SDL_strlcat(
-    dst: *mut c_char, src: *const c_char, maxlen: size_t,
-  ) -> size_t;
+    dst: *mut c_char, src: *const c_char, maxlen: usize,
+  ) -> usize;
 }
 extern "C" {
   pub fn SDL_strdup(str: *const c_char) -> *mut c_char;
@@ -509,7 +508,7 @@ extern "C" {
   ) -> *mut c_char;
 }
 extern "C" {
-  pub fn SDL_utf8strlen(str: *const c_char) -> size_t;
+  pub fn SDL_utf8strlen(str: *const c_char) -> usize;
 }
 extern "C" {
   pub fn SDL_itoa(value: c_int, str: *mut c_char, radix: c_int) -> *mut c_char;
@@ -572,7 +571,7 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_strncmp(
-    str1: *const c_char, str2: *const c_char, maxlen: size_t,
+    str1: *const c_char, str2: *const c_char, maxlen: usize,
   ) -> c_int;
 }
 extern "C" {
@@ -580,7 +579,7 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_strncasecmp(
-    str1: *const c_char, str2: *const c_char, len: size_t,
+    str1: *const c_char, str2: *const c_char, len: usize,
   ) -> c_int;
 }
 extern "C" {
@@ -593,12 +592,12 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_snprintf(
-    text: *mut c_char, maxlen: size_t, fmt: *const c_char, ...
+    text: *mut c_char, maxlen: usize, fmt: *const c_char, ...
   ) -> c_int;
 }
 extern "C" {
   pub fn SDL_vsnprintf(
-    text: *mut c_char, maxlen: size_t, fmt: *const c_char, ap: va_list,
+    text: *mut c_char, maxlen: usize, fmt: *const c_char, ap: va_list,
   ) -> c_int;
 }
 extern "C" {
@@ -725,14 +724,14 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_iconv(
-    cd: SDL_iconv_t, inbuf: *mut *const c_char, inbytesleft: *mut size_t,
-    outbuf: *mut *mut c_char, outbytesleft: *mut size_t,
-  ) -> size_t;
+    cd: SDL_iconv_t, inbuf: *mut *const c_char, inbytesleft: *mut usize,
+    outbuf: *mut *mut c_char, outbytesleft: *mut usize,
+  ) -> usize;
 }
 extern "C" {
   pub fn SDL_iconv_string(
     tocode: *const c_char, fromcode: *const c_char, inbuf: *const c_char,
-    inbytesleft: size_t,
+    inbytesleft: usize,
   ) -> *mut c_char;
 }
 pub type SDL_main_func =
@@ -976,7 +975,7 @@ extern "C" {
 extern "C" {
   pub fn SDL_CreateThreadWithStackSize(
     fn_: Option<unsafe extern "C" fn(arg1: *mut c_void) -> c_int>,
-    name: *const c_char, stacksize: size_t, data: *mut c_void,
+    name: *const c_char, stacksize: usize, data: *mut c_void,
     pfnBeginThread: pfnSDL_CurrentBeginThread,
     pfnEndThread: pfnSDL_CurrentEndThread,
   ) -> *mut SDL_Thread;
@@ -1026,17 +1025,17 @@ pub struct SDL_RWops {
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
       ptr: *mut c_void,
-      size: size_t,
-      maxnum: size_t,
-    ) -> size_t,
+      size: usize,
+      maxnum: usize,
+    ) -> usize,
   >,
   pub write: Option<
     unsafe extern "C" fn(
       context: *mut SDL_RWops,
       ptr: *const c_void,
-      size: size_t,
-      num: size_t,
-    ) -> size_t,
+      size: usize,
+      num: usize,
+    ) -> usize,
   >,
   pub close: Option<unsafe extern "C" fn(context: *mut SDL_RWops) -> c_int>,
   pub type_: Uint32,
@@ -1061,8 +1060,8 @@ pub struct SDL_RWops__bindgen_ty_1__bindgen_ty_1 {
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SDL_RWops__bindgen_ty_1__bindgen_ty_1__bindgen_ty_1 {
   pub data: *mut c_void,
-  pub size: size_t,
-  pub left: size_t,
+  pub size: usize,
+  pub left: usize,
 }
 impl Default for SDL_RWops__bindgen_ty_1__bindgen_ty_1__bindgen_ty_1 {
   fn default() -> Self {
@@ -1150,26 +1149,25 @@ extern "C" {
 }
 extern "C" {
   pub fn SDL_RWread(
-    context: *mut SDL_RWops, ptr: *mut c_void, size: size_t, maxnum: size_t,
-  ) -> size_t;
+    context: *mut SDL_RWops, ptr: *mut c_void, size: usize, maxnum: usize,
+  ) -> usize;
 }
 extern "C" {
   pub fn SDL_RWwrite(
-    context: *mut SDL_RWops, ptr: *const c_void, size: size_t, num: size_t,
-  ) -> size_t;
+    context: *mut SDL_RWops, ptr: *const c_void, size: usize, num: usize,
+  ) -> usize;
 }
 extern "C" {
   pub fn SDL_RWclose(context: *mut SDL_RWops) -> c_int;
 }
 extern "C" {
   pub fn SDL_LoadFile_RW(
-    src: *mut SDL_RWops, datasize: *mut size_t, freesrc: c_int,
+    src: *mut SDL_RWops, datasize: *mut usize, freesrc: c_int,
   ) -> *mut c_void;
 }
 extern "C" {
-  pub fn SDL_LoadFile(
-    file: *const c_char, datasize: *mut size_t,
-  ) -> *mut c_void;
+  pub fn SDL_LoadFile(file: *const c_char, datasize: *mut usize)
+    -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_ReadU8(src: *mut SDL_RWops) -> Uint8;
@@ -1193,25 +1191,25 @@ extern "C" {
   pub fn SDL_ReadBE64(src: *mut SDL_RWops) -> Uint64;
 }
 extern "C" {
-  pub fn SDL_WriteU8(dst: *mut SDL_RWops, value: Uint8) -> size_t;
+  pub fn SDL_WriteU8(dst: *mut SDL_RWops, value: Uint8) -> usize;
 }
 extern "C" {
-  pub fn SDL_WriteLE16(dst: *mut SDL_RWops, value: Uint16) -> size_t;
+  pub fn SDL_WriteLE16(dst: *mut SDL_RWops, value: Uint16) -> usize;
 }
 extern "C" {
-  pub fn SDL_WriteBE16(dst: *mut SDL_RWops, value: Uint16) -> size_t;
+  pub fn SDL_WriteBE16(dst: *mut SDL_RWops, value: Uint16) -> usize;
 }
 extern "C" {
-  pub fn SDL_WriteLE32(dst: *mut SDL_RWops, value: Uint32) -> size_t;
+  pub fn SDL_WriteLE32(dst: *mut SDL_RWops, value: Uint32) -> usize;
 }
 extern "C" {
-  pub fn SDL_WriteBE32(dst: *mut SDL_RWops, value: Uint32) -> size_t;
+  pub fn SDL_WriteBE32(dst: *mut SDL_RWops, value: Uint32) -> usize;
 }
 extern "C" {
-  pub fn SDL_WriteLE64(dst: *mut SDL_RWops, value: Uint64) -> size_t;
+  pub fn SDL_WriteLE64(dst: *mut SDL_RWops, value: Uint64) -> usize;
 }
 extern "C" {
-  pub fn SDL_WriteBE64(dst: *mut SDL_RWops, value: Uint64) -> size_t;
+  pub fn SDL_WriteBE64(dst: *mut SDL_RWops, value: Uint64) -> usize;
 }
 pub type SDL_AudioFormat = Uint16;
 pub type SDL_AudioCallback = Option<
@@ -1467,10 +1465,10 @@ extern "C" {
   pub fn SDL_GetSystemRAM() -> c_int;
 }
 extern "C" {
-  pub fn SDL_SIMDGetAlignment() -> size_t;
+  pub fn SDL_SIMDGetAlignment() -> usize;
 }
 extern "C" {
-  pub fn SDL_SIMDAlloc(len: size_t) -> *mut c_void;
+  pub fn SDL_SIMDAlloc(len: usize) -> *mut c_void;
 }
 extern "C" {
   pub fn SDL_SIMDFree(ptr: *mut c_void);
@@ -2324,9 +2322,9 @@ extern "C" {
 }
 pub const SDL_HITTEST_NORMAL: SDL_HitTestResult = 0;
 pub const SDL_HITTEST_DRAGGABLE: SDL_HitTestResult = 1;
-pub const SDL_HITTEST_RESIZE_TOPLEFT: SDL_HitTestResult = 2;
-pub const SDL_HITTEST_RESIZE_TOP: SDL_HitTestResult = 3;
-pub const SDL_HITTEST_RESIZE_TOPRIGHT: SDL_HitTestResult = 4;
+pub const SDL_HITTEST_REusizeOPLEFT: SDL_HitTestResult = 2;
+pub const SDL_HITTEST_REusizeOP: SDL_HitTestResult = 3;
+pub const SDL_HITTEST_REusizeOPRIGHT: SDL_HitTestResult = 4;
 pub const SDL_HITTEST_RESIZE_RIGHT: SDL_HitTestResult = 5;
 pub const SDL_HITTEST_RESIZE_BOTTOMRIGHT: SDL_HitTestResult = 6;
 pub const SDL_HITTEST_RESIZE_BOTTOM: SDL_HitTestResult = 7;
