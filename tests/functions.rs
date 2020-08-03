@@ -11,10 +11,11 @@ use fermium::*;
 /// The assertion is a static check, so if there's a problem it will
 /// cause a compilation failure rather than a runtime error.
 macro_rules! assert_fn {
-  ($f:ident : $t:ty) => {{
+  ($f:ident : $t:ty) => {
     #[allow(bad_style)]
-    const _ignore: $t = $f;
-  }};
+    #[allow(unused)]
+    const $f: $t = fermium::$f;
+  };
 }
 
 assert_fn!(SDL_GetPlatform: unsafe extern "C" fn() -> *const c_char);
