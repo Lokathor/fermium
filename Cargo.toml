@@ -34,7 +34,3 @@ cmake = { version = "0.1", optional = true }
 [package.metadata.docs.rs]
 default-target = "x86_64-pc-windows-msvc"
 features = ["dynamic_link"]
-
-[badges]
-appveyor = { repository = "Lokathor/fermium" }
-travis-ci = { repository = "Lokathor/fermium" }

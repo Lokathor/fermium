@@ -1,7 +1,5 @@
 [![License:Zlib](https://img.shields.io/badge/License-Zlib-brightgreen.svg)](https://opensource.org/licenses/Zlib)
 ![Minimum Rust Version](https://img.shields.io/badge/Min%20Rust-1.33-green.svg)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/lqvi8qbjayf35v8m/branch/master?svg=true)](https://ci.appveyor.com/project/Lokathor/fermium/branch/master)
-[![TravisCI](https://travis-ci.org/Lokathor/fermium.svg?branch=master)](https://travis-ci.org/Lokathor/fermium)
 [![crates.io](https://img.shields.io/crates/v/fermium.svg)](https://crates.io/crates/fermium)
 [![docs.rs](https://docs.rs/fermium/badge.svg)](https://docs.rs/fermium/)
 
