@@ -27,8 +27,7 @@ use_bindgen_bin = []
 chlorine = "1"
 
 [target."cfg(windows)".build-dependencies]
-# This is necessary for the static build on windows. On Mac/Linux I just assume
-# that you've already installed SDL2 via your method of choice.
+# Performs the static build on windows.
 cmake = { version = "0.1", optional = true }
 
 [package.metadata.docs.rs]

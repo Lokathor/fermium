@@ -30,7 +30,7 @@ fn main() {
     run_bindgen_bin();
   }
 
-  #[cfg(feature = "cmake")]
+  #[cfg(all(feature = "cmake", windows))]
   {
     if cfg!(feature = "static_link") && target.contains("windows") {
       println!(
@@ -140,7 +140,7 @@ fn run_bindgen_bin() {
   }
 }
 
-#[cfg(feature = "cmake")]
+#[cfg(all(feature = "cmake", windows))]
 fn build_the_c_library() -> PathBuf {
   let target = env::var("TARGET").expect("Couldn't read `TARGET`");
   let manifest_dir = PathBuf::from(
