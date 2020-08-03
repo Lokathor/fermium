@@ -1,4 +1,3 @@
-
 //! This module tests that specific functions exist with specific signatures.
 //! It's more of a guard against possible breaks when we do future releases than
 //! it is a check of specific functionality.
@@ -12,10 +11,10 @@ use fermium::*;
 /// The assertion is a static check, so if there's a problem it will
 /// cause a compilation failure rather than a runtime error.
 macro_rules! assert_fn {
-  ($f:ident : $t:ty) => {
+  ($f:ident : $t:ty) => {{
     #[allow(bad_style)]
-    const _: $t = $f;
-  };
+    const _ignore: $t = $f;
+  }};
 }
 
 assert_fn!(SDL_GetPlatform: unsafe extern "C" fn() -> *const c_char);
