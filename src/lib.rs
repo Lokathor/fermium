@@ -29,8 +29,7 @@ pick! {
   }
 }
 
-#[cfg(not(windows))]
-pub type size_t = c_ulong;
+pub type size_t = usize;
 
 /// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch
 /// input
