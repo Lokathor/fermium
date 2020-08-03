@@ -29,6 +29,9 @@ pick! {
   }
 }
 
+#[cfg(not(windows))]
+pub type size_t = c_ulong;
+
 /// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch
 /// input
 pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
