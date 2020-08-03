@@ -18,7 +18,11 @@ fn main() {
     .expect("Failed to write the bytes of the DLL!");
   println!(
     "Wrote out the {}-bit SDL2 dynamic lib to 'SDL2.dll', you're ready to go.",
-    if cfg!(target_pointer_width = "32") { 32 } else { 64 }
+    if cfg!(target_pointer_width = "32") {
+      32
+    } else {
+      64
+    }
   );
 }
 
