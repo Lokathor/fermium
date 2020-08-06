@@ -27,6 +27,7 @@ jobs:
         toolchain: ${{ matrix.rust.toolchain }}
         target:  ${{ matrix.rust.target }}
         profile: minimal
+        default: true
     # Note(Lokathor): We don't need to install SDL2 on windows, it's bundled.
     - name: Install SDL2 (if Mac)
       if: matrix.rust.target == 'x86_64-apple-darwin'
