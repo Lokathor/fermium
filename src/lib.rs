@@ -29,10 +29,9 @@ pick! {
   }
 }
 
-// Note(Lokathor): Sometimes this is defined already within the bindings, but
-// other types bindgen just uses `usize` directly. This alias lets us always
-// define things in terms of `size_t`.
-#[cfg(any(target_os = "macos", target_os = "linux"))]
+// Note(Lokathor): Sometimes bindings will try to generate this alias, sometimes
+// they won't. Instead, we define it once here and any binding that conflicts
+// with this *is simply wrong*.
 pub type size_t = usize;
 
 /// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch
