@@ -1,161 +1,97 @@
 #![no_std]
 #![allow(bad_style)]
+#![warn(missing_docs)]
 
-//! Bindings to SDL2.
-//!
-//! This version exposes bindings for `SDL2-2.0.12`, and if you avoid calling
-//! any of the newer functions you can also use older versions of SDL2.
-//!
-//! The default docs are for the x86_64 **Windows** MSVC version, but this crate
-//! also works just fine on **Mac** and **Linux**.
-//!
-//! Things are about 95% the same from target to target. Some functions only
-//! exist on specific platforms (eg: getting DirectX or Metal info), and others
-//! have signatures that vary by platform (eg: creating a thread). Usually
-//! nothing a little `cfg` can't fix.
-//!
-//! [The SDL2 Wiki](https://wiki.libsdl.org/) has information on function usage.
-//! What's here is just the function signatures and structs.
-
-use core::fmt::Debug;
+//! Bindings to the SDL2 C library.
 
 pub use chlorine::*;
 
-pick! {
-  if #[cfg(feature = "use_bindgen_bin")] {
-    include!(concat!(env!("OUT_DIR"),"/SDL2-2.0.12-",env!("TARGET"),".rs"));
-  } else {
-    include!(concat!("SDL2-2.0.12-",env!("TARGET"),".rs"));
-  }
-}
+// Note(Lokathor): Declarations are organized into modules according to SDL's
+// public header organization. A file like `include/SDL_foo.h` becomes a module
+// named `foo`, and `SDL.h` itself is `lib.rs`. As with SDL, all the
+// declarations are exported as a single flat namespace at the top level.
 
-/// `SDL_touch.h`: Used as the device ID for mouse events simulated with touch
-/// input
-pub const SDL_TOUCH_MOUSEID: u32 = -1i32 as u32;
+mod platform;
+pub use platform::*;
 
-/// `SDL_touch.h`: Used as the SDL_TouchID for touch events simulated with mouse
-/// input
-///
-/// * `2.0.10` or later
-pub const SDL_MOUSE_TOUCHID: i64 = -1i64;
+mod stdinc;
+pub use stdinc::*;
 
-/// This is the common alias for the `SDL_WINDOWPOS_CENTERED_MASK` value.
-///
-/// It's `i32` rather than `u32` because the primary use for it is to be passed
-/// to `SDL_CreateWindow`.
-pub const SDL_WINDOWPOS_CENTERED: i32 = SDL_WINDOWPOS_CENTERED_MASK as i32;
+mod error;
+pub use error::*;
 
-/// `SDL_surface.h`: Evaluates to true if the surface needs to be locked before
-/// access.
-///
-/// ## Safety
-///
-/// This must be a valid `SDL_Surface` pointer.
-#[inline(always)]
-pub unsafe fn SDL_MUSTLOCK(surface: *const SDL_Surface) -> bool {
-  (*surface).flags & SDL_RLEACCEL != 0
-}
+mod rwops;
+pub use rwops::*;
 
-/// `SDL_pixels.h`: "internal" macro to check if a value is a pixel format
-/// value.
-#[inline(always)]
-pub const fn SDL_PIXELFLAG(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
-  (format >> 28) & 0x0F
-}
+// TODO: the code was first written from the 2.0.14 headers, so we should
+// recheck each module to ensure that we're using only the 2.0.12 stuff.
 
-/// `SDL_pixels.h`: Pixel type of this format.
-#[inline(always)]
-pub const fn SDL_PIXELTYPE(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
-  (format >> 24) & 0x0F
-}
+mod audio;
+pub use audio::*;
 
-/// `SDL_pixels.h`: Component ordering of this format.
-#[inline(always)]
-pub const fn SDL_PIXELORDER(
-  format: SDL_PixelFormatEnum,
-) -> SDL_PixelFormatEnum {
-  (format >> 20) & 0x0F
-}
+mod blendmode;
+pub use blendmode::*;
 
-/// `SDL_pixels.h`: Channel width layout of this format.
-#[inline(always)]
-pub const fn SDL_PIXELLAYOUT(
-  format: SDL_PixelFormatEnum,
-) -> SDL_PixelFormatEnum {
-  (format >> 16) & 0x0F
-}
+mod clipboard;
+pub use clipboard::*;
 
-/// `SDL_pixels.h`: Bits per pixel.
-#[inline(always)]
-pub const fn SDL_BITSPERPIXEL(
-  format: SDL_PixelFormatEnum,
-) -> SDL_PixelFormatEnum {
-  (format >> 8) & 0xFF
-}
+mod cpuinfo;
+pub use cpuinfo::*;
 
-/// `SDL_pixels.h`: Bytes per pixel.
-#[inline(always)]
-pub fn SDL_BYTESPERPIXEL(format: SDL_PixelFormatEnum) -> SDL_PixelFormatEnum {
-  if SDL_ISPIXELFORMAT_FOURCC(format) {
-    if format == SDL_PIXELFORMAT_YUY2
-      || format == SDL_PIXELFORMAT_UYVY
-      || format == SDL_PIXELFORMAT_YVYU
-    {
-      2
-    } else {
-      1
-    }
-  } else {
-    format & 0xFF
-  }
-}
+mod pixels;
+pub use pixels::*;
 
-/// `SDL_pixels.h`: Is this an indexed format?
-#[inline(always)]
-pub fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
-  !SDL_ISPIXELFORMAT_FOURCC(format)
-    && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1
-      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4
-      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8)
-}
+mod rect;
+pub use rect::*;
 
-/// `SDL_pixels.h`: Is this a packed format?
-#[inline(always)]
-pub fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
-  !SDL_ISPIXELFORMAT_FOURCC(format)
-    && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8
-      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16
-      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32)
-}
+mod surface;
+pub use surface::*;
 
-/// `SDL_pixels.h`: Is this an array format?
-#[inline(always)]
-pub fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
-  !SDL_ISPIXELFORMAT_FOURCC(format)
-    && (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8
-      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16
-      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU32
-      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16
-      || SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32)
-}
+mod video;
+pub use video::*;
 
-/// `SDL_pixels.h`: Does this format have an alpha channel?
-#[inline(always)]
-pub fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
-  (SDL_ISPIXELFORMAT_PACKED(format)
-    && (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB
-      || SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA
-      || SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR
-      || SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))
-    || (SDL_ISPIXELFORMAT_ARRAY(format)
-      && (SDL_PIXELORDER(format) == SDL_ARRAYORDER_ARGB
-        || SDL_PIXELORDER(format) == SDL_ARRAYORDER_RGBA
-        || SDL_PIXELORDER(format) == SDL_ARRAYORDER_ABGR
-        || SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA))
-}
+// scancode
 
-/// `SDL_pixels.h`: Is this a FourCC format?
-#[inline(always)]
-pub fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormatEnum) -> bool {
-  (format != 0) && (SDL_PIXELFLAG(format) != 1)
-}
+// keycode
+
+// keyboard
+
+// mouse
+
+// joystick
+
+// gamecontroller
+
+// quit
+
+// touch
+
+// gesture
+
+// events
+
+// filesystem
+
+// haptic
+
+// hints
+
+// loadso
+
+// messagebox
+
+// power
+
+// renderer
+
+// sensor
+
+// shape
+
+// syswm
+
+// timer
+
+// version
+
+// vulkan
