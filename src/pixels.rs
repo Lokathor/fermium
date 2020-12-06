@@ -1,3 +1,6 @@
+// The only stuff left to doc here are the various constants.
+#![allow(missing_docs)]
+
 pub use crate::{c_char, c_int, stdinc::*};
 
 /// More alpha => more opaque.
@@ -6,9 +9,12 @@ pub const SDL_ALPHA_OPAQUE: u8 = 255;
 pub const SDL_ALPHA_TRANSPARENT: u8 = 0;
 
 /// Pixel type.
+///
+/// Instances of this value are called `SDL_PIXELTYPE_*`
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SDL_PixelType(pub u32);
+/// An unknown pixel type.
 pub const SDL_PIXELTYPE_UNKNOWN: SDL_PixelType = SDL_PixelType(0);
 pub const SDL_PIXELTYPE_INDEX1: SDL_PixelType = SDL_PixelType(1);
 pub const SDL_PIXELTYPE_INDEX4: SDL_PixelType = SDL_PixelType(2);
@@ -23,14 +29,21 @@ pub const SDL_PIXELTYPE_ARRAYF16: SDL_PixelType = SDL_PixelType(10);
 pub const SDL_PIXELTYPE_ARRAYF32: SDL_PixelType = SDL_PixelType(11);
 
 /// Bitmap pixel order, high bit -> low bit.
+///
+/// Instances of this value are called `SDL_BITMAPORDER_*`
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SDL_BitmapOrder(pub u32);
+/// No bitmap ordering.
 pub const SDL_BITMAPORDER_NONE: SDL_BitmapOrder = SDL_BitmapOrder(0);
+/// Bitmap ordering from high to low.
 pub const SDL_BITMAPORDER_4321: SDL_BitmapOrder = SDL_BitmapOrder(1);
+/// Bitmap ordering from low to high.
 pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder(2);
 
 /// Packed component order, high bit -> low bit.
+///
+/// Instances of this value are called `SDL_PACKEDORDER_*`
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SDL_PackedOrder(pub u32);
@@ -45,6 +58,8 @@ pub const SDL_PACKEDORDER_ABGR: SDL_PackedOrder = SDL_PackedOrder(7);
 pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder(8);
 
 /// Array component order, low byte -> high byte.
+///
+/// Instances of this value are called `SDL_ARRAYORDER_*`
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SDL_ArrayOrder(pub u32);
@@ -57,6 +72,8 @@ pub const SDL_ARRAYORDER_BGRA: SDL_ArrayOrder = SDL_ArrayOrder(5);
 pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder(6);
 
 /// Packed component order, high bit -> low bit.
+///
+/// Instances of this value are called `SDL_PACKEDLAYOUT_*`
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SDL_PackedLayout(pub u32);
@@ -70,12 +87,14 @@ pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout(6);
 pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout(7);
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout(8);
 
+/// Converts a FourCC into a pixel format enumeration value.
 pub const fn SDL_DEFINE_PIXELFOURCC(
   a: u8, b: u8, c: u8, d: u8,
 ) -> SDL_PixelFormatEnum {
   SDL_PixelFormatEnum(SDL_FOURCC(a, b, c, d))
 }
 
+/// Converts the pixel type parameters into a pixel format enumeration value.
 pub const fn SDL_DEFINE_PIXELFORMAT(
   type_: SDL_PixelType, order: u32, layout: u32, bits: u32, bytes: u32,
 ) -> SDL_PixelFormatEnum {
@@ -89,22 +108,29 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
   )
 }
 
+/// Gets the pixel flag bits.
+///
+/// Generally 1, except that FourCC enumerations can have other values.
 pub const fn SDL_PIXELFLAG(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 28) & 0x0F
 }
+/// Gets the pixel type bits.
 pub const fn SDL_PIXELTYPE(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 24) & 0x0F
 }
+/// Gets the pixel order bits.
 pub const fn SDL_PIXELORDER(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 20) & 0x0F
 }
+/// Gets the pixel layout bits.
 pub const fn SDL_PIXELLAYOUT(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 16) & 0x0F
 }
+/// Gets the bits per pixel.
 pub const fn SDL_BITSPERPIXEL(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 8) & 0xFF
 }
-
+/// Gets the bytes per pixel.
 pub const fn SDL_BYTESPERPIXEL(x: SDL_PixelFormatEnum) -> u32 {
   if SDL_ISPIXELFORMAT_FOURCC(x) {
     if ((x.0) == SDL_PIXELFORMAT_YUY2.0)
@@ -119,21 +145,21 @@ pub const fn SDL_BYTESPERPIXEL(x: SDL_PixelFormatEnum) -> u32 {
     ((x.0) >> 0) & 0xFF
   }
 }
-
+/// Is this pixel format an indexed format?
 pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
   !SDL_ISPIXELFORMAT_FOURCC(format)
     && ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1.0)
       || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4.0)
       || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8.0))
 }
-
+/// Is this pixel format a packed format?
 pub const fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
   !SDL_ISPIXELFORMAT_FOURCC(format)
     && ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8.0)
       || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16.0)
       || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32.0))
 }
-
+/// Is this pixel format an array format?
 pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
   !SDL_ISPIXELFORMAT_FOURCC(format)
     && ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8.0)
@@ -142,7 +168,7 @@ pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
       || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16.0)
       || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32.0))
 }
-
+/// Does the pixel format have an alpha channel?
 pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
   (SDL_ISPIXELFORMAT_PACKED(format)
     && ((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB.0)
@@ -155,12 +181,14 @@ pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
         || (SDL_PIXELORDER(format) == SDL_ARRAYORDER_ABGR.0)
         || (SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA.0)))
 }
-
+/// Is the pixel format a FourCC format?
 pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormatEnum) -> bool {
   (format.0 != 0) && (SDL_PIXELFLAG(format) != 1)
 }
 
 /// An enumerated pixel format value.
+///
+/// Instances of this value are called `SDL_PIXELFORMAT_*`
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SDL_PixelFormatEnum(pub u32);
@@ -429,6 +457,7 @@ pub const SDL_PIXELFORMAT_NV21: SDL_PixelFormatEnum =
 pub const SDL_PIXELFORMAT_EXTERNAL_OES: SDL_PixelFormatEnum =
   SDL_DEFINE_PIXELFOURCC(b'O', b'E', b'S', b' ');
 
+/// An RGBA color value (8-bits per channel).
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
 #[allow(missing_docs)]
@@ -439,6 +468,11 @@ pub struct SDL_Color {
   pub a: Uint8,
 }
 
+/// Info about a palette of colors.
+///
+/// Generally, you shouldn't alter these fields. In fact usually you shouldn't
+/// even allocate or free these on your own, SDL2 will do so for you at the
+/// appropriate times.
 #[derive(Debug)]
 #[repr(C)]
 pub struct SDL_Palette {
@@ -448,6 +482,9 @@ pub struct SDL_Palette {
   pub refcount: c_int,
 }
 
+/// An SDL Pixel Format.
+///
+/// Generally, you shouldn't alter these fields.
 #[derive(Debug)]
 #[repr(C)]
 pub struct SDL_PixelFormat {
@@ -492,10 +529,10 @@ extern "C" {
     bpp: c_int, Rmask: Uint32, Gmask: Uint32, Bmask: Uint32, Amask: Uint32,
   ) -> Uint32;
 
-  /// Create an SDL_PixelFormat structure from a pixel format enum.
+  /// Create an [`SDL_PixelFormat`] structure from a pixel format enum.
   pub fn SDL_AllocFormat(pixel_format: Uint32) -> *mut SDL_PixelFormat;
 
-  /// Free an SDL_PixelFormat structure.
+  /// Free an [`SDL_PixelFormat`] structure.
   pub fn SDL_FreeFormat(format: *mut SDL_PixelFormat);
 
   /// Create a palette structure with the specified number of color entries.
