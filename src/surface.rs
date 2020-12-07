@@ -16,12 +16,17 @@ pub unsafe fn SDL_MUSTLOCK(s: *const SDL_Surface) -> bool {
   ((*s).flags & SDL_RLEACCEL) != 0
 }
 
+/// A newtype'd `c_void`.
 #[allow(unused)]
 #[repr(transparent)]
 pub struct SDL_BlitMap(c_void);
 
+/// Represents a bitmap image in CPU memory.
+///
+/// Generally, you should not touch these fields yourself.
 #[derive(Debug)]
 #[repr(C)]
+#[allow(missing_docs)]
 pub struct SDL_Surface {
   pub flags: Uint32,
   pub format: *mut SDL_PixelFormat,
@@ -54,10 +59,19 @@ pub const SDL_YUV_CONVERSION_BT709: SDL_YUV_CONVERSION_MODE =
 pub const SDL_YUV_CONVERSION_AUTOMATIC: SDL_YUV_CONVERSION_MODE =
   SDL_YUV_CONVERSION_MODE(3);
 
+/// Given a file path to a BMP file, load and parse it into an [`SDL_Surface`]
+/// as one step.
+///
+/// **Return:** As [`SDL_LoadBMP_RW`]: the new surface, or NULL if there was an
+/// error.
 pub unsafe fn SDL_LoadBMP(file: *const c_char) -> *mut SDL_Surface {
   SDL_LoadBMP_RW(SDL_RWFromFile(file, b"rb\0".as_ptr().cast()), 1)
 }
 
+/// Save an [`SDL_Surface`] to the file path specified.
+///
+/// **Return:** As [`SDL_SaveBMP_RW`]: 0 if successful or -1 if there was an
+/// error.
 pub unsafe fn SDL_SaveBMP(
   surface: *mut SDL_Surface, file: *const c_char,
 ) -> c_int {
@@ -65,7 +79,7 @@ pub unsafe fn SDL_SaveBMP(
 }
 
 extern "C" {
-  /// Allocate and free an RGB surface.
+  /// Allocate a new RGB surface.
   ///
   /// If the depth is 4 or 8 bits, an empty palette is allocated for the
   /// surface. If the depth is greater than 8 bits, the pixel format is set
@@ -81,25 +95,49 @@ extern "C" {
   /// * `Gmask`: The green mask of the surface to create.
   /// * `Bmask`: The blue mask of the surface to create.
   /// * `Amask`: The alpha mask of the surface to create.
+  ///
+  /// **Return:** A new [`SDL_Surface`], or NULL on error (call [`SDL_GetError`]
+  /// for more info).
+  ///
+  /// **Note:** This actually uses [`SDL_MasksToPixelFormatEnum`] to determine a
+  /// pixel format enum value, and then calls
+  /// [`SDL_CreateRGBSurfaceWithFormat`]. If you already know the pixel format
+  /// enum value, then you can use that function directly.
   pub fn SDL_CreateRGBSurface(
     flags: Uint32, width: c_int, height: c_int, depth: c_int, Rmask: Uint32,
     Gmask: Uint32, Bmask: Uint32, Amask: Uint32,
   ) -> *mut SDL_Surface;
 
+  /// Similar to [`SDL_CreateRGBSurface`], but using a pixel format enum value.
   pub fn SDL_CreateRGBSurfaceWithFormat(
     flags: Uint32, width: c_int, height: c_int, depth: c_int, format: Uint32,
   ) -> *mut SDL_Surface;
 
+  /// Makes a surface from a pre-allocated buffer.
+  ///
+  /// The surface depends on the pixels allocation for its lifetime, but has the
+  /// `PRE_ALLOC` flag so it won't free the pixels on its own. In other words,
+  /// this works like a borrow rather than like an ownership transfer.
   pub fn SDL_CreateRGBSurfaceFrom(
     pixels: *mut c_void, width: c_int, height: c_int, depth: c_int,
     pitch: c_int, Rmask: Uint32, Gmask: Uint32, Bmask: Uint32, Amask: Uint32,
   ) -> *mut SDL_Surface;
 
+  /// Makes a surface from a pre-allocated buffer in a specified format.
+  ///
+  /// This is like a combination of [`SDL_CreateRGBSurfaceWithFormat`] and
+  /// [`SDL_CreateRGBSurfaceFrom`].
   pub fn SDL_CreateRGBSurfaceWithFormatFrom(
     pixels: *mut c_void, width: c_int, height: c_int, depth: c_int,
     pitch: c_int, format: Uint32,
   ) -> *mut SDL_Surface;
 
+  /// Frees the surface.
+  ///
+  /// This doesn't necessarily free any memory. Surfaces use ref counting for
+  /// some things, and this will only actually free the memory if the ref count
+  /// goes to 0. Also, they can be formed using borrowed memory, and in that
+  /// case freeing the surface will not free the borrowed pixel memory itself.
   pub fn SDL_FreeSurface(surface: *mut SDL_Surface);
 
   /// Set the palette used by a surface.
@@ -136,7 +174,7 @@ extern "C" {
   ///
   /// If `freesrc` is non-zero, the stream will be closed after being read.
   ///
-  /// The new surface should be freed with SDL_FreeSurface().
+  /// The new surface should be freed with [`SDL_FreeSurface`].
   ///
   /// **Return:** the new surface, or NULL if there was an error.
   pub fn SDL_LoadBMP_RW(
@@ -168,7 +206,7 @@ extern "C" {
 
   /// Sets the color key (transparent pixel) in a blit-able surface.
   ///
-  /// You can pass SDL_RLEACCEL to enable RLE accelerated blits.
+  /// You can pass [`SDL_RLEACCEL`] to enable RLE accelerated blits.
   ///
   /// * `surface`: The surface to update
   /// * `flag`: Non-zero to enable colorkey and 0 to disable colorkey
@@ -264,10 +302,10 @@ extern "C" {
     surface: *mut SDL_Surface, rect: *const SDL_Rect,
   ) -> SDL_bool;
 
-  // Gets the clipping rectangle for the destination surface in a blit.
-  //
-  // `rect` must be a pointer to a valid rectangle which will be filled
-  // with the correct values.
+  /// Gets the clipping rectangle for the destination surface in a blit.
+  ///
+  /// `rect` must be a pointer to a valid rectangle which will be filled
+  /// with the correct values.
   pub fn SDL_GetClipRect(surface: *mut SDL_Surface, rect: *mut SDL_Rect);
 
   /// Creates a new surface identical to the existing surface
@@ -278,7 +316,7 @@ extern "C" {
   /// fast as possible.  If this function fails, it returns NULL.
   ///
   /// The `flags` parameter is passed to [`SDL_CreateRGBSurface`] and has those
-  /// semantics.  You can also pass `SDL_RLEACCEL` in the flags parameter and
+  /// semantics.  You can also pass [`SDL_RLEACCEL`] in the flags parameter and
   /// SDL will try to RLE accelerate colorkey and alpha blits in the resulting
   /// surface.
   pub fn SDL_ConvertSurface(
