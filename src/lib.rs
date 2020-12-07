@@ -100,7 +100,8 @@ pub use video::*;
 mod scancode;
 pub use scancode::*;
 
-// keycode
+mod keycode;
+pub use keycode::*;
 
 // keyboard
 

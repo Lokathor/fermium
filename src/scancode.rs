@@ -2,7 +2,8 @@
 
 /// The SDL keyboard scancode representation.
 ///
-/// This is used in places like the [`SDL_Keysym`] struct.
+/// This is used in places like the [`SDL_Keysym`] struct for the "hardware" /
+/// "physical" designation of a key.
 ///
 /// The values in this enumeration are based on the USB usage page standard:
 /// https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf
@@ -10,7 +11,7 @@
 /// See all the constants named `SDL_SCANCODE_*`
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
-pub struct SDL_Scancode(pub u32);
+pub struct SDL_Scancode(pub i32);
 
 pub const SDL_SCANCODE_A: SDL_Scancode = SDL_Scancode(4);
 pub const SDL_SCANCODE_B: SDL_Scancode = SDL_Scancode(5);
