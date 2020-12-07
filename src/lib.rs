@@ -6,6 +6,53 @@
 
 pub use chlorine::*;
 
+macro_rules! impl_bit_ops_for_tuple_newtype {
+  ($t:ty) => {
+    impl core::ops::BitAnd for $t {
+      type Output = Self;
+      #[inline]
+      fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+      }
+    }
+    impl core::ops::BitAndAssign for $t {
+      fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0
+      }
+    }
+    impl core::ops::BitOr for $t {
+      type Output = Self;
+      #[inline]
+      fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+      }
+    }
+    impl core::ops::BitOrAssign for $t {
+      fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0
+      }
+    }
+    impl core::ops::BitXor for $t {
+      type Output = Self;
+      #[inline]
+      fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+      }
+    }
+    impl core::ops::BitXorAssign for $t {
+      fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0
+      }
+    }
+    impl core::ops::Not for $t {
+      type Output = Self;
+      fn not(self) -> Self::Output {
+        Self(!self.0)
+      }
+    }
+  };
+}
+
 // Note(Lokathor): Declarations are organized into modules according to SDL's
 // public header organization. A file like `include/SDL_foo.h` becomes a module
 // named `foo`, and `SDL.h` itself is `lib.rs`. As with SDL, all the
