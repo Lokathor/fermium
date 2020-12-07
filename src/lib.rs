@@ -103,7 +103,8 @@ pub use scancode::*;
 mod keycode;
 pub use keycode::*;
 
-// keyboard
+mod keyboard;
+pub use keyboard::*;
 
 // mouse
 

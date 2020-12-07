@@ -1,4 +1,4 @@
-use crate::c_char;
+pub use crate::c_char;
 
 extern "C" {
   /// Gets the current error string, stored in a thread local buffer.
