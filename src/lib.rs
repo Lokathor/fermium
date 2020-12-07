@@ -97,7 +97,8 @@ pub use surface::*;
 mod video;
 pub use video::*;
 
-// scancode
+mod scancode;
+pub use scancode::*;
 
 // keycode
 
