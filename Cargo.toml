@@ -9,8 +9,8 @@ license = "Zlib"
 keywords = ["SDL2"]
 categories = ["external-ffi-bindings", "no-std"]
 
-# links = "SDL2"
-# build = "build.rs"
+links = "SDL2"
+build = "build.rs"
 
 [dependencies]
 chlorine = "1"
