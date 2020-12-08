@@ -112,13 +112,17 @@ pub use joystick::*;
 pub mod gamecontroller;
 pub use gamecontroller::*;
 
-// quit
+pub mod touch;
+pub use touch::*;
 
-// touch
+pub mod gesture;
+pub use gesture::*;
 
-// gesture
+pub mod events;
+pub use events::*;
 
-// events
+//pub mod quit;
+//pub use quit::*;
 
 // filesystem
 
