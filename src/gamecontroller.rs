@@ -97,7 +97,7 @@ pub struct SDL_GameControllerButtonBind_hat_data {
 }
 
 #[derive(Clone, Copy)]
-#[repr(C, align(4))] // TODO: investigate if this will be align4 without the repr
+#[repr(C, align(4))] // bindgen had align(4) here, even though i think it's useless.
 #[allow(missing_docs)]
 pub union SDL_GameControllerButtonBind_value_data {
   pub button: c_int,

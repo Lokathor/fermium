@@ -1,6 +1,6 @@
 //! Module for event handling.
 
-pub use crate::{error::*, gamecontroller::*, gesture::*, joystick::*, keyboard::*, mouse::*, stdinc::*, touch::*, video::*};
+pub use crate::{c_long, error::*, gamecontroller::*, gesture::*, joystick::*, keyboard::*, mouse::*, stdinc::*, syswm::*, touch::*, version::*, video::*};
 
 /// Button is released.
 ///
@@ -705,16 +705,48 @@ impl Default for SDL_UserEvent {
   }
 }
 
-/// An opaque system window manager message value.
-///
-/// The exact layout depends on the system.
-#[repr(transparent)]
-pub struct SDL_SysWMmsg(c_void);
+/// This is the data your [Window Procedure](https://docs.microsoft.com/en-us/windows/win32/winmsg/using-window-procedures) would get.
+#[derive(Clone, Copy)]
+#[repr(C)]
+#[allow(missing_docs)]
+pub struct SDL_SysWMmsg_windows {
+  /// The window for the message (`HWND`)
+  pub hwnd: *mut c_void,
+  /// The type of message (`UINT`)
+  pub msg: c_uint,
+  /// WORD message parameter (`WPARAM`)
+  pub wParam: usize,
+  /// LONG message parameter (`LPARAM`)
+  pub lParam: isize,
+}
+
+#[derive(Clone, Copy)]
+#[repr(C)]
+#[allow(missing_docs)]
+pub union SDL_SysWMmsg_union {
+  /// The inputs to a [Window Procedure](https://docs.microsoft.com/en-us/windows/win32/winmsg/using-window-procedures).
+  pub win: SDL_SysWMmsg_windows,
+  /// Transmute this to an `XEvent`.
+  pub x11_event: [c_long; 24],
+  /// This is a `DFBEvent`
+  pub dfb: c_uint,
+  /* The window systems without any supported events are skipped here */
+}
+
+/// Message info from the system's window manager.
+#[derive(Clone, Copy)]
+#[repr(C)]
+#[allow(missing_docs)]
+pub struct SDL_SysWMmsg {
+  pub version: SDL_version,
+  pub subsystem: SDL_SYSWM_TYPE,
+  pub msg: SDL_SysWMmsg_union,
+}
 
 /// A video driver dependent system event (event.syswm.*)
 ///
-/// This event is disabled by default, you can enable it with
-/// [`SDL_EventState`].
+/// The [`SDL_SYSWMEVENT`] event type is disabled by default, you can enable it
+/// with [`SDL_EventState`].
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
 #[allow(missing_docs)]

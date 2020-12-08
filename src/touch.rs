@@ -40,7 +40,7 @@ pub struct SDL_Finger {
 }
 
 /// Used as the device ID for *mouse events* simulated with touch input.
-pub const SDL_TOUCH_MOUSEID: u32 = -1_i32 as u32; // TODO: give this the correct type?
+pub const SDL_TOUCH_MOUSEID: u32 = -1_i32 as u32;
 
 /// Used as the `SDL_TouchID` for *touch events* simulated with mouse input.
 pub const SDL_MOUSE_TOUCHID: SDL_TouchID = SDL_TouchID(-1);

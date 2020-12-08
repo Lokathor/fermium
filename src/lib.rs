@@ -128,7 +128,8 @@ pub use quit::*;
 pub mod filesystem;
 pub use filesystem::*;
 
-// haptic
+// TODO: haptic (joystick force feedback system). I bet no one is even gonna ask
+// for this to be put in.
 
 pub mod hints;
 pub use hints::*;
@@ -142,18 +143,22 @@ pub use messagebox::*;
 pub mod power;
 pub use power::*;
 
-// renderer
+pub mod renderer;
+pub use renderer::*;
 
 pub mod sensor;
 pub use sensor::*;
 
-// shape
+// TODO: shape (allows shaped windows). I bet no one is even gonna ask for this.
 
-// syswm
+pub mod syswm;
+pub use syswm::*;
 
-// timer
+pub mod timer;
+pub use timer::*;
 
 pub mod version;
 pub use version::*;
 
-// vulkan
+pub mod vulkan;
+pub use vulkan::*;

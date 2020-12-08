@@ -17,3 +17,19 @@ chlorine = "1"
 
 [build-dependencies]
 cmake = "0.1"
+
+[features]
+# Enable this to dynamicly link to SDL2. The default is to static link because
+# even with a staticly linked SDL2 the end user can override the SDL2 used at
+# runtime (if absolutely necessary) via SDL2's "Dynamic API" system.
+# https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html
+dynamic_link = []
+
+# Enabling this will completely skip the build/link of SDL2 itself. This makes
+# `cargo check` and similar much faster, but you'll get linking errors if you
+# try to build an executable with this enabled (eg: a bin/bench/test).
+cargo_check = []
+
+[package.metadata.docs.rs]
+# building the docs is a "check only" style operation.
+features = ["cargo_check"]
