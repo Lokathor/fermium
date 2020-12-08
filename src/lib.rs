@@ -121,8 +121,8 @@ pub use gesture::*;
 pub mod events;
 pub use events::*;
 
-//pub mod quit;
-//pub use quit::*;
+pub mod quit;
+pub use quit::*;
 
 // filesystem
 
