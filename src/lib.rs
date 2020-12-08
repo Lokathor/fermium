@@ -124,7 +124,8 @@ pub use events::*;
 pub mod quit;
 pub use quit::*;
 
-// filesystem
+pub mod filesystem;
+pub use filesystem::*;
 
 // haptic
 
