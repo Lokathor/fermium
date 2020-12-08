@@ -1,3 +1,5 @@
+//! Module for SDL's in-memory bitmap type.
+
 pub use crate::{blendmode::*, pixels::*, rect::*, rwops::*, stdinc::*};
 
 /// Surface uses preallocated memory

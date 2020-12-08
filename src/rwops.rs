@@ -1,3 +1,11 @@
+//! Allows for interaction with things you can read and write from.
+//!
+//! Usually files, but you can also point this at static memory and stuff in
+//! some situations.
+//!
+//! Only a minimal amount of this module is currently bound. If you want more
+//! added, PRs accepted.
+
 pub use crate::{c_char, c_void, error::*, stdinc::*};
 
 /// SDL's read/write abstraction.
@@ -6,7 +14,6 @@ pub use crate::{c_char, c_void, error::*, stdinc::*};
 /// I'm dubious as to its general value compared to using `std::fs` most of the
 /// time. So, currently, there's only bindings to allocate one from a file path
 /// and to free it later.
-#[allow(unused)]
 #[repr(transparent)]
 pub struct SDL_RWops(c_void);
 

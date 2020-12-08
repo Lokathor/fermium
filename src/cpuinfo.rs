@@ -1,5 +1,6 @@
-use crate::c_int;
-pub use crate::stdinc::*;
+//! Get some useful info about the current CPU.
+
+pub use crate::{c_int, stdinc::*};
 
 extern "C" {
   /// This function returns the number of CPU cores available.

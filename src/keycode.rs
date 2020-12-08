@@ -20,9 +20,6 @@ pub use crate::{scancode::*, stdinc::*};
 #[repr(transparent)]
 pub struct SDL_Keycode(pub i32);
 
-/// The headers are inconsistent about if we capitalize the 'c'.
-type SDL_KeyCode = SDL_Keycode;
-
 pub const SDLK_SCANCODE_MASK: i32 = 1 << 30;
 
 pub const fn SDL_SCANCODE_TO_KEYCODE(x: SDL_Scancode) -> SDL_Keycode {

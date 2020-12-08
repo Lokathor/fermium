@@ -1,3 +1,5 @@
+//! SDL uses a thread-local buffer to store the current error string.
+
 pub use crate::c_char;
 
 extern "C" {

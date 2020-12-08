@@ -1,3 +1,5 @@
+//! Operations for SDL's rectangle type.
+
 pub use crate::{error::*, pixels::*, rwops::*, stdinc::*};
 
 /// The structure that defines a point (integer)

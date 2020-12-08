@@ -1,5 +1,6 @@
-use crate::c_int;
-pub use crate::{error::*, rwops::*, stdinc::*};
+//! Audio playback.
+
+pub use crate::{c_int, error::*, rwops::*, stdinc::*};
 
 /// Audio format flags.
 ///

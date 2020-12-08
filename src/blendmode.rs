@@ -1,3 +1,5 @@
+//! Support module for pixel blending.
+
 /// A newtype'd blend operation value.
 ///
 /// See `SDL_BLENDMODE_*` for examples.

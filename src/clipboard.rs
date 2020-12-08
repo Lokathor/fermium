@@ -1,5 +1,6 @@
-pub use crate::stdinc::*;
-use crate::{c_char, c_int};
+//! Interact with the system clipboard.
+
+pub use crate::{c_char, c_int, stdinc::*};
 
 extern "C" {
   /// Put UTF-8 text into the clipboard

@@ -1,3 +1,5 @@
+//! Module for interacting with the video subsystem.
+
 pub use crate::{pixels::*, rect::*, stdinc::*, surface::*};
 
 /// The structure that defines a display mode
@@ -17,7 +19,6 @@ pub struct SDL_DisplayMode {
 }
 
 /// The type used to identify a window (newtype'd `c_void`).
-#[allow(unused)]
 #[repr(transparent)]
 pub struct SDL_Window(c_void);
 

@@ -58,57 +58,56 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
 // named `foo`, and `SDL.h` itself is `lib.rs`. As with SDL, all the
 // declarations are exported as a single flat namespace at the top level.
 
-mod platform;
+pub mod platform;
 pub use platform::*;
 
-mod stdinc;
+pub mod stdinc;
 pub use stdinc::*;
 
-mod error;
+pub mod error;
 pub use error::*;
 
-mod rwops;
+pub mod rwops;
 pub use rwops::*;
 
-// TODO: the code was first written from the 2.0.14 headers, so we should
-// recheck each module to ensure that we're using only the 2.0.12 stuff.
-
-mod audio;
+pub mod audio;
 pub use audio::*;
 
-mod blendmode;
+pub mod blendmode;
 pub use blendmode::*;
 
-mod clipboard;
+pub mod clipboard;
 pub use clipboard::*;
 
-mod cpuinfo;
+pub mod cpuinfo;
 pub use cpuinfo::*;
 
-mod pixels;
+pub mod pixels;
 pub use pixels::*;
 
-mod rect;
+pub mod rect;
 pub use rect::*;
 
-mod surface;
+pub mod surface;
 pub use surface::*;
 
-mod video;
+pub mod video;
 pub use video::*;
 
-mod scancode;
+pub mod scancode;
 pub use scancode::*;
 
-mod keycode;
+pub mod keycode;
 pub use keycode::*;
 
-mod keyboard;
+pub mod keyboard;
 pub use keyboard::*;
 
-// mouse
+pub mod mouse;
+pub use mouse::*;
 
-// joystick
+pub mod joystick;
+pub use joystick::*;
 
 // gamecontroller
 
