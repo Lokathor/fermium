@@ -109,7 +109,8 @@ pub use mouse::*;
 pub mod joystick;
 pub use joystick::*;
 
-// gamecontroller
+pub mod gamecontroller;
+pub use gamecontroller::*;
 
 // quit
 

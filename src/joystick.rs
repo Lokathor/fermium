@@ -19,13 +19,14 @@
 //!
 //! If you would like to receive joystick updates while the application
 //! is in the background, you should set the
-//! [`SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS`] before calling `SDL_Init`
+//! [`SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS`] hint before calling
+//! `SDL_Init`.
 //!
 //! See Also: [`gamecontroller`](crate::gamecontroller)
 
 pub use crate::{error::*, stdinc::*};
 
-/// The joystick structure used to identify an SDL joystick
+/// An SDL joystick is an opaque structure.
 #[repr(transparent)]
 pub struct SDL_Joystick(c_void);
 
