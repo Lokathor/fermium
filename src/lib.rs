@@ -1,6 +1,7 @@
 #![no_std]
 #![allow(bad_style)]
 #![warn(missing_docs)]
+#![cfg_attr(feature = "const_mut_refs", feature(const_mut_refs))]
 
 //! Bindings to the SDL2 C library.
 
@@ -129,17 +130,22 @@ pub use filesystem::*;
 
 // haptic
 
-// hints
+pub mod hints;
+pub use hints::*;
 
-// loadso
+pub mod loadso;
+pub use loadso::*;
 
-// messagebox
+pub mod messagebox;
+pub use messagebox::*;
 
-// power
+pub mod power;
+pub use power::*;
 
 // renderer
 
-// sensor
+pub mod sensor;
+pub use sensor::*;
 
 // shape
 
@@ -147,6 +153,7 @@ pub use filesystem::*;
 
 // timer
 
-// version
+pub mod version;
+pub use version::*;
 
 // vulkan
