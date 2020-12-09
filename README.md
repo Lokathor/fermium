@@ -1,5 +1,10 @@
+![Minimum Rust Version](https://img.shields.io/badge/Min%20Rust-1.48-green.svg)
+[![crates.io](https://img.shields.io/crates/v/fermium.svg)](https://crates.io/crates/fermium)
+[![docs.rs](https://docs.rs/fermium/badge.svg)](https://docs.rs/fermium/)
+
 # `fermium`
 
-## SDL2-2.0.12
+Rust bindings to the [SDL2](https://libsdl.org/) library.
 
-This directory is the source zip from [libsdl.org](https://libsdl.org/download-2.0.php), specifically release [2.0.12](https://libsdl.org/release/SDL2-2.0.12.zip) of the library.
+This crate bundles the source for SDL2 and then builds it for you.
+In other words, you do not need to have installed SDL2 yourself.
