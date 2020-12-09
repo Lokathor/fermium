@@ -13,7 +13,9 @@ extern "C" {
   /// function in the shared object and returns it.
   ///
   /// This address is no longer valid after calling [`SDL_UnloadObject`].
-  pub fn SDL_LoadFunction(handle: *mut c_void, name: *const c_char) -> *mut c_void;
+  pub fn SDL_LoadFunction(
+    handle: *mut c_void, name: *const c_char,
+  ) -> *mut c_void;
 
   /// Unload a shared object from memory.
   pub fn SDL_UnloadObject(handle: *mut c_void);

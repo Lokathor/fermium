@@ -104,7 +104,7 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
       | ((order) << 20)
       | ((layout) << 16)
       | ((bits) << 8)
-      | ((bytes) << 0),
+      | (bytes),
   )
 }
 
@@ -142,7 +142,7 @@ pub const fn SDL_BYTESPERPIXEL(x: SDL_PixelFormatEnum) -> u32 {
       1
     }
   } else {
-    ((x.0) >> 0) & 0xFF
+    x.0 & 0xFF
   }
 }
 /// Is this pixel format an indexed format?

@@ -13,15 +13,20 @@ pub struct SDL_MessageBoxFlags(pub u32);
 impl_bit_ops_for_tuple_newtype!(SDL_MessageBoxFlags);
 
 /// error dialog
-pub const SDL_MESSAGEBOX_ERROR: SDL_MessageBoxFlags = SDL_MessageBoxFlags(0x00000010);
+pub const SDL_MESSAGEBOX_ERROR: SDL_MessageBoxFlags =
+  SDL_MessageBoxFlags(0x00000010);
 /// warning dialog
-pub const SDL_MESSAGEBOX_WARNING: SDL_MessageBoxFlags = SDL_MessageBoxFlags(0x00000020);
+pub const SDL_MESSAGEBOX_WARNING: SDL_MessageBoxFlags =
+  SDL_MessageBoxFlags(0x00000020);
 /// informational dialog
-pub const SDL_MESSAGEBOX_INFORMATION: SDL_MessageBoxFlags = SDL_MessageBoxFlags(0x00000040);
+pub const SDL_MESSAGEBOX_INFORMATION: SDL_MessageBoxFlags =
+  SDL_MessageBoxFlags(0x00000040);
 /// buttons placed left to right
-pub const SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT: SDL_MessageBoxFlags = SDL_MessageBoxFlags(0x00000080);
+pub const SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT: SDL_MessageBoxFlags =
+  SDL_MessageBoxFlags(0x00000080);
 /// buttons placed right to left
-pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags = SDL_MessageBoxFlags(0x00000100);
+pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
+  SDL_MessageBoxFlags(0x00000100);
 
 /// [`SDL_MessageBoxButtonData`] flags.
 ///
@@ -34,9 +39,11 @@ pub struct SDL_MessageBoxButtonFlags(pub u32);
 impl_bit_ops_for_tuple_newtype!(SDL_MessageBoxButtonFlags);
 
 /// Marks the default button when return is hit.
-pub const SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT: SDL_MessageBoxButtonFlags = SDL_MessageBoxButtonFlags(0x00000001);
+pub const SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT: SDL_MessageBoxButtonFlags =
+  SDL_MessageBoxButtonFlags(0x00000001);
 /// Marks the default button when escape is hit.
-pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: SDL_MessageBoxButtonFlags = SDL_MessageBoxButtonFlags(0x00000002);
+pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: SDL_MessageBoxButtonFlags =
+  SDL_MessageBoxButtonFlags(0x00000002);
 
 /// Individual button data.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -71,15 +78,20 @@ pub struct SDL_MessageBoxColor {
 pub struct SDL_MessageBoxColorType(pub u32);
 
 #[allow(missing_docs)]
-pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: SDL_MessageBoxColorType = SDL_MessageBoxColorType(0);
+pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: SDL_MessageBoxColorType =
+  SDL_MessageBoxColorType(0);
 #[allow(missing_docs)]
-pub const SDL_MESSAGEBOX_COLOR_TEXT: SDL_MessageBoxColorType = SDL_MessageBoxColorType(1);
+pub const SDL_MESSAGEBOX_COLOR_TEXT: SDL_MessageBoxColorType =
+  SDL_MessageBoxColorType(1);
 #[allow(missing_docs)]
-pub const SDL_MESSAGEBOX_COLOR_BUTTON_BORDER: SDL_MessageBoxColorType = SDL_MessageBoxColorType(2);
+pub const SDL_MESSAGEBOX_COLOR_BUTTON_BORDER: SDL_MessageBoxColorType =
+  SDL_MessageBoxColorType(2);
 #[allow(missing_docs)]
-pub const SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND: SDL_MessageBoxColorType = SDL_MessageBoxColorType(3);
+pub const SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND: SDL_MessageBoxColorType =
+  SDL_MessageBoxColorType(3);
 #[allow(missing_docs)]
-pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED: SDL_MessageBoxColorType = SDL_MessageBoxColorType(4);
+pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED: SDL_MessageBoxColorType =
+  SDL_MessageBoxColorType(4);
 #[allow(missing_docs)]
 pub const SDL_MESSAGEBOX_COLOR_MAX: usize = 5;
 
@@ -128,7 +140,9 @@ extern "C" {
   /// parent window, or on the main thread if the messagebox has no parent.  It
   /// will block execution of that thread until the user clicks a button or
   /// closes the messagebox.
-  pub fn SDL_ShowMessageBox(messageboxdata: *const SDL_MessageBoxData, buttonid: *mut c_int) -> c_int;
+  pub fn SDL_ShowMessageBox(
+    messageboxdata: *const SDL_MessageBoxData, buttonid: *mut c_int,
+  ) -> c_int;
 
   /// Create a simple modal message box.
   ///
@@ -150,5 +164,8 @@ extern "C" {
   /// **Returns:** 0 on success, -1 on error.
   ///
   /// See Also: [`SDL_ShowMessageBox`]
-  pub fn SDL_ShowSimpleMessageBox(flags: SDL_MessageBoxFlags, title: *const c_char, message: *const c_char, window: *mut SDL_Window) -> c_int;
+  pub fn SDL_ShowSimpleMessageBox(
+    flags: SDL_MessageBoxFlags, title: *const c_char, message: *const c_char,
+    window: *mut SDL_Window,
+  ) -> c_int;
 }

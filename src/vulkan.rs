@@ -159,7 +159,9 @@ extern "C" {
   /// ```
   ///
   /// See Also: [`SDL_Vulkan_CreateSurface`]
-  pub fn SDL_Vulkan_GetInstanceExtensions(window: *mut SDL_Window, pCount: *mut c_uint, pNames: *mut *const c_char) -> SDL_bool;
+  pub fn SDL_Vulkan_GetInstanceExtensions(
+    window: *mut SDL_Window, pCount: *mut c_uint, pNames: *mut *const c_char,
+  ) -> SDL_bool;
   // TODO: convert the above example to rust
 
   /// Create a Vulkan rendering surface for a window.
@@ -189,7 +191,9 @@ extern "C" {
   /// [`SDL_Vulkan_CreateSurface`] enabled.
   ///
   /// See Also: [`SDL_Vulkan_GetInstanceExtensions`]
-  pub fn SDL_Vulkan_CreateSurface(window: *mut SDL_Window, instance: VkInstance, surface: *mut VkSurfaceKHR) -> SDL_bool;
+  pub fn SDL_Vulkan_CreateSurface(
+    window: *mut SDL_Window, instance: VkInstance, surface: *mut VkSurfaceKHR,
+  ) -> SDL_bool;
 
   /// Get the size of a window's underlying drawable in pixels (for use with
   /// setting viewport, scissor & etc).
@@ -209,5 +213,7 @@ extern "C" {
   /// setting `NSHighResolutionCapable` to true in its `Info.plist`.
   ///
   /// See Also: [`SDL_GetWindowSize`] and [`SDL_CreateWindow`]
-  pub fn SDL_Vulkan_GetDrawableSize(window: *mut SDL_Window, w: *mut c_int, h: *mut c_int);
+  pub fn SDL_Vulkan_GetDrawableSize(
+    window: *mut SDL_Window, w: *mut c_int, h: *mut c_int,
+  );
 }

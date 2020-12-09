@@ -82,5 +82,6 @@ extern "C" {
   /// if there's a problem (creating directory failed, etc).
   ///
   /// See Also: [`SDL_GetBasePath`]
-  pub fn SDL_GetPrefPath(org: *const c_char, app: *const c_char) -> *mut c_char;
+  pub fn SDL_GetPrefPath(org: *const c_char, app: *const c_char)
+    -> *mut c_char;
 }

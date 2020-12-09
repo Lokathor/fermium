@@ -15,8 +15,12 @@ extern "C" {
   pub fn SDL_SaveAllDollarTemplates(dst: *mut SDL_RWops) -> c_int;
 
   /// Save a currently loaded Dollar Gesture template.
-  pub fn SDL_SaveDollarTemplate(gestureId: SDL_GestureID, dst: *mut SDL_RWops) -> c_int;
+  pub fn SDL_SaveDollarTemplate(
+    gestureId: SDL_GestureID, dst: *mut SDL_RWops,
+  ) -> c_int;
 
   /// Load Dollar Gesture templates from a file.
-  pub fn SDL_LoadDollarTemplates(touchId: SDL_TouchID, src: *mut SDL_RWops) -> c_int;
+  pub fn SDL_LoadDollarTemplates(
+    touchId: SDL_TouchID, src: *mut SDL_RWops,
+  ) -> c_int;
 }

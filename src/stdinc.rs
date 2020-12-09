@@ -21,7 +21,7 @@ pub(crate) type Sint64 = i64;
 ///
 /// Inputs are generally ASCII values.
 pub const fn SDL_FOURCC(a: u8, b: u8, c: u8, d: u8) -> u32 {
-  (a as u32) << 0 | (b as u32) << 8 | (c as u32) << 16 | (d as u32) << 24
+  (a as u32) | (b as u32) << 8 | (c as u32) << 16 | (d as u32) << 24
 }
 
 /// SDL's `bool` approximation.

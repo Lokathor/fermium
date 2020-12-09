@@ -1,6 +1,9 @@
 //! Module for event handling.
 
-pub use crate::{c_long, error::*, gamecontroller::*, gesture::*, joystick::*, keyboard::*, mouse::*, stdinc::*, syswm::*, touch::*, version::*, video::*};
+pub use crate::{
+  c_long, error::*, gamecontroller::*, gesture::*, joystick::*, keyboard::*,
+  mouse::*, stdinc::*, syswm::*, touch::*, version::*, video::*,
+};
 
 /// Button is released.
 ///
@@ -133,7 +136,8 @@ pub const SDL_CONTROLLERDEVICEADDED: SDL_EventType = SDL_EventType(0x650 + 3);
 pub const SDL_CONTROLLERDEVICEREMOVED: SDL_EventType = SDL_EventType(0x650 + 4);
 
 /// The controller mapping was updated.
-pub const SDL_CONTROLLERDEVICEREMAPPED: SDL_EventType = SDL_EventType(0x650 + 5);
+pub const SDL_CONTROLLERDEVICEREMAPPED: SDL_EventType =
+  SDL_EventType(0x650 + 5);
 
 #[allow(missing_docs)]
 pub const SDL_FINGERDOWN: SDL_EventType = SDL_EventType(0x700);
@@ -626,8 +630,8 @@ pub struct SDL_DollarGestureEvent {
 #[repr(C)]
 #[allow(missing_docs)]
 pub struct SDL_DropEvent {
-  /// Should always be [`SDL_DROPBEGIN`], [`SDL_DROPFILE`], [`SDL_DROPTEXT`], or
-  /// [`SDL_DROPCOMPLETE`]
+  /// Should always be [`SDL_DROPBEGIN`], [`SDL_DROPFILE`], [`SDL_DROPTEXT`],
+  /// or [`SDL_DROPCOMPLETE`]
   pub type_: SDL_EventType,
   /// In milliseconds, populated using [`SDL_GetTicks`].
   pub timestamp: Uint32,
@@ -813,7 +817,9 @@ pub const SDL_PEEKEVENT: SDL_eventaction = SDL_eventaction(1);
 pub const SDL_GETEVENT: SDL_eventaction = SDL_eventaction(2);
 
 /// Event filter operation.
-pub type SDL_EventFilter = Option<unsafe extern "C" fn(userdata: *mut c_void, event: *mut SDL_Event) -> c_int>;
+pub type SDL_EventFilter = Option<
+  unsafe extern "C" fn(userdata: *mut c_void, event: *mut SDL_Event) -> c_int,
+>;
 
 extern "C" {
   /// Pumps the event loop, gathering events from the input devices.
@@ -840,13 +846,18 @@ extern "C" {
   /// error.
   ///
   /// This function is thread-safe.
-  pub fn SDL_PeepEvents(events: *mut SDL_Event, numevents: c_int, action: SDL_eventaction, minType: SDL_EventType, maxType: SDL_EventType) -> c_int;
+  pub fn SDL_PeepEvents(
+    events: *mut SDL_Event, numevents: c_int, action: SDL_eventaction,
+    minType: SDL_EventType, maxType: SDL_EventType,
+  ) -> c_int;
 
   /// Checks to see if certain event types are in the event queue.
   pub fn SDL_HasEvent(type_: SDL_EventType) -> SDL_bool;
 
   /// Checks to see if a range of event types are in the event queue.
-  pub fn SDL_HasEvents(minType: SDL_EventType, maxType: SDL_EventType) -> SDL_bool;
+  pub fn SDL_HasEvents(
+    minType: SDL_EventType, maxType: SDL_EventType,
+  ) -> SDL_bool;
 
   /// This function clears events of a particular type from the event queue.
   ///
@@ -918,7 +929,9 @@ extern "C" {
   /// Return the current event filter - can be used to "chain" filters.
   ///
   /// If there is no event filter set, this function returns `SDL_FALSE`.
-  pub fn SDL_GetEventFilter(filter: *mut SDL_EventFilter, userdata: *mut *mut c_void) -> SDL_bool;
+  pub fn SDL_GetEventFilter(
+    filter: *mut SDL_EventFilter, userdata: *mut *mut c_void,
+  ) -> SDL_bool;
 
   /// Add a function which is called when an event is added to the queue.
   pub fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: *mut c_void);

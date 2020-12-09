@@ -62,13 +62,16 @@ pub struct SDL_JoystickType(pub i32);
 #[allow(missing_docs)]
 pub const SDL_JOYSTICK_TYPE_UNKNOWN: SDL_JoystickType = SDL_JoystickType(0);
 #[allow(missing_docs)]
-pub const SDL_JOYSTICK_TYPE_GAMECONTROLLER: SDL_JoystickType = SDL_JoystickType(1);
+pub const SDL_JOYSTICK_TYPE_GAMECONTROLLER: SDL_JoystickType =
+  SDL_JoystickType(1);
 #[allow(missing_docs)]
 pub const SDL_JOYSTICK_TYPE_WHEEL: SDL_JoystickType = SDL_JoystickType(2);
 #[allow(missing_docs)]
-pub const SDL_JOYSTICK_TYPE_ARCADE_STICK: SDL_JoystickType = SDL_JoystickType(3);
+pub const SDL_JOYSTICK_TYPE_ARCADE_STICK: SDL_JoystickType =
+  SDL_JoystickType(3);
 #[allow(missing_docs)]
-pub const SDL_JOYSTICK_TYPE_FLIGHT_STICK: SDL_JoystickType = SDL_JoystickType(4);
+pub const SDL_JOYSTICK_TYPE_FLIGHT_STICK: SDL_JoystickType =
+  SDL_JoystickType(4);
 #[allow(missing_docs)]
 pub const SDL_JOYSTICK_TYPE_DANCE_PAD: SDL_JoystickType = SDL_JoystickType(5);
 #[allow(missing_docs)]
@@ -88,19 +91,26 @@ pub const SDL_JOYSTICK_TYPE_THROTTLE: SDL_JoystickType = SDL_JoystickType(9);
 pub struct SDL_JoystickPowerLevel(pub i32);
 
 /// The power level is unknown.
-pub const SDL_JOYSTICK_POWER_UNKNOWN: SDL_JoystickPowerLevel = SDL_JoystickPowerLevel(-1);
+pub const SDL_JOYSTICK_POWER_UNKNOWN: SDL_JoystickPowerLevel =
+  SDL_JoystickPowerLevel(-1);
 /// <= 5%
-pub const SDL_JOYSTICK_POWER_EMPTY: SDL_JoystickPowerLevel = SDL_JoystickPowerLevel(0);
+pub const SDL_JOYSTICK_POWER_EMPTY: SDL_JoystickPowerLevel =
+  SDL_JoystickPowerLevel(0);
 /// <= 20%
-pub const SDL_JOYSTICK_POWER_LOW: SDL_JoystickPowerLevel = SDL_JoystickPowerLevel(1);
+pub const SDL_JOYSTICK_POWER_LOW: SDL_JoystickPowerLevel =
+  SDL_JoystickPowerLevel(1);
 /// <= 70%
-pub const SDL_JOYSTICK_POWER_MEDIUM: SDL_JoystickPowerLevel = SDL_JoystickPowerLevel(2);
+pub const SDL_JOYSTICK_POWER_MEDIUM: SDL_JoystickPowerLevel =
+  SDL_JoystickPowerLevel(2);
 /// <= 100%
-pub const SDL_JOYSTICK_POWER_FULL: SDL_JoystickPowerLevel = SDL_JoystickPowerLevel(3);
+pub const SDL_JOYSTICK_POWER_FULL: SDL_JoystickPowerLevel =
+  SDL_JoystickPowerLevel(3);
 /// This joystick is wired to the rest of the system.
-pub const SDL_JOYSTICK_POWER_WIRED: SDL_JoystickPowerLevel = SDL_JoystickPowerLevel(4);
+pub const SDL_JOYSTICK_POWER_WIRED: SDL_JoystickPowerLevel =
+  SDL_JoystickPowerLevel(4);
 /// Honestly, this particular constant is probably pointless.
-pub const SDL_JOYSTICK_POWER_MAX: SDL_JoystickPowerLevel = SDL_JoystickPowerLevel(5);
+pub const SDL_JOYSTICK_POWER_MAX: SDL_JoystickPowerLevel =
+  SDL_JoystickPowerLevel(5);
 
 /// A joystick axis uses the `i16` range, so this is just `i16::MAX`
 pub const SDL_JOYSTICK_AXIS_MAX: i16 = 32767;
@@ -193,7 +203,8 @@ extern "C" {
   /// This can be called before any joysticks are opened.
   ///
   /// If the index is out of range, this function will return -1.
-  pub fn SDL_JoystickGetDeviceInstanceID(device_index: c_int) -> SDL_JoystickID;
+  pub fn SDL_JoystickGetDeviceInstanceID(device_index: c_int)
+    -> SDL_JoystickID;
 
   /// Open a joystick for use.
   ///
@@ -206,7 +217,9 @@ extern "C" {
   pub fn SDL_JoystickOpen(device_index: c_int) -> *mut SDL_Joystick;
 
   /// Return the SDL_Joystick associated with an instance id.
-  pub fn SDL_JoystickFromInstanceID(instance_id: SDL_JoystickID) -> *mut SDL_Joystick;
+  pub fn SDL_JoystickFromInstanceID(
+    instance_id: SDL_JoystickID,
+  ) -> *mut SDL_Joystick;
 
   /// Return the SDL_Joystick associated with a player index.
   pub fn SDL_JoystickFromPlayerIndex(player_index: c_int) -> *mut SDL_Joystick;
@@ -222,7 +235,9 @@ extern "C" {
   pub fn SDL_JoystickGetPlayerIndex(joystick: *mut SDL_Joystick) -> c_int;
 
   /// Set the player index of an opened joystick.
-  pub fn SDL_JoystickSetPlayerIndex(joystick: *mut SDL_Joystick, player_index: c_int);
+  pub fn SDL_JoystickSetPlayerIndex(
+    joystick: *mut SDL_Joystick, player_index: c_int,
+  );
 
   /// Return the GUID for this opened joystick.
   pub fn SDL_JoystickGetGUID(joystick: *mut SDL_Joystick) -> SDL_JoystickGUID;
@@ -249,10 +264,14 @@ extern "C" {
   ///
   /// `pszGUID` must point to at least 33 bytes. 32 for the string, plus a NULL
   /// terminator.
-  pub fn SDL_JoystickGetGUIDString(guid: SDL_JoystickGUID, pszGUID: *mut c_char, cbGUID: c_int);
+  pub fn SDL_JoystickGetGUIDString(
+    guid: SDL_JoystickGUID, pszGUID: *mut c_char, cbGUID: c_int,
+  );
 
   /// Convert a string into a joystick guid
-  pub fn SDL_JoystickGetGUIDFromString(pchGUID: *const c_char) -> SDL_JoystickGUID;
+  pub fn SDL_JoystickGetGUIDFromString(
+    pchGUID: *const c_char,
+  ) -> SDL_JoystickGUID;
 
   /// Returns `SDL_TRUE` if the joystick has been opened and it is currently
   /// connected, or `SDL_FALSE` if it has not.
@@ -297,7 +316,9 @@ extern "C" {
   /// The state is a value ranging from -32768 to 32767.
   ///
   /// The axis indices start at index 0.
-  pub fn SDL_JoystickGetAxis(joystick: *mut SDL_Joystick, axis: c_int) -> Sint16;
+  pub fn SDL_JoystickGetAxis(
+    joystick: *mut SDL_Joystick, axis: c_int,
+  ) -> Sint16;
 
   /// Get the initial state of an axis control on a joystick.
   ///
@@ -307,7 +328,9 @@ extern "C" {
   ///
   /// **Returns:** `SDL_TRUE` if this axis has any initial value, or `SDL_FALSE`
   /// if not.
-  pub fn SDL_JoystickGetAxisInitialState(joystick: *mut SDL_Joystick, axis: c_int, state: *mut Sint16) -> SDL_bool;
+  pub fn SDL_JoystickGetAxisInitialState(
+    joystick: *mut SDL_Joystick, axis: c_int, state: *mut Sint16,
+  ) -> SDL_bool;
 
   /// Get the current state of a POV hat on a joystick.
   ///
@@ -321,12 +344,16 @@ extern "C" {
   /// **Return:** 0, or -1 if you passed it invalid parameters.
   ///
   /// The ball indices start at index 0.
-  pub fn SDL_JoystickGetBall(joystick: *mut SDL_Joystick, ball: c_int, dx: *mut c_int, dy: *mut c_int) -> c_int;
+  pub fn SDL_JoystickGetBall(
+    joystick: *mut SDL_Joystick, ball: c_int, dx: *mut c_int, dy: *mut c_int,
+  ) -> c_int;
 
   /// Get the current state of a button on a joystick.
   ///
   /// The button indices start at index 0.
-  pub fn SDL_JoystickGetButton(joystick: *mut SDL_Joystick, button: c_int) -> Uint8;
+  pub fn SDL_JoystickGetButton(
+    joystick: *mut SDL_Joystick, button: c_int,
+  ) -> Uint8;
 
   /// Trigger a rumble effect.
   ///
@@ -341,11 +368,16 @@ extern "C" {
   /// * `duration_ms` The duration of the rumble effect, in milliseconds.
   ///
   /// **Returns:** 0, or -1 if rumble isn't supported on this joystick
-  pub fn SDL_JoystickRumble(joystick: *mut SDL_Joystick, low_frequency_rumble: Uint16, high_frequency_rumble: Uint16, duration_ms: Uint32) -> c_int;
+  pub fn SDL_JoystickRumble(
+    joystick: *mut SDL_Joystick, low_frequency_rumble: Uint16,
+    high_frequency_rumble: Uint16, duration_ms: Uint32,
+  ) -> c_int;
 
   /// Close a joystick previously opened with [`SDL_JoystickOpen`].
   pub fn SDL_JoystickClose(joystick: *mut SDL_Joystick);
 
   /// Return the battery level of this joystick.
-  pub fn SDL_JoystickCurrentPowerLevel(joystick: *mut SDL_Joystick) -> SDL_JoystickPowerLevel;
+  pub fn SDL_JoystickCurrentPowerLevel(
+    joystick: *mut SDL_Joystick,
+  ) -> SDL_JoystickPowerLevel;
 }

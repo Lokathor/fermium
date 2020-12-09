@@ -194,5 +194,7 @@ extern "C" {
   ///   unimplemented!("now you have your info");
   /// }
   /// ```
-  pub fn SDL_GetWindowWMInfo(window: *mut SDL_Window, info: *mut SDL_SysWMinfo) -> SDL_bool;
+  pub fn SDL_GetWindowWMInfo(
+    window: *mut SDL_Window, info: *mut SDL_SysWMinfo,
+  ) -> SDL_bool;
 }

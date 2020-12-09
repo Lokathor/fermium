@@ -20,13 +20,16 @@ pub struct SDL_FingerID(pub Sint64);
 pub struct SDL_TouchDeviceType(pub i32);
 
 /// The "invalid" touch type. Used for error values and such.
-pub const SDL_TOUCH_DEVICE_INVALID: SDL_TouchDeviceType = SDL_TouchDeviceType(-1);
+pub const SDL_TOUCH_DEVICE_INVALID: SDL_TouchDeviceType =
+  SDL_TouchDeviceType(-1);
 /// Touch screen with window-relative coordinates
 pub const SDL_TOUCH_DEVICE_DIRECT: SDL_TouchDeviceType = SDL_TouchDeviceType(0);
 /// Trackpad with absolute device coordinates
-pub const SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE: SDL_TouchDeviceType = SDL_TouchDeviceType(1);
+pub const SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE: SDL_TouchDeviceType =
+  SDL_TouchDeviceType(1);
 /// Trackpad with screen cursor-relative coordinates
-pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType = SDL_TouchDeviceType(2);
+pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
+  SDL_TouchDeviceType(2);
 
 /// Info for a finger object.
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -59,5 +62,7 @@ extern "C" {
   pub fn SDL_GetNumTouchFingers(touchID: SDL_TouchID) -> c_int;
 
   /// Get the finger object of the given touch, with the given index.
-  pub fn SDL_GetTouchFinger(touchID: SDL_TouchID, index: c_int) -> *mut SDL_Finger;
+  pub fn SDL_GetTouchFinger(
+    touchID: SDL_TouchID, index: c_int,
+  ) -> *mut SDL_Finger;
 }

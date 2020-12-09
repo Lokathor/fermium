@@ -27,13 +27,17 @@ pub use crate::{c_char, stdinc::*, video::*};
 pub struct SDL_RendererFlags(pub u32);
 impl_bit_ops_for_tuple_newtype!(SDL_RendererFlags);
 /// The renderer is a software fallback
-pub const SDL_RENDERER_SOFTWARE: SDL_RendererFlags = SDL_RendererFlags(0x00000001);
+pub const SDL_RENDERER_SOFTWARE: SDL_RendererFlags =
+  SDL_RendererFlags(0x00000001);
 /// The renderer uses hardware acceleration
-pub const SDL_RENDERER_ACCELERATED: SDL_RendererFlags = SDL_RendererFlags(0x00000002);
+pub const SDL_RENDERER_ACCELERATED: SDL_RendererFlags =
+  SDL_RendererFlags(0x00000002);
 /// Present is synchronized with the refresh rate
-pub const SDL_RENDERER_PRESENTVSYNC: SDL_RendererFlags = SDL_RendererFlags(0x00000004);
+pub const SDL_RENDERER_PRESENTVSYNC: SDL_RendererFlags =
+  SDL_RendererFlags(0x00000004);
 /// The renderer supports rendering to texture
-pub const SDL_RENDERER_TARGETTEXTURE: SDL_RendererFlags = SDL_RendererFlags(0x00000008);
+pub const SDL_RENDERER_TARGETTEXTURE: SDL_RendererFlags =
+  SDL_RendererFlags(0x00000008);
 
 /// Information on the capabilities of a render driver or context.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -92,11 +96,14 @@ pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess(2);
 #[repr(transparent)]
 pub struct SDL_TextureModulate(pub i32);
 /// No modulation.
-pub const SDL_TEXTUREMODULATE_NONE: SDL_TextureModulate = SDL_TextureModulate(0);
+pub const SDL_TEXTUREMODULATE_NONE: SDL_TextureModulate =
+  SDL_TextureModulate(0);
 /// `srcC = srcC * color`
-pub const SDL_TEXTUREMODULATE_COLOR: SDL_TextureModulate = SDL_TextureModulate(1);
+pub const SDL_TEXTUREMODULATE_COLOR: SDL_TextureModulate =
+  SDL_TextureModulate(1);
 /// `srcA = srcA * alpha`
-pub const SDL_TEXTUREMODULATE_ALPHA: SDL_TextureModulate = SDL_TextureModulate(2);
+pub const SDL_TEXTUREMODULATE_ALPHA: SDL_TextureModulate =
+  SDL_TextureModulate(2);
 
 /// Flip values for [`SDL_RenderCopyEx`]
 ///
@@ -142,7 +149,9 @@ extern "C" {
   /// **Returns:** 0 on success, -1 if the index was out of range.
   ///
   /// See Also: [`SDL_CreateRenderer`]
-  pub fn SDL_GetRenderDriverInfo(index: c_int, info: *mut SDL_RendererInfo) -> c_int;
+  pub fn SDL_GetRenderDriverInfo(
+    index: c_int, info: *mut SDL_RendererInfo,
+  ) -> c_int;
 
   /// Create a window and default renderer
   ///
@@ -153,7 +162,10 @@ extern "C" {
   /// * `renderer` A pointer filled with the renderer, or NULL on error
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_CreateWindowAndRenderer(width: c_int, height: c_int, window_flags: Uint32, window: *mut *mut SDL_Window, renderer: *mut *mut SDL_Renderer) -> c_int;
+  pub fn SDL_CreateWindowAndRenderer(
+    width: c_int, height: c_int, window_flags: Uint32,
+    window: *mut *mut SDL_Window, renderer: *mut *mut SDL_Renderer,
+  ) -> c_int;
 
   /// Create a 2D rendering context for a window.
   ///
@@ -166,7 +178,9 @@ extern "C" {
   ///
   /// See Also: [`SDL_CreateSoftwareRenderer`], [`SDL_GetRendererInfo`],
   /// [`SDL_DestroyRenderer`]
-  pub fn SDL_CreateRenderer(window: *mut SDL_Window, index: c_int, flags: Uint32) -> *mut SDL_Renderer;
+  pub fn SDL_CreateRenderer(
+    window: *mut SDL_Window, index: c_int, flags: Uint32,
+  ) -> *mut SDL_Renderer;
 
   /// Create a 2D software rendering context for a surface.
   ///
@@ -175,16 +189,22 @@ extern "C" {
   /// **Returns:** A valid rendering context or NULL if there was an error.
   ///
   /// See Also: [`SDL_CreateRenderer`], [`SDL_DestroyRenderer`]
-  pub fn SDL_CreateSoftwareRenderer(surface: *mut SDL_Surface) -> *mut SDL_Renderer;
+  pub fn SDL_CreateSoftwareRenderer(
+    surface: *mut SDL_Surface,
+  ) -> *mut SDL_Renderer;
 
   /// Get the renderer associated with a window.
   pub fn SDL_GetRenderer(window: *mut SDL_Window) -> *mut SDL_Renderer;
 
   /// Get information about a rendering context.
-  pub fn SDL_GetRendererInfo(renderer: *mut SDL_Renderer, info: *mut SDL_RendererInfo) -> c_int;
+  pub fn SDL_GetRendererInfo(
+    renderer: *mut SDL_Renderer, info: *mut SDL_RendererInfo,
+  ) -> c_int;
 
   /// Get the output size in pixels of a rendering context.
-  pub fn SDL_GetRendererOutputSize(renderer: *mut SDL_Renderer, w: *mut c_int, h: *mut c_int) -> c_int;
+  pub fn SDL_GetRendererOutputSize(
+    renderer: *mut SDL_Renderer, w: *mut c_int, h: *mut c_int,
+  ) -> c_int;
 
   /// Create a texture for a rendering context.
   ///
@@ -202,7 +222,10 @@ extern "C" {
   ///
   /// See Also: [`SDL_QueryTexture`], [`SDL_UpdateTexture`],
   /// [`SDL_DestroyTexture`]
-  pub fn SDL_CreateTexture(renderer: *mut SDL_Renderer, format: Uint32, access: c_int, w: c_int, h: c_int) -> *mut SDL_Texture;
+  pub fn SDL_CreateTexture(
+    renderer: *mut SDL_Renderer, format: Uint32, access: c_int, w: c_int,
+    h: c_int,
+  ) -> *mut SDL_Texture;
 
   /// Create a texture from an existing surface.
   ///
@@ -214,7 +237,9 @@ extern "C" {
   /// The surface is not modified or freed by this function.
   ///
   /// See Also: [`SDL_QueryTexture`], [`SDL_DestroyTexture`]
-  pub fn SDL_CreateTextureFromSurface(renderer: *mut SDL_Renderer, surface: *mut SDL_Surface) -> *mut SDL_Texture;
+  pub fn SDL_CreateTextureFromSurface(
+    renderer: *mut SDL_Renderer, surface: *mut SDL_Surface,
+  ) -> *mut SDL_Texture;
 
   /// Query the attributes of a texture
   ///
@@ -226,7 +251,10 @@ extern "C" {
   /// * `h` A pointer filled in with the height of the texture in pixels.
   ///
   /// **Returns:** 0 on success, or -1 if the texture is not valid.
-  pub fn SDL_QueryTexture(texture: *mut SDL_Texture, format: *mut Uint32, access: *mut c_int, w: *mut c_int, h: *mut c_int) -> c_int;
+  pub fn SDL_QueryTexture(
+    texture: *mut SDL_Texture, format: *mut Uint32, access: *mut c_int,
+    w: *mut c_int, h: *mut c_int,
+  ) -> c_int;
 
   /// Set an additional color value used in render copy operations.
   ///
@@ -239,7 +267,9 @@ extern "C" {
   /// modulation is not supported.
   ///
   /// See Also: [`SDL_GetTextureColorMod`]
-  pub fn SDL_SetTextureColorMod(texture: *mut SDL_Texture, r: Uint8, g: Uint8, b: Uint8) -> c_int;
+  pub fn SDL_SetTextureColorMod(
+    texture: *mut SDL_Texture, r: Uint8, g: Uint8, b: Uint8,
+  ) -> c_int;
 
   ///  Get the additional color value used in render copy operations.
   ///
@@ -251,7 +281,9 @@ extern "C" {
   /// **Returns:** 0 on success, or -1 if the texture is not valid.
   ///
   /// See Also: [`SDL_SetTextureColorMod`]
-  pub fn SDL_GetTextureColorMod(texture: *mut SDL_Texture, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8) -> c_int;
+  pub fn SDL_GetTextureColorMod(
+    texture: *mut SDL_Texture, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8,
+  ) -> c_int;
 
   /// Set an additional alpha value used in render copy operations.
   ///
@@ -262,7 +294,9 @@ extern "C" {
   /// modulation is not supported.
   ///
   /// See Also: [`SDL_GetTextureAlphaMod`]
-  pub fn SDL_SetTextureAlphaMod(texture: *mut SDL_Texture, alpha: Uint8) -> c_int;
+  pub fn SDL_SetTextureAlphaMod(
+    texture: *mut SDL_Texture, alpha: Uint8,
+  ) -> c_int;
 
   /// Get the additional alpha value used in render copy operations.
   ///
@@ -272,7 +306,9 @@ extern "C" {
   /// **Returns:** 0 on success, or -1 if the texture is not valid.
   ///
   /// See Also: [`SDL_SetTextureAlphaMod`]
-  pub fn SDL_GetTextureAlphaMod(texture: *mut SDL_Texture, alpha: *mut Uint8) -> c_int;
+  pub fn SDL_GetTextureAlphaMod(
+    texture: *mut SDL_Texture, alpha: *mut Uint8,
+  ) -> c_int;
 
   /// Set the blend mode used for texture copy operations.
   ///
@@ -285,7 +321,9 @@ extern "C" {
   /// If the blend mode is not supported, the closest supported mode is chosen.
   ///
   /// See Also: [`SDL_GetTextureBlendMode`]
-  pub fn SDL_SetTextureBlendMode(texture: *mut SDL_Texture, blendMode: SDL_BlendMode) -> c_int;
+  pub fn SDL_SetTextureBlendMode(
+    texture: *mut SDL_Texture, blendMode: SDL_BlendMode,
+  ) -> c_int;
 
   /// Get the blend mode used for texture copy operations.
   ///
@@ -295,7 +333,9 @@ extern "C" {
   /// **Returns:** 0 on success, or -1 if the texture is not valid.
   ///
   /// See Also: [`SDL_SetTextureBlendMode`]
-  pub fn SDL_GetTextureBlendMode(texture: *mut SDL_Texture, blendMode: *mut SDL_BlendMode) -> c_int;
+  pub fn SDL_GetTextureBlendMode(
+    texture: *mut SDL_Texture, blendMode: *mut SDL_BlendMode,
+  ) -> c_int;
 
   /// Set the scale mode used for texture scale operations.
   ///
@@ -307,7 +347,9 @@ extern "C" {
   /// If the scale mode is not supported, the closest supported mode is chosen.
   ///
   /// See Also: [`SDL_GetTextureScaleMode`]
-  pub fn SDL_SetTextureScaleMode(texture: *mut SDL_Texture, scaleMode: SDL_ScaleMode) -> c_int;
+  pub fn SDL_SetTextureScaleMode(
+    texture: *mut SDL_Texture, scaleMode: SDL_ScaleMode,
+  ) -> c_int;
 
   /// Get the scale mode used for texture scale operations.
   ///
@@ -317,7 +359,9 @@ extern "C" {
   /// **Returns:** 0 on success, or -1 if the texture is not valid.
   ///
   /// See Also: [`SDL_SetTextureScaleMode`]
-  pub fn SDL_GetTextureScaleMode(texture: *mut SDL_Texture, scaleMode: *mut SDL_ScaleMode) -> c_int;
+  pub fn SDL_GetTextureScaleMode(
+    texture: *mut SDL_Texture, scaleMode: *mut SDL_ScaleMode,
+  ) -> c_int;
 
   /// Update the given texture rectangle with new pixel data.
   ///
@@ -334,7 +378,10 @@ extern "C" {
   /// **Returns:** 0 on success, or -1 if the texture is not valid.
   ///
   /// This is a fairly slow function.
-  pub fn SDL_UpdateTexture(texture: *mut SDL_Texture, rect: *const SDL_Rect, pixels: *const c_void, pitch: c_int) -> c_int;
+  pub fn SDL_UpdateTexture(
+    texture: *mut SDL_Texture, rect: *const SDL_Rect, pixels: *const c_void,
+    pitch: c_int,
+  ) -> c_int;
 
   /// Update a rectangle within a planar YV12 or IYUV texture with new pixel
   /// data.
@@ -354,7 +401,11 @@ extern "C" {
   /// You can use [`SDL_UpdateTexture`] as long as your pixel data is
   /// a contiguous block of Y and U/V planes in the proper order, but
   /// this function is available if your pixel data is not contiguous.
-  pub fn SDL_UpdateYUVTexture(texture: *mut SDL_Texture, rect: *const SDL_Rect, Yplane: *const Uint8, Ypitch: c_int, Uplane: *const Uint8, Upitch: c_int, Vplane: *const Uint8, Vpitch: c_int) -> c_int;
+  pub fn SDL_UpdateYUVTexture(
+    texture: *mut SDL_Texture, rect: *const SDL_Rect, Yplane: *const Uint8,
+    Ypitch: c_int, Uplane: *const Uint8, Upitch: c_int, Vplane: *const Uint8,
+    Vpitch: c_int,
+  ) -> c_int;
 
   /// Lock a portion of the texture for write-only pixel access.
   ///
@@ -370,7 +421,10 @@ extern "C" {
   /// created with [`SDL_TEXTUREACCESS_STREAMING`].
   ///
   /// See Also: [`SDL_UnlockTexture`]
-  pub fn SDL_LockTexture(texture: *mut SDL_Texture, rect: *const SDL_Rect, pixels: *mut *mut c_void, pitch: *mut c_int) -> c_int;
+  pub fn SDL_LockTexture(
+    texture: *mut SDL_Texture, rect: *const SDL_Rect, pixels: *mut *mut c_void,
+    pitch: *mut c_int,
+  ) -> c_int;
 
   /// Lock a portion of the texture for write-only pixel access. Expose it as a
   /// SDL surface.
@@ -387,7 +441,10 @@ extern "C" {
   /// created with [`SDL_TEXTUREACCESS_STREAMING`].
   ///
   /// See Also: [`SDL_UnlockTexture`]
-  pub fn SDL_LockTextureToSurface(texture: *mut SDL_Texture, rect: *const SDL_Rect, surface: *mut *mut SDL_Surface) -> c_int;
+  pub fn SDL_LockTextureToSurface(
+    texture: *mut SDL_Texture, rect: *const SDL_Rect,
+    surface: *mut *mut SDL_Surface,
+  ) -> c_int;
 
   /// Unlock a texture, uploading the changes to video memory, if needed.
   ///
@@ -413,7 +470,9 @@ extern "C" {
   /// **Returns:** 0 on success, or -1 on error
   ///
   /// See Also: [`SDL_GetRenderTarget`]
-  pub fn SDL_SetRenderTarget(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture) -> c_int;
+  pub fn SDL_SetRenderTarget(
+    renderer: *mut SDL_Renderer, texture: *mut SDL_Texture,
+  ) -> c_int;
 
   /// Get the current render target or `NULL` for the default render target.
   ///
@@ -443,7 +502,9 @@ extern "C" {
   ///
   /// See Also: [`SDL_RenderGetLogicalSize`], [`SDL_RenderSetScale`],
   /// [`SDL_RenderSetViewport`]
-  pub fn SDL_RenderSetLogicalSize(renderer: *mut SDL_Renderer, w: c_int, h: c_int) -> c_int;
+  pub fn SDL_RenderSetLogicalSize(
+    renderer: *mut SDL_Renderer, w: c_int, h: c_int,
+  ) -> c_int;
 
   /// Get device independent resolution for rendering
   ///
@@ -452,7 +513,9 @@ extern "C" {
   /// * `h` A pointer filled with the height of the logical resolution
   ///
   /// See Also: [`SDL_RenderSetLogicalSize`]
-  pub fn SDL_RenderGetLogicalSize(renderer: *mut SDL_Renderer, w: *mut c_int, h: *mut c_int);
+  pub fn SDL_RenderGetLogicalSize(
+    renderer: *mut SDL_Renderer, w: *mut c_int, h: *mut c_int,
+  );
 
   /// Set whether to force integer scales for resolution-independent rendering
   ///
@@ -464,7 +527,9 @@ extern "C" {
   /// viewport size is rounded down to the lower multiple.
   ///
   /// See Also: [`SDL_RenderSetLogicalSize`]
-  pub fn SDL_RenderSetIntegerScale(renderer: *mut SDL_Renderer, enable: SDL_bool) -> c_int;
+  pub fn SDL_RenderSetIntegerScale(
+    renderer: *mut SDL_Renderer, enable: SDL_bool,
+  ) -> c_int;
 
   /// Get whether integer scales are forced for resolution-independent rendering
   ///
@@ -487,12 +552,16 @@ extern "C" {
   /// automatically reset.
   ///
   /// See Also: [`SDL_RenderGetViewport`], [`SDL_RenderSetLogicalSize`]
-  pub fn SDL_RenderSetViewport(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> c_int;
+  pub fn SDL_RenderSetViewport(
+    renderer: *mut SDL_Renderer, rect: *const SDL_Rect,
+  ) -> c_int;
 
   /// Get the drawing area for the current target.
   ///
   /// See Also: [`SDL_RenderSetViewport`]
-  pub fn SDL_RenderGetViewport(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect) -> c_void;
+  pub fn SDL_RenderGetViewport(
+    renderer: *mut SDL_Renderer, rect: *mut SDL_Rect,
+  ) -> c_void;
 
   /// Set the clip rectangle for the current target.
   ///
@@ -503,7 +572,9 @@ extern "C" {
   /// **Returns:** 0 on success, or -1 on error
   ///
   /// See Also: [`SDL_RenderGetClipRect`]
-  pub fn SDL_RenderSetClipRect(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> c_int;
+  pub fn SDL_RenderSetClipRect(
+    renderer: *mut SDL_Renderer, rect: *const SDL_Rect,
+  ) -> c_int;
 
   /// Get the clip rectangle for the current target.
   ///
@@ -512,7 +583,9 @@ extern "C" {
   ///   rectangle if clipping is disabled.
   ///
   /// See Also: [`SDL_RenderSetClipRect`]
-  pub fn SDL_RenderGetClipRect(renderer: *mut SDL_Renderer, rect: *mut SDL_Rect) -> c_void;
+  pub fn SDL_RenderGetClipRect(
+    renderer: *mut SDL_Renderer, rect: *mut SDL_Rect,
+  ) -> c_void;
 
   /// Get whether clipping is enabled on the given renderer.
   ///
@@ -536,7 +609,9 @@ extern "C" {
   /// quality hints.  For best results use integer scaling factors.
   ///
   /// See Also: [`SDL_RenderGetScale`], [`SDL_RenderSetLogicalSize`]
-  pub fn SDL_RenderSetScale(renderer: *mut SDL_Renderer, scaleX: f32, scaleY: f32) -> c_int;
+  pub fn SDL_RenderSetScale(
+    renderer: *mut SDL_Renderer, scaleX: f32, scaleY: f32,
+  ) -> c_int;
 
   /// Get the drawing scale for the current target.
   ///
@@ -545,7 +620,9 @@ extern "C" {
   /// * `scaleY` A pointer filled in with the vertical scaling factor
   ///
   /// See Also: [`SDL_RenderSetScale`]
-  pub fn SDL_RenderGetScale(renderer: *mut SDL_Renderer, scaleX: *mut f32, scaleY: *mut f32);
+  pub fn SDL_RenderGetScale(
+    renderer: *mut SDL_Renderer, scaleX: *mut f32, scaleY: *mut f32,
+  );
 
   /// Set the color used for drawing operations (Rect, Line and Clear).
   ///
@@ -557,7 +634,9 @@ extern "C" {
   ///   `SDL_ALPHA_OPAQUE` (255).
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_SetRenderDrawColor(renderer: *mut SDL_Renderer, r: Uint8, g: Uint8, b: Uint8, a: Uint8) -> c_int;
+  pub fn SDL_SetRenderDrawColor(
+    renderer: *mut SDL_Renderer, r: Uint8, g: Uint8, b: Uint8, a: Uint8,
+  ) -> c_int;
 
   /// Get the color used for drawing operations (Rect, Line and Clear).
   ///
@@ -569,7 +648,10 @@ extern "C" {
   ///   usually [`SDL_ALPHA_OPAQUE`] (255).
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_GetRenderDrawColor(renderer: *mut SDL_Renderer, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8, a: *mut Uint8) -> c_int;
+  pub fn SDL_GetRenderDrawColor(
+    renderer: *mut SDL_Renderer, r: *mut Uint8, g: *mut Uint8, b: *mut Uint8,
+    a: *mut Uint8,
+  ) -> c_int;
 
   /// Set the blend mode used for drawing operations (Fill and Line).
   ///
@@ -582,7 +664,9 @@ extern "C" {
   /// chosen.
   ///
   /// See Also: [`SDL_GetRenderDrawBlendMode`]
-  pub fn SDL_SetRenderDrawBlendMode(renderer: *mut SDL_Renderer, blendMode: SDL_BlendMode) -> c_int;
+  pub fn SDL_SetRenderDrawBlendMode(
+    renderer: *mut SDL_Renderer, blendMode: SDL_BlendMode,
+  ) -> c_int;
 
   /// Get the blend mode used for drawing operations.
   ///
@@ -592,7 +676,9 @@ extern "C" {
   /// **Returns:** 0 on success, or -1 on error
   ///
   /// See Also: [`SDL_SetRenderDrawBlendMode`]
-  pub fn SDL_GetRenderDrawBlendMode(renderer: *mut SDL_Renderer, blendMode: *mut SDL_BlendMode) -> c_int;
+  pub fn SDL_GetRenderDrawBlendMode(
+    renderer: *mut SDL_Renderer, blendMode: *mut SDL_BlendMode,
+  ) -> c_int;
 
   /// Clear the current rendering target with the drawing color
   ///
@@ -609,7 +695,9 @@ extern "C" {
   /// * `y` The y coordinate of the point.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawPoint(renderer: *mut SDL_Renderer, x: c_int, y: c_int) -> c_int;
+  pub fn SDL_RenderDrawPoint(
+    renderer: *mut SDL_Renderer, x: c_int, y: c_int,
+  ) -> c_int;
 
   /// Draw multiple points on the current rendering target.
   ///
@@ -618,7 +706,9 @@ extern "C" {
   /// * `count` The number of points to draw
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawPoints(renderer: *mut SDL_Renderer, points: *const SDL_Point, count: c_int) -> c_int;
+  pub fn SDL_RenderDrawPoints(
+    renderer: *mut SDL_Renderer, points: *const SDL_Point, count: c_int,
+  ) -> c_int;
 
   /// Draw a line on the current rendering target.
   ///
@@ -629,7 +719,9 @@ extern "C" {
   /// * `y2` The y coordinate of the end point.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawLine(renderer: *mut SDL_Renderer, x1: c_int, y1: c_int, x2: c_int, y2: c_int) -> c_int;
+  pub fn SDL_RenderDrawLine(
+    renderer: *mut SDL_Renderer, x1: c_int, y1: c_int, x2: c_int, y2: c_int,
+  ) -> c_int;
 
   /// Draw a series of connected lines on the current rendering target.
   ///
@@ -638,7 +730,9 @@ extern "C" {
   /// * `count` The number of points, drawing count-1 lines
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawLines(renderer: *mut SDL_Renderer, points: *const SDL_Point, count: c_int) -> c_int;
+  pub fn SDL_RenderDrawLines(
+    renderer: *mut SDL_Renderer, points: *const SDL_Point, count: c_int,
+  ) -> c_int;
 
   /// Draw a rectangle on the current rendering target.
   ///
@@ -647,7 +741,9 @@ extern "C" {
   ///   entire rendering target.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawRect(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> c_int;
+  pub fn SDL_RenderDrawRect(
+    renderer: *mut SDL_Renderer, rect: *const SDL_Rect,
+  ) -> c_int;
 
   /// Draw some number of rectangles on the current rendering target.
   ///
@@ -656,7 +752,9 @@ extern "C" {
   /// * `count` The number of rectangles.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawRects(renderer: *mut SDL_Renderer, rects: *const SDL_Rect, count: c_int) -> c_int;
+  pub fn SDL_RenderDrawRects(
+    renderer: *mut SDL_Renderer, rects: *const SDL_Rect, count: c_int,
+  ) -> c_int;
 
   /// Fill a rectangle on the current rendering target with the drawing color.
   ///
@@ -665,7 +763,9 @@ extern "C" {
   ///   rendering target.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderFillRect(renderer: *mut SDL_Renderer, rect: *const SDL_Rect) -> c_int;
+  pub fn SDL_RenderFillRect(
+    renderer: *mut SDL_Renderer, rect: *const SDL_Rect,
+  ) -> c_int;
 
   /// Fill some number of rectangles on the current rendering target with the
   /// drawing color.
@@ -675,7 +775,9 @@ extern "C" {
   /// * `count` The number of rectangles.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderFillRects(renderer: *mut SDL_Renderer, rects: *const SDL_Rect, count: c_int) -> c_int;
+  pub fn SDL_RenderFillRects(
+    renderer: *mut SDL_Renderer, rects: *const SDL_Rect, count: c_int,
+  ) -> c_int;
 
   /// Copy a portion of the texture to the current rendering target.
   ///
@@ -687,7 +789,10 @@ extern "C" {
   ///   entire rendering target.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderCopy(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, srcrect: *const SDL_Rect, dstrect: *const SDL_Rect) -> c_int;
+  pub fn SDL_RenderCopy(
+    renderer: *mut SDL_Renderer, texture: *mut SDL_Texture,
+    srcrect: *const SDL_Rect, dstrect: *const SDL_Rect,
+  ) -> c_int;
 
   /// Copy a portion of the source texture to the current rendering target,
   /// rotating it by angle around the given center
@@ -707,7 +812,11 @@ extern "C" {
   ///   should be performed on the texture
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderCopyEx(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, srcrect: *const SDL_Rect, dstrect: *const SDL_Rect, angle: f64, center: *const SDL_Point, flip: SDL_RendererFlip) -> c_int;
+  pub fn SDL_RenderCopyEx(
+    renderer: *mut SDL_Renderer, texture: *mut SDL_Texture,
+    srcrect: *const SDL_Rect, dstrect: *const SDL_Rect, angle: f64,
+    center: *const SDL_Point, flip: SDL_RendererFlip,
+  ) -> c_int;
 
   /// Draw a point on the current rendering target.
   ///
@@ -716,7 +825,9 @@ extern "C" {
   /// * `y` The y coordinate of the point.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawPointF(renderer: *mut SDL_Renderer, x: f32, y: f32) -> c_int;
+  pub fn SDL_RenderDrawPointF(
+    renderer: *mut SDL_Renderer, x: f32, y: f32,
+  ) -> c_int;
 
   /// Draw multiple points on the current rendering target.
   ///
@@ -725,7 +836,9 @@ extern "C" {
   /// * `count` The number of points to draw
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawPointsF(renderer: *mut SDL_Renderer, points: *const SDL_FPoint, count: c_int) -> c_int;
+  pub fn SDL_RenderDrawPointsF(
+    renderer: *mut SDL_Renderer, points: *const SDL_FPoint, count: c_int,
+  ) -> c_int;
 
   /// Draw a line on the current rendering target.
   ///
@@ -736,7 +849,9 @@ extern "C" {
   /// * `y2` The y coordinate of the end point.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawLineF(renderer: *mut SDL_Renderer, x1: f32, y1: f32, x2: f32, y2: f32) -> c_int;
+  pub fn SDL_RenderDrawLineF(
+    renderer: *mut SDL_Renderer, x1: f32, y1: f32, x2: f32, y2: f32,
+  ) -> c_int;
 
   /// Draw a series of connected lines on the current rendering target.
   ///
@@ -745,7 +860,9 @@ extern "C" {
   /// * `count` The number of points, drawing count-1 lines
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawLinesF(renderer: *mut SDL_Renderer, points: *const SDL_FPoint, count: c_int) -> c_int;
+  pub fn SDL_RenderDrawLinesF(
+    renderer: *mut SDL_Renderer, points: *const SDL_FPoint, count: c_int,
+  ) -> c_int;
 
   /// Draw a rectangle on the current rendering target.
   ///
@@ -754,7 +871,9 @@ extern "C" {
   ///   entire rendering target.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawRectF(renderer: *mut SDL_Renderer, rect: *const SDL_FRect) -> c_int;
+  pub fn SDL_RenderDrawRectF(
+    renderer: *mut SDL_Renderer, rect: *const SDL_FRect,
+  ) -> c_int;
 
   /// Draw some number of rectangles on the current rendering target.
   ///
@@ -763,7 +882,9 @@ extern "C" {
   /// * `count` The number of rectangles.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderDrawRectsF(renderer: *mut SDL_Renderer, rects: *const SDL_FRect, count: c_int) -> c_int;
+  pub fn SDL_RenderDrawRectsF(
+    renderer: *mut SDL_Renderer, rects: *const SDL_FRect, count: c_int,
+  ) -> c_int;
 
   /// Fill a rectangle on the current rendering target with the drawing color.
   ///
@@ -772,7 +893,9 @@ extern "C" {
   ///   rendering target.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderFillRectF(renderer: *mut SDL_Renderer, rect: *const SDL_FRect) -> c_int;
+  pub fn SDL_RenderFillRectF(
+    renderer: *mut SDL_Renderer, rect: *const SDL_FRect,
+  ) -> c_int;
 
   /// Fill some number of rectangles on the current rendering target with the
   /// drawing color.
@@ -782,7 +905,9 @@ extern "C" {
   /// * `count` The number of rectangles.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderFillRectsF(renderer: *mut SDL_Renderer, rects: *const SDL_FRect, count: c_int) -> c_int;
+  pub fn SDL_RenderFillRectsF(
+    renderer: *mut SDL_Renderer, rects: *const SDL_FRect, count: c_int,
+  ) -> c_int;
 
   /// Copy a portion of the texture to the current rendering target.
   ///
@@ -794,7 +919,10 @@ extern "C" {
   ///   rendering target.
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderCopyF(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, srcrect: *const SDL_Rect, dstrect: *const SDL_FRect) -> c_int;
+  pub fn SDL_RenderCopyF(
+    renderer: *mut SDL_Renderer, texture: *mut SDL_Texture,
+    srcrect: *const SDL_Rect, dstrect: *const SDL_FRect,
+  ) -> c_int;
 
   /// Copy a portion of the source texture to the current rendering target,
   /// rotating it by angle around the given center
@@ -814,7 +942,11 @@ extern "C" {
   ///   be performed on the texture
   ///
   /// **Returns:** 0 on success, or -1 on error
-  pub fn SDL_RenderCopyExF(renderer: *mut SDL_Renderer, texture: *mut SDL_Texture, srcrect: *const SDL_Rect, dstrect: *const SDL_FRect, angle: f64, center: *const SDL_FPoint, flip: SDL_RendererFlip) -> c_int;
+  pub fn SDL_RenderCopyExF(
+    renderer: *mut SDL_Renderer, texture: *mut SDL_Texture,
+    srcrect: *const SDL_Rect, dstrect: *const SDL_FRect, angle: f64,
+    center: *const SDL_FPoint, flip: SDL_RendererFlip,
+  ) -> c_int;
 
   /// Read pixels from the current rendering target.
   ///
@@ -830,7 +962,10 @@ extern "C" {
   ///
   /// **Warning:** This is a very slow operation, and should not be used
   /// frequently.
-  pub fn SDL_RenderReadPixels(renderer: *mut SDL_Renderer, rect: *const SDL_Rect, format: Uint32, pixels: *mut c_void, pitch: c_int) -> c_int;
+  pub fn SDL_RenderReadPixels(
+    renderer: *mut SDL_Renderer, rect: *const SDL_Rect, format: Uint32,
+    pixels: *mut c_void, pitch: c_int,
+  ) -> c_int;
 
   /// Update the screen with rendering performed.
   pub fn SDL_RenderPresent(renderer: *mut SDL_Renderer);
@@ -876,7 +1011,9 @@ extern "C" {
   /// * `texh` A pointer to a float that will be filled with the texture height.
   ///
   /// **Returns:** 0 on success, or -1 if the operation is not supported
-  pub fn SDL_GL_BindTexture(texture: *mut SDL_Texture, texw: *mut f32, texh: *mut f32) -> c_int;
+  pub fn SDL_GL_BindTexture(
+    texture: *mut SDL_Texture, texw: *mut f32, texh: *mut f32,
+  ) -> c_int;
 
   /// Unbind a texture from the current OpenGL/ES/ES2 context.
   ///
@@ -903,5 +1040,7 @@ extern "C" {
   /// renderer isn't a Metal renderer
   ///
   /// See Also: [`SDL_RenderGetMetalLayer`]
-  pub fn SDL_RenderGetMetalCommandEncoder(renderer: *mut SDL_Renderer) -> *mut c_void;
+  pub fn SDL_RenderGetMetalCommandEncoder(
+    renderer: *mut SDL_Renderer,
+  ) -> *mut c_void;
 }

@@ -101,7 +101,8 @@ extern "C" {
   pub fn SDL_SensorOpen(device_index: c_int) -> *mut SDL_Sensor;
 
   /// Return the SDL_Sensor associated with an instance id.
-  pub fn SDL_SensorFromInstanceID(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
+  pub fn SDL_SensorFromInstanceID(instance_id: SDL_SensorID)
+    -> *mut SDL_Sensor;
 
   /// Get the implementation dependent name of a sensor.
   ///
@@ -139,7 +140,9 @@ extern "C" {
   /// * `num_values` The number of values to write to data
   ///
   /// **Returns:** 0 or -1 if an error occurred.
-  pub fn SDL_SensorGetData(sensor: *mut SDL_Sensor, data: *mut c_float, num_values: c_int) -> c_int;
+  pub fn SDL_SensorGetData(
+    sensor: *mut SDL_Sensor, data: *mut c_float, num_values: c_int,
+  ) -> c_int;
 
   /// Close a sensor previously opened with [`SDL_SensorOpen`]
   pub fn SDL_SensorClose(sensor: *mut SDL_Sensor);

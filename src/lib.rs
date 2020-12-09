@@ -1,7 +1,7 @@
 #![no_std]
 #![allow(bad_style)]
 #![warn(missing_docs)]
-#![cfg_attr(feature = "const_mut_refs", feature(const_mut_refs))]
+#![allow(clippy::missing_safety_doc)]
 
 //! Bindings to the SDL2 C library.
 

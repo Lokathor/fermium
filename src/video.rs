@@ -44,23 +44,29 @@ pub const SDL_WINDOW_MINIMIZED: SDL_WindowFlags = SDL_WindowFlags(0x00000040);
 #[allow(missing_docs)]
 pub const SDL_WINDOW_MAXIMIZED: SDL_WindowFlags = SDL_WindowFlags(0x00000080);
 #[allow(missing_docs)]
-pub const SDL_WINDOW_INPUT_GRABBED: SDL_WindowFlags = SDL_WindowFlags(0x00000100);
+pub const SDL_WINDOW_INPUT_GRABBED: SDL_WindowFlags =
+  SDL_WindowFlags(0x00000100);
 #[allow(missing_docs)]
 pub const SDL_WINDOW_INPUT_FOCUS: SDL_WindowFlags = SDL_WindowFlags(0x00000200);
 #[allow(missing_docs)]
 pub const SDL_WINDOW_MOUSE_FOCUS: SDL_WindowFlags = SDL_WindowFlags(0x00000400);
 #[allow(missing_docs)]
-pub const SDL_WINDOW_FULLSCREEN_DESKTOP: SDL_WindowFlags = SDL_WindowFlags(SDL_WINDOW_FULLSCREEN.0 | 0x00001000);
+pub const SDL_WINDOW_FULLSCREEN_DESKTOP: SDL_WindowFlags =
+  SDL_WindowFlags(SDL_WINDOW_FULLSCREEN.0 | 0x00001000);
 #[allow(missing_docs)]
 pub const SDL_WINDOW_FOREIGN: SDL_WindowFlags = SDL_WindowFlags(0x00000800);
 #[allow(missing_docs)]
-pub const SDL_WINDOW_ALLOW_HIGHDPI: SDL_WindowFlags = SDL_WindowFlags(0x00002000);
+pub const SDL_WINDOW_ALLOW_HIGHDPI: SDL_WindowFlags =
+  SDL_WindowFlags(0x00002000);
 #[allow(missing_docs)]
-pub const SDL_WINDOW_MOUSE_CAPTURE: SDL_WindowFlags = SDL_WindowFlags(0x00004000);
+pub const SDL_WINDOW_MOUSE_CAPTURE: SDL_WindowFlags =
+  SDL_WindowFlags(0x00004000);
 #[allow(missing_docs)]
-pub const SDL_WINDOW_ALWAYS_ON_TOP: SDL_WindowFlags = SDL_WindowFlags(0x00008000);
+pub const SDL_WINDOW_ALWAYS_ON_TOP: SDL_WindowFlags =
+  SDL_WindowFlags(0x00008000);
 #[allow(missing_docs)]
-pub const SDL_WINDOW_SKIP_TASKBAR: SDL_WindowFlags = SDL_WindowFlags(0x00010000);
+pub const SDL_WINDOW_SKIP_TASKBAR: SDL_WindowFlags =
+  SDL_WindowFlags(0x00010000);
 #[allow(missing_docs)]
 pub const SDL_WINDOW_UTILITY: SDL_WindowFlags = SDL_WindowFlags(0x00020000);
 #[allow(missing_docs)]
@@ -98,7 +104,8 @@ pub const SDL_WINDOWEVENT_MOVED: SDL_WindowEventID = SDL_WindowEventID(4);
 #[allow(missing_docs)]
 pub const SDL_WINDOWEVENT_RESIZED: SDL_WindowEventID = SDL_WindowEventID(5);
 #[allow(missing_docs)]
-pub const SDL_WINDOWEVENT_SIZE_CHANGED: SDL_WindowEventID = SDL_WindowEventID(6);
+pub const SDL_WINDOWEVENT_SIZE_CHANGED: SDL_WindowEventID =
+  SDL_WindowEventID(6);
 #[allow(missing_docs)]
 pub const SDL_WINDOWEVENT_MINIMIZED: SDL_WindowEventID = SDL_WindowEventID(7);
 #[allow(missing_docs)]
@@ -110,7 +117,8 @@ pub const SDL_WINDOWEVENT_ENTER: SDL_WindowEventID = SDL_WindowEventID(10);
 #[allow(missing_docs)]
 pub const SDL_WINDOWEVENT_LEAVE: SDL_WindowEventID = SDL_WindowEventID(11);
 #[allow(missing_docs)]
-pub const SDL_WINDOWEVENT_FOCUS_GAINED: SDL_WindowEventID = SDL_WindowEventID(12);
+pub const SDL_WINDOWEVENT_FOCUS_GAINED: SDL_WindowEventID =
+  SDL_WindowEventID(12);
 #[allow(missing_docs)]
 pub const SDL_WINDOWEVENT_FOCUS_LOST: SDL_WindowEventID = SDL_WindowEventID(13);
 #[allow(missing_docs)]
@@ -130,22 +138,28 @@ pub struct SDL_DisplayEventID(pub u8);
 /// Never used
 pub const SDL_DISPLAYEVENT_NONE: SDL_DisplayEventID = SDL_DisplayEventID(0);
 /// Display orientation has changed to `data1`
-pub const SDL_DISPLAYEVENT_ORIENTATION: SDL_DisplayEventID = SDL_DisplayEventID(1);
+pub const SDL_DISPLAYEVENT_ORIENTATION: SDL_DisplayEventID =
+  SDL_DisplayEventID(1);
 
 /// Orientations a display can have.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SDL_DisplayOrientation(pub u32);
 #[allow(missing_docs)]
-pub const SDL_ORIENTATION_UNKNOWN: SDL_DisplayOrientation = SDL_DisplayOrientation(0);
+pub const SDL_ORIENTATION_UNKNOWN: SDL_DisplayOrientation =
+  SDL_DisplayOrientation(0);
 #[allow(missing_docs)]
-pub const SDL_ORIENTATION_LANDSCAPE: SDL_DisplayOrientation = SDL_DisplayOrientation(1);
+pub const SDL_ORIENTATION_LANDSCAPE: SDL_DisplayOrientation =
+  SDL_DisplayOrientation(1);
 #[allow(missing_docs)]
-pub const SDL_ORIENTATION_LANDSCAPE_FLIPPED: SDL_DisplayOrientation = SDL_DisplayOrientation(2);
+pub const SDL_ORIENTATION_LANDSCAPE_FLIPPED: SDL_DisplayOrientation =
+  SDL_DisplayOrientation(2);
 #[allow(missing_docs)]
-pub const SDL_ORIENTATION_PORTRAIT: SDL_DisplayOrientation = SDL_DisplayOrientation(3);
+pub const SDL_ORIENTATION_PORTRAIT: SDL_DisplayOrientation =
+  SDL_DisplayOrientation(3);
 #[allow(missing_docs)]
-pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation = SDL_DisplayOrientation(4);
+pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
+  SDL_DisplayOrientation(4);
 
 /// A handle to an OpenGL context.
 #[derive(Debug, Clone, Copy)]
@@ -221,7 +235,8 @@ pub struct SDL_GLprofile(pub u32);
 #[allow(missing_docs)]
 pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLprofile = SDL_GLprofile(0x0001);
 #[allow(missing_docs)]
-pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLprofile = SDL_GLprofile(0x0002);
+pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLprofile =
+  SDL_GLprofile(0x0002);
 #[allow(missing_docs)]
 pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLprofile = SDL_GLprofile(0x0004);
 
@@ -233,13 +248,17 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLprofile = SDL_GLprofile(0x0004);
 pub struct SDL_GLcontextFlag(pub u32);
 impl_bit_ops_for_tuple_newtype!(SDL_GLcontextFlag);
 #[allow(missing_docs)]
-pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLcontextFlag = SDL_GLcontextFlag(0x0001);
+pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLcontextFlag =
+  SDL_GLcontextFlag(0x0001);
 #[allow(missing_docs)]
-pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLcontextFlag = SDL_GLcontextFlag(0x0002);
+pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLcontextFlag =
+  SDL_GLcontextFlag(0x0002);
 #[allow(missing_docs)]
-pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLcontextFlag = SDL_GLcontextFlag(0x0004);
+pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLcontextFlag =
+  SDL_GLcontextFlag(0x0004);
 #[allow(missing_docs)]
-pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag = SDL_GLcontextFlag(0x0008);
+pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag =
+  SDL_GLcontextFlag(0x0008);
 
 /// Affects GL's behavior when you release the context.
 ///
@@ -248,9 +267,11 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLcontextFlag = SDL_GLcontext
 #[repr(transparent)]
 pub struct SDL_GLcontextReleaseFlag(pub u32);
 #[allow(missing_docs)]
-pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLcontextReleaseFlag = SDL_GLcontextReleaseFlag(0x0000);
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLcontextReleaseFlag =
+  SDL_GLcontextReleaseFlag(0x0000);
 #[allow(missing_docs)]
-pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag = SDL_GLcontextReleaseFlag(0x0001);
+pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag =
+  SDL_GLcontextReleaseFlag(0x0001);
 
 /// Affects GL's behavior when the context is reset.
 ///
@@ -259,9 +280,11 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLcontextReleaseFlag = SDL_
 #[repr(transparent)]
 pub struct SDL_GLContextResetNotification(pub u32);
 #[allow(missing_docs)]
-pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification = SDL_GLContextResetNotification(0x0000);
+pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
+  SDL_GLContextResetNotification(0x0000);
 #[allow(missing_docs)]
-pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification = SDL_GLContextResetNotification(0x0001);
+pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification =
+  SDL_GLContextResetNotification(0x0001);
 
 /// The results of a hit test.
 ///
@@ -282,16 +305,24 @@ pub const SDL_HITTEST_RESIZE_TOPRIGHT: SDL_HitTestResult = SDL_HitTestResult(4);
 #[allow(missing_docs)]
 pub const SDL_HITTEST_RESIZE_RIGHT: SDL_HitTestResult = SDL_HitTestResult(5);
 #[allow(missing_docs)]
-pub const SDL_HITTEST_RESIZE_BOTTOMRIGHT: SDL_HitTestResult = SDL_HitTestResult(6);
+pub const SDL_HITTEST_RESIZE_BOTTOMRIGHT: SDL_HitTestResult =
+  SDL_HitTestResult(6);
 #[allow(missing_docs)]
 pub const SDL_HITTEST_RESIZE_BOTTOM: SDL_HitTestResult = SDL_HitTestResult(7);
 #[allow(missing_docs)]
-pub const SDL_HITTEST_RESIZE_BOTTOMLEFT: SDL_HitTestResult = SDL_HitTestResult(8);
+pub const SDL_HITTEST_RESIZE_BOTTOMLEFT: SDL_HitTestResult =
+  SDL_HitTestResult(8);
 #[allow(missing_docs)]
 pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = SDL_HitTestResult(9);
 
 /// SDL's "hit test" function pointer type.
-pub type SDL_HitTest = Option<unsafe extern "C" fn(win: *mut SDL_Window, area: *const SDL_Point, data: *mut c_void) -> SDL_HitTestResult>;
+pub type SDL_HitTest = Option<
+  unsafe extern "C" fn(
+    win: *mut SDL_Window,
+    area: *const SDL_Point,
+    data: *mut c_void,
+  ) -> SDL_HitTestResult,
+>;
 
 extern "C" {
   /// The number of available video drivers.
@@ -329,13 +360,17 @@ extern "C" {
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_GetDisplayBounds(displayIndex: c_int, rect: *mut SDL_Rect) -> c_int;
+  pub fn SDL_GetDisplayBounds(
+    displayIndex: c_int, rect: *mut SDL_Rect,
+  ) -> c_int;
 
   /// As [`SDL_GetDisplayBounds`], but system reserved area (eg: the taskbar) is
   /// removed for you.
   ///
   /// Generally, you should use this for non-fullscreen programs.
-  pub fn SDL_GetDisplayUsableBounds(displayIndex: c_int, rect: *mut SDL_Rect) -> c_int;
+  pub fn SDL_GetDisplayUsableBounds(
+    displayIndex: c_int, rect: *mut SDL_Rect,
+  ) -> c_int;
 
   /// Get the diagonal, horizontal, and vertical DPI of a display.
   ///
@@ -343,10 +378,14 @@ extern "C" {
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_GetDisplayDPI(displayIndex: c_int, ddpi: *mut f32, hdpi: *mut f32, vdpi: *mut f32) -> c_int;
+  pub fn SDL_GetDisplayDPI(
+    displayIndex: c_int, ddpi: *mut f32, hdpi: *mut f32, vdpi: *mut f32,
+  ) -> c_int;
 
   /// Gets the orientation of a display.
-  pub fn SDL_GetDisplayOrientation(displayIndex: c_int) -> SDL_DisplayOrientation;
+  pub fn SDL_GetDisplayOrientation(
+    displayIndex: c_int,
+  ) -> SDL_DisplayOrientation;
 
   /// Gets the number of available display modes.
   ///
@@ -357,25 +396,34 @@ extern "C" {
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_GetDisplayMode(displayIndex: c_int, modeIndex: c_int, mode: *mut SDL_DisplayMode) -> c_int;
+  pub fn SDL_GetDisplayMode(
+    displayIndex: c_int, modeIndex: c_int, mode: *mut SDL_DisplayMode,
+  ) -> c_int;
 
   /// Gets info about the desktop's display mode.
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_GetDesktopDisplayMode(displayIndex: c_int, mode: *mut SDL_DisplayMode) -> c_int;
+  pub fn SDL_GetDesktopDisplayMode(
+    displayIndex: c_int, mode: *mut SDL_DisplayMode,
+  ) -> c_int;
 
   /// Gets info about the current display mode.
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_GetCurrentDisplayMode(displayIndex: c_int, mode: *mut SDL_DisplayMode) -> c_int;
+  pub fn SDL_GetCurrentDisplayMode(
+    displayIndex: c_int, mode: *mut SDL_DisplayMode,
+  ) -> c_int;
 
   /// Gets the closest display mode to the `mode` requested.
   ///
   /// **Returns:** Either the `closest` pointer, or null on failure. Call
   /// [`SDL_GetError`] for more.
-  pub fn SDL_GetClosestDisplayMode(displayIndex: c_int, mode: *const SDL_DisplayMode, closest: *mut SDL_DisplayMode) -> *mut SDL_DisplayMode;
+  pub fn SDL_GetClosestDisplayMode(
+    displayIndex: c_int, mode: *const SDL_DisplayMode,
+    closest: *mut SDL_DisplayMode,
+  ) -> *mut SDL_DisplayMode;
 
   /// Gets the display index for the center of a given window.
   ///
@@ -388,14 +436,18 @@ extern "C" {
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_SetWindowDisplayMode(window: *mut SDL_Window, mode: *const SDL_DisplayMode) -> c_int;
+  pub fn SDL_SetWindowDisplayMode(
+    window: *mut SDL_Window, mode: *const SDL_DisplayMode,
+  ) -> c_int;
 
   /// Gets the display mode used when the given window is visible and
   /// fullscreen.
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_GetWindowDisplayMode(window: *mut SDL_Window, mode: *mut SDL_DisplayMode) -> c_int;
+  pub fn SDL_GetWindowDisplayMode(
+    window: *mut SDL_Window, mode: *mut SDL_DisplayMode,
+  ) -> c_int;
 
   /// Gets the pixel format of the window.
   ///
@@ -407,7 +459,9 @@ extern "C" {
   ///
   /// **Returns:** the window pointer, or NULL on failure. Call [`SDL_GetError`]
   /// for more.
-  pub fn SDL_CreateWindow(title: *const c_char, x: c_int, y: c_int, w: c_int, h: c_int, flags: Uint32) -> *mut SDL_Window;
+  pub fn SDL_CreateWindow(
+    title: *const c_char, x: c_int, y: c_int, w: c_int, h: c_int, flags: Uint32,
+  ) -> *mut SDL_Window;
 
   /// Creates a window from driver-dependent window creation data, typically a
   /// native window pointer.
@@ -434,12 +488,16 @@ extern "C" {
   /// Associates a named user data pointer to the window.
   ///
   /// The name is case sensitive.
-  pub fn SDL_SetWindowData(window: *mut SDL_Window, name: *const c_char, userdata: *mut c_void) -> *mut c_void;
+  pub fn SDL_SetWindowData(
+    window: *mut SDL_Window, name: *const c_char, userdata: *mut c_void,
+  ) -> *mut c_void;
 
   /// Gets the named user data pointer of the window.
   ///
   /// The name is case sensitive.
-  pub fn SDL_GetWindowData(window: *mut SDL_Window, name: *const c_char) -> *mut c_void;
+  pub fn SDL_GetWindowData(
+    window: *mut SDL_Window, name: *const c_char,
+  ) -> *mut c_void;
 
   /// Sets the window's position.
   pub fn SDL_SetWindowPosition(window: *mut SDL_Window, x: c_int, y: c_int);
@@ -447,7 +505,9 @@ extern "C" {
   /// Gets the window's position.
   ///
   /// Either pointer may safely be null.
-  pub fn SDL_GetWindowPosition(window: *mut SDL_Window, x: *mut c_int, y: *mut c_int);
+  pub fn SDL_GetWindowPosition(
+    window: *mut SDL_Window, x: *mut c_int, y: *mut c_int,
+  );
 
   /// Sets the window's client area size (in screen coordinates).
   ///
@@ -457,24 +517,37 @@ extern "C" {
   /// Gets the window's client area size (in screen coordinates).
   ///
   /// Either pointer may safely be null.
-  pub fn SDL_GetWindowSize(window: *mut SDL_Window, w: *mut c_int, h: *mut c_int);
+  pub fn SDL_GetWindowSize(
+    window: *mut SDL_Window, w: *mut c_int, h: *mut c_int,
+  );
 
   /// Gets the size of the border decoration around the client area.
   ///
   /// Any pointer may safely be null.
-  pub fn SDL_GetWindowBordersSize(window: *mut SDL_Window, top: *mut c_int, left: *mut c_int, bottom: *mut c_int, right: *mut c_int) -> c_int;
+  pub fn SDL_GetWindowBordersSize(
+    window: *mut SDL_Window, top: *mut c_int, left: *mut c_int,
+    bottom: *mut c_int, right: *mut c_int,
+  ) -> c_int;
 
   /// Sets the minimum client area size of the window.
-  pub fn SDL_SetWindowMinimumSize(window: *mut SDL_Window, min_w: c_int, min_h: c_int);
+  pub fn SDL_SetWindowMinimumSize(
+    window: *mut SDL_Window, min_w: c_int, min_h: c_int,
+  );
 
   /// Gets the minimum client area size of the window.
-  pub fn SDL_GetWindowMinimumSize(window: *mut SDL_Window, w: *mut c_int, h: *mut c_int);
+  pub fn SDL_GetWindowMinimumSize(
+    window: *mut SDL_Window, w: *mut c_int, h: *mut c_int,
+  );
 
   /// Sets the maximum client area size of the window.
-  pub fn SDL_SetWindowMaximumSize(window: *mut SDL_Window, max_w: c_int, max_h: c_int);
+  pub fn SDL_SetWindowMaximumSize(
+    window: *mut SDL_Window, max_w: c_int, max_h: c_int,
+  );
 
   /// Gets the maximum client area size of the window.
-  pub fn SDL_GetWindowMaximumSize(window: *mut SDL_Window, w: *mut c_int, h: *mut c_int);
+  pub fn SDL_GetWindowMaximumSize(
+    window: *mut SDL_Window, w: *mut c_int, h: *mut c_int,
+  );
 
   /// Add/remove the border of the window.
   ///
@@ -510,7 +583,9 @@ extern "C" {
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_SetWindowFullscreen(window: *mut SDL_Window, flags: Uint32) -> c_int;
+  pub fn SDL_SetWindowFullscreen(
+    window: *mut SDL_Window, flags: Uint32,
+  ) -> c_int;
 
   /// Gets the surface of the window.
   ///
@@ -533,7 +608,9 @@ extern "C" {
 
   /// As [`SDL_UpdateWindowSurfaceRects`], but limited to the list of rects
   /// given.
-  pub fn SDL_UpdateWindowSurfaceRects(window: *mut SDL_Window, rects: *const SDL_Rect, numrects: c_int) -> c_int;
+  pub fn SDL_UpdateWindowSurfaceRects(
+    window: *mut SDL_Window, rects: *const SDL_Rect, numrects: c_int,
+  ) -> c_int;
 
   /// Sets if the window "grabs" the mouse pointer (locking it inside the
   /// window).
@@ -552,7 +629,9 @@ extern "C" {
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_SetWindowBrightness(window: *mut SDL_Window, brightness: f32) -> c_int;
+  pub fn SDL_SetWindowBrightness(
+    window: *mut SDL_Window, brightness: f32,
+  ) -> c_int;
 
   /// Gets the brightness (gamma) of the display that owns the window.
   pub fn SDL_GetWindowBrightness(window: *mut SDL_Window) -> f32;
@@ -567,10 +646,14 @@ extern "C" {
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_GetWindowOpacity(window: *mut SDL_Window, out_opacity: *mut f32) -> c_int;
+  pub fn SDL_GetWindowOpacity(
+    window: *mut SDL_Window, out_opacity: *mut f32,
+  ) -> c_int;
 
   /// Sets a window as a modal for another window (X11 only).
-  pub fn SDL_SetWindowModalFor(modal_window: *mut SDL_Window, parent_window: *mut SDL_Window) -> c_int;
+  pub fn SDL_SetWindowModalFor(
+    modal_window: *mut SDL_Window, parent_window: *mut SDL_Window,
+  ) -> c_int;
 
   /// Sets input focus to a given window.
   pub fn SDL_SetWindowInputFocus(window: *mut SDL_Window) -> c_int;
@@ -582,13 +665,21 @@ extern "C" {
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_SetWindowGammaRamp(window: *mut SDL_Window, red: *const Uint16, green: *const Uint16, blue: *const Uint16) -> c_int;
+  pub fn SDL_SetWindowGammaRamp(
+    window: *mut SDL_Window, red: *const Uint16, green: *const Uint16,
+    blue: *const Uint16,
+  ) -> c_int;
 
   /// Gets the gamma ramp of the window.
-  pub fn SDL_GetWindowGammaRamp(window: *mut SDL_Window, red: *mut Uint16, green: *mut Uint16, blue: *mut Uint16) -> c_int;
+  pub fn SDL_GetWindowGammaRamp(
+    window: *mut SDL_Window, red: *mut Uint16, green: *mut Uint16,
+    blue: *mut Uint16,
+  ) -> c_int;
 
   /// Sets the hit test callback hit test user data for the window.
-  pub fn SDL_SetWindowHitTest(window: *mut SDL_Window, callback: SDL_HitTest, callback_data: *mut c_void) -> c_int;
+  pub fn SDL_SetWindowHitTest(
+    window: *mut SDL_Window, callback: SDL_HitTest, callback_data: *mut c_void,
+  ) -> c_int;
 
   /// Destroys a window.
   pub fn SDL_DestroyWindow(window: *mut SDL_Window);
@@ -662,7 +753,9 @@ extern "C" {
   ///
   /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
   /// more.
-  pub fn SDL_GL_MakeCurrent(window: *mut SDL_Window, context: SDL_GLContext) -> c_int;
+  pub fn SDL_GL_MakeCurrent(
+    window: *mut SDL_Window, context: SDL_GLContext,
+  ) -> c_int;
 
   /// Gets the window associated with the current context.
   pub fn SDL_GL_GetCurrentWindow() -> *mut SDL_Window;
@@ -675,7 +768,9 @@ extern "C" {
   /// This is for use with `glViewport`.
   ///
   /// Either pointer may safely be null.
-  pub fn SDL_GL_GetDrawableSize(window: *mut SDL_Window, w: *mut c_int, h: *mut c_int);
+  pub fn SDL_GL_GetDrawableSize(
+    window: *mut SDL_Window, w: *mut c_int, h: *mut c_int,
+  );
 
   /// Sets the swap interval of GL swaps.
   ///

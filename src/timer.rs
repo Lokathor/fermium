@@ -8,7 +8,8 @@ pub use crate::stdinc::*;
 /// next timer interval. If the returned value is the same as the one passed in,
 /// the periodic alarm continues, otherwise a new alarm is scheduled. If the
 /// callback returns 0, the periodic alarm is cancelled.
-pub type SDL_TimerCallback = Option<unsafe extern "C" fn(interval: Uint32, param: *mut c_void) -> Uint32>;
+pub type SDL_TimerCallback =
+  Option<unsafe extern "C" fn(interval: Uint32, param: *mut c_void) -> Uint32>;
 
 /// Definition of the timer ID type.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -35,7 +36,9 @@ extern "C" {
   /// Add a new timer to the pool of timers already running.
   ///
   /// **Returns:** A timer ID, or 0 when an error occurs.
-  pub fn SDL_AddTimer(interval: Uint32, callback: SDL_TimerCallback, param: *mut c_void) -> SDL_TimerID;
+  pub fn SDL_AddTimer(
+    interval: Uint32, callback: SDL_TimerCallback, param: *mut c_void,
+  ) -> SDL_TimerID;
 
   /// Remove a timer by ID.
   ///
