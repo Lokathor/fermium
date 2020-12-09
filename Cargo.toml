@@ -5,7 +5,7 @@ repository = "https://github.com/Lokathor/fermium"
 version = "20012.0.0-alpha.1"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
-license = "Zlib"
+license = "Zlib OR Apache-2.0 OR MIT"
 keywords = ["SDL2"]
 categories = ["external-ffi-bindings", "no-std"]
 
