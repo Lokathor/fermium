@@ -10,7 +10,6 @@ fn main() {
     let mut cm = cmake::Config::new(manifest_dir.join("SDL2-2.0.12"));
     cm.static_crt(true);
     cm.target(&env::var("TARGET").expect("Couldn't read `TARGET`"));
-    cm.pic(true);
 
     if cfg!(feature = "dynamic_link") {
       cm.define("SDL_SHARED", "ON");
