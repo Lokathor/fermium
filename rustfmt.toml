@@ -1,7 +1,4 @@
-# Based on
-# https://github.com/rust-lang/rustfmt/blob/rustfmt-1.4.19/Configurations.md
-
-# Stable
+# Stable (1.0)
 edition = "2018"
 fn_args_layout = "Compressed"
 max_width = 80

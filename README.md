@@ -1,23 +1,21 @@
-[![License:Zlib](https://img.shields.io/badge/License-Zlib-brightgreen.svg)](https://opensource.org/licenses/Zlib)
-![Minimum Rust Version](https://img.shields.io/badge/Min%20Rust-1.33-green.svg)
+![Minimum Rust Version](https://img.shields.io/badge/Min%20Rust-1.48-green.svg)
 [![crates.io](https://img.shields.io/crates/v/fermium.svg)](https://crates.io/crates/fermium)
 [![docs.rs](https://docs.rs/fermium/badge.svg)](https://docs.rs/fermium/)
 
-# fermium
+# `fermium`
 
-The `fermium` crate is raw bindings to the SDL2 C API.
+Rust bindings to the [SDL2](https://libsdl.org/) library.
 
-Currently this targets `SDL2-2.0.14`.
-
-It uses a bundled copy of SDL2 on Windows, and the system version on Mac/Linux.
+This crate bundles the source for SDL2 and then builds it for you.
+In other words, you do not need to have installed SDL2 yourself.
 
 ## Versioning
 
-SDL2 doesn't follow SemVer, so this crate can't easily follow SemVer.
+SDL2 doesn't follow SemVer, so this crate can't easily follow SemVer either.
 
-Instead, this crate uses the entire SDL2 version targeted as the major version,
+Instead, this crate uses the entire SDL2 release version as the major version,
 with the minor and patch versions being "normal semver" from there.
-* `SDL2-2.0.14` --> `fermium-20014.0.0`
+* `SDL2-2.0.12` --> `fermium-20012.0.0`
 
 ## Project Logo
 

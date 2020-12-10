@@ -2,34 +2,37 @@
 name = "fermium"
 description = "An opinionated crate of SDL2 bindings."
 repository = "https://github.com/Lokathor/fermium"
-# Targets SDL2 version 2.0.14
-version = "20014.0.0-alpha.0"
+version = "20012.0.0-alpha.1"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
-license = "Zlib"
+license = "Zlib OR Apache-2.0 OR MIT"
 keywords = ["SDL2"]
 categories = ["external-ffi-bindings", "no-std"]
 
 links = "SDL2"
 build = "build.rs"
 
-[features]
-# Link with the dynamic library files.
-dynamic_link = []
-
-# Link with the static library files.
-static_link = ["cmake"]
-
-# Run the `bindgen` CLI to generate bindings. Probably don't use this.
-use_bindgen_bin = []
-
 [dependencies]
 chlorine = "1"
 
-[target."cfg(windows)".build-dependencies]
-# Performs the static build on windows.
-cmake = { version = "0.1", optional = true }
+[build-dependencies]
+cmake = "0.1"
+
+[features]
+# Enable this to dynamicly link to SDL2. The default is to static link because
+# even with a staticly linked SDL2 the end user can override the SDL2 used at
+# runtime (if absolutely necessary) via SDL2's "Dynamic API" system.
+# https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html
+#
+# NOTE: this causes strange build errors some of the time, and I don't know why,
+# but I also don't super value this as a feature, so consider it "unstable".
+dynamic_link = []
+
+# Enabling this will completely skip the build/link of SDL2 itself. This makes
+# `cargo check` and similar much faster, but you'll get linking errors if you
+# try to build an executable with this enabled (eg: a bin/bench/test).
+cargo_check = []
 
 [package.metadata.docs.rs]
-default-target = "x86_64-pc-windows-msvc"
-features = ["dynamic_link"]
+# building the docs is a "check only" style operation.
+features = ["cargo_check"]
