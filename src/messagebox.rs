@@ -1,6 +1,6 @@
 //! Allows the creation of message boxes, for short messages to the user.
 
-pub use crate::video::*;
+use crate::{c_char, c_int, stdinc::*, video::*};
 
 /// [`SDL_MessageBox`] flags.
 ///

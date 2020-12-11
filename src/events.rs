@@ -1,8 +1,8 @@
 //! Module for event handling.
 
-pub use crate::{
-  c_long, error::*, gamecontroller::*, gesture::*, joystick::*, keyboard::*,
-  mouse::*, stdinc::*, syswm::*, touch::*, version::*, video::*,
+use crate::{
+  c_char, c_float, c_int, c_long, c_uint, c_void, gesture::*, joystick::*,
+  keyboard::*, mouse::*, stdinc::*, syswm::*, touch::*, version::*, video::*,
 };
 
 /// Button is released.

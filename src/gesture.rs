@@ -1,6 +1,6 @@
 //! Module for touch gestures.
 
-pub use crate::{rwops::*, touch::*};
+use crate::{c_int, rwops::*, stdinc::*, touch::*};
 
 /// Used with gesture events.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

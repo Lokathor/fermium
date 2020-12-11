@@ -1,6 +1,6 @@
 #![allow(missing_docs)]
 
-pub use crate::{scancode::*, stdinc::*};
+use crate::scancode::*;
 
 /// The SDL keyboard keycode representation.
 ///

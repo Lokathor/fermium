@@ -13,7 +13,7 @@
 //! application will override the default generation of quit events for that
 //! signal.
 
-pub use crate::{error::*, events::*, stdinc::*};
+use crate::events::*;
 
 /// Checks if a quit event is currently in the queue.
 pub unsafe fn SDL_QuitRequested() -> bool {

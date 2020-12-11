@@ -4,7 +4,7 @@
 //! a full Vulkan experience you'll need a vulkan bindings crate such as
 //! [ash](https:docs.rs/ash), or similar.
 
-pub use crate::{c_uint, video::*};
+use crate::{c_char, c_int, c_uint, c_void, stdinc::*, video::*};
 
 /// Vulkan instance pointer.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

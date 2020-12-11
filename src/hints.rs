@@ -11,7 +11,7 @@
 //! a way for an application or user to give the library a hint as
 //! to how they would like the library to work.
 
-pub use crate::{c_char, stdinc::*};
+use crate::{c_char, c_void, stdinc::*};
 
 macro_rules! c_str {
   ($l:literal) => {

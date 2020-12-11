@@ -1,6 +1,6 @@
 //! Operations for SDL's rectangle type.
 
-pub use crate::{error::*, pixels::*, rwops::*, stdinc::*};
+use crate::{c_float, c_int, stdinc::*};
 
 /// The structure that defines a point (integer)
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -16,8 +16,8 @@ pub struct SDL_Point {
 #[repr(C)]
 #[allow(missing_docs)]
 pub struct SDL_FPoint {
-  pub x: f32,
-  pub y: f32,
+  pub x: c_float,
+  pub y: c_float,
 }
 
 /// A rectangle, with the origin at the upper left (integer).

@@ -1,6 +1,6 @@
 //! Module for loading "shared objects" (aka dynamic libraries / DLLs).
 
-pub use crate::{c_char, c_void};
+use crate::{c_char, c_void};
 
 extern "C" {
   /// This function dynamically loads a shared object and returns a pointer to

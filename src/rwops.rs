@@ -6,7 +6,7 @@
 //! Only a minimal amount of this module is currently bound. If you want more
 //! added, PRs accepted.
 
-pub use crate::{c_char, c_void, error::*, stdinc::*};
+use crate::{c_char, c_void};
 
 /// SDL's read/write abstraction.
 ///
