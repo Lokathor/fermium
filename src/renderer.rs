@@ -19,7 +19,9 @@
 //! These functions must be called from the main thread. See this bug for
 //! details: http://bugzilla.libsdl.org/show_bug.cgi?id=1995
 
-pub use crate::{c_char, stdinc::*, video::*};
+use crate::{
+  blendmode::*, c_char, c_int, c_void, rect::*, stdinc::*, surface::*, video::*,
+};
 
 /// Flags used when creating a rendering context
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

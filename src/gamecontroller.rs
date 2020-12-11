@@ -15,39 +15,7 @@
 //!
 //! See Also: [`joystick`](crate::joystick)
 
-/**
- *  To count the number of game controllers in the system for the
- * following:  int nJoysticks = SDL_NumJoysticks();
- *  int nGameControllers = 0;
- *  for (int i = 0; i < nJoysticks; i++) {
- *      if (SDL_IsGameController(i)) {
- *          nGameControllers++;
- *      }
- *  }
- *
- *  Using the SDL_HINT_GAMECONTROLLERCONFIG hint or the
- * SDL_GameControllerAddMapping() you can add support for controllers
- * SDL is unaware of or cause an existing controller to have a
- * different binding. The format is:  guid,name,mappings
- *
- *  Where GUID is the string value from SDL_JoystickGetGUIDString(),
- * name is the human readable string for the device and mappings are
- * controller mappings to joystick ones.  Under Windows there is a
- * reserved GUID of "xinput" that covers any XInput devices.  The
- * mapping format for joystick is:      bX - a joystick button, index X
- *      hX.Y - hat X with value Y
- *      aX - axis X of the joystick
- *  Buttons can be used as a controller axis and vice versa.
- *
- *  This string shows an example of a valid mapping for a controller
- *  "03000000341a00003608000000000000,PS3
- * Controller,a:b1,b:b2,y:b3,x:b0,start:b9,guide:b12,back:b8,dpup:h0.1,
- * dpleft:h0.8,dpdown:h0.4,dpright:h0.2,leftshoulder:b4,rightshoulder:
- * b5, leftstick:b10,rightstick:b11,leftx:a0,lefty:a1,rightx:a2,righty:
- * a3, lefttrigger:b6,righttrigger:b7",
- *
- */
-pub use crate::{error::*, joystick::*, rwops::*, stdinc::*};
+use crate::{c_char, c_int, c_void, joystick::*, rwops::*, stdinc::*};
 
 /// An SDL game controller is an opaque structure.
 #[repr(transparent)]

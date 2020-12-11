@@ -3,7 +3,7 @@
 //! This is mostly needed to make support for the
 //! [`raw-window-handle`](https://docs.rs/raw-window-handle) crate possible.
 
-pub use crate::{c_uint, c_ulong, c_void, version::*, video::*};
+use crate::{c_uint, c_ulong, c_void, stdinc::*, version::*, video::*};
 
 /// These are the various supported windowing subsystems.
 ///
@@ -186,7 +186,7 @@ extern "C" {
   ///
   /// You typically use this function like this:
   /// ```no_run
-  /// # use fermium::*;
+  /// # use fermium::prelude::*;
   /// let window = unimplemented!("make the window");
   /// let mut info = SDL_SysWMinfo::default();
   /// SDL_VERSION(&mut info.version);

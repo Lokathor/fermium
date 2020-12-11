@@ -1,6 +1,6 @@
 //! Module for interacting with the video subsystem.
 
-pub use crate::{pixels::*, rect::*, stdinc::*, surface::*};
+use crate::{c_char, c_int, c_void, rect::*, stdinc::*, surface::*};
 
 /// The structure that defines a display mode
 #[derive(Debug)]

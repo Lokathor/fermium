@@ -1,6 +1,6 @@
 //! Timer related functionality.
 
-pub use crate::stdinc::*;
+use crate::{c_int, c_void, stdinc::*};
 
 /// Function prototype for the timer callback function.
 ///

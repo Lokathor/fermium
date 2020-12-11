@@ -3,7 +3,7 @@
 //! [`SDL_Init`] must have been called with the [`SDL_INIT_SENSOR`] flag. This
 //! causes SDL to scan the system for sensors, and load appropriate drivers.
 
-pub use crate::{c_char, c_float, c_void, stdinc::*};
+use crate::{c_char, c_float, c_int, c_void, stdinc::*};
 
 /// SDL's opaque sensor type.
 #[repr(transparent)]

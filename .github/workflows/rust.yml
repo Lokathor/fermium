@@ -42,9 +42,9 @@ jobs:
         toolchain: ${{ matrix.rust.toolchain }}
         command: test
 
-    #- name: Run Tests with Dynamic Linking
-    #  uses: actions-rs/cargo@v1
-    #  with:
-    #    toolchain: ${{ matrix.rust.toolchain }}
-    #    command: test
-    #    args: --features=dynamic_link
+    - name: Run Tests with Dynamic Linking
+      uses: actions-rs/cargo@v1
+      with:
+        toolchain: ${{ matrix.rust.toolchain }}
+        command: test
+        args: --features=dynamic_link

@@ -1,6 +1,6 @@
 //! Lets you get info about the runtime SDL version.
 
-pub use crate::{c_char, stdinc::*};
+use crate::{c_char, stdinc::*};
 
 /// Information about the version of SDL in use.
 ///

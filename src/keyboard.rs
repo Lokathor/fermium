@@ -1,6 +1,8 @@
 //! Interactions with the keyboard.
 
-pub use crate::{error::*, keycode::*, stdinc::*, video::*};
+use crate::{
+  c_char, c_int, keycode::*, rect::*, scancode::*, stdinc::*, video::*,
+};
 
 /// SDL uses this for key events.
 ///

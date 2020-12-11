@@ -4,18 +4,31 @@
 
 # `fermium`
 
-Rust bindings to the [SDL2](https://libsdl.org/) library.
+Rust bindings to the [SDL2](https://libsdl.org/) library, version 2.0.12
 
 This crate bundles the source for SDL2 and then builds it for you.
 In other words, you do not need to have installed SDL2 yourself.
+You do need a C compiler, but everyone has one of those, even on Windows.
 
 ## Versioning
 
-SDL2 doesn't follow SemVer, so this crate can't easily follow SemVer either.
+SDL2 does **not** follow SemVer.
 
-Instead, this crate uses the entire SDL2 release version as the major version,
-with the minor and patch versions being "normal semver" from there.
-* `SDL2-2.0.12` --> `fermium-20012.0.0`
+Under SDL2's version scheme, the numbers are what SemVer would call `major.major.minor`.
+In other words, 2.0.10 is a compatible API upgrade from 2.0.9, and 2.1.0 is a *breaking* upgrade from 2.0.9.
+
+Also, as of 2.0.10, they moved to a Linux style "even numbers are releases" version.
+So the stable version after 2.0.10 is 2.0.12, and the next stable version will be 2.0.14.
+
+Because SDL2 doesn't follow SemVer, it's slightly harder for `fermium` to follow SemVer.
+
+Since I want it to be very easy to identify what version of SDL2 is bundled in what version of `fermium`,
+we use the full SDL2 release version as the major version number of this crate:
+
+> `SDL2-2.0.12` --> `fermium-20012.0.0`
+
+Updates *within* a `fermium` major version will all target the same SDL2 version,
+and follow the normal SemVer rules.
 
 ## Project Logo
 

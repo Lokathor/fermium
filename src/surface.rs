@@ -1,6 +1,8 @@
 //! Module for SDL's in-memory bitmap type.
 
-pub use crate::{blendmode::*, pixels::*, rect::*, rwops::*, stdinc::*};
+use crate::{
+  blendmode::*, c_char, c_int, c_void, pixels::*, rect::*, rwops::*, stdinc::*,
+};
 
 /// Surface uses preallocated memory
 pub const SDL_PREALLOC: u32 = 0x00000001;

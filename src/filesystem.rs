@@ -1,6 +1,6 @@
 //! Filesystem helper functions.
 
-pub use crate::c_char;
+use crate::c_char;
 
 extern "C" {
   /// Get the path where the application resides.
