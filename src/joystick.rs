@@ -24,7 +24,7 @@
 //!
 //! See Also: [`gamecontroller`](crate::gamecontroller)
 
-pub use crate::{c_void, error::*, stdinc::*};
+use crate::{c_char, c_int, c_void, stdinc::*};
 
 /// The `SDL_Joystick` type is an opaque structure.
 #[derive(Debug)]

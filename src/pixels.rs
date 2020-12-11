@@ -1,7 +1,7 @@
 // The only stuff left to doc here are the various constants.
 #![allow(missing_docs)]
 
-pub use crate::{c_char, c_int, stdinc::*};
+use crate::{c_char, c_int, stdinc::*};
 
 /// More alpha => more opaque.
 pub const SDL_ALPHA_OPAQUE: u8 = 255;

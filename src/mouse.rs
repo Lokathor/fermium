@@ -1,6 +1,6 @@
 //! Mouse control and interaction.
 
-pub use crate::{error::*, stdinc::*, video::*};
+use crate::{c_int, c_void, stdinc::*, surface::*, video::*};
 
 /// An opaque cursor value.
 ///

@@ -59,6 +59,8 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
 // named `foo`. Also there is a `prelude` module which lets you grab all exports
 // in a single use statement.
 
+pub mod prelude;
+
 // TODO: haptic (joystick force feedback system).
 // TODO: shape (allows shaped windows).
 // TODO: mutex (portable, no_std mutex would be handy).

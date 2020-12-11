@@ -1,6 +1,6 @@
 //! Module for touch interface interactions.
 
-pub use crate::{c_float, stdinc::*};
+use crate::{c_float, c_int, stdinc::*};
 
 /// Used with touch events.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

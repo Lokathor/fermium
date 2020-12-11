@@ -1,6 +1,6 @@
 //! Lets you get power info about the system.
 
-pub use crate::c_int;
+use crate::c_int;
 
 /// The basic state for the system's power supply.
 ///

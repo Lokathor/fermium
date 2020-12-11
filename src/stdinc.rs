@@ -2,7 +2,7 @@
 
 //! The "standard include" which almost every other include tends to use.
 
-pub use crate::{c_int, c_void};
+use crate::{c_int, c_void};
 
 // Note(Lokathor): We want to be able to use these in the definitions for easier
 // interaction with the SDL headers and bindgen, but they're dumb to expose to
