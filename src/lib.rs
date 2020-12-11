@@ -56,109 +56,42 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
 
 // Note(Lokathor): Declarations are organized into modules according to SDL's
 // public header organization. A file like `include/SDL_foo.h` becomes a module
-// named `foo`, and `SDL.h` itself is `lib.rs`. As with SDL, all the
-// declarations are exported as a single flat namespace at the top level.
+// named `foo`. Also there is a `prelude` module which lets you grab all exports
+// in a single use statement.
 
-pub mod platform;
-pub use platform::*;
-
-pub mod stdinc;
-pub use stdinc::*;
-
-pub mod error;
-pub use error::*;
-
-pub mod rwops;
-pub use rwops::*;
-
+// TODO: haptic (joystick force feedback system).
+// TODO: shape (allows shaped windows).
+// TODO: mutex (portable, no_std mutex would be handy).
 pub mod audio;
-pub use audio::*;
-
 pub mod blendmode;
-pub use blendmode::*;
-
 pub mod clipboard;
-pub use clipboard::*;
-
 pub mod cpuinfo;
-pub use cpuinfo::*;
-
-pub mod pixels;
-pub use pixels::*;
-
-pub mod rect;
-pub use rect::*;
-
-pub mod surface;
-pub use surface::*;
-
-pub mod video;
-pub use video::*;
-
-pub mod scancode;
-pub use scancode::*;
-
-pub mod keycode;
-pub use keycode::*;
-
-pub mod keyboard;
-pub use keyboard::*;
-
-pub mod mouse;
-pub use mouse::*;
-
-pub mod joystick;
-pub use joystick::*;
-
-pub mod gamecontroller;
-pub use gamecontroller::*;
-
-pub mod touch;
-pub use touch::*;
-
-pub mod gesture;
-pub use gesture::*;
-
+pub mod error;
 pub mod events;
-pub use events::*;
-
-pub mod quit;
-pub use quit::*;
-
 pub mod filesystem;
-pub use filesystem::*;
-
-// TODO: haptic (joystick force feedback system). I bet no one is even gonna ask
-// for this to be put in.
-
+pub mod gamecontroller;
+pub mod gesture;
 pub mod hints;
-pub use hints::*;
-
+pub mod joystick;
+pub mod keyboard;
+pub mod keycode;
 pub mod loadso;
-pub use loadso::*;
-
 pub mod messagebox;
-pub use messagebox::*;
-
+pub mod mouse;
+pub mod pixels;
+pub mod platform;
 pub mod power;
-pub use power::*;
-
+pub mod quit;
+pub mod rect;
 pub mod renderer;
-pub use renderer::*;
-
+pub mod rwops;
+pub mod scancode;
 pub mod sensor;
-pub use sensor::*;
-
-// TODO: shape (allows shaped windows). I bet no one is even gonna ask for this.
-
+pub mod stdinc;
+pub mod surface;
 pub mod syswm;
-pub use syswm::*;
-
 pub mod timer;
-pub use timer::*;
-
+pub mod touch;
 pub mod version;
-pub use version::*;
-
+pub mod video;
 pub mod vulkan;
-pub use vulkan::*;
