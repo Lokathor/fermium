@@ -186,7 +186,7 @@ extern "C" {
   ///
   /// You typically use this function like this:
   /// ```no_run
-  /// # use fermium::*;
+  /// # use fermium::prelude::*;
   /// let window = unimplemented!("make the window");
   /// let mut info = SDL_SysWMinfo::default();
   /// SDL_VERSION(&mut info.version);
