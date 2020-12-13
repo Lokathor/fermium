@@ -1,5 +1,7 @@
 #![allow(missing_docs)]
 
+//! Physical key mappings (ignores locale).
+
 /// The SDL keyboard scancode representation.
 ///
 /// This is used in places like the [`SDL_Keysym`] struct for the "hardware" /

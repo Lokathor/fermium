@@ -1,5 +1,6 @@
-// The only stuff left to doc here are the various constants.
 #![allow(missing_docs)]
+
+//! Module for pixel editing.
 
 use crate::{c_char, c_int, stdinc::*};
 

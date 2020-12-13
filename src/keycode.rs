@@ -1,5 +1,7 @@
 #![allow(missing_docs)]
 
+//! Logical key mappings (changes by locale).
+
 use crate::scancode::*;
 
 /// The SDL keyboard keycode representation.
