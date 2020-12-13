@@ -5,7 +5,10 @@
 
 //! Bindings to the SDL2 C library.
 
-pub use chlorine::*;
+pub use chlorine::{
+  c_char, c_double, c_float, c_int, c_long, c_longlong, c_schar, c_short,
+  c_uchar, c_uint, c_ulong, c_ulonglong, c_ushort, c_void,
+};
 
 macro_rules! impl_bit_ops_for_tuple_newtype {
   ($t:ty) => {
