@@ -128,3 +128,69 @@ pub mod touch;
 pub mod version;
 pub mod video;
 pub mod vulkan;
+
+/// SDL2's initialization flags.
+///
+/// These are the flags which may be passed to [`SDL_Init`]. You should specify
+/// the subsystems which you will be using in your application.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[repr(transparent)]
+pub struct SDL_InitFlags(pub u32);
+impl_bit_ops_for_tuple_newtype!(SDL_InitFlags);
+#[allow(missing_docs)]
+pub const SDL_INIT_TIMER: SDL_InitFlags = SDL_InitFlags(0x00000001);
+#[allow(missing_docs)]
+pub const SDL_INIT_AUDIO: SDL_InitFlags = SDL_InitFlags(0x00000010);
+/// `SDL_INIT_VIDEO` implies [`SDL_INIT_EVENTS`]
+pub const SDL_INIT_VIDEO: SDL_InitFlags = SDL_InitFlags(0x00000020);
+/// `SDL_INIT_JOYSTICK` implies [`SDL_INIT_EVENTS`]
+pub const SDL_INIT_JOYSTICK: SDL_InitFlags = SDL_InitFlags(0x00000200);
+#[allow(missing_docs)]
+pub const SDL_INIT_HAPTIC: SDL_InitFlags = SDL_InitFlags(0x00001000);
+/// `SDL_INIT_GAMECONTROLLER` implies [`SDL_INIT_JOYSTICK`]
+pub const SDL_INIT_GAMECONTROLLER: SDL_InitFlags = SDL_InitFlags(0x00002000);
+#[allow(missing_docs)]
+pub const SDL_INIT_EVENTS: SDL_InitFlags = SDL_InitFlags(0x00004000);
+#[allow(missing_docs)]
+pub const SDL_INIT_SENSOR: SDL_InitFlags = SDL_InitFlags(0x00008000);
+/// compatibility; this flag is ignored.
+pub const SDL_INIT_NOPARACHUTE: SDL_InitFlags = SDL_InitFlags(0x00100000);
+#[allow(missing_docs)]
+pub const SDL_INIT_EVERYTHING: SDL_InitFlags = SDL_InitFlags(
+  SDL_INIT_TIMER.0
+    | SDL_INIT_AUDIO.0
+    | SDL_INIT_VIDEO.0
+    | SDL_INIT_EVENTS.0
+    | SDL_INIT_JOYSTICK.0
+    | SDL_INIT_HAPTIC.0
+    | SDL_INIT_GAMECONTROLLER.0
+    | SDL_INIT_SENSOR.0,
+);
+
+extern "C" {
+  /// This function initializes the subsystems specified by `flags`.
+  pub fn SDL_Init(flags: SDL_InitFlags) -> c_int;
+
+  /// This function initializes specific SDL subsystems
+  ///
+  /// Subsystem initialization is ref-counted, you must call
+  /// [`SDL_QuitSubSystem`] for each [`SDL_InitSubSystem`] to correctly shutdown
+  /// a subsystem manually (or call [`SDL_Quit`] to force shutdown). If a
+  /// subsystem is already loaded then this call will increase the ref-count and
+  /// return.
+  pub fn SDL_InitSubSystem(flags: SDL_InitFlags) -> c_int;
+
+  /// This function cleans up specific SDL subsystems.
+  pub fn SDL_QuitSubSystem(flags: SDL_InitFlags) -> c_int;
+
+  /// This function returns a mask of the specified subsystems which have
+  /// previously been initialized.
+  ///
+  /// If `flags` is 0, it returns a mask of all initialized subsystems.
+  pub fn SDL_WasInit(flags: SDL_InitFlags) -> c_int;
+
+  /// This function cleans up all initialized subsystems.
+  ///
+  /// You should call it upon all exit conditions.
+  pub fn SDL_Quit();
+}
