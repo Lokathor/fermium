@@ -48,3 +48,9 @@ jobs:
         toolchain: ${{ matrix.rust.toolchain }}
         command: test
         args: --features=dynamic_link
+
+    - name: Check Binary Linking (static)
+      run: cargo run --example init_quit
+
+    - name: Check Binary Linking (dynamic)
+      run: cargo run --example init_quit --features=dynamic_link
