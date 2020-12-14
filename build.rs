@@ -86,6 +86,8 @@ fn main() {
           // Do we do anything here?
         } else if term.starts_with("-pthread") {
           // Nothing special on the Rust side, I'm told.
+        } else if term.starts_with("-Wl,-current_version,") {
+          // I don't think rust passes along a current version number?
         } else {
           panic!("Unknown term: >>{}<<", term);
         }
