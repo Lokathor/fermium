@@ -4,6 +4,23 @@
 #![allow(clippy::missing_safety_doc)]
 
 //! Bindings to the SDL2 C library.
+//!
+//! This crate bundles a copy of the SDL2 source code and builds it
+//! automatically via `build.rs`. No special setup is required on your part.
+//!
+//! Building SDL2 takes about a minute on an average development machine, so the
+//! "first time" compilation of this crate can seem quite slow.
+//!
+//! # Crate Features
+//!
+//! * `dynamic_link`: This causes SDL2 to be dynamically linked instead of
+//!   statically linked. This is of little value, except that your final binary
+//!   will be slightly smaller. If you're *very* sure that the end user will
+//!   already have SDL2 available on their system and you really want to save
+//!   the space then you can enable this.
+//! * `cargo_check`: This causes the crate to skip building SDL2 entirely. This
+//!   allows the `cargo check` command (and similar commands that don't build an
+//!   executable, such as `cargo doc`) to execute much faster.
 
 pub use chlorine::{
   c_char, c_double, c_float, c_int, c_long, c_longlong, c_schar, c_short,

@@ -23,14 +23,12 @@ cmake = "0.1"
 # even with a staticly linked SDL2 the end user can override the SDL2 used at
 # runtime (if absolutely necessary) via SDL2's "Dynamic API" system.
 # https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html
-#
-# NOTE: this causes strange build errors some of the time, and I don't know why,
-# but I also don't super value this as a feature, so consider it "unstable".
 dynamic_link = []
 
 # Enabling this will completely skip the build/link of SDL2 itself. This makes
-# `cargo check` and similar much faster, but you'll get linking errors if you
-# try to build an executable with this enabled (eg: a bin/bench/test).
+# `cargo check` and similar much faster (including rust-analyzer), but you'll
+# get linking errors if you try to actually build an executable with this
+# enabled (eg: a bin/bench/test).
 cargo_check = []
 
 [package.metadata.docs.rs]
