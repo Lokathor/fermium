@@ -89,6 +89,8 @@ pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout(7);
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout(8);
 
 /// Converts a FourCC into a pixel format enumeration value.
+#[inline]
+#[must_use]
 pub const fn SDL_DEFINE_PIXELFOURCC(
   a: u8, b: u8, c: u8, d: u8,
 ) -> SDL_PixelFormatEnum {
@@ -96,6 +98,8 @@ pub const fn SDL_DEFINE_PIXELFOURCC(
 }
 
 /// Converts the pixel type parameters into a pixel format enumeration value.
+#[inline]
+#[must_use]
 pub const fn SDL_DEFINE_PIXELFORMAT(
   type_: SDL_PixelType, order: u32, layout: u32, bits: u32, bytes: u32,
 ) -> SDL_PixelFormatEnum {
@@ -112,26 +116,38 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
 /// Gets the pixel flag bits.
 ///
 /// Generally 1, except that FourCC enumerations can have other values.
+#[inline]
+#[must_use]
 pub const fn SDL_PIXELFLAG(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 28) & 0x0F
 }
 /// Gets the pixel type bits.
+#[inline]
+#[must_use]
 pub const fn SDL_PIXELTYPE(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 24) & 0x0F
 }
 /// Gets the pixel order bits.
+#[inline]
+#[must_use]
 pub const fn SDL_PIXELORDER(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 20) & 0x0F
 }
 /// Gets the pixel layout bits.
+#[inline]
+#[must_use]
 pub const fn SDL_PIXELLAYOUT(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 16) & 0x0F
 }
 /// Gets the bits per pixel.
+#[inline]
+#[must_use]
 pub const fn SDL_BITSPERPIXEL(x: SDL_PixelFormatEnum) -> u32 {
   ((x.0) >> 8) & 0xFF
 }
 /// Gets the bytes per pixel.
+#[inline]
+#[must_use]
 pub const fn SDL_BYTESPERPIXEL(x: SDL_PixelFormatEnum) -> u32 {
   if SDL_ISPIXELFORMAT_FOURCC(x) {
     if ((x.0) == SDL_PIXELFORMAT_YUY2.0)
@@ -147,6 +163,8 @@ pub const fn SDL_BYTESPERPIXEL(x: SDL_PixelFormatEnum) -> u32 {
   }
 }
 /// Is this pixel format an indexed format?
+#[inline]
+#[must_use]
 pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
   !SDL_ISPIXELFORMAT_FOURCC(format)
     && ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1.0)
@@ -154,6 +172,8 @@ pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormatEnum) -> bool {
       || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8.0))
 }
 /// Is this pixel format a packed format?
+#[inline]
+#[must_use]
 pub const fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
   !SDL_ISPIXELFORMAT_FOURCC(format)
     && ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8.0)
@@ -161,6 +181,8 @@ pub const fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormatEnum) -> bool {
       || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32.0))
 }
 /// Is this pixel format an array format?
+#[inline]
+#[must_use]
 pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
   !SDL_ISPIXELFORMAT_FOURCC(format)
     && ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8.0)
@@ -170,6 +192,8 @@ pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormatEnum) -> bool {
       || (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32.0))
 }
 /// Does the pixel format have an alpha channel?
+#[inline]
+#[must_use]
 pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
   (SDL_ISPIXELFORMAT_PACKED(format)
     && ((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB.0)
@@ -183,6 +207,8 @@ pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormatEnum) -> bool {
         || (SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA.0)))
 }
 /// Is the pixel format a FourCC format?
+#[inline]
+#[must_use]
 pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormatEnum) -> bool {
   (format.0 != 0) && (SDL_PIXELFLAG(format) != 1)
 }

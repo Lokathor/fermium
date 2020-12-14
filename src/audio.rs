@@ -23,30 +23,44 @@ use crate::{c_char, c_int, c_void, rwops::*, stdinc::*};
 pub struct SDL_AudioFormat(pub u16);
 
 /// Pits per sample. eg: i16 = 16, f32 = 32.
+#[inline]
+#[must_use]
 pub const fn SDL_AUDIO_BITSIZE(af: SDL_AudioFormat) -> u16 {
   af.0 & 0xFF
 }
 /// If the sample type is a floating type.
+#[inline]
+#[must_use]
 pub const fn SDL_AUDIO_ISFLOAT(af: SDL_AudioFormat) -> bool {
   af.0 & (1 << 8) != 0
 }
 /// If the samples are big-endian.
+#[inline]
+#[must_use]
 pub const fn SDL_AUDIO_ISBIGENDIAN(af: SDL_AudioFormat) -> bool {
   af.0 & (1 << 12) != 0
 }
 /// If the samples are signed values.
+#[inline]
+#[must_use]
 pub const fn SDL_AUDIO_ISSIGNED(af: SDL_AudioFormat) -> bool {
   af.0 & (1 << 15) != 0
 }
 /// If the samples are an int type.
+#[inline]
+#[must_use]
 pub const fn SDL_AUDIO_ISINT(af: SDL_AudioFormat) -> bool {
   !SDL_AUDIO_ISFLOAT(af)
 }
 /// If the samples are little-endian.
+#[inline]
+#[must_use]
 pub const fn SDL_AUDIO_ISLITTLEENDIAN(af: SDL_AudioFormat) -> bool {
   !SDL_AUDIO_ISBIGENDIAN(af)
 }
 /// If the samples are unsigned values.
+#[inline]
+#[must_use]
 pub const fn SDL_AUDIO_ISUNSIGNED(af: SDL_AudioFormat) -> bool {
   !SDL_AUDIO_ISSIGNED(af)
 }
@@ -714,6 +728,7 @@ extern "C" {
 ///
 /// Works like [`SDL_LoadWAV_RW`], but automatically creates and then frees the
 /// intermediate [`SDL_RWops`] for you.
+#[inline]
 pub unsafe fn SDL_LoadWAV(
   file: *const c_char, spec: *mut SDL_AudioSpec, audio_buf: *mut *mut Uint8,
   audio_len: *mut Uint32,

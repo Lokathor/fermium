@@ -15,7 +15,8 @@ pub const SDL_SIMD_ALIGNED: u32 = 0x00000008;
 
 /// Checks if an [`SDL_Surface`] must be locked before the pixels are accessed
 /// directly.
-#[inline(always)]
+#[inline]
+#[must_use]
 pub unsafe fn SDL_MUSTLOCK(s: *const SDL_Surface) -> bool {
   ((*s).flags & SDL_RLEACCEL) != 0
 }
@@ -68,6 +69,7 @@ pub const SDL_YUV_CONVERSION_AUTOMATIC: SDL_YUV_CONVERSION_MODE =
 ///
 /// **Return:** As [`SDL_LoadBMP_RW`]: the new surface, or NULL if there was an
 /// error.
+#[inline]
 pub unsafe fn SDL_LoadBMP(file: *const c_char) -> *mut SDL_Surface {
   SDL_LoadBMP_RW(SDL_RWFromFile(file, b"rb\0".as_ptr().cast()), 1)
 }
@@ -76,6 +78,7 @@ pub unsafe fn SDL_LoadBMP(file: *const c_char) -> *mut SDL_Surface {
 ///
 /// **Return:** As [`SDL_SaveBMP_RW`]: 0 if successful or -1 if there was an
 /// error.
+#[inline]
 pub unsafe fn SDL_SaveBMP(
   surface: *mut SDL_Surface, file: *const c_char,
 ) -> c_int {

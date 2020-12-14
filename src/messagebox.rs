@@ -57,6 +57,8 @@ pub struct SDL_MessageBoxButtonData {
   pub text: *const c_char,
 }
 impl Default for SDL_MessageBoxButtonData {
+  #[inline]
+  #[must_use]
   fn default() -> Self {
     unsafe { core::mem::zeroed() }
   }
@@ -121,6 +123,8 @@ pub struct SDL_MessageBoxData {
   pub colorScheme: *const SDL_MessageBoxColorScheme,
 }
 impl Default for SDL_MessageBoxData {
+  #[inline]
+  #[must_use]
   fn default() -> Self {
     unsafe { core::mem::zeroed() }
   }

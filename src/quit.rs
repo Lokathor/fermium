@@ -16,6 +16,8 @@
 use crate::events::*;
 
 /// Checks if a quit event is currently in the queue.
+#[inline]
+#[must_use]
 pub unsafe fn SDL_QuitRequested() -> bool {
   SDL_PumpEvents();
   SDL_PeepEvents(core::ptr::null_mut(), 0, SDL_PEEKEVENT, SDL_QUIT, SDL_QUIT)

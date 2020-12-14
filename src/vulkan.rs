@@ -11,6 +11,8 @@ use crate::{c_char, c_int, c_uint, c_void, stdinc::*, video::*};
 #[repr(transparent)]
 pub struct VkInstance(*mut u8);
 impl Default for VkInstance {
+  #[inline]
+  #[must_use]
   fn default() -> Self {
     unsafe { core::mem::zeroed() }
   }

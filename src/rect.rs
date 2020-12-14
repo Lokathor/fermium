@@ -43,13 +43,15 @@ pub struct SDL_FRect {
 }
 
 /// Returns `true` if a point resides inside a rectangle.
-#[inline(always)]
+#[inline]
+#[must_use]
 pub const fn SDL_PointInRect(p: SDL_Point, r: SDL_Rect) -> bool {
   (p.x >= r.x) && (p.x < (r.x + r.w)) && (p.y >= r.y) && (p.y < (r.y + r.h))
 }
 
 /// Returns `true` if the rectangle has no area.
-#[inline(always)]
+#[inline]
+#[must_use]
 pub const fn SDL_RectEmpty(r: SDL_Rect) -> bool {
   (r.w <= 0) || (r.h <= 0)
 }

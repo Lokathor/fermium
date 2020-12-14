@@ -169,6 +169,8 @@ pub struct SDL_SysWMinfo {
   pub info: SDL_SysWMinfo_union,
 }
 impl Default for SDL_SysWMinfo {
+  #[inline]
+  #[must_use]
   fn default() -> Self {
     unsafe { core::mem::zeroed() }
   }

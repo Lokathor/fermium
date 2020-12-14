@@ -32,11 +32,14 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
     impl core::ops::BitAnd for $t {
       type Output = Self;
       #[inline]
+      #[must_use]
       fn bitand(self, rhs: Self) -> Self::Output {
         Self(self.0 & rhs.0)
       }
     }
     impl core::ops::BitAndAssign for $t {
+      #[inline]
+      #[must_use]
       fn bitand_assign(&mut self, rhs: Self) {
         self.0 &= rhs.0
       }
@@ -44,11 +47,14 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
     impl core::ops::BitOr for $t {
       type Output = Self;
       #[inline]
+      #[must_use]
       fn bitor(self, rhs: Self) -> Self::Output {
         Self(self.0 | rhs.0)
       }
     }
     impl core::ops::BitOrAssign for $t {
+      #[inline]
+      #[must_use]
       fn bitor_assign(&mut self, rhs: Self) {
         self.0 |= rhs.0
       }
@@ -56,17 +62,22 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
     impl core::ops::BitXor for $t {
       type Output = Self;
       #[inline]
+      #[must_use]
       fn bitxor(self, rhs: Self) -> Self::Output {
         Self(self.0 ^ rhs.0)
       }
     }
     impl core::ops::BitXorAssign for $t {
+      #[inline]
+      #[must_use]
       fn bitxor_assign(&mut self, rhs: Self) {
         self.0 ^= rhs.0
       }
     }
     impl core::ops::Not for $t {
       type Output = Self;
+      #[inline]
+      #[must_use]
       fn not(self) -> Self::Output {
         Self(!self.0)
       }

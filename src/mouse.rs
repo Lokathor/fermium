@@ -229,6 +229,8 @@ extern "C" {
 /// * Button 1:  Left mouse button
 /// * Button 2:  Middle mouse button
 /// * Button 3:  Right mouse button
+#[inline]
+#[must_use]
 pub const fn SDL_BUTTON(x: u32) -> u32 {
   1 << (x - 1)
 }

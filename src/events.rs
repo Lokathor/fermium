@@ -643,6 +643,8 @@ pub struct SDL_DropEvent {
   pub windowID: Uint32,
 }
 impl Default for SDL_DropEvent {
+  #[inline]
+  #[must_use]
   fn default() -> Self {
     unsafe { core::mem::zeroed() }
   }
@@ -704,6 +706,8 @@ pub struct SDL_UserEvent {
   pub data2: *mut c_void,
 }
 impl Default for SDL_UserEvent {
+  #[inline]
+  #[must_use]
   fn default() -> Self {
     unsafe { core::mem::zeroed() }
   }
@@ -763,6 +767,8 @@ pub struct SDL_SysWMEvent {
   pub msg: *mut SDL_SysWMmsg,
 }
 impl Default for SDL_SysWMEvent {
+  #[inline]
+  #[must_use]
   fn default() -> Self {
     unsafe { core::mem::zeroed() }
   }
@@ -971,6 +977,8 @@ pub const SDL_DISABLE: i32 = 0;
 pub const SDL_ENABLE: i32 = 1;
 
 /// As [`SDL_EventState`], but provides the "query" part for you.
+#[inline]
+#[must_use]
 pub unsafe fn SDL_GetEventState(type_: SDL_EventType) -> Uint8 {
   SDL_EventState(type_, SDL_QUERY)
 }

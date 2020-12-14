@@ -60,6 +60,8 @@ pub struct SDL_RendererInfo {
   pub max_texture_height: c_int,
 }
 impl Default for SDL_RendererInfo {
+  #[inline]
+  #[must_use]
   fn default() -> Self {
     unsafe { core::mem::zeroed() }
   }

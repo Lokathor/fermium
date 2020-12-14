@@ -24,6 +24,11 @@ pub struct SDL_Keycode(pub i32);
 
 pub const SDLK_SCANCODE_MASK: i32 = 1 << 30;
 
+/// Converts a scancode into a keycode.
+///
+/// Primarily intended for internal use.
+#[inline]
+#[must_use]
 pub const fn SDL_SCANCODE_TO_KEYCODE(x: SDL_Scancode) -> SDL_Keycode {
   SDL_Keycode(x.0 | (1 << 30))
 }
@@ -374,6 +379,8 @@ impl SDL_Keymod {
   ///
   /// This is needed for easy interaction with the `mod_` field of
   /// [`SDL_Keysym`].
+  #[inline]
+  #[must_use]
   pub const fn as_u16(self) -> u16 {
     self.0 as i16 as u16
   }
