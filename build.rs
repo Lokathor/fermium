@@ -69,7 +69,14 @@ fn main() {
           };
         } else if term.starts_with("-l") {
           // normal link
-          println!("cargo:rustc-link-lib={}", &term[2..]);
+          if term.ends_with(".framework") {
+            // macOS framework link, weirdly through -l
+            let name_framework = term.rsplit("/").next().unwrap();
+            let name = name_framework.split(".").next().unwrap();
+            println!("cargo:rustc-link-lib=framework={}", name);
+          } else {
+            println!("cargo:rustc-link-lib={}", &term[2..]);
+          }
         } else if term.starts_with("-Wl,-framework,") {
           // macOS framework link
           println!("cargo:rustc-link-lib=framework={}", &term[15..]);
@@ -79,7 +86,7 @@ fn main() {
           println!("cargo:rustc-link-lib=framework={}", &term[20..]);
         } else if term.starts_with("-Wl,-rpath,") {
           // I don't know why this works, but it does seem to?
-          println!("cargo:rustc-env=LD_LIBRARY_PATH={}", &term[11..]);
+          println!("cargo:rustc-env=DYLD_LIBRARY_PATH={}", &term[11..]);
         } else if term.starts_with("-Wl,--enable-new-dtags") {
           // Do we do anything here?
         } else if term.starts_with("-Wl,--no-undefined") {
