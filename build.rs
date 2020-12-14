@@ -12,6 +12,7 @@ fn main() {
     cm.target(&env::var("TARGET").expect("Couldn't read `TARGET`"));
     cm.define("SDL_SHARED", "ON");
     cm.define("SDL_STATIC", "ON");
+    cm.profile("Release");
     let build_output_path = cm.build();
     println!("build_output_path: {}", build_output_path.display());
 
@@ -22,9 +23,9 @@ fn main() {
 
     if cfg!(windows) {
       if cfg!(feature = "dynamic_link") {
-        println!("cargo:rustc-link-lib=SDL2d");
+        println!("cargo:rustc-link-lib=SDL2");
       } else {
-        println!("cargo:rustc-link-lib=static=SDL2-staticd");
+        println!("cargo:rustc-link-lib=static=SDL2-static");
         println!("cargo:rustc-link-lib=user32");
         println!("cargo:rustc-link-lib=gdi32");
         println!("cargo:rustc-link-lib=winmm");
@@ -63,9 +64,9 @@ fn main() {
           println!("cargo:rustc-link-search=native={}", &term[2..]);
         } else if term.starts_with("-lSDL2") {
           if cfg!(feature = "dynamic_link") {
-            println!("cargo:rustc-link-lib=SDL2d")
+            println!("cargo:rustc-link-lib=SDL2")
           } else {
-            println!("cargo:rustc-link-lib=static=SDL2d")
+            println!("cargo:rustc-link-lib=static=SDL2")
           };
         } else if term.starts_with("-l") {
           // normal link
