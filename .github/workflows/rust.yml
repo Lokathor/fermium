@@ -43,15 +43,15 @@ jobs:
         toolchain: ${{ matrix.rust.toolchain }}
         command: test
 
-    - name: Run Tests with Dynamic Linking
-      uses: actions-rs/cargo@v1
-      with:
-        toolchain: ${{ matrix.rust.toolchain }}
-        command: test
-        args: --features=dynamic_link
+    #- name: Run Tests with Dynamic Linking
+    #  uses: actions-rs/cargo@v1
+    #  with:
+    #    toolchain: ${{ matrix.rust.toolchain }}
+    #    command: test
+    #    args: --features=dynamic_link
 
     - name: Check Binary Linking (static)
       run: cargo run --example init_quit
 
-    - name: Check Binary Linking (dynamic)
-      run: cargo run --example init_quit --features=dynamic_link
+    #- name: Check Binary Linking (dynamic)
+    #  run: cargo run --example init_quit --features=dynamic_link

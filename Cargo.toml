@@ -23,7 +23,11 @@ cmake = "0.1"
 # Enable this to dynamicly link to SDL2. The default is to static link because
 # even with a staticly linked SDL2 the end user can override the SDL2 used at
 # runtime (if absolutely necessary) via SDL2's "Dynamic API" system.
-# https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html
+# https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html 
+#
+# WARNING: THIS DOES NOT WORK ON UNIX SYSTEMS. If you'd like it to work on unix
+# systems please submit the PR to fix the build/link process, because I don't
+# know how to make the rpath work right.
 dynamic_link = []
 
 # Enabling this will completely skip the build/link of SDL2 itself. This makes
