@@ -90,6 +90,9 @@ fn main() {
           // I don't think rust passes along a current version number?
         } else if term.starts_with("-Wl,-compatibility_version,") {
           // I don't think rust passes along a compatibility version number?
+        } else if term.starts_with("-Wl,-undefined,error") {
+          // This asks the linker to error on undefined symbols(?), which it
+          // already will do.
         } else {
           panic!("Unknown term: >>{}<<", term);
         }
