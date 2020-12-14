@@ -63,9 +63,9 @@ fn main() {
           println!("cargo:rustc-link-search=native={}", &term[2..]);
         } else if term.starts_with("-lSDL2") {
           if cfg!(feature = "dynamic_link") {
-            println!("cargo:rustc-link-lib=SDL2")
+            println!("cargo:rustc-link-lib=SDL2d")
           } else {
-            println!("cargo:rustc-link-lib=static=SDL2")
+            println!("cargo:rustc-link-lib=static=SDL2d")
           };
         } else if term.starts_with("-l") {
           // normal link
