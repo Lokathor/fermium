@@ -32,7 +32,7 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
 ///
 /// If supported, will display warning icon, etc.
 ///
-/// See the `SDL_MESSAGEBOX_*` constants.
+/// See the `SDL_MESSAGEBOX_BUTTON_*` constants.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SDL_MessageBoxButtonFlags(pub u32);
