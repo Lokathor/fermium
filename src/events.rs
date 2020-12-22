@@ -62,6 +62,9 @@ pub const SDL_APP_WILLENTERFOREGROUND: SDL_EventType = SDL_EventType(0x100 + 5);
 /// * Called on Android in `onResume()`
 pub const SDL_APP_DIDENTERFOREGROUND: SDL_EventType = SDL_EventType(0x100 + 6);
 
+/// The user's locale preferences have changed.
+pub const SDL_LOCALECHANGED: SDL_EventType = SDL_EventType(0x100 + 7);
+
 /// Display state change.
 pub const SDL_DISPLAYEVENT: SDL_EventType = SDL_EventType(0x150);
 
@@ -138,6 +141,19 @@ pub const SDL_CONTROLLERDEVICEREMOVED: SDL_EventType = SDL_EventType(0x650 + 4);
 /// The controller mapping was updated.
 pub const SDL_CONTROLLERDEVICEREMAPPED: SDL_EventType =
   SDL_EventType(0x650 + 5);
+
+/// Game controller touchpad was touched.
+pub const SDL_CONTROLLERTOUCHPADDOWN: SDL_EventType = SDL_EventType(0x650 + 6);
+
+/// Game controller touchpad finger was moved.
+pub const SDL_CONTROLLERTOUCHPADMOTION: SDL_EventType =
+  SDL_EventType(0x650 + 7);
+
+/// Game controller touchpad finger was lifted.
+pub const SDL_CONTROLLERTOUCHPADUP: SDL_EventType = SDL_EventType(0x650 + 8);
+
+/// Game controller sensor was updated.
+pub const SDL_CONTROLLERSENSORUPDATE: SDL_EventType = SDL_EventType(0x650 + 9);
 
 #[allow(missing_docs)]
 pub const SDL_FINGERDOWN: SDL_EventType = SDL_EventType(0x700);
@@ -532,6 +548,47 @@ pub struct SDL_ControllerDeviceEvent {
   pub which: Sint32,
 }
 
+/// Game controller touchpad event structure (event.ctouchpad.*)
+#[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
+#[repr(C)]
+#[allow(missing_docs)]
+pub struct SDL_ControllerTouchpadEvent {
+  /// [`SDL_CONTROLLERTOUCHPADDOWN`], [`SDL_CONTROLLERTOUCHPADMOTION`],
+  /// [`SDL_CONTROLLERTOUCHPADUP`]
+  type_: SDL_EventType,
+  /// In milliseconds, populated using [`SDL_GetTicks`].
+  timestamp: Uint32,
+  /// The joystick instance id
+  which: SDL_JoystickID,
+  /// The index of the touchpad
+  touchpad: Sint32,
+  /// The index of the finger on the touchpad
+  finger: Sint32,
+  /// Normalized in the range 0..=1 with 0 being on the left
+  x: c_float,
+  /// Normalized in the range 0..=1 with 0 being at the top
+  y: c_float,
+  /// Normalized in the range 0..=1
+  pressure: c_float,
+}
+
+/// Game controller sensor event structure (event.csensor.*)
+#[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
+#[repr(C)]
+#[allow(missing_docs)]
+pub struct SDL_ControllerSensorEvent {
+  /// [`SDL_CONTROLLERSENSORUPDATE`]
+  type_: SDL_EventType,
+  /// In milliseconds, populated using [`SDL_GetTicks`].
+  timestamp: Uint32,
+  /// The joystick instance id
+  which: SDL_JoystickID,
+  /// The type of the sensor, one of the values of [`SDL_SensorType`]
+  sensor: Sint32,
+  /// Up to 3 values from the sensor, as defined in [`sensor`](crate::sensor)
+  data: [c_float; 3],
+}
+
 /// Audio device event structure (event.adevice.*)
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
@@ -797,6 +854,8 @@ pub union SDL_Event {
   pub caxis: SDL_ControllerAxisEvent,
   pub cbutton: SDL_ControllerButtonEvent,
   pub cdevice: SDL_ControllerDeviceEvent,
+  pub ctouchpad: SDL_ControllerTouchpadEvent,
+  pub csensor: SDL_ControllerSensorEvent,
   pub adevice: SDL_AudioDeviceEvent,
   pub sensor: SDL_SensorEvent,
   pub quit: SDL_QuitEvent,
