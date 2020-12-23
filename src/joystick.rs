@@ -112,6 +112,9 @@ pub const SDL_JOYSTICK_POWER_WIRED: SDL_JoystickPowerLevel =
 pub const SDL_JOYSTICK_POWER_MAX: SDL_JoystickPowerLevel =
   SDL_JoystickPowerLevel(5);
 
+/// Set max recognized G-force from accelerometer.
+pub const SDL_IPHONE_MAX_GFORCE: f32 = 5.0;
+
 /// A joystick axis uses the `i16` range, so this is just `i16::MAX`
 pub const SDL_JOYSTICK_AXIS_MAX: i16 = 32767;
 
@@ -224,6 +227,43 @@ extern "C" {
   /// Return the SDL_Joystick associated with a player index.
   pub fn SDL_JoystickFromPlayerIndex(player_index: c_int) -> *mut SDL_Joystick;
 
+  /// Attaches a new virtual joystick.
+  ///
+  /// Returns the joystick's device index, or -1 if an error occurred.
+  pub fn SDL_JoystickAttachVirtual(
+    type_: SDL_JoystickType, naxes: c_int, nbuttons: c_int, nhats: c_int,
+  ) -> c_int;
+
+  /// Indicates whether or not a virtual-joystick is at a given device index.
+  pub fn SDL_JoystickIsVirtual(device_index: c_int) -> SDL_bool;
+
+  /// Set values on an opened, virtual-joystick's controls.
+  ///
+  /// Please note that values set here will not be applied until the next call
+  /// to [`SDL_JoystickUpdate`], which can either be called directly, or can be
+  /// called indirectly through various other SDL APIS, including, but not
+  /// limited to the following: [`SDL_PollEvent`], [`SDL_PumpEvents`],
+  /// [`SDL_WaitEventTimeout`], [`SDL_WaitEvent`].
+  ///
+  /// Returns 0 on success, -1 on error.
+  pub fn SDL_JoystickSetVirtualAxis(
+    joystick: *mut SDL_Joystick, axis: c_int, value: Sint16,
+  ) -> c_int;
+
+  /// Set values on an opened, virtual-joystick's controls.
+  ///
+  /// See [`SDL_JoystickSetVirtualAxis`]
+  pub fn SDL_JoystickSetVirtualButton(
+    joystick: *mut SDL_Joystick, button: c_int, value: Uint8,
+  ) -> c_int;
+
+  /// Set values on an opened, virtual-joystick's controls.
+  ///
+  /// See [`SDL_JoystickSetVirtualAxis`]
+  pub fn SDL_JoystickSetVirtualHat(
+    joystick: *mut SDL_Joystick, hat: c_int, value: Uint8,
+  ) -> c_int;
+
   /// Return the name for this currently opened joystick.
   ///
   /// If no name can be found, this function returns NULL.
@@ -256,6 +296,11 @@ extern "C" {
   ///
   /// If the product ID isn't available this function returns 0.
   pub fn SDL_JoystickGetProductVersion(joystick: *mut SDL_Joystick) -> Uint16;
+
+  /// Get the serial number of an opened joystick, if available.
+  ///
+  /// Returns the serial number of the joystick, or NULL if it is not available.
+  pub fn SDL_JoystickGetSerial(joystick: *mut SDL_Joystick) -> *const c_char;
 
   /// Get the type of an opened joystick.
   pub fn SDL_JoystickGetType(joystick: *mut SDL_Joystick) -> SDL_JoystickType;
@@ -371,6 +416,44 @@ extern "C" {
   pub fn SDL_JoystickRumble(
     joystick: *mut SDL_Joystick, low_frequency_rumble: Uint16,
     high_frequency_rumble: Uint16, duration_ms: Uint32,
+  ) -> c_int;
+
+  /// Start a rumble effect in the joystick's triggers
+  ///
+  /// Each call to this function cancels any previous trigger rumble effect, and
+  /// calling it with 0 intensity stops any rumbling.
+  ///
+  /// * `joystick` The joystick to vibrate
+  /// * `left_rumble` The intensity of the left trigger rumble motor, from 0 to
+  ///   0xFFFF
+  /// * `right_rumble` The intensity of the right trigger rumble motor, from 0
+  ///   to 0xFFFF
+  /// * `duration_ms` The duration of the rumble effect, in milliseconds
+  ///
+  /// **Returns:** 0, or -1 if trigger rumble isn't supported on this joystick
+  pub fn SDL_JoystickRumbleTriggers(
+    joystick: *mut SDL_Joystick, left_rumble: Uint16, right_rumble: Uint16,
+    duration_ms: Uint32,
+  ) -> c_int;
+
+  /// Return whether a joystick has an LED
+  ///
+  /// * `joystick` The joystick to query
+  ///
+  /// **Returns:** `SDL_TRUE`, or `SDL_FALSE` if this joystick does not have a
+  /// modifiable LED
+  pub fn SDL_JoystickHasLED(joystick: *mut SDL_Joystick) -> SDL_bool;
+
+  /// Update a joystick's LED color.
+  ///
+  /// * `joystick` The joystick to update
+  /// * `red` The intensity of the red LED
+  /// * `green` The intensity of the green LED
+  /// * `blue` The intensity of the blue LED
+  ///
+  /// **Returns:** 0, or -1 if this joystick does not have a modifiable LED.
+  pub fn SDL_JoystickSetLED(
+    joystick: *mut SDL_Joystick, red: Uint8, green: Uint8, blue: Uint8,
   ) -> c_int;
 
   /// Close a joystick previously opened with [`SDL_JoystickOpen`].
