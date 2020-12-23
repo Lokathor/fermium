@@ -152,6 +152,7 @@ pub union SDL_SysWMinfo_union {
   /* MIR entry skipped because it's no longer available */
   pub android: SDL_SysWMinfo_android,
   pub vivante: SDL_SysWMinfo_vivante,
+  /* os2 support skipped, file an issue if you care. */
   /// Dummy field to ensure that the union is always at least 64 bytes.
   pub dummy: [u8; 64],
 }
