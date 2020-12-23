@@ -400,7 +400,7 @@ extern "C" {
     joystick: *mut SDL_Joystick, button: c_int,
   ) -> Uint8;
 
-  /// Trigger a rumble effect.
+  /// Start a rumble effect.
   ///
   /// Each call to this function cancels any previous rumble effect, and calling
   /// it with 0 intensity stops any rumbling.
