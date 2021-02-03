@@ -33,17 +33,29 @@ pub struct SDL_BlitMap(c_void);
 #[repr(C)]
 #[allow(missing_docs)]
 pub struct SDL_Surface {
+  /// Read-only
   pub flags: Uint32,
+  /// Read-only
   pub format: *mut SDL_PixelFormat,
+  /// Read-only
   pub w: c_int,
+  /// Read-only
   pub h: c_int,
+  /// Read-only
   pub pitch: c_int,
+  /// Read-write
   pub pixels: *mut c_void,
+  /// Application data associated with the surface, Read-write
   pub userdata: *mut c_void,
+  /// information needed for surfaces requiring locks, Read-only
   pub locked: c_int,
-  pub lock_data: *mut c_void,
+  /// list of BlitMap that hold a reference to this surface, Private
+  pub list_blitmap: *mut c_void,
+  /// clipping information, Read-only
   pub clip_rect: SDL_Rect,
+  /// info for fast blit mapping to other surfaces, Private
   pub map: *mut SDL_BlitMap,
+  /// Reference count -- used when freeing surface, Read-mostly
   pub refcount: c_int,
 }
 
@@ -210,6 +222,12 @@ extern "C" {
   ///
   /// **Return:** 0 on success, or -1 if the surface is not valid
   pub fn SDL_SetSurfaceRLE(surface: *mut SDL_Surface, flag: c_int) -> c_int;
+
+  /// Returns whether the surface is RLE enabled
+  ///
+  /// **Returns:** `SDL_TRUE` if the surface is RLE enabled, or `SDL_FALSE` if
+  /// the surface is `NULL` or not RLE enabled
+  pub fn SDL_HasSurfaceRLE(surface: *mut SDL_Surface) -> SDL_bool;
 
   /// Sets the color key (transparent pixel) in a blit-able surface.
   ///

@@ -15,7 +15,9 @@
 //!
 //! See Also: [`joystick`](crate::joystick)
 
-use crate::{c_char, c_int, c_void, joystick::*, rwops::*, stdinc::*};
+use crate::{
+  c_char, c_float, c_int, c_void, joystick::*, rwops::*, sensor::*, stdinc::*,
+};
 
 /// An SDL game controller is an opaque structure.
 #[repr(transparent)]
@@ -45,6 +47,12 @@ pub const SDL_CONTROLLER_TYPE_PS4: SDL_GameControllerType =
 #[allow(missing_docs)]
 pub const SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO: SDL_GameControllerType =
   SDL_GameControllerType(5);
+#[allow(missing_docs)]
+pub const SDL_CONTROLLER_TYPE_VIRTUAL: SDL_GameControllerType =
+  SDL_GameControllerType(6);
+#[allow(missing_docs)]
+pub const SDL_CONTROLLER_TYPE_PS5: SDL_GameControllerType =
+  SDL_GameControllerType(7);
 
 /// The type of a binding between the underlying joystick and its controller
 /// abstraction.
@@ -185,8 +193,27 @@ pub const SDL_CONTROLLER_BUTTON_DPAD_LEFT: SDL_GameControllerButton =
 /// Arrow-pad right.
 pub const SDL_CONTROLLER_BUTTON_DPAD_RIGHT: SDL_GameControllerButton =
   SDL_GameControllerButton(14);
+/// Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro
+/// capture button.
+pub const SDL_CONTROLLER_BUTTON_MISC1: SDL_GameControllerButton =
+  SDL_GameControllerButton(15);
+/// Xbox Elite paddle P1.
+pub const SDL_CONTROLLER_BUTTON_PADDLE1: SDL_GameControllerButton =
+  SDL_GameControllerButton(16);
+/// Xbox Elite paddle P3.
+pub const SDL_CONTROLLER_BUTTON_PADDLE2: SDL_GameControllerButton =
+  SDL_GameControllerButton(17);
+/// Xbox Elite paddle P2.
+pub const SDL_CONTROLLER_BUTTON_PADDLE3: SDL_GameControllerButton =
+  SDL_GameControllerButton(18);
+/// Xbox Elite paddle P4.
+pub const SDL_CONTROLLER_BUTTON_PADDLE4: SDL_GameControllerButton =
+  SDL_GameControllerButton(19);
+/// PS4/PS5 touchpad button.
+pub const SDL_CONTROLLER_BUTTON_TOUCHPAD: SDL_GameControllerButton =
+  SDL_GameControllerButton(20);
 /// The number of valid controller button possibilities.
-pub const SDL_CONTROLLER_BUTTON_MAX: usize = 15;
+pub const SDL_CONTROLLER_BUTTON_MAX: usize = 21;
 
 /// Load a set of mappings from a file.
 ///
@@ -355,6 +382,14 @@ extern "C" {
     gamecontroller: *mut SDL_GameController,
   ) -> Uint16;
 
+  /// Get the serial number of an opened controller, if available.
+  ///
+  /// Returns the serial number of the controller, or `NULL` if it is not
+  /// available.
+  pub fn SDL_GameControllerGetSerial(
+    gamecontroller: *mut SDL_GameController,
+  ) -> *const c_char;
+
   /// Returns `SDL_TRUE` if the controller has been opened and currently
   /// connected, or `SDL_FALSE` if it has not.
   pub fn SDL_GameControllerGetAttached(
@@ -396,6 +431,11 @@ extern "C" {
     gamecontroller: *mut SDL_GameController, axis: SDL_GameControllerAxis,
   ) -> SDL_GameControllerButtonBind;
 
+  /// Return whether a game controller has a given axis.
+  pub fn SDL_GameControllerHasAxis(
+    gamecontroller: *mut SDL_GameController, axis: SDL_GameControllerAxis,
+  ) -> SDL_bool;
+
   /// Get the current state of an axis control on a game controller.
   ///
   /// The state is a value ranging from -32768 to 32767 (except for the
@@ -421,12 +461,83 @@ extern "C" {
     gamecontroller: *mut SDL_GameController, button: SDL_GameControllerButton,
   ) -> SDL_GameControllerButtonBind;
 
+  /// Return whether a game controller has a given button.
+  pub fn SDL_GameControllerHasButton(
+    gamecontroller: *mut SDL_GameController, button: SDL_GameControllerButton,
+  ) -> SDL_bool;
+
   /// Get the current state of a button on a game controller.
   ///
   /// The button indices start at index 0.
   pub fn SDL_GameControllerGetButton(
     gamecontroller: *mut SDL_GameController, button: SDL_GameControllerButton,
   ) -> Uint8;
+
+  /// Get the number of touchpads on a game controller.
+  pub fn SDL_GameControllerGetNumTouchpads(
+    gamecontroller: *mut SDL_GameController,
+  ) -> c_int;
+
+  /// Get the number of supported simultaneous fingers on a touchpad on a game
+  /// controller.
+  pub fn SDL_GameControllerGetNumTouchpadFingers(
+    gamecontroller: *mut SDL_GameController, touchpad: c_int,
+  ) -> c_int;
+
+  /// Get the current state of a finger on a touchpad on a game controller.
+  pub fn SDL_GameControllerGetTouchpadFinger(
+    gamecontroller: *mut SDL_GameController, touchpad: c_int, finger: c_int,
+    state: *mut Uint8, x: *mut c_float, y: *mut c_float,
+    pressure: *mut c_float,
+  ) -> c_int;
+
+  /// Return whether a game controller has a particular sensor.
+  ///
+  /// * `gamecontroller` The controller to query
+  /// * `type` The type of sensor to query
+  ///
+  /// **Returns:** `SDL_TRUE` if the sensor exists, `SDL_FALSE` otherwise.
+  pub fn SDL_GameControllerHasSensor(
+    gamecontroller: *mut SDL_GameController, type_: SDL_SensorType,
+  ) -> SDL_bool;
+
+  /// Set whether data reporting for a game controller sensor is enabled
+  ///
+  /// * `gamecontroller` The controller to update
+  /// * `type` The type of sensor to enable/disable
+  /// * `enabled` Whether data reporting should be enabled
+  ///
+  /// **Returns:** 0 or -1 if an error occurred.
+  pub fn SDL_GameControllerSetSensorEnabled(
+    gamecontroller: *mut SDL_GameController, type_: SDL_SensorType,
+    enabled: SDL_bool,
+  ) -> c_int;
+
+  /// Query whether sensor data reporting is enabled for a game controller
+  ///
+  /// * `gamecontroller` The controller to query
+  /// * `type` The type of sensor to query
+  ///
+  /// **Returns:** `SDL_TRUE` if the sensor is enabled, `SDL_FALSE` otherwise.
+  pub fn SDL_GameControllerIsSensorEnabled(
+    gamecontroller: *mut SDL_GameController, type_: SDL_SensorType,
+  ) -> SDL_bool;
+
+  /// Get the current state of a game controller sensor.
+  ///
+  /// The number of values and interpretation of the data is sensor dependent.
+  /// See [`sensor`](crate::sensor) for the details for each type of sensor.
+  ///
+  /// * `gamecontroller` The controller to query
+  /// * `type` The type of sensor to query
+  /// * `data` A pointer filled with the current sensor state
+  /// * `num_values` The number of values to write to data
+  ///
+  /// **Returns:** 0, or -1 if an error occurred.
+  pub fn SDL_GameControllerGetSensorData(
+    gamecontroller: *mut SDL_GameController, type_: SDL_SensorType,
+    data: *mut c_float, num_values: c_int,
+  ) -> c_int;
 
   /// Trigger a rumble effect.
   ///
@@ -440,10 +551,51 @@ extern "C" {
   ///   rumble motor, from 0 to 0xFFFF
   /// * `duration_ms` The duration of the rumble effect, in milliseconds
   ///
-  /// **Return:** 0, or -1 if rumble isn't supported on this joystick
+  /// **Return:** 0, or -1 if rumble isn't supported on this controller
   pub fn SDL_GameControllerRumble(
     gamecontroller: *mut SDL_GameController, low_frequency_rumble: Uint16,
     high_frequency_rumble: Uint16, duration_ms: Uint32,
+  ) -> c_int;
+
+  /// Start a rumble effect in the game controller's triggers.
+  ///
+  /// Each call to this function cancels any previous trigger rumble effect, and
+  /// calling it with 0 intensity stops any rumbling.
+  ///
+  /// * `gamecontroller` The controller to vibrate
+  /// * `left_rumble` The intensity of the left trigger rumble motor, from 0 to
+  ///   0xFFFF
+  /// * `right_rumble` The intensity of the right trigger rumble motor, from 0
+  ///   to 0xFFFF
+  /// * `duration_ms` The duration of the rumble effect, in milliseconds
+  ///
+  /// **Return:** 0, or -1 if rumble isn't supported on this controller
+  pub fn SDL_GameControllerRumbleTriggers(
+    gamecontroller: *mut SDL_GameController, left_rumble: Uint16,
+    right_rumble: Uint16, duration_ms: Uint32,
+  ) -> c_int;
+
+  /// Return whether a controller has an LED.
+  ///
+  /// * `gamecontroller` The controller to query
+  ///
+  /// **Return:** `SDL_TRUE`, or `SDL_FALSE` if this controller does not have a
+  /// modifiable LED.
+  pub fn SDL_GameControllerHasLED(
+    gamecontroller: *mut SDL_GameController,
+  ) -> SDL_bool;
+
+  /// Update a controller's LED color.
+  ///
+  /// * `gamecontroller` The controller to update
+  /// * `red` The intensity of the red LED
+  /// * `green` The intensity of the green LED
+  /// * `blue` The intensity of the blue LED
+  ///
+  /// **Return:** 0, or -1 if this controller does not have a modifiable LED
+  pub fn SDL_GameControllerSetLED(
+    gamecontroller: *mut SDL_GameController, red: Uint8, green: Uint8,
+    blue: Uint8,
   ) -> c_int;
 
   /// Close a controller previously opened with [`SDL_GameControllerOpen`].

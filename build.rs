@@ -7,7 +7,7 @@ fn main() {
         .expect("Could not read `CARGO_MANIFEST_DIR`!"),
     );
 
-    let mut cm = cmake::Config::new(manifest_dir.join("SDL2-2.0.12"));
+    let mut cm = cmake::Config::new(manifest_dir.join("SDL2-2.0.14"));
     cm.static_crt(true);
     cm.target(&env::var("TARGET").expect("Couldn't read `TARGET`"));
     cm.define("SDL_SHARED", "ON");

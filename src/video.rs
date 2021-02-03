@@ -140,6 +140,14 @@ pub const SDL_DISPLAYEVENT_NONE: SDL_DisplayEventID = SDL_DisplayEventID(0);
 /// Display orientation has changed to `data1`
 pub const SDL_DISPLAYEVENT_ORIENTATION: SDL_DisplayEventID =
   SDL_DisplayEventID(1);
+/// Display has been added to the system
+#[doc(since = "20014")]
+pub const SDL_DISPLAYEVENT_CONNECTED: SDL_DisplayEventID =
+  SDL_DisplayEventID(2);
+/// Display has been removed from the system
+#[doc(since = "20014")]
+pub const SDL_DISPLAYEVENT_DISCONNECTED: SDL_DisplayEventID =
+  SDL_DisplayEventID(3);
 
 /// Orientations a display can have.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -455,10 +463,50 @@ extern "C" {
   /// failure. Call [`SDL_GetError`] for more.
   pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> Uint32;
 
-  /// Creates a new window.
+  /// Create a window with the specified position, dimensions, and flags.
   ///
-  /// **Returns:** the window pointer, or NULL on failure. Call [`SDL_GetError`]
-  /// for more.
+  /// * `title` The title of the window, in UTF-8 encoding.
+  /// * `x` The x position of the window, [`SDL_WINDOWPOS_CENTERED`], or
+  ///   [`SDL_WINDOWPOS_UNDEFINED`].
+  /// * `y` The y position of the window, [`SDL_WINDOWPOS_CENTERED`], or
+  ///   [`SDL_WINDOWPOS_UNDEFINED`].
+  /// * `w` The width of the window, in screen coordinates.
+  /// * `h` The height of the window, in screen coordinates.
+  /// * `flags` The flags for the window, a mask of any of the following:
+  ///   [`SDL_WINDOW_FULLSCREEN`],    [`SDL_WINDOW_OPENGL`],
+  ///   [`SDL_WINDOW_HIDDEN`],        [`SDL_WINDOW_BORDERLESS`],
+  ///   [`SDL_WINDOW_RESIZABLE`],     [`SDL_WINDOW_MAXIMIZED`],
+  ///   [`SDL_WINDOW_MINIMIZED`],     [`SDL_WINDOW_INPUT_GRABBED`],
+  ///   [`SDL_WINDOW_ALLOW_HIGHDPI`], [`SDL_WINDOW_VULKAN`],
+  ///   [`SDL_WINDOW_METAL`].
+  ///
+  /// **Returns:** The created window, or `NULL` if window creation failed.
+  ///
+  /// If the window is created with the `SDL_WINDOW_ALLOW_HIGHDPI` flag, its
+  /// size in pixels may differ from its size in screen coordinates on
+  /// platforms with high-DPI support (e.g. iOS and Mac OS X). Use
+  /// SDL_GetWindowSize() to query the client area's size in screen
+  /// coordinates, and SDL_GL_GetDrawableSize(), SDL_Vulkan_GetDrawableSize(),
+  /// or SDL_GetRendererOutputSize() to query the drawable size in pixels.
+  ///
+  /// If the window is created with any of the SDL_WINDOW_OPENGL or
+  /// `SDL_WINDOW_VULKAN` flags, then the corresponding LoadLibrary function
+  /// ([`SDL_GL_LoadLibrary`] or [`SDL_Vulkan_LoadLibrary`]) is called and the
+  /// corresponding UnloadLibrary function is called by [`SDL_DestroyWindow`]().
+  ///
+  /// If `SDL_WINDOW_VULKAN` is specified and there isn't a working Vulkan
+  /// driver, [`SDL_CreateWindow`]() will fail because
+  /// [`SDL_Vulkan_LoadLibrary`]() will fail.
+  ///
+  /// If `SDL_WINDOW_METAL` is specified on an OS that does not support Metal,
+  /// [`SDL_CreateWindow`]() will fail.
+  ///
+  /// **Note:** On non-Apple devices, SDL requires you to either not link to the
+  /// Vulkan loader or link to a dynamic library version. This limitation
+  /// may be removed in a future version of SDL.
+  ///
+  /// See Also: [`SDL_DestroyWindow`], [`SDL_GL_LoadLibrary`],
+  /// [`SDL_Vulkan_LoadLibrary`]
   pub fn SDL_CreateWindow(
     title: *const c_char, x: c_int, y: c_int, w: c_int, h: c_int, flags: Uint32,
   ) -> *mut SDL_Window;

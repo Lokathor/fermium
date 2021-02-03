@@ -41,14 +41,16 @@ pub const SDL_SENSOR_GYRO: SDL_SensorType = SDL_SensorType(2);
 /// Accelerometer sensor
 ///
 /// The accelerometer returns the current acceleration in SI meters per
-/// second squared. This includes gravity, so a device at rest will have
-/// an acceleration of `SDL_STANDARD_GRAVITY` straight down.
+/// second squared. This measurement includes the force of gravity, so
+/// a device at rest will have an value of `SDL_STANDARD_GRAVITY` away
+/// from the center of the earth.
 ///
 /// * values[0]: Acceleration on the x axis
 /// * values[1]: Acceleration on the y axis
 /// * values[2]: Acceleration on the z axis
 ///
-/// For phones held in portrait mode, the axes are defined as follows:
+/// For phones held in portrait mode and game controllers held in front of you,
+/// the axes are defined as follows:
 /// * -X ... +X : left ... right
 /// * -Y ... +Y : bottom ... top
 /// * -Z ... +Z : farther ... closer
@@ -59,6 +61,19 @@ pub const SDL_SENSOR_GYRO: SDL_SensorType = SDL_SensorType(2);
 pub const SDL_STANDARD_GRAVITY: c_float = 9.80665;
 
 extern "C" {
+  /// Locking for multi-threaded access to the sensor API.
+  ///
+  /// If you are using the sensor API or handling events from multiple threads
+  /// you should use these locking functions to protect access to the sensors.
+  ///
+  /// In particular, you are guaranteed that the sensor list won't change, so
+  /// the API functions that take a sensor index will be valid, and sensor
+  /// events will not be delivered.
+  pub fn SDL_LockSensors() -> c_int;
+
+  /// Reverse of [`SDL_LockSensors`].
+  pub fn SDL_UnlockSensors() -> c_int;
+
   /// Count the number of sensors attached to the system right now.
   pub fn SDL_NumSensors() -> c_int;
 
