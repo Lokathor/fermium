@@ -11,5 +11,5 @@ pub use crate::{
   keyboard::*, keycode::*, loadso::*, messagebox::*, mouse::*, pixels::*,
   platform::*, power::*, quit::*, rect::*, renderer::*, rwops::*, scancode::*,
   sensor::*, stdinc::*, surface::*, syswm::*, timer::*, touch::*, version::*,
-  video::*, vulkan::*,
+  video::*, vulkan::*, *,
 };
