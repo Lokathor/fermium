@@ -13,6 +13,22 @@
 
 use crate::{c_char, c_void, stdinc::*};
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::events::*;
+#[allow(unused)]
+use crate::gamecontroller::*;
+#[allow(unused)]
+use crate::platform::*;
+#[allow(unused)]
+use crate::renderer::*;
+#[allow(unused)]
+use crate::rwops::*;
+#[allow(unused)]
+use crate::video::*;
+#[allow(unused)]
+use crate::*;
+
 macro_rules! c_str {
   ($l:literal) => {
     concat!($l, '\0').as_bytes()
@@ -359,7 +375,7 @@ pub const SDL_HINT_ORIENTATIONS: &[u8] = c_str!("SDL_IOS_ORIENTATIONS");
 ///
 /// More information about properly making use of controllers for the Apple TV
 /// can be found here:
-/// https://developer.apple.com/tvos/human-interface-guidelines/remote-and-controllers/
+/// <https://developer.apple.com/tvos/human-interface-guidelines/remote-and-controllers/>
 ///
 /// This variable can be set to the following values:
 /// * "0": Controller input does not generate UI events (the default).
@@ -691,7 +707,7 @@ pub const SDL_HINT_ALLOW_TOPMOST: &[u8] = c_str!("SDL_ALLOW_TOPMOST");
 /// power and CPU time. This hint is only used on Windows 7 and earlier.
 ///
 /// See this blog post for more information:
-/// http://randomascii.wordpress.com/2013/07/08/windows-timer-resolution-megawatts-wasted/
+/// <http://randomascii.wordpress.com/2013/07/08/windows-timer-resolution-megawatts-wasted/>
 ///
 /// If this variable is set to "0", the system timer resolution is not set.
 ///
@@ -745,8 +761,8 @@ pub const SDL_HINT_QTWAYLAND_WINDOW_FLAGS: &[u8] =
 /// and PSP backend.
 ///
 /// Instead of this hint, in 2.0.9 and later, you can use
-/// [`SDL_CreateThreadWithStackSize`]. This hint only works with the classic
-/// [`SDL_CreateThread`].
+/// `SDL_CreateThreadWithStackSize`. This hint only works with the classic
+/// `SDL_CreateThread`.
 pub const SDL_HINT_THREAD_STACK_SIZE: &[u8] = c_str!("SDL_THREAD_STACK_SIZE");
 
 /// A string specifying additional information to use with
@@ -846,7 +862,7 @@ pub const SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT: &[u8] =
 /// To setup a URL to an app's privacy policy, set
 /// `SDL_HINT_WINRT_PRIVACY_POLICY_URL` before calling any [`SDL_Init`]
 /// functions. The contents of the hint should be a valid URL. For example,
-/// "http://www.example.com".
+/// `"http://www.example.com"`.
 ///
 /// The default value is "", which will prevent SDL from adding a privacy policy
 /// link to the Settings charm. This hint should only be set during app init.
@@ -929,8 +945,9 @@ pub const SDL_HINT_WINRT_PRIVACY_POLICY_LABEL: &[u8] =
 /// event.
 ///
 /// More details on back button behavior in Windows Phone apps can be found at
-/// the following page, on Microsoft's developer site:
-/// http://msdn.microsoft.com/en-us/library/windowsphone/develop/jj247550(v=vs.105).aspx
+/// the following page, on [Microsoft's Developer Site][1]
+///
+/// [1]: (http://msdn.microsoft.com/en-us/library/windowsphone/develop/jj247550(v=vs.105).aspx)
 pub const SDL_HINT_WINRT_HANDLE_BACK_BUTTON: &[u8] =
   c_str!("SDL_WINRT_HANDLE_BACK_BUTTON");
 
@@ -1186,7 +1203,7 @@ pub const SDL_HINT_OPENGL_ES_DRIVER: &[u8] = c_str!("SDL_OPENGL_ES_DRIVER");
 
 /// A variable controlling speed/quality tradeoff of audio resampling.
 ///
-/// If available, SDL can use libsamplerate ( http://www.mega-nerd.com/SRC/ ) to
+/// If available, SDL can use libsamplerate ( <http://www.mega-nerd.com/SRC/> ) to
 /// handle audio resampling. There are different resampling modes available that
 /// produce different levels of quality, using more CPU.
 ///
@@ -1219,8 +1236,9 @@ pub const SDL_HINT_AUDIO_RESAMPLING_MODE: &[u8] =
 ///   muted by the phone mute switch (default)
 /// * "playback": Use the `AVAudioSessionCategoryPlayback` category
 ///
-/// For more information, see Apple's documentation:
-/// https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/AudioSessionCategoriesandModes/AudioSessionCategoriesandModes.html
+/// For more information, see [Apple's Documentation][1]
+///
+/// [1]: (https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/AudioSessionCategoriesandModes/AudioSessionCategoriesandModes.html)
 pub const SDL_HINT_AUDIO_CATEGORY: &[u8] = c_str!("SDL_AUDIO_CATEGORY");
 
 /// A variable controlling whether the 2D render API is compatible or efficient.
@@ -1280,10 +1298,10 @@ pub const SDL_HINT_AUTO_UPDATE_SENSORS: &[u8] =
 ///
 /// This is generally meant to be used to debug SDL itself, but can be useful
 /// for application developers that need better visibility into what is going on
-/// in the event queue. Logged events are sent through [`SDL_Log`], which means
+/// in the event queue. Logged events are sent through `SDL_Log`, which means
 /// by default they appear on `stdout` on most platforms or maybe
-/// [`OutputDebugString`] on Windows, and can be funneled by the app with
-/// [`SDL_LogSetOutputFunction`], etc.
+/// `OutputDebugString` on Windows, and can be funneled by the app with
+/// `SDL_LogSetOutputFunction`, etc.
 ///
 /// This hint can be toggled on and off at runtime, if you only need to log
 /// events for a small subset of program execution.

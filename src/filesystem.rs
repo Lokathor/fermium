@@ -2,6 +2,10 @@
 
 use crate::c_char;
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::stdinc::*;
+
 extern "C" {
   /// Get the path where the application resides.
   ///

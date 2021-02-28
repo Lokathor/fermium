@@ -4,6 +4,10 @@ use crate::{
   blendmode::*, c_char, c_int, c_void, pixels::*, rect::*, rwops::*, stdinc::*,
 };
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::error::*;
+
 /// Surface uses preallocated memory
 pub const SDL_PREALLOC: u32 = 0x00000001;
 /// Surface is RLE encoded
@@ -102,7 +106,7 @@ extern "C" {
   ///
   /// If the depth is 4 or 8 bits, an empty palette is allocated for the
   /// surface. If the depth is greater than 8 bits, the pixel format is set
-  /// using the flags '[RGB]mask'.
+  /// using the flags `[RGB]mask`.
   ///
   /// If the function runs out of memory, it will return NULL.
   ///
@@ -115,8 +119,8 @@ extern "C" {
   /// * `Bmask`: The blue mask of the surface to create.
   /// * `Amask`: The alpha mask of the surface to create.
   ///
-  /// **Return:** A new [`SDL_Surface`], or NULL on error (call [`SDL_GetError`]
-  /// for more info).
+  /// **Return:** A new [`SDL_Surface`], or NULL on error (call
+  /// [`SDL_GetErrorMsg`] for more info).
   ///
   /// **Note:** This actually uses [`SDL_MasksToPixelFormatEnum`] to determine a
   /// pixel format enum value, and then calls

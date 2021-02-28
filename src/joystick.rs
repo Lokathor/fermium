@@ -26,6 +26,14 @@
 
 use crate::{c_char, c_int, c_void, stdinc::*};
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::events::*;
+#[allow(unused)]
+use crate::hints::*;
+#[allow(unused)]
+use crate::*;
+
 /// The `SDL_Joystick` type is an opaque structure.
 #[derive(Debug)]
 #[repr(transparent)]

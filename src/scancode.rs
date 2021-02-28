@@ -2,13 +2,17 @@
 
 //! Physical key mappings (ignores locale).
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::keyboard::*;
+
 /// The SDL keyboard scancode representation.
 ///
 /// This is used in places like the [`SDL_Keysym`] struct for the "hardware" /
 /// "physical" designation of a key.
 ///
 /// The values in this enumeration are based on the USB usage page standard:
-/// https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf
+/// <https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf>
 ///
 /// See all the constants named `SDL_SCANCODE_*`
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

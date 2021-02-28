@@ -30,7 +30,11 @@ extern "C" {
 
   /// Wait a specified number of milliseconds before returning.
   ///
-  /// This is essentially the same as [`std::thread::sleep_ms`].
+  /// This is essentially the same as
+  /// [`std::thread::sleep_ms`](https://doc.rust-lang.org/std/thread/fn.sleep_ms.html),
+  /// which incidentally is deprecated for being a slightly inferior interface
+  /// compared to
+  /// [`std::thread::sleep`](https://doc.rust-lang.org/std/thread/fn.sleep.html).
   pub fn SDL_Delay(ms: Uint32);
 
   /// Add a new timer to the pool of timers already running.

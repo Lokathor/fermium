@@ -2,6 +2,9 @@
 
 use crate::{c_char, stdinc::*};
 
+#[allow(unused)]
+use crate::*;
+
 /// Information about the version of SDL in use.
 ///
 /// Represents the library's version as three levels:

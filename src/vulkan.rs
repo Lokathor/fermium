@@ -6,6 +6,10 @@
 
 use crate::{c_char, c_int, c_uint, c_void, stdinc::*, video::*};
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::hints::*;
+
 /// Vulkan instance pointer.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
@@ -120,7 +124,9 @@ extern "C" {
   /// more platform specific extensions
   ///
   /// The extension names queried here must be enabled when calling
-  /// [`VkCreateInstance`], otherwise surface creation will fail.
+  /// [`vkCreateInstance`][1], otherwise surface creation will fail.
+  ///
+  /// [1]: (https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html)
   ///
   /// `window` should have been created with the [`SDL_WINDOW_VULKAN`] flag, or
   /// be `NULL`.

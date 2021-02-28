@@ -17,11 +17,15 @@
 //! should use SDL's OpenGL/Direct3D support or one of the many good 3D engines.
 //!
 //! These functions must be called from the main thread. See this bug for
-//! details: http://bugzilla.libsdl.org/show_bug.cgi?id=1995
+//! details: <http://bugzilla.libsdl.org/show_bug.cgi?id=1995>
 
 use crate::{
   blendmode::*, c_char, c_int, c_void, rect::*, stdinc::*, surface::*, video::*,
 };
+
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::pixels::*;
 
 /// Flags used when creating a rendering context
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]

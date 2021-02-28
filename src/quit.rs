@@ -15,6 +15,10 @@
 
 use crate::events::*;
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::*;
+
 /// Checks if a quit event is currently in the queue.
 #[inline]
 #[must_use]

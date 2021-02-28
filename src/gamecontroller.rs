@@ -19,6 +19,16 @@ use crate::{
   c_char, c_float, c_int, c_void, joystick::*, rwops::*, sensor::*, stdinc::*,
 };
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::events::*;
+#[allow(unused)]
+use crate::hints::*;
+#[allow(unused)]
+use crate::platform::*;
+#[allow(unused)]
+use crate::*;
+
 /// An SDL game controller is an opaque structure.
 #[repr(transparent)]
 pub struct SDL_GameController(c_void);

@@ -2,6 +2,12 @@
 
 use crate::{c_char, c_int, c_void, rect::*, stdinc::*, surface::*};
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::error::*;
+#[allow(unused)]
+use crate::vulkan::*;
+
 /// The structure that defines a display mode
 #[derive(Debug)]
 #[repr(C)]
@@ -372,8 +378,8 @@ extern "C" {
   ///
   /// The primary display is at (0,0).
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GetDisplayBounds(
     displayIndex: c_int, rect: *mut SDL_Rect,
   ) -> c_int;
@@ -390,8 +396,8 @@ extern "C" {
   ///
   /// Any pointer may safely be null if you don't want that value.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GetDisplayDPI(
     displayIndex: c_int, ddpi: *mut f32, hdpi: *mut f32, vdpi: *mut f32,
   ) -> c_int;
@@ -408,24 +414,24 @@ extern "C" {
 
   /// Gets info about a display mode.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GetDisplayMode(
     displayIndex: c_int, modeIndex: c_int, mode: *mut SDL_DisplayMode,
   ) -> c_int;
 
   /// Gets info about the desktop's display mode.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GetDesktopDisplayMode(
     displayIndex: c_int, mode: *mut SDL_DisplayMode,
   ) -> c_int;
 
   /// Gets info about the current display mode.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GetCurrentDisplayMode(
     displayIndex: c_int, mode: *mut SDL_DisplayMode,
   ) -> c_int;
@@ -433,7 +439,7 @@ extern "C" {
   /// Gets the closest display mode to the `mode` requested.
   ///
   /// **Returns:** Either the `closest` pointer, or null on failure. Call
-  /// [`SDL_GetError`] for more.
+  /// [`SDL_GetErrorMsg`] for more.
   pub fn SDL_GetClosestDisplayMode(
     displayIndex: c_int, mode: *const SDL_DisplayMode,
     closest: *mut SDL_DisplayMode,
@@ -441,15 +447,15 @@ extern "C" {
 
   /// Gets the display index for the center of a given window.
   ///
-  /// **Returns:** non-negative, or negative on failure. Call [`SDL_GetError`]
-  /// for more.
+  /// **Returns:** non-negative, or negative on failure. Call
+  /// [`SDL_GetErrorMsg`] for more.
   pub fn SDL_GetWindowDisplayIndex(window: *mut SDL_Window) -> c_int;
 
   /// Sets the display mode to use when the given window is visible and
   /// fullscreen.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_SetWindowDisplayMode(
     window: *mut SDL_Window, mode: *const SDL_DisplayMode,
   ) -> c_int;
@@ -457,8 +463,8 @@ extern "C" {
   /// Gets the display mode used when the given window is visible and
   /// fullscreen.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GetWindowDisplayMode(
     window: *mut SDL_Window, mode: *mut SDL_DisplayMode,
   ) -> c_int;
@@ -466,7 +472,7 @@ extern "C" {
   /// Gets the pixel format of the window.
   ///
   /// **Return:** the pixel format on success, or `SDL_PIXELFORMAT_UNKNOWN` on
-  /// failure. Call [`SDL_GetError`] for more.
+  /// failure. Call [`SDL_GetErrorMsg`] for more.
   pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> Uint32;
 
   /// Create a window with the specified position, dimensions, and flags.
@@ -520,8 +526,8 @@ extern "C" {
   /// Creates a window from driver-dependent window creation data, typically a
   /// native window pointer.
   ///
-  /// **Returns:** the window pointer, or NULL on failure. Call [`SDL_GetError`]
-  /// for more.
+  /// **Returns:** the window pointer, or NULL on failure. Call
+  /// [`SDL_GetErrorMsg`] for more.
   pub fn SDL_CreateWindowFrom(data: *const c_void) -> *mut SDL_Window;
 
   /// Gets the window's ID, or 0 on failure.
@@ -635,8 +641,8 @@ extern "C" {
   /// * `SDL_WINDOW_FULLSCREEN_DESKTOP`
   /// * 0 for a "windowed" window.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_SetWindowFullscreen(
     window: *mut SDL_Window, flags: Uint32,
   ) -> c_int;
@@ -651,13 +657,13 @@ extern "C" {
   /// finalize your changes for the user to see.
   ///
   /// **Returns:** the surface pointer, or NULL on failure. Call
-  /// [`SDL_GetError`] for more.
+  /// [`SDL_GetErrorMsg`] for more.
   pub fn SDL_GetWindowSurface(window: *mut SDL_Window) -> *mut SDL_Surface;
 
   /// Updates the window surface data for the user to see.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_UpdateWindowSurface(window: *mut SDL_Window) -> c_int;
 
   /// As [`SDL_UpdateWindowSurfaceRects`], but limited to the list of rects
@@ -681,8 +687,8 @@ extern "C" {
 
   /// Set the brightness (gamma) for the display that owns the window.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_SetWindowBrightness(
     window: *mut SDL_Window, brightness: f32,
   ) -> c_int;
@@ -692,14 +698,14 @@ extern "C" {
 
   /// Sets a window's opacity.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_SetWindowOpacity(window: *mut SDL_Window, opacity: f32) -> c_int;
 
   /// Gets a window's opacity (to the pointer given).
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GetWindowOpacity(
     window: *mut SDL_Window, out_opacity: *mut f32,
   ) -> c_int;
@@ -717,8 +723,8 @@ extern "C" {
   /// Each pointer should be a pointer to a 256-element translation table, or
   /// null.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_SetWindowGammaRamp(
     window: *mut SDL_Window, red: *const Uint16, green: *const Uint16,
     blue: *const Uint16,
@@ -755,8 +761,8 @@ extern "C" {
   /// You can also skip using this function and the default GL
   /// library will be loaded when a GL window is created.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GL_LoadLibrary(path: *const c_char) -> c_int;
 
   /// Get a GL function pointer for a given function name.
@@ -788,14 +794,14 @@ extern "C" {
 
   /// Sets a GL attribute to the given value.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GL_SetAttribute(attr: SDL_GLattr, value: c_int) -> c_int;
 
   /// Gets a GL attribute's value (to the pointer given).
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GL_GetAttribute(attr: SDL_GLattr, value: *mut c_int) -> c_int;
 
   /// Creates a new context for use with the window, and also makes it current.
@@ -805,8 +811,8 @@ extern "C" {
   ///
   /// You can pass NULL to make no context be the current context.
   ///
-  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetError`] for
-  /// more.
+  /// **Returns:** 0 on success, negative on failure. Call [`SDL_GetErrorMsg`]
+  /// for more.
   pub fn SDL_GL_MakeCurrent(
     window: *mut SDL_Window, context: SDL_GLContext,
   ) -> c_int;
@@ -836,7 +842,7 @@ extern "C" {
   /// vsync.
   ///
   /// **Returns:** 0 on success, -1 if setting the swap interval isn't
-  /// supported. Call [`SDL_GetError`] for more.
+  /// supported. Call [`SDL_GetErrorMsg`] for more.
   pub fn SDL_GL_SetSwapInterval(interval: c_int) -> c_int;
 
   /// Gets the swap interval setting.
@@ -845,7 +851,7 @@ extern "C" {
   /// * 1 for standard vsync swapping.
   /// * -1 for adaptive vsync swapping.
   ///
-  /// You can also call [`SDL_GetError`] for more.
+  /// You can also call [`SDL_GetErrorMsg`] for more.
   pub fn SDL_GL_GetSwapInterval() -> c_int;
 
   /// Swaps the front buffer and back buffer of a GL using window.

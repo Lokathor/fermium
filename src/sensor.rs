@@ -5,6 +5,12 @@
 
 use crate::{c_char, c_float, c_int, c_void, stdinc::*};
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::video::*;
+#[allow(unused)]
+use crate::*;
+
 /// SDL's opaque sensor type.
 #[repr(transparent)]
 pub struct SDL_Sensor(c_void);
@@ -24,7 +30,7 @@ pub struct SDL_SensorID(pub Sint32);
 /// Additional sensors may be available, using platform-dependent semantics.
 ///
 /// Hare are the additional Android sensors:
-/// https://developer.android.com/reference/android/hardware/SensorEvent.html#values
+/// <https://developer.android.com/reference/android/hardware/SensorEvent.html#values>
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct SDL_SensorType(pub i32);
@@ -45,9 +51,9 @@ pub const SDL_SENSOR_GYRO: SDL_SensorType = SDL_SensorType(2);
 /// a device at rest will have an value of `SDL_STANDARD_GRAVITY` away
 /// from the center of the earth.
 ///
-/// * values[0]: Acceleration on the x axis
-/// * values[1]: Acceleration on the y axis
-/// * values[2]: Acceleration on the z axis
+/// * `values[0]`: Acceleration on the x axis
+/// * `values[1]`: Acceleration on the y axis
+/// * `values[2]`: Acceleration on the z axis
 ///
 /// For phones held in portrait mode and game controllers held in front of you,
 /// the axes are defined as follows:

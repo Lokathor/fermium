@@ -5,6 +5,14 @@ use crate::{
   keyboard::*, mouse::*, stdinc::*, syswm::*, touch::*, version::*, video::*,
 };
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::audio::*;
+#[allow(unused)]
+use crate::sensor::*;
+#[allow(unused)]
+use crate::timer::*;
+
 /// Button is released.
 ///
 /// Used with both keyboard and mouse.

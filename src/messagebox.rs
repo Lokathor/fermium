@@ -2,7 +2,11 @@
 
 use crate::{c_char, c_int, stdinc::*, video::*};
 
-/// [`SDL_MessageBox`] flags.
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::*;
+
+/// Flags for [`SDL_ShowMessageBox`] and [`SDL_ShowSimpleMessageBox`].
 ///
 /// If supported, will display warning icon, etc.
 ///

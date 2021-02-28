@@ -4,6 +4,10 @@
 
 use crate::scancode::*;
 
+// makes rustdoc link properly!
+#[allow(unused)]
+use crate::keyboard::*;
+
 /// The SDL keyboard keycode representation.
 ///
 /// This is used in places like the [`SDL_Keysym`] struct for the "software" /
