@@ -2,9 +2,9 @@
 
 ## 20014.2.0
 
-* Docs for `SDL_Init` now list the return code meaning.
 * Added the `SDL_GLContext::is_null` method.
 * Added the C types into the export list of the `prelude`.
+* Docs for `SDL_Init` now list the return code meaning.
 * Fixed up all the intra-doc links so they should point to the right stuff.
 
 ## 20014.1.0
