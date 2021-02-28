@@ -174,6 +174,12 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
 #[allow(unused)]
 #[repr(transparent)]
 pub struct SDL_GLContext(pub *mut c_void);
+impl SDL_GLContext {
+  /// Checks if the context pointer is null.
+  pub fn is_null(self) -> bool {
+    self.0.is_null()
+  }
+}
 
 /// OpenGL configuration attributes
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
