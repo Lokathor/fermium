@@ -39,6 +39,10 @@ dynamic_link = []
 # enabled (eg: a bin/bench/test).
 cargo_check = []
 
+# Not Part Of Semver! With this on, the x86_64-pc-windows-msvc target will build
+# much faster. No effect on other targets.
+experimental_fast_build = ["dynamic_link"]
+
 [package.metadata.docs.rs]
 # building the docs is a "check only" style operation.
 features = ["cargo_check"]

@@ -1,7 +1,26 @@
 use std::env;
 
 fn main() {
-  if cfg!(not(feature = "cargo_check")) {
+  let target = env::var("TARGET").expect("Could not read `TARGET`!");
+
+  if cfg!(feature = "experimental_fast_build")
+    && target == "x86_64-pc-windows-msvc"
+  {
+    let manifest_dir = std::path::PathBuf::from(
+      env::var("CARGO_MANIFEST_DIR")
+        .expect("Could not read `CARGO_MANIFEST_DIR`!"),
+    );
+    // declare search path
+    println!(
+      "cargo:rustc-link-search={}",
+      manifest_dir
+        .join("SDL2-2.0.14-devel")
+        .join("x86_64-pc-windows-msvc")
+        .display()
+    );
+    // declare linking (dynamic)
+    println!("cargo:rustc-link-lib=SDL2");
+  } else if cfg!(not(feature = "cargo_check")) {
     let manifest_dir = std::path::PathBuf::from(
       env::var("CARGO_MANIFEST_DIR")
         .expect("Could not read `CARGO_MANIFEST_DIR`!"),
