@@ -165,6 +165,8 @@ pub const SDL_INIT_EVERYTHING: SDL_InitFlags = SDL_InitFlags(
 
 extern "C" {
   /// This function initializes the subsystems specified by `flags`.
+  ///
+  /// **Returns:** 0 on success or a negative error code on failure
   pub fn SDL_Init(flags: SDL_InitFlags) -> c_int;
 
   /// This function initializes specific SDL subsystems
