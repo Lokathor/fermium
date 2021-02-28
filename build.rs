@@ -1,6 +1,14 @@
 use std::env;
 
 fn main() {
+  // Note(Lokathor): I was told by thomcc@github to put this in because it makes
+  // the build faster if this crate is used within a workspace.
+  //
+  // The build script only uses the bundled C source to build the lib, so unless
+  // we actually replace the C source, we don't need to re-run the build script.
+  // This won't affect our ability to develop the Rust level bindings.
+  println!("cargo:rerun-if-changed=build.rs");
+
   let target = env::var("TARGET").expect("Could not read `TARGET`!");
 
   if cfg!(feature = "experimental_fast_build")
@@ -18,7 +26,8 @@ fn main() {
         .join("x86_64-pc-windows-msvc")
         .display()
     );
-    // declare linking (dynamic)
+    // declare linking (the bundled files only work with dynamic linking)
+    assert!(cfg!(feature = "dynamic_link"));
     println!("cargo:rustc-link-lib=SDL2");
   } else if cfg!(not(feature = "cargo_check")) {
     let manifest_dir = std::path::PathBuf::from(
