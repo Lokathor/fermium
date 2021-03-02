@@ -451,6 +451,9 @@ extern "C" {
   /// [`SDL_GetErrorMsg`] for more.
   pub fn SDL_GetWindowDisplayIndex(window: *mut SDL_Window) -> c_int;
 
+  /// Get a window from a stored ID, or NULL if it doesn't exist.
+  pub fn SDL_GetWindowFromID(id: u32) -> *mut SDL_Window;
+
   /// Sets the display mode to use when the given window is visible and
   /// fullscreen.
   ///
