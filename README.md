@@ -30,6 +30,14 @@ we use the full SDL2 release version as the major version number of this crate:
 Updates *within* a `fermium` major version will all target the same SDL2 version,
 and follow the normal SemVer rules.
 
+## FAQ
+
+* **Lokathor, why does your crate have such a stupid name?**
+  * Well, this started as raw layer for a crate called `beryllium`, to replace its usage of `sdl2-sys` with something new.
+    Since `sdl2-sys` was already taken, I needed another name, and I decided to pick another element to go with the first element.
+    Somewhat at random, I just decided to check out element 100 on wikipedia, and it was apparently discovered in the fallout of the first hydrogen bomb.
+    I thought to myself, "well that's cool enough, I guess.", and now we're here.
+
 ## Project Logo
 
 [![birth of fermium](https://upload.wikimedia.org/wikipedia/commons/5/58/Ivy_Mike_-_mushroom_cloud.jpg)](https://en.wikipedia.org/wiki/Fermium)
