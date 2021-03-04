@@ -39,7 +39,7 @@ pub const fn SDL_SCANCODE_TO_KEYCODE(x: SDL_Scancode) -> SDL_Keycode {
 
 pub const SDLK_UNKNOWN: SDL_Keycode = SDL_Keycode(0);
 pub const SDLK_RETURN: SDL_Keycode = SDL_Keycode(b'\r' as i32);
-pub const SDLK_ESCAPE: SDL_Keycode = SDL_Keycode(33);
+pub const SDLK_ESCAPE: SDL_Keycode = SDL_Keycode(27);
 /// `\b`
 pub const SDLK_BACKSPACE: SDL_Keycode = SDL_Keycode(8);
 pub const SDLK_TAB: SDL_Keycode = SDL_Keycode(b'\t' as i32);
