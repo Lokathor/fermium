@@ -3,6 +3,7 @@
 ## 20014.3.0
 
 * made the `fermium` binary which will write out the x86_64 dll in the current directory.
+* marked the inner fields of `VkInstance` and `VkSurfaceKHR` as `pub` to improve inter-operation with other vulkan libraries.
 
 ## 20014.2.0
 
