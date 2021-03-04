@@ -10,6 +10,22 @@ fn main() {
   println!("cargo:rerun-if-changed=build.rs");
 
   let target = env::var("TARGET").expect("Could not read `TARGET`!");
+  println!("target:{}", target);
+
+  let out_dir = env::var("OUT_DIR").expect("Could not read `OUT_DIR`!");
+  println!("out_dir:{}", out_dir);
+
+  let cargo_manifest_dir = env::var("CARGO_MANIFEST_DIR")
+    .expect("Could not read `CARGO_MANIFEST_DIR`!");
+  println!("cargo_manifest_dir:{}", cargo_manifest_dir);
+
+  let dll_from = std::path::Path::new(&cargo_manifest_dir).join("SDL2.dll");
+  println!("dll_from:{}", dll_from.display());
+
+  let dll_to = std::path::Path::new(&out_dir).join("SDL2.dll");
+  println!("dll_to:{}", dll_to.display());
+
+  std::fs::copy(dll_from, dll_to).unwrap();
 
   if cfg!(feature = "experimental_fast_build")
     && target == "x86_64-pc-windows-msvc"
