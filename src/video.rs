@@ -147,11 +147,9 @@ pub const SDL_DISPLAYEVENT_NONE: SDL_DisplayEventID = SDL_DisplayEventID(0);
 pub const SDL_DISPLAYEVENT_ORIENTATION: SDL_DisplayEventID =
   SDL_DisplayEventID(1);
 /// Display has been added to the system
-#[doc(since = "20014")]
 pub const SDL_DISPLAYEVENT_CONNECTED: SDL_DisplayEventID =
   SDL_DisplayEventID(2);
 /// Display has been removed from the system
-#[doc(since = "20014")]
 pub const SDL_DISPLAYEVENT_DISCONNECTED: SDL_DisplayEventID =
   SDL_DisplayEventID(3);
 
