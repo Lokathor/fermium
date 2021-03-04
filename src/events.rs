@@ -586,15 +586,15 @@ pub struct SDL_ControllerTouchpadEvent {
 #[allow(missing_docs)]
 pub struct SDL_ControllerSensorEvent {
   /// [`SDL_CONTROLLERSENSORUPDATE`]
-  type_: SDL_EventType,
+  pub type_: SDL_EventType,
   /// In milliseconds, populated using [`SDL_GetTicks`].
-  timestamp: Uint32,
+  pub timestamp: Uint32,
   /// The joystick instance id
-  which: SDL_JoystickID,
+  pub which: SDL_JoystickID,
   /// The type of the sensor, one of the values of [`SDL_SensorType`]
-  sensor: Sint32,
+  pub sensor: Sint32,
   /// Up to 3 values from the sensor, as defined in [`sensor`](crate::sensor)
-  data: [c_float; 3],
+  pub data: [c_float; 3],
 }
 
 /// Audio device event structure (event.adevice.*)

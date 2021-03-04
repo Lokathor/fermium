@@ -1,5 +1,9 @@
 # Changelog
 
+## 20014.4.0
+
+* mark more fields as `pub` that accidentally were not `pub`: SDL_Keysym and SDL_SensorEvent.
+
 ## 20014.3.0
 
 * made the `fermium` binary which will write out the x86_64 dll in the current directory.

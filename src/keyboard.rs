@@ -12,12 +12,12 @@ use crate::{
 #[repr(C)]
 pub struct SDL_Keysym {
   /// SDL physical key code
-  scancode: SDL_Scancode,
+  pub scancode: SDL_Scancode,
   /// SDL virtual key code
-  sym: SDL_Keycode,
+  pub sym: SDL_Keycode,
   /// current key modifiers
-  mod_: Uint16,
-  unused: Uint32,
+  pub mod_: Uint16,
+  pub unused: Uint32,
 }
 
 extern "C" {
