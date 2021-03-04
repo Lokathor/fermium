@@ -1,5 +1,9 @@
 # Changelog
 
+## 20014.4.1
+
+* correct the value of SDLK_ESCAPE
+
 ## 20014.4.0
 
 * mark more fields as `pub` that accidentally were not `pub`: SDL_Keysym and SDL_SensorEvent.
