@@ -1,5 +1,11 @@
 # Changelog
 
+## 20014.3.0
+
+* made the `fermium` binary which will write out the x86_64 dll in the current directory.
+* marked the inner fields of `VkInstance` and `VkSurfaceKHR` as `pub` to improve inter-operation with other vulkan libraries.
+* Added `SDL_GetWindowFromID`
+
 ## 20014.2.0
 
 * Added the `SDL_GLContext::is_null` method.

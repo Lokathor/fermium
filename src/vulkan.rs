@@ -13,7 +13,7 @@ use crate::hints::*;
 /// Vulkan instance pointer.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
-pub struct VkInstance(*mut u8);
+pub struct VkInstance(pub *mut c_void);
 impl Default for VkInstance {
   #[inline]
   #[must_use]
@@ -25,7 +25,7 @@ impl Default for VkInstance {
 /// Vulkan surface handle.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
-pub struct VkSurfaceKHR(u64);
+pub struct VkSurfaceKHR(pub u64);
 
 /// Alternate type name in some docs.
 pub type SDL_vulkanInstance = VkInstance;
