@@ -10,8 +10,8 @@ pub use crate::{
   c_schar, c_short, c_uchar, c_uint, c_ulong, c_ulonglong, c_ushort, c_void,
   clipboard::*, cpuinfo::*, error::*, events::*, filesystem::*,
   gamecontroller::*, gesture::*, hints::*, joystick::*, keyboard::*,
-  keycode::*, loadso::*, messagebox::*, mouse::*, pixels::*, platform::*,
-  power::*, quit::*, rect::*, renderer::*, rwops::*, scancode::*, sensor::*,
-  stdinc::*, surface::*, syswm::*, timer::*, touch::*, version::*, video::*,
-  vulkan::*, *,
+  keycode::*, loadso::*, messagebox::*, mouse::*, mutex::*, pixels::*,
+  platform::*, power::*, quit::*, rect::*, renderer::*, rwops::*, scancode::*,
+  sensor::*, stdinc::*, surface::*, syswm::*, timer::*, touch::*, version::*,
+  video::*, vulkan::*, *,
 };

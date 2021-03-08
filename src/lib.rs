@@ -107,6 +107,7 @@ pub mod keycode;
 pub mod loadso;
 pub mod messagebox;
 pub mod mouse;
+pub mod mutex;
 pub mod pixels;
 pub mod platform;
 pub mod power;
