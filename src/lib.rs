@@ -86,9 +86,7 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
 
 pub mod prelude;
 
-// TODO: haptic (joystick force feedback system).
 // TODO: shape (allows shaped windows).
-// TODO: mutex (portable, no_std mutex would be handy).
 // TODO: locale (locale info)
 // TODO: misc (lets you open a browser to a URL)
 pub mod audio;
