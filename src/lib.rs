@@ -100,6 +100,7 @@ pub mod events;
 pub mod filesystem;
 pub mod gamecontroller;
 pub mod gesture;
+pub mod haptic;
 pub mod hints;
 pub mod joystick;
 pub mod keyboard;
