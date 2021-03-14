@@ -35,7 +35,6 @@ use crate::hints::*;
 use crate::*;
 
 /// The `SDL_Joystick` type is an opaque structure.
-#[derive(Debug)]
 #[repr(transparent)]
 pub struct SDL_Joystick(c_void);
 

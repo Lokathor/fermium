@@ -25,7 +25,7 @@ cmake = "0.1"
 # Enable this to dynamicly link to SDL2. The default is to static link because
 # even with a staticly linked SDL2 the end user can override the SDL2 used at
 # runtime (if absolutely necessary) via SDL2's "Dynamic API" system.
-# https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html 
+# https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html
 #
 # WARNING: THIS DOES NOT WORK ON UNIX SYSTEMS. If you'd like it to work on unix
 # systems please submit the PR to fix the build/link process, because I don't
@@ -41,6 +41,20 @@ cargo_check = []
 # Not Part Of Semver! With this on, the x86_64-pc-windows-msvc target will build
 # much faster. No effect on other targets.
 experimental_fast_build = ["dynamic_link"]
+
+# Requires Nightly! Unstable! Use `#[link_args]` for `weak_framework` support on
+# macOS (specifically, do this for `GameController.framework` and
+# `CoreHaptic.framework` if they're linked in, since they're so new)
+nightly_macos_link_args = []
+
+# Use the `sdl2-config` binary that's either on the path, or specified via the
+# `FERMIUM_SDL2_CONFIG_PATH` environment variable. If not specified in the
+# environment, then we require it be at least the version we'd bundle.
+# Otherwise, you should set `FERMIUM_ALLOW_OLDER=1` in the environment.
+#
+# If no binary is set, we fall back to building and linking our bundled version
+# unless `FERMIUM_NO_CMAKE_FALLBACK=1` is set.
+use_sdl2_config = []
 
 [package.metadata.docs.rs]
 # building the docs is a "check only" style operation.

@@ -17,6 +17,7 @@ pub struct SDL_Keysym {
   pub sym: SDL_Keycode,
   /// current key modifiers
   pub mod_: Uint16,
+  /// This field is apparently unused by SDL.
   pub unused: Uint32,
 }
 

@@ -2,6 +2,7 @@
 #![allow(bad_style)]
 #![warn(missing_docs)]
 #![allow(clippy::missing_safety_doc)]
+#![cfg_attr(feature = "nightly_macos_link_args", feature(link_args))]
 
 //! Bindings to the SDL2 C library.
 //!
@@ -86,9 +87,7 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
 
 pub mod prelude;
 
-// TODO: haptic (joystick force feedback system).
 // TODO: shape (allows shaped windows).
-// TODO: mutex (portable, no_std mutex would be handy).
 // TODO: locale (locale info)
 // TODO: misc (lets you open a browser to a URL)
 pub mod audio;
@@ -100,6 +99,7 @@ pub mod events;
 pub mod filesystem;
 pub mod gamecontroller;
 pub mod gesture;
+pub mod haptic;
 pub mod hints;
 pub mod joystick;
 pub mod keyboard;
@@ -107,6 +107,7 @@ pub mod keycode;
 pub mod loadso;
 pub mod messagebox;
 pub mod mouse;
+pub mod mutex;
 pub mod pixels;
 pub mod platform;
 pub mod power;
@@ -192,3 +193,18 @@ extern "C" {
   /// You should call it upon all exit conditions.
   pub fn SDL_Quit();
 }
+
+#[cfg_attr(
+  weak_framework_game_controller,
+  link_args = "-weak_framework GameController"
+)]
+#[cfg_attr(
+  weak_framework_core_haptics,
+  link_args = "-weak_framework CoreHaptics"
+)]
+#[cfg_attr(weak_framework_metal, link_args = "-weak_framework Metal")]
+#[cfg_attr(
+  weak_framework_quartz_core,
+  link_args = "-weak_framework QuartzCore"
+)]
+extern "C" {}
