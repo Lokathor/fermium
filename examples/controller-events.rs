@@ -111,23 +111,23 @@ fn main() {
         }
         SDL_CONTROLLERDEVICEREMAPPED => {
           println!("SDL_CONTROLLERDEVICEREMAPPED");
-          // TODO
+          println!("{:?}", event.cdevice);
         }
         SDL_CONTROLLERTOUCHPADDOWN => {
           println!("SDL_CONTROLLERTOUCHPADDOWN");
-          // TODO
+          println!("{:?}", event.ctouchpad);
         }
         SDL_CONTROLLERTOUCHPADMOTION => {
           println!("SDL_CONTROLLERTOUCHPADMOTION");
-          // TODO
+          println!("{:?}", event.ctouchpad);
         }
         SDL_CONTROLLERTOUCHPADUP => {
           println!("SDL_CONTROLLERTOUCHPADUP");
-          // TODO
+          println!("{:?}", event.ctouchpad);
         }
         SDL_CONTROLLERSENSORUPDATE => {
           println!("SDL_CONTROLLERSENSORUPDATE");
-          // TODO
+          println!("{:?}", event.ctouchpad);
         }
         _ => (),
       }
