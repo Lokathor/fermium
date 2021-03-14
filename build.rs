@@ -56,6 +56,7 @@ fn main() {
     cm.target(&env::var("TARGET").expect("Couldn't read `TARGET`"));
     cm.define("SDL_SHARED", "ON");
     cm.define("SDL_STATIC", "ON");
+    cm.define("HIDAPI", "ON");
     cm.profile("Release");
     let build_output_path = cm.build();
     println!("build_output_path: {}", build_output_path.display());

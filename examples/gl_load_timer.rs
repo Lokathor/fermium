@@ -3,7 +3,7 @@ use gl46::global_commands::load_global_gl_with;
 
 fn main() {
   unsafe {
-    assert!(SDL_Init(SDL_INIT_EVERYTHING) == 0);
+    assert_eq!(SDL_Init(SDL_INIT_EVERYTHING), 0);
 
     let win = SDL_CreateWindow(
       b"demo\0".as_ptr().cast(),
