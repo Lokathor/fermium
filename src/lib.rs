@@ -2,6 +2,7 @@
 #![allow(bad_style)]
 #![warn(missing_docs)]
 #![allow(clippy::missing_safety_doc)]
+#![cfg_attr(feature = "nightly_macos_link_args", feature(link_args))]
 
 //! Bindings to the SDL2 C library.
 //!
@@ -192,3 +193,18 @@ extern "C" {
   /// You should call it upon all exit conditions.
   pub fn SDL_Quit();
 }
+
+#[cfg_attr(
+  weak_framework_game_controller,
+  link_args = "-weak_framework GameController"
+)]
+#[cfg_attr(
+  weak_framework_core_haptics,
+  link_args = "-weak_framework CoreHaptics"
+)]
+#[cfg_attr(weak_framework_metal, link_args = "-weak_framework Metal")]
+#[cfg_attr(
+  weak_framework_quartz_core,
+  link_args = "-weak_framework QuartzCore"
+)]
+extern "C" {}
