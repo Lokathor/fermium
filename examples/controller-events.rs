@@ -40,6 +40,14 @@ fn main() {
           println!("SDL_QUIT");
           break;
         }
+        SDL_KEYDOWN => {
+          println!("SDL_KEYDOWN");
+          println!("{:?}", event.key);
+        }
+        SDL_KEYUP => {
+          println!("SDL_KEYUP");
+          println!("{:?}", event.key);
+        }
         SDL_CONTROLLERAXISMOTION => {
           println!("SDL_CONTROLLERAXISMOTION");
           println!("{:?}", event.caxis);
