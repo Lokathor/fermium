@@ -435,30 +435,32 @@ pub const SDL_PIXELFORMAT_ARGB2101010: SDL_PixelFormatEnum =
     32,
     4,
   );
+
 pub const SDL_PIXELFORMAT_RGBA32: SDL_PixelFormatEnum =
   if cfg!(target_endian = "big") {
-    SDL_PIXELFORMAT_ABGR8888
-  } else {
     SDL_PIXELFORMAT_RGBA8888
+  } else {
+    SDL_PIXELFORMAT_ABGR8888
   };
 pub const SDL_PIXELFORMAT_ARGB32: SDL_PixelFormatEnum =
   if cfg!(target_endian = "big") {
-    SDL_PIXELFORMAT_BGRA8888
-  } else {
     SDL_PIXELFORMAT_ARGB8888
+  } else {
+    SDL_PIXELFORMAT_BGRA8888
   };
 pub const SDL_PIXELFORMAT_BGRA32: SDL_PixelFormatEnum =
   if cfg!(target_endian = "big") {
-    SDL_PIXELFORMAT_ARGB8888
-  } else {
     SDL_PIXELFORMAT_BGRA8888
+  } else {
+    SDL_PIXELFORMAT_ARGB8888
   };
 pub const SDL_PIXELFORMAT_ABGR32: SDL_PixelFormatEnum =
   if cfg!(target_endian = "big") {
-    SDL_PIXELFORMAT_RGBA8888
-  } else {
     SDL_PIXELFORMAT_ABGR8888
+  } else {
+    SDL_PIXELFORMAT_RGBA8888
   };
+
 /// Planar mode: Y + V + U  (3 planes)
 pub const SDL_PIXELFORMAT_YV12: SDL_PixelFormatEnum =
   SDL_DEFINE_PIXELFOURCC(b'Y', b'V', b'1', b'2');

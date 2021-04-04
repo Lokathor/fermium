@@ -876,6 +876,11 @@ pub union SDL_Event {
   pub padding: [Uint8; 56],
   pub force_align: [u64; 7],
 }
+impl Default for SDL_Event {
+  fn default() -> Self {
+    unsafe { core::mem::zeroed() }
+  }
+}
 
 /// Used with [`SDL_PeepEvents`]
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -950,6 +955,8 @@ extern "C" {
   ///
   /// **Returns:** 1 if there are any pending events, or 0 if there are none
   /// available.
+  ///
+  /// This is non-blocking, if no event is available it will immediately return.
   ///
   /// * `event` If not NULL, the next event is removed from the queue and stored
   ///   in that area.
