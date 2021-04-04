@@ -1,12 +1,16 @@
 # Changelog
 
+## 20014.4.2
+
+* Correct the value of `SDL_PIXELFORMAT_RGBA32`, `SDL_PIXELFORMAT_ARGB32`, `SDL_PIXELFORMAT_BGRA32`, and `SDL_PIXELFORMAT_ABGR32`.
+
 ## 20014.4.1
 
-* correct the value of SDLK_ESCAPE
+* Correct the value of `SDLK_ESCAPE`
 
 ## 20014.4.0
 
-* mark more fields as `pub` that accidentally were not `pub`: SDL_Keysym and SDL_SensorEvent.
+* mark more fields as `pub` that accidentally were not `pub`: `SDL_Keysym` and `SDL_SensorEvent`.
 
 ## 20014.3.0
 
