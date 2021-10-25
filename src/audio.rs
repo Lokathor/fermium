@@ -722,6 +722,30 @@ extern "C" {
   /// This function shuts down audio processing and closes the given audio
   /// device.
   pub fn SDL_CloseAudioDevice(dev: SDL_AudioDeviceID);
+
+  /// Get the preferred audio format of a specific audio device.
+  ///
+  /// This function is only valid after a successfully initializing the audio
+  /// subsystem. The values returned by this function reflect the latest call to
+  /// [SDL_GetNumAudioDevices]; re-call that function to re-detect available
+  /// hardware.
+  ///
+  /// `spec` will be filled with the sample rate, sample format, and channel
+  /// count. All other values in the structure are filled with 0. When the
+  /// supported struct members are 0, SDL was unable to get the property from
+  /// the backend.
+  ///
+  /// * `index` the index of the audio device; valid values range from 0 to
+  ///   [SDL_GetNumAudioDevices] - 1
+  /// * `iscapture` non-zero to query the list of recording devices, zero to
+  ///   query the list of output devices.
+  /// * `spec` The [SDL_AudioSpec] to be initialized by this function.
+  /// * **Returns:** 0 on success, nonzero on error
+  ///
+  /// See Also: [SDL_GetNumAudioDevices]
+  pub fn SDL_GetAudioDeviceSpec(
+    index: c_int, iscapture: c_int, spec: *mut SDL_AudioSpec,
+  ) -> c_int;
 }
 
 /// Loads a WAV file.

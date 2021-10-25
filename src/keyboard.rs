@@ -17,6 +17,8 @@ pub struct SDL_Keysym {
   pub sym: SDL_Keycode,
   /// current key modifiers
   pub mod_: Uint16,
+  /// unused padding field
+  #[allow(unused)]
   pub unused: Uint32,
 }
 

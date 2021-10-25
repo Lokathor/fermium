@@ -1428,6 +1428,43 @@ pub const SDL_HINT_AUDIO_DEVICE_STREAM_NAME: &[u8] =
 /// optional: "en". So you might have a list like this: "en_GB,jp,es_PT"
 pub const SDL_HINT_PREFERRED_LOCALES: &[u8] = c_str!("SDL_PREFERRED_LOCALES");
 
+/// A variable that causes SDL to not ignore audio "monitors"
+///
+/// This is currently only used for PulseAudio and ignored elsewhere.
+///
+/// By default, SDL ignores audio devices that aren't associated with physical
+/// hardware. Changing this hint to "1" will expose anything SDL sees that
+/// appears to be an audio source or sink. This will add "devices" to the list
+/// that the user probably doesn't want or need, but it can be useful in
+/// scenarios where you want to hook up SDL to some sort of virtual device,
+/// etc.
+///
+/// The default value is "0".  This hint must be set before [SDL_Init].
+///
+/// This hint is available since SDL 2.0.16. Before then, virtual devices are
+/// always ignored.
+pub const SDL_HINT_AUDIO_INCLUDE_MONITORS: &[u8] =
+  c_str!("SDL_AUDIO_INCLUDE_MONITORS");
+
+/// Specify an application role for an audio device.
+///
+/// Some audio backends (such as Pipewire) allow you to describe the role of
+/// your audio stream. Among other things, this description might show up in
+/// a system control panel or software for displaying and manipulating media
+/// playback/capture graphs.
+///
+/// This hints lets you transmit that information to the OS. The contents of
+/// this hint are used while opening an audio device. You should use a string
+/// that describes your what your program is playing (Game, Music, Movie,
+/// etc...).
+///
+/// Setting this to "" or leaving it unset will have SDL use a reasonable
+/// default: "Game" or something similar.
+///
+/// On targets where this is not supported, this hint does nothing.
+pub const SDL_HINT_AUDIO_DEVICE_STREAM_ROLE: &[u8] =
+  c_str!("SDL_AUDIO_DEVICE_STREAM_ROLE");
+
 /// An enumeration of hint priorities.
 ///
 /// See `SDL_HINT_*`

@@ -463,4 +463,10 @@ extern "C" {
   pub fn SDL_GetYUVConversionModeForResolution(
     width: c_int, height: c_int,
   ) -> SDL_YUV_CONVERSION_MODE;
+
+  /// Perform bilinear scaling between two surfaces of the same format, 32BPP.
+  pub fn SDL_SoftStretchLinear(
+    src: *mut SDL_Surface, srcrect: *const SDL_Rect, dst: *mut SDL_Surface,
+    dstrect: *const SDL_Rect,
+  ) -> c_int;
 }

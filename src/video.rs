@@ -342,6 +342,19 @@ pub type SDL_HitTest = Option<
   ) -> SDL_HitTestResult,
 >;
 
+/// Window flash operation
+///
+/// See [SDL_FlashWindow]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[repr(transparent)]
+pub struct SDL_FlashOperation(pub u32);
+/// Cancel any window flash state
+pub const SDL_FLASH_CANCEL: SDL_FlashOperation = SDL_FlashOperation(0);
+/// Flash the window briefly to get attention
+pub const SDL_FLASH_BRIEFLY: SDL_FlashOperation = SDL_FlashOperation(1);
+/// Flash the window until it gets focus
+pub const SDL_FLASH_UNTIL_FOCUSED: SDL_FlashOperation = SDL_FlashOperation(2);
+
 extern "C" {
   /// The number of available video drivers.
   ///
@@ -862,4 +875,64 @@ extern "C" {
   ///
   /// If the context is current, it will be made un-current first.
   pub fn SDL_GL_DeleteContext(context: SDL_GLContext);
+
+  /// Request a window to demand attention from the user.
+  ///
+  /// * `window` the window to be flashed
+  /// * `operation` the flash operation
+  /// * **Returns:** 0 on success, or a negative error code on failure. Call
+  ///   [SDL_GetError] for more information.
+  pub fn SDL_FlashWindow(
+    window: *mut SDL_Window, operation: SDL_FlashOperation,
+  ) -> c_int;
+
+  /// Set the window to always be above the others.
+  ///
+  /// This will add or remove the window's `SDL_WINDOW_ALWAYS_ON_TOP`
+  /// flag. This will bring the window to the front and keep the window above
+  /// the rest.
+  ///
+  /// * `window` The window of which to change the always on top state.
+  /// * `on_top`  SDL_TRUE to set the window always on top, SDL_FALSE to
+  ///   disable.
+  ///
+  /// See Also: [SDL_SetWindowAlwaysOnTop]
+  pub fn SDL_SetWindowAlwaysOnTop(window: *mut SDL_Window, on_top: SDL_bool);
+
+  /// Set a window's keyboard grab mode.
+  ///
+  /// If the caller enables a grab while another window is currently grabbed,
+  /// the other window loses its grab in favor of the caller's window.
+  ///
+  /// * `window` The window for which the keyboard grab mode should be set.
+  /// * `grabbed` This is SDL_TRUE to grab keyboard, and SDL_FALSE to release.
+  ///
+  /// See Also: [SDL_GetWindowKeyboardGrab], [SDL_SetWindowMouseGrab],
+  /// [SDL_SetWindowGrab]
+  pub fn SDL_SetWindowKeyboardGrab(window: *mut SDL_Window, grabbed: SDL_bool);
+
+  /// Set a window's mouse grab mode.
+  ///
+  /// * `window` The window for which the mouse grab mode should be set.
+  ///
+  /// See Also: [SDL_GetWindowMouseGrab], [SDL_SetWindowKeyboardGrab],
+  /// [SDL_SetWindowGrab]
+  pub fn SDL_SetWindowMouseGrab(window: *mut SDL_Window, grabbed: SDL_bool);
+
+  /// Get a window's keyboard grab mode.
+  ///
+  /// * `window` the window to query
+  /// * **Returns:** `SDL_TRUE` if keyboard is grabbed, and `SDL_FALSE`
+  ///   otherwise.
+  ///
+  /// See Also: [SDL_SetWindowKeyboardGrab], [SDL_GetWindowGrab]
+  pub fn SDL_GetWindowKeyboardGrab(window: *mut SDL_Window) -> SDL_bool;
+
+  /// Get a window's mouse grab mode.
+  ///
+  /// * `window` the window to query
+  /// * **Returns:** `SDL_TRUE` if mouse is grabbed, and `SDL_FALSE` otherwise.
+  ///
+  /// See Also: [SDL_SetWindowKeyboardGrab], [SDL_GetWindowGrab]
+  pub fn SDL_GetWindowMouseGrab(window: *mut SDL_Window) -> SDL_bool;
 }

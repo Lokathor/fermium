@@ -38,7 +38,7 @@ fn main() {
     println!(
       "cargo:rustc-link-search={}",
       manifest_dir
-        .join("SDL2-2.0.14-devel")
+        .join("SDL2-2.0.16-devel")
         .join("x86_64-pc-windows-msvc")
         .display()
     );
@@ -51,7 +51,7 @@ fn main() {
         .expect("Could not read `CARGO_MANIFEST_DIR`!"),
     );
 
-    let mut cm = cmake::Config::new(manifest_dir.join("SDL2-2.0.14"));
+    let mut cm = cmake::Config::new(manifest_dir.join("SDL2-2.0.16"));
     cm.static_crt(true);
     cm.target(&env::var("TARGET").expect("Couldn't read `TARGET`"));
     cm.define("SDL_SHARED", "ON");

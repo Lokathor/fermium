@@ -63,6 +63,12 @@ pub const SDL_CONTROLLER_TYPE_VIRTUAL: SDL_GameControllerType =
 #[allow(missing_docs)]
 pub const SDL_CONTROLLER_TYPE_PS5: SDL_GameControllerType =
   SDL_GameControllerType(7);
+#[allow(missing_docs)]
+pub const SDL_CONTROLLER_TYPE_AMAZON_LUNA: SDL_GameControllerType =
+  SDL_GameControllerType(8);
+#[allow(missing_docs)]
+pub const SDL_CONTROLLER_TYPE_GOOGLE_STADIA: SDL_GameControllerType =
+  SDL_GameControllerType(9);
 
 /// The type of a binding between the underlying joystick and its controller
 /// abstraction.
@@ -610,4 +616,25 @@ extern "C" {
 
   /// Close a controller previously opened with [`SDL_GameControllerOpen`].
   pub fn SDL_GameControllerClose(gamecontroller: *mut SDL_GameController);
+
+  /// Send a controller specific effect packet
+  ///
+  /// * `gamecontroller` The controller to affect
+  /// * `data` The data to send to the controller
+  /// * `size` The size of the data to send to the controller
+  /// * **Returns:** 0, or -1 if this controller or driver doesn't support
+  ///   effect packets
+  pub fn SDL_GameControllerSendEffect(
+    gamecontroller: *mut SDL_GameController, data: *const c_void, size: c_int,
+  ) -> c_int;
+
+  /// Get the data rate (number of events per second) of a game controller
+  /// sensor.
+  ///
+  /// * `gamecontroller` The controller to query
+  /// * `type` The type of sensor to query
+  /// * **Returns:** the data rate, or 0.0f if the data rate is not available.
+  pub fn SDL_GameControllerGetSensorDataRate(
+    gamecontroller: *mut SDL_GameController, type_: SDL_SensorType,
+  ) -> c_float;
 }

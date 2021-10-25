@@ -1,5 +1,23 @@
 # Changelog
 
+## 20016.0.0
+
+* Updates the SDL2 version to 2.0.16. This adds the following:
+  * SDL_FlashWindow
+  * SDL_GetAudioDeviceSpec
+  * SDL_SetWindowAlwaysOnTop
+  * SDL_SetWindowKeyboardGrab
+  * SDL_SetWindowMouseGrab
+  * SDL_GetWindowKeyboardGrab
+  * SDL_GetWindowMouseGrab
+  * SDL_UpdateNVTexture
+  * SDL_GameControllerSendEffect
+  * Hint(Linux): SDL_HINT_AUDIO_INCLUDE_MONITORS
+  * Hint(Linux): SDL_HINT_AUDIO_DEVICE_STREAM_ROLE
+
+As before, functions in `SDL_system.h` aren't included.
+(I bring this up only because 2.0.16 did add some new system stuff.)
+
 ## 20014.4.2
 
 * Correct the value of `SDL_PIXELFORMAT_RGBA32`, `SDL_PIXELFORMAT_ARGB32`, `SDL_PIXELFORMAT_BGRA32`, and `SDL_PIXELFORMAT_ABGR32`.
