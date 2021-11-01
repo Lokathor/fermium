@@ -2,7 +2,7 @@
 name = "fermium"
 description = "An opinionated crate of SDL2 bindings."
 repository = "https://github.com/Lokathor/fermium"
-version = "20014.4.3-alpha.0"
+version = "20016.0.0-alpha.0"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2018"
 license = "Zlib OR Apache-2.0 OR MIT"
@@ -27,9 +27,9 @@ cmake = "0.1"
 # runtime (if absolutely necessary) via SDL2's "Dynamic API" system.
 # https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html 
 #
-# WARNING: THIS DOES NOT WORK ON UNIX SYSTEMS. If you'd like it to work on unix
-# systems please submit the PR to fix the build/link process, because I don't
-# know how to make the rpath work right.
+# WARNING: THIS DOES NOT WORK RIGHT ON UNIX SYSTEMS. If you'd like it to work on
+# unix systems please submit the PR to fix the build/link process, because I
+# don't know how to make the rpath work right.
 dynamic_link = []
 
 # Enabling this will completely skip the build/link of SDL2 itself. This makes
@@ -39,7 +39,10 @@ dynamic_link = []
 cargo_check = []
 
 # Not Part Of Semver! With this on, the x86_64-pc-windows-msvc target will build
-# much faster. No effect on other targets.
+# much faster by dynamically linking to a pre-built DLL that's provided within
+# the crate. On other targets it will just activate dynamic linking, but as
+# noted above that's generally bad because the build.rs file isn't currently
+# smart enough to cope with that.
 experimental_fast_build = ["dynamic_link"]
 
 [package.metadata.docs.rs]
