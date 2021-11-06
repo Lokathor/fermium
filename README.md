@@ -4,7 +4,7 @@
 
 # `fermium`
 
-Rust bindings to the [SDL2](https://libsdl.org/) library, version 2.0.14
+Rust bindings to the [SDL2](https://libsdl.org/) library, version 2.0.16
 
 This crate bundles the source for SDL2 and then builds it for you.
 In other words, you do not need to have installed SDL2 yourself.
