@@ -16,7 +16,7 @@ build = "build.rs"
 chlorine = "1"
 
 [dev-dependencies]
-gl46 = { version = "0.1", features = ["global_loader", "GL_ARB_debug_output", "GL_ARB_texture_filter_anisotropic", "GL_KHR_debug"] }
+gl33 = { version = "0.1", features = ["global_loader", "GL_ARB_debug_output", "GL_ARB_texture_filter_anisotropic", "GL_KHR_debug"] }
 
 [build-dependencies]
 cmake = "0.1"

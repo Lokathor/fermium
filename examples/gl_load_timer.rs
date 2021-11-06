@@ -1,5 +1,5 @@
 use fermium::{video::*, *};
-use gl46::global_commands::load_global_gl_with;
+use gl33::global_commands::load_global_gl_with;
 
 fn main() {
   unsafe {
@@ -15,8 +15,16 @@ fn main() {
     );
     assert!(!win.is_null());
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(
+      SDL_GL_CONTEXT_PROFILE_MASK,
+      SDL_GL_CONTEXT_PROFILE_CORE.0 as _,
+    );
+    SDL_GL_SetAttribute(
+      SDL_GL_CONTEXT_FLAGS,
+      SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG.0 as _,
+    );
 
     let ctx = SDL_GL_CreateContext(win);
     assert!(!ctx.0.is_null());
