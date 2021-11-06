@@ -1,5 +1,7 @@
+#[cfg(windows)]
 use std::io::Write;
 
+#[cfg(windows)]
 const DLL_BYTES: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/SDL2.dll"));
 
 #[cfg(windows)]
