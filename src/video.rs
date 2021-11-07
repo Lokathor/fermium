@@ -791,7 +791,7 @@ extern "C" {
   ///   use [`SDL_GL_ExtensionSupported`] to check that the pointer will be
   ///   valid.
   /// * You should generally use [`SDL_GL_ExtensionSupported`] for any extension
-  ///   yo use. In some cases, a pointer for an extension function will be
+  ///   you use. In some cases, a pointer for an extension function will be
   ///   non-null but still invalid.
   /// * If you're transmuting this output to a function pointer yourself:
   ///   Remember that all GL functions mut use the `extern "system"` ABI.
