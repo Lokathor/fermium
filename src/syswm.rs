@@ -177,6 +177,62 @@ impl Default for SDL_SysWMinfo {
   }
 }
 
+#[cfg(feature = "raw-window-handle")]
+impl SDL_SysWMinfo {
+  /// Attempts to convert the info into the correct [RawWindowHandle] value
+  ///
+  /// ## Safety
+  /// * The `subsystem` must be correct for the `info` data, or bad things
+  ///   happen.
+  pub unsafe fn try_into(self) -> Option<raw_window_handle::RawWindowHandle> {
+    use raw_window_handle::*;
+    Some(match self.subsystem {
+      SDL_SYSWM_WINDOWS => {
+        let mut win32_handle = Win32Handle::empty();
+        win32_handle.hinstance = self.info.win.hinstance;
+        win32_handle.hwnd = self.info.win.window;
+        RawWindowHandle::Win32(win32_handle)
+      }
+      SDL_SYSWM_X11 => {
+        let mut xlib_handle = XlibHandle::empty();
+        xlib_handle.display = self.info.x11.display;
+        xlib_handle.window = self.info.x11.window;
+        RawWindowHandle::Xlib(xlib_handle)
+      }
+      SDL_SYSWM_COCOA => {
+        let mut appkit_handle = AppKitHandle::empty();
+        appkit_handle.ns_window = self.info.cocoa.window;
+        RawWindowHandle::AppKit(appkit_handle)
+      }
+      SDL_SYSWM_UIKIT => {
+        let mut uikit_handle = UiKitHandle::empty();
+        uikit_handle.ui_window = self.info.uikit.window;
+        RawWindowHandle::UiKit(uikit_handle)
+      }
+      SDL_SYSWM_WAYLAND => {
+        let mut wayland_handle = WaylandHandle::empty();
+        wayland_handle.display = self.info.wl.display;
+        wayland_handle.surface = self.info.wl.surface;
+        RawWindowHandle::Wayland(wayland_handle)
+      }
+      SDL_SYSWM_WINRT => {
+        let mut winrt_handle = WinRtHandle::empty();
+        winrt_handle.core_window = self.info.winrt.window;
+        RawWindowHandle::WinRt(winrt_handle)
+      }
+      SDL_SYSWM_ANDROID => {
+        let mut android_handle = AndroidNdkHandle::empty();
+        android_handle.a_native_window = self.info.android.window;
+        RawWindowHandle::AndroidNdk(android_handle)
+      }
+      /* I don't think RWH supports any of these? */
+      SDL_SYSWM_MIR | SDL_SYSWM_VIVANTE | SDL_SYSWM_OS2 | SDL_SYSWM_HAIKU
+      | SDL_SYSWM_DIRECTFB => return None,
+      _ => return /*We shouldn't be in this case! Oh well!*/ None,
+    })
+  }
+}
+
 extern "C" {
   /// This function allows access to driver-dependent window information.
   ///

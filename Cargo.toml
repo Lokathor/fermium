@@ -14,6 +14,7 @@ build = "build.rs"
 
 [dependencies]
 chlorine = "1"
+raw-window-handle = { version = "0.4", optional = true }
 
 [dev-dependencies]
 gl46 = { version = "0.1", features = ["global_loader", "GL_ARB_debug_output", "GL_ARB_texture_filter_anisotropic", "GL_KHR_debug"] }
