@@ -1,5 +1,9 @@
 # Changelog
 
+## 20016.1.1
+
+* Update the `SDL_PATCHLEVEL` to the correct value of 16 (had been left at 14).
+
 ## 20016.1.0
 
 * Added `raw-window-handle` (0.4) support via feature. This makes a properly

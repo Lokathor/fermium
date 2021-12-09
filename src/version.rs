@@ -34,7 +34,7 @@ pub const SDL_MAJOR_VERSION: u8 = 2;
 /// SDL Minor version that this lib was compiled against.
 pub const SDL_MINOR_VERSION: u8 = 0;
 /// SDL Patch version that this lib was compiled against.
-pub const SDL_PATCHLEVEL: u8 = 14;
+pub const SDL_PATCHLEVEL: u8 = 16;
 
 /// Writes the version of SDL that this lib was compiled against into the
 /// struct.
