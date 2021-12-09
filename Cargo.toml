@@ -49,3 +49,4 @@ experimental_fast_build = ["dynamic_link"]
 [package.metadata.docs.rs]
 # building the docs is a "check only" style operation.
 features = ["cargo_check"]
+rustdoc-args = ["--cfg","docs_rs"]

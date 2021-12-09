@@ -178,6 +178,7 @@ impl Default for SDL_SysWMinfo {
 }
 
 #[cfg(feature = "raw-window-handle")]
+#[cfg_attr(docs_rs, doc(cfg(feature = "raw-window-handle")))]
 impl SDL_SysWMinfo {
   /// Attempts to convert the info into the correct [RawWindowHandle] value
   ///

@@ -2,6 +2,7 @@
 #![allow(bad_style)]
 #![warn(missing_docs)]
 #![allow(clippy::missing_safety_doc)]
+#![cfg_attr(docs_rs, feature(doc_cfg))]
 
 //! Bindings to the SDL2 C library.
 //!
