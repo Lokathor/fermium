@@ -1,5 +1,11 @@
 # Changelog
 
+## 20016.1.0
+
+* Added `raw-window-handle` (0.4) support via feature. This makes a properly
+  filled out `SDL_SysWMinfo` value able to turn itself into the correct
+  `RawWindowHandle` enum.
+
 ## 20016.0.0
 
 * Updates the SDL2 version to 2.0.16. This adds the following:
