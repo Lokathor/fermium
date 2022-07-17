@@ -1,5 +1,11 @@
 # Changelog
 
+## 20018 (2022-07-17)
+
+* Updated the bundled SDL2 version to be 2.0.22 Unfortunately, I haven't really
+  had time for this crate in a while, so this just updates the bundled SDL2
+  version without adding declarations for the new functions.
+
 ## 20016.1.1
 
 * Update the `SDL_PATCHLEVEL` to the correct value of 16 (had been left at 14).
