@@ -38,7 +38,7 @@ fn main() {
     println!(
       "cargo:rustc-link-search={}",
       manifest_dir
-        .join("SDL2-2.0.16-devel")
+        .join("SDL2-2.0.22-devel")
         .join("x86_64-pc-windows-msvc")
         .display()
     );
