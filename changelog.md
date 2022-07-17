@@ -1,6 +1,6 @@
 # Changelog
 
-## 20018 (2022-07-17)
+## 20022 (2022-07-17)
 
 * Updated the bundled SDL2 version to be 2.0.22 Unfortunately, I haven't really
   had time for this crate in a while, so this just updates the bundled SDL2
