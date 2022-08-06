@@ -12,6 +12,15 @@ fn main() {
   let target = env::var("TARGET").expect("Could not read `TARGET`!");
   println!("target:{}", target);
 
+  let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap();
+  println!("target_arch:{}", target_arch);
+
+  let target_vendor = env::var("CARGO_CFG_TARGET_VENDOR").unwrap();
+  println!("target_vendor:{}", target_vendor);
+
+  let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
+  println!("target_os:{}", target_os);
+
   let out_dir = env::var("OUT_DIR").expect("Could not read `OUT_DIR`!");
   println!("out_dir:{}", out_dir);
 
@@ -57,6 +66,26 @@ fn main() {
     cm.define("SDL_SHARED", "ON");
     cm.define("SDL_STATIC", "ON");
     cm.define("HIDAPI", "ON");
+
+    // We need to set extra CMake options when building for Apple platforms.
+    if target_vendor == "apple" {
+      // CMake can handle the x86_64/aarch64 duality of Apple platforms, but
+      // needs to be told which architecture(s) we want. Since rust doesn't
+      // support fat binaries, we'll only set the one architecture
+      // requested. See: https://github.com/rust-lang/cargo/issues/8875
+      match target_arch.as_str() {
+        "aarch64" => {
+          cm.define("CMAKE_OSX_ARCHITECTURES", "arm64");
+        }
+        "x86_64" => {
+          cm.define("CMAKE_OSX_ARCHITECTURES", "x86_64");
+        }
+        arch => {
+          println!("Unrecognized architecture for Apple platform \"{}\", not setting CMAKE_OSX_ARCHITECTURES", arch);
+        }
+      }
+    }
+
     cm.profile("Release");
     let build_output_path = cm.build();
     println!("build_output_path: {}", build_output_path.display());
