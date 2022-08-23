@@ -23,8 +23,8 @@ gl33 = { version = "0.1", features = ["global_loader", "GL_ARB_debug_output", "G
 cmake = "0.1"
 
 [features]
-# Enable this to dynamicly link to SDL2. The default is to static link because
-# even with a staticly linked SDL2 the end user can override the SDL2 used at
+# Enable this to dynamically link to SDL2. The default is to static link because
+# even with a statically linked SDL2 the end user can override the SDL2 used at
 # runtime (if absolutely necessary) via SDL2's "Dynamic API" system.
 # https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html 
 #
