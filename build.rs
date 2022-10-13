@@ -1,3 +1,5 @@
+#![allow(clippy::if_same_then_else)]
+
 use std::env;
 
 fn main() {
@@ -146,8 +148,8 @@ fn main() {
           // normal link
           if term.ends_with(".framework") {
             // macOS framework link, weirdly through -l
-            let name_framework = term.rsplit("/").next().unwrap();
-            let name = name_framework.split(".").next().unwrap();
+            let name_framework = term.rsplit('/').next().unwrap();
+            let name = name_framework.split('.').next().unwrap();
             println!("cargo:rustc-link-lib=framework={}", name);
           } else {
             println!("cargo:rustc-link-lib={}", &term[2..]);
