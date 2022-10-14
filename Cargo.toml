@@ -19,31 +19,20 @@ raw-window-handle = { version = "0.4", optional = true }
 gl33 = { version = "0.1", features = ["global_loader", "GL_ARB_debug_output", "GL_ARB_texture_filter_anisotropic", "GL_KHR_debug"] }
 
 [build-dependencies]
-cmake = "0.1"
+cmake = { version = "0.1", optional = true }
 
 [features]
-# Enable this to dynamically link to SDL2. The default is to static link because
-# even with a statically linked SDL2 the end user can override the SDL2 used at
-# runtime (if absolutely necessary) via SDL2's "Dynamic API" system.
-# https://sdl-mirror.readthedocs.io/en/latest/README-dynapi.html 
-#
-# WARNING: THIS DOES NOT WORK RIGHT ON UNIX SYSTEMS. If you'd like it to work on
-# unix systems please submit the PR to fix the build/link process, because I
-# don't know how to make the rpath work right.
-dynamic_link = []
-
 # Enabling this will completely skip the build/link of SDL2 itself. This makes
 # `cargo check` and similar much faster (including rust-analyzer), but you'll
 # get linking errors if you try to actually build an executable with this
 # enabled (eg: a bin/bench/test).
 cargo_check = []
 
-# Not Part Of Semver! With this on, the x86_64-pc-windows-msvc target will build
-# much faster by dynamically linking to a pre-built DLL that's provided within
-# the crate. On other targets it will just activate dynamic linking, but as
-# noted above that's generally bad because the build.rs file isn't currently
-# smart enough to cope with that.
-experimental_fast_build = ["dynamic_link"]
+# If you enable this, the crate will static link to a build of the bundled
+# version of SDL2. Otherwise, the crate will dynamically link to the SDL2
+# installed on the system (on Windows x86_64 MSVC it will dynamic link to
+# provided developer files).
+static_bundled_build = ["cmake"]
 
 [package.metadata.docs.rs]
 # building the docs is a "check only" style operation.
