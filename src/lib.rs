@@ -17,7 +17,7 @@
 //!   This allows the `cargo check` command (and similar commands that don't
 //!   build an executable, such as `cargo doc`) to execute much faster.
 
-pub use chlorine::{
+pub use core::ffi::{
   c_char, c_double, c_float, c_int, c_long, c_longlong, c_schar, c_short,
   c_uchar, c_uint, c_ulong, c_ulonglong, c_ushort, c_void,
 };
