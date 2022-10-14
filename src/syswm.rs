@@ -189,40 +189,40 @@ impl SDL_SysWMinfo {
     use raw_window_handle::*;
     Some(match self.subsystem {
       SDL_SYSWM_WINDOWS => {
-        let mut win32_handle = Win32Handle::empty();
+        let mut win32_handle = Win32WindowHandle::empty();
         win32_handle.hinstance = self.info.win.hinstance;
         win32_handle.hwnd = self.info.win.window;
         RawWindowHandle::Win32(win32_handle)
       }
       SDL_SYSWM_X11 => {
-        let mut xlib_handle = XlibHandle::empty();
-        xlib_handle.display = self.info.x11.display;
+        let mut xlib_handle = XlibWindowHandle::empty();
+        //xlib_handle.display = self.info.x11.display;
         xlib_handle.window = self.info.x11.window;
         RawWindowHandle::Xlib(xlib_handle)
       }
       SDL_SYSWM_COCOA => {
-        let mut appkit_handle = AppKitHandle::empty();
+        let mut appkit_handle = AppKitWindowHandle::empty();
         appkit_handle.ns_window = self.info.cocoa.window;
         RawWindowHandle::AppKit(appkit_handle)
       }
       SDL_SYSWM_UIKIT => {
-        let mut uikit_handle = UiKitHandle::empty();
+        let mut uikit_handle = UiKitWindowHandle::empty();
         uikit_handle.ui_window = self.info.uikit.window;
         RawWindowHandle::UiKit(uikit_handle)
       }
       SDL_SYSWM_WAYLAND => {
-        let mut wayland_handle = WaylandHandle::empty();
-        wayland_handle.display = self.info.wl.display;
+        let mut wayland_handle = WaylandWindowHandle::empty();
+        //wayland_handle.display = self.info.wl.display;
         wayland_handle.surface = self.info.wl.surface;
         RawWindowHandle::Wayland(wayland_handle)
       }
       SDL_SYSWM_WINRT => {
-        let mut winrt_handle = WinRtHandle::empty();
+        let mut winrt_handle = WinRtWindowHandle::empty();
         winrt_handle.core_window = self.info.winrt.window;
         RawWindowHandle::WinRt(winrt_handle)
       }
       SDL_SYSWM_ANDROID => {
-        let mut android_handle = AndroidNdkHandle::empty();
+        let mut android_handle = AndroidNdkWindowHandle::empty();
         android_handle.a_native_window = self.info.android.window;
         RawWindowHandle::AndroidNdk(android_handle)
       }

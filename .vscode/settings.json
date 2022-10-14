@@ -1,6 +1,7 @@
 {
   "rust-analyzer.cargo.features": [
-    "cargo_check"
+    "cargo_check",
+    "raw-window-handle",
   ],
   "cmake.configureOnOpen": false,
 }

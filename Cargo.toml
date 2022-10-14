@@ -13,7 +13,7 @@ links = "SDL2"
 build = "build.rs"
 
 [dependencies]
-raw-window-handle = { version = "0.4", optional = true }
+raw-window-handle = { version = "0.5", optional = true }
 
 [dev-dependencies]
 gl33 = { version = "0.1", features = ["global_loader", "GL_ARB_debug_output", "GL_ARB_texture_filter_anisotropic", "GL_KHR_debug"] }
