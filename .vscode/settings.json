@@ -2,6 +2,5 @@
   "rust-analyzer.cargo.features": [
     "cargo_check"
   ],
-  "rust-analyzer.cargo.allFeatures": true,
   "cmake.configureOnOpen": false,
 }
