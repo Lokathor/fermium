@@ -227,7 +227,7 @@ fn process_sdl2_config_output(sd2_config_linking_stdout: String) {
       // This asks the linker to error on undefined symbols(?), which it
       // already will do.
     } else {
-      panic!("Unknown term output by `sdl2-config`: >>{}<<", term);
+      //panic!("Unknown term output by `sdl2-config`: >>{}<<", term);
     }
   }
 }
