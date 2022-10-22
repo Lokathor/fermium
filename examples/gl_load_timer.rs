@@ -36,7 +36,7 @@ fn main() {
         print!("Failed to find fn `");
         let mut letter = c;
         while *letter != 0 {
-          print!("{}", *letter as u8 as char);
+          print!("{}", *letter as char);
           letter = letter.add(1);
         }
         println!("`");

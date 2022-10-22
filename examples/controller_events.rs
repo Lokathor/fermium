@@ -10,7 +10,7 @@ fn print_error() {
 
 unsafe fn print_ptr(mut p: *const u8) {
   while *p != 0 {
-    print!("{}", *p as u8 as char);
+    print!("{}", *p as char);
     p = p.add(1);
   }
 }
