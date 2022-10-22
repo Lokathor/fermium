@@ -11,10 +11,10 @@ jobs:
       fail-fast: false
       matrix:
         rust:
-        - { toolchain: 1.58.0, os: macOS-latest, target: x86_64-apple-darwin }
-        - { toolchain: 1.58.0, os: ubuntu-latest, target: x86_64-unknown-linux-gnu }
-        - { toolchain: 1.58.0, os: windows-latest, target: x86_64-pc-windows-msvc }
-        - { toolchain: 1.58.0, os: windows-latest, target: i686-pc-windows-msvc }
+        - { toolchain: 1.64.0, os: macOS-latest, target: x86_64-apple-darwin }
+        - { toolchain: 1.64.0, os: ubuntu-latest, target: x86_64-unknown-linux-gnu }
+        - { toolchain: 1.64.0, os: windows-latest, target: x86_64-pc-windows-msvc }
+        - { toolchain: 1.64.0, os: windows-latest, target: i686-pc-windows-msvc }
         - { toolchain: stable, os: macOS-latest, target: x86_64-apple-darwin }
         - { toolchain: stable, os: ubuntu-latest, target: x86_64-unknown-linux-gnu }
         - { toolchain: stable, os: windows-latest, target: x86_64-pc-windows-msvc }
