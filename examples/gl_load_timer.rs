@@ -34,7 +34,7 @@ fn main() {
       let p = SDL_GL_GetProcAddress(c);
       if p.is_null() {
         print!("Failed to find fn `");
-        let mut letter = c;
+        let mut letter: *const u8 = c.cast::<u8>();
         while *letter != 0 {
           print!("{}", *letter as char);
           letter = letter.add(1);
