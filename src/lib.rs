@@ -6,18 +6,26 @@
 
 //! Bindings to the SDL2 C library.
 //!
-//! This crate bundles a copy of the SDL2 source code and builds it
-//! automatically via `build.rs`. No special setup is required on your part.
+//! By default the crate will dynamically link to the system installed version
+//! of SDL2. The crate provides bindings for most of the 2.0.16 APIs, but your
+//! system version of SDL2 might be older or newer than that. For example,
+//! Debian Bullseye is on 2.0.14, but Debian Bookworm has updated to 2.24.1
+//! (note that in between SDL2 changed their version number policy, so new
+//! versions now update the middle value). On Windows MSVC the "system" version
+//! will be SDL2's official pre-built development files that come bundled in the
+//! crate.
 //!
-//! Building SDL2 takes about a minute on an average development machine, so the
-//! "first time" compilation of this crate can seem quite slow.
+//! If you use the `static_bundled_build` cargo feature then this will build
+//! SDL2 using a bundled copy of the source and then statically link to that.
+//! Building SDL2 can take a bit during that first build (usually 1 minute or
+//! more).
 //!
 //! # Crate Features
-//! * `cargo_check`: This causes the crate to *skip* building SDL2 entirely.
-//!   This allows the `cargo check` command (and similar commands that don't
-//!   build an executable, such as `cargo doc`) to execute much faster.
+//! * `cargo_check`: This causes the entire build.rs to exit early. This is
+//!   useful if you don't need to make an executable, such as `cargo check` or
+//!   `cargo doc`.
 
-pub use chlorine::{
+pub use core::ffi::{
   c_char, c_double, c_float, c_int, c_long, c_longlong, c_schar, c_short,
   c_uchar, c_uint, c_ulong, c_ulonglong, c_ushort, c_void,
 };
@@ -34,7 +42,6 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
     }
     impl core::ops::BitAndAssign for $t {
       #[inline]
-      #[must_use]
       fn bitand_assign(&mut self, rhs: Self) {
         self.0 &= rhs.0
       }
@@ -49,7 +56,6 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
     }
     impl core::ops::BitOrAssign for $t {
       #[inline]
-      #[must_use]
       fn bitor_assign(&mut self, rhs: Self) {
         self.0 |= rhs.0
       }
@@ -64,7 +70,6 @@ macro_rules! impl_bit_ops_for_tuple_newtype {
     }
     impl core::ops::BitXorAssign for $t {
       #[inline]
-      #[must_use]
       fn bitxor_assign(&mut self, rhs: Self) {
         self.0 ^= rhs.0
       }

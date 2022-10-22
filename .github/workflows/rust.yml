@@ -11,18 +11,14 @@ jobs:
       fail-fast: false
       matrix:
         rust:
-        - { toolchain: 1.48.0, os: macOS-latest, target: x86_64-apple-darwin }
-        - { toolchain: 1.48.0, os: ubuntu-latest, target: x86_64-unknown-linux-gnu }
-        - { toolchain: 1.48.0, os: windows-latest, target: x86_64-pc-windows-msvc }
-        - { toolchain: 1.48.0, os: windows-latest, target: i686-pc-windows-msvc }
+        - { toolchain: 1.64.0, os: macOS-latest, target: x86_64-apple-darwin }
+        - { toolchain: 1.64.0, os: ubuntu-latest, target: x86_64-unknown-linux-gnu }
+        - { toolchain: 1.64.0, os: windows-latest, target: x86_64-pc-windows-msvc }
+        - { toolchain: 1.64.0, os: windows-latest, target: i686-pc-windows-msvc }
         - { toolchain: stable, os: macOS-latest, target: x86_64-apple-darwin }
         - { toolchain: stable, os: ubuntu-latest, target: x86_64-unknown-linux-gnu }
         - { toolchain: stable, os: windows-latest, target: x86_64-pc-windows-msvc }
         - { toolchain: stable, os: windows-latest, target: i686-pc-windows-msvc }
-        - { toolchain: beta, os: macOS-latest, target: x86_64-apple-darwin }
-        - { toolchain: beta, os: ubuntu-latest, target: x86_64-unknown-linux-gnu }
-        - { toolchain: beta, os: windows-latest, target: x86_64-pc-windows-msvc }
-        - { toolchain: beta, os: windows-latest, target: i686-pc-windows-msvc }
     steps:
     - uses: actions/checkout@v1
     - uses: actions-rs/toolchain@v1
@@ -34,11 +30,12 @@ jobs:
     
     # Note(Lokathor): We don't ever need to install SDL2, it's bundled!
     
-    - name: Run Tests with Static Linking (the default linking)
+    - name: Run Tests with Static Linking
       uses: actions-rs/cargo@v1
       with:
         toolchain: ${{ matrix.rust.toolchain }}
         command: test
+        args: --features=static_bundled_build
 
     #- name: Run Tests with Dynamic Linking
     #  uses: actions-rs/cargo@v1
