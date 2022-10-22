@@ -35,7 +35,7 @@ jobs:
       with:
         toolchain: ${{ matrix.rust.toolchain }}
         command: test
-        args: --features="static_bundled_build"
+        args: --features=static_bundled_build
 
     #- name: Run Tests with Dynamic Linking
     #  uses: actions-rs/cargo@v1
