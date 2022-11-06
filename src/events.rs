@@ -563,21 +563,21 @@ pub struct SDL_ControllerDeviceEvent {
 pub struct SDL_ControllerTouchpadEvent {
   /// [`SDL_CONTROLLERTOUCHPADDOWN`], [`SDL_CONTROLLERTOUCHPADMOTION`],
   /// [`SDL_CONTROLLERTOUCHPADUP`]
-  type_: SDL_EventType,
+  pub type_: SDL_EventType,
   /// In milliseconds, populated using [`SDL_GetTicks`].
-  timestamp: Uint32,
+  pub timestamp: Uint32,
   /// The joystick instance id
-  which: SDL_JoystickID,
+  pub which: SDL_JoystickID,
   /// The index of the touchpad
-  touchpad: Sint32,
+  pub touchpad: Sint32,
   /// The index of the finger on the touchpad
-  finger: Sint32,
+  pub finger: Sint32,
   /// Normalized in the range 0..=1 with 0 being on the left
-  x: c_float,
+  pub x: c_float,
   /// Normalized in the range 0..=1 with 0 being at the top
-  y: c_float,
+  pub y: c_float,
   /// Normalized in the range 0..=1
-  pressure: c_float,
+  pub pressure: c_float,
 }
 
 /// Game controller sensor event structure (event.csensor.*)
