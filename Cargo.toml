@@ -2,7 +2,7 @@
 name = "fermium"
 description = "An opinionated crate of SDL2 bindings."
 repository = "https://github.com/Lokathor/fermium"
-version = "22401.1.0"
+version = "22603.1.0"
 authors = ["Lokathor <zefria@gmail.com>"]
 edition = "2021"
 license = "Zlib OR Apache-2.0 OR MIT"

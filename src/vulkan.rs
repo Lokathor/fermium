@@ -23,9 +23,20 @@ impl Default for VkInstance {
 }
 
 /// Vulkan surface handle.
-#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
-pub struct VkSurfaceKHR(pub u64);
+pub struct VkSurfaceKHR(
+  #[cfg(target_pointer_width = "64")] pub *mut c_void,
+  #[cfg(not(target_pointer_width = "64"))] pub u64,
+);
+impl Default for VkSurfaceKHR {
+  fn default() -> Self {
+    #[cfg(target_pointer_width = "64")]
+    return Self(core::ptr::null_mut());
+    #[cfg(not(target_pointer_width = "64"))]
+    return Self(0);
+  }
+}
 
 /// Alternate type name in some docs.
 pub type SDL_vulkanInstance = VkInstance;
