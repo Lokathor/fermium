@@ -1,3 +1,5 @@
+#![allow(clippy::uninlined_format_args)]
+
 use fermium::{video::*, *};
 use gl33::global_commands::load_global_gl_with;
 

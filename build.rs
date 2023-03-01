@@ -1,6 +1,7 @@
 #![allow(clippy::if_same_then_else)]
 #![allow(clippy::len_zero)]
 #![allow(clippy::redundant_pattern_matching)]
+#![allow(clippy::uninlined_format_args)]
 
 use std::env;
 
@@ -148,7 +149,7 @@ fn do_dynamic_system() {
   if target_os.contains("windows") {
     if target == "x86_64-pc-windows-msvc" {
       let devel_path =
-        std::path::Path::new(&cargo_manifest_dir).join("SDL2-2.24.1-devel");
+        std::path::Path::new(&cargo_manifest_dir).join("SDL2-2.26.3-devel");
 
       // Copy the DLL file into the executable out directory. When distributing
       // your executable, you might need to provide the SDL2 DLL as well, unless
