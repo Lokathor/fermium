@@ -27,15 +27,11 @@ pub const fn SDL_FOURCC(a: u8, b: u8, c: u8, d: u8) -> u32 {
 }
 
 /// SDL's `bool` approximation.
-///
-/// Because C has no real `bool` type, we get some named constants.
-#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[repr(transparent)]
-pub struct SDL_bool(u32);
+pub type SDL_bool = bool32::Bool32;
 /// `false` value
-pub const SDL_FALSE: SDL_bool = SDL_bool(0);
+pub const SDL_FALSE: SDL_bool = SDL_bool::new(false);
 /// `true` value
-pub const SDL_TRUE: SDL_bool = SDL_bool(1);
+pub const SDL_TRUE: SDL_bool = SDL_bool::new(true);
 
 extern "C" {
   /// Works like [`malloc`](https://man7.org/linux/man-pages/man3/malloc.3.html)
