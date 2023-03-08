@@ -99,6 +99,16 @@ fn main() {
               print_ptr(serial_p);
               println!();
             }
+            print!("> Mapping: ");
+            let mapping_p: *const u8 =
+              SDL_GameControllerMapping(controller).cast();
+            if mapping_p.is_null() {
+              println!("not available");
+            } else {
+              print_ptr(mapping_p);
+              SDL_free(mapping_p as _);
+              println!();
+            }
           }
         }
         SDL_CONTROLLERDEVICEREMOVED => {
