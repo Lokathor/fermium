@@ -10,39 +10,11 @@ use crate::{c_char, c_int, c_uint, c_void, stdinc::*, video::*};
 #[allow(unused)]
 use crate::hints::*;
 
-/// Vulkan instance pointer.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[repr(transparent)]
-pub struct VkInstance(pub *mut c_void);
-impl Default for VkInstance {
-  #[inline]
-  #[must_use]
-  fn default() -> Self {
-    unsafe { core::mem::zeroed() }
-  }
-}
-
-/// Vulkan surface handle.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[repr(transparent)]
-pub struct VkSurfaceKHR(
-  #[cfg(target_pointer_width = "64")] pub *mut c_void,
-  #[cfg(not(target_pointer_width = "64"))] pub u64,
-);
-impl Default for VkSurfaceKHR {
-  fn default() -> Self {
-    #[cfg(target_pointer_width = "64")]
-    return Self(core::ptr::null_mut());
-    #[cfg(not(target_pointer_width = "64"))]
-    return Self(0);
-  }
-}
+/// Alternate type name in some docs.
+pub type SDL_vulkanInstance = raw_vulkan_handle::VkInstance;
 
 /// Alternate type name in some docs.
-pub type SDL_vulkanInstance = VkInstance;
-
-/// Alternate type name in some docs.
-pub type SDL_vulkanSurface = VkSurfaceKHR;
+pub type SDL_vulkanSurface = raw_vulkan_handle::VkSurfaceKHR;
 
 extern "C" {
   /// Dynamically load a Vulkan loader library.
@@ -211,7 +183,8 @@ extern "C" {
   ///
   /// See Also: [`SDL_Vulkan_GetInstanceExtensions`]
   pub fn SDL_Vulkan_CreateSurface(
-    window: *mut SDL_Window, instance: VkInstance, surface: *mut VkSurfaceKHR,
+    window: *mut SDL_Window, instance: raw_vulkan_handle::VkInstance,
+    surface: *mut raw_vulkan_handle::VkSurfaceKHR,
   ) -> SDL_bool;
 
   /// Get the size of a window's underlying drawable in pixels (for use with

@@ -12,8 +12,23 @@ categories = ["external-ffi-bindings", "no-std"]
 links = "SDL2"
 build = "build.rs"
 
+[features]
+default = ["vulkan"]
+vulkan = ["raw_vulkan_handle"]
+# Enabling this will completely skip the build/link of SDL2 itself. This makes
+# `cargo check` and similar much faster (including rust-analyzer), but you'll
+# get linking errors if you try to actually build an executable with this
+# enabled (eg: a bin/bench/test).
+cargo_check = []
+# If you enable this, the crate will static link to a build of the bundled
+# version of SDL2. Otherwise, the crate will dynamically link to the SDL2
+# installed on the system (on Windows x86_64 MSVC it will dynamic link to
+# provided developer files).
+static_bundled_build = ["cmake"]
+
 [dependencies]
 raw-window-handle = { version = "0.5", optional = true }
+raw_vulkan_handle = { version = "0.1.1", optional = true }
 
 [dev-dependencies]
 gl33 = { version = "0.1", features = ["global_loader", "GL_ARB_debug_output", "GL_ARB_texture_filter_anisotropic", "GL_KHR_debug"] }
@@ -21,18 +36,6 @@ gl33 = { version = "0.1", features = ["global_loader", "GL_ARB_debug_output", "G
 [build-dependencies]
 cmake = { version = "0.1", optional = true }
 
-[features]
-# Enabling this will completely skip the build/link of SDL2 itself. This makes
-# `cargo check` and similar much faster (including rust-analyzer), but you'll
-# get linking errors if you try to actually build an executable with this
-# enabled (eg: a bin/bench/test).
-cargo_check = []
-
-# If you enable this, the crate will static link to a build of the bundled
-# version of SDL2. Otherwise, the crate will dynamically link to the SDL2
-# installed on the system (on Windows x86_64 MSVC it will dynamic link to
-# provided developer files).
-static_bundled_build = ["cmake"]
 
 [package.metadata.docs.rs]
 # building the docs is a "check only" style operation.

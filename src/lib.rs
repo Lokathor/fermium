@@ -129,6 +129,8 @@ pub mod timer;
 pub mod touch;
 pub mod version;
 pub mod video;
+
+#[cfg(feature = "vulkan")]
 pub mod vulkan;
 
 /// SDL2's initialization flags.
