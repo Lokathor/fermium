@@ -43,28 +43,22 @@ fn main() {
           break;
         }
         SDL_KEYDOWN => {
-          println!("SDL_KEYDOWN");
-          println!("{:?}", event.key);
+          println!("SDL_KEYDOWN: {:?}", event.key);
         }
         SDL_KEYUP => {
-          println!("SDL_KEYUP");
-          println!("{:?}", event.key);
+          println!("SDL_KEYUP {:?}", event.key);
         }
         SDL_CONTROLLERAXISMOTION => {
-          println!("SDL_CONTROLLERAXISMOTION");
-          println!("{:?}", event.caxis);
+          println!("SDL_CONTROLLERAXISMOTION: {:?}", event.caxis);
         }
         SDL_CONTROLLERBUTTONDOWN => {
-          println!("SDL_CONTROLLERBUTTONDOWN");
-          println!("{:?}", event.cbutton);
+          println!("SDL_CONTROLLERBUTTONDOWN: {:?}", event.cbutton);
         }
         SDL_CONTROLLERBUTTONUP => {
-          println!("SDL_CONTROLLERBUTTONUP");
-          println!("{:?}", event.cbutton);
+          println!("SDL_CONTROLLERBUTTONUP: {:?}", event.cbutton);
         }
         SDL_CONTROLLERDEVICEADDED => {
-          println!("SDL_CONTROLLERDEVICEADDED");
-          println!("{:?}", event.cdevice);
+          println!("SDL_CONTROLLERDEVICEADDED: {:?}", event.cdevice);
           let id = event.cdevice.which;
           println!("Opening joystick {} as a controller...", id);
           let controller = SDL_GameControllerOpen(id);
@@ -108,8 +102,7 @@ fn main() {
           }
         }
         SDL_CONTROLLERDEVICEREMOVED => {
-          println!("SDL_CONTROLLERDEVICEREMOVED");
-          println!("{:?}", event.cdevice);
+          println!("SDL_CONTROLLERDEVICEREMOVED: {:?}", event.cdevice);
           let id = event.cdevice.which;
           println!("Closing ID {}...", id);
           let controller = SDL_GameControllerFromInstanceID(SDL_JoystickID(id));
@@ -120,24 +113,19 @@ fn main() {
           }
         }
         SDL_CONTROLLERDEVICEREMAPPED => {
-          println!("SDL_CONTROLLERDEVICEREMAPPED");
-          println!("{:?}", event.cdevice);
+          println!("SDL_CONTROLLERDEVICEREMAPPED: {:?}", event.cdevice);
         }
         SDL_CONTROLLERTOUCHPADDOWN => {
-          println!("SDL_CONTROLLERTOUCHPADDOWN");
-          println!("{:?}", event.ctouchpad);
+          println!("SDL_CONTROLLERTOUCHPADDOWN: {:?}", event.ctouchpad);
         }
         SDL_CONTROLLERTOUCHPADMOTION => {
-          println!("SDL_CONTROLLERTOUCHPADMOTION");
-          println!("{:?}", event.ctouchpad);
+          println!("SDL_CONTROLLERTOUCHPADMOTION: {:?}", event.ctouchpad);
         }
         SDL_CONTROLLERTOUCHPADUP => {
-          println!("SDL_CONTROLLERTOUCHPADUP");
-          println!("{:?}", event.ctouchpad);
+          println!("SDL_CONTROLLERTOUCHPADUP: {:?}", event.ctouchpad);
         }
         SDL_CONTROLLERSENSORUPDATE => {
-          println!("SDL_CONTROLLERSENSORUPDATE");
-          println!("{:?}", event.ctouchpad);
+          println!("SDL_CONTROLLERSENSORUPDATE: {:?}", event.ctouchpad);
         }
         _ => (),
       }
