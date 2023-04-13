@@ -12,6 +12,8 @@ pub use crate::{
   gamecontroller::*, gesture::*, hints::*, joystick::*, keyboard::*,
   keycode::*, loadso::*, messagebox::*, mouse::*, pixels::*, platform::*,
   power::*, quit::*, rect::*, renderer::*, rwops::*, scancode::*, sensor::*,
-  stdinc::*, surface::*, syswm::*, timer::*, touch::*, version::*, video::*,
-  vulkan::*, *,
+  stdinc::*, surface::*, syswm::*, timer::*, touch::*, version::*, video::*, *,
 };
+
+#[cfg(feature = "vulkan")]
+pub use crate::vulkan::*;

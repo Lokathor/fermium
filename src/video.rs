@@ -6,6 +6,7 @@ use crate::{c_char, c_int, c_void, rect::*, stdinc::*, surface::*};
 #[allow(unused)]
 use crate::error::*;
 #[allow(unused)]
+#[cfg(feature = "vulkan")]
 use crate::vulkan::*;
 
 /// The structure that defines a display mode
