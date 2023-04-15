@@ -8,6 +8,7 @@ edition = "2021"
 license = "Zlib OR Apache-2.0 OR MIT"
 keywords = ["SDL2"]
 categories = ["external-ffi-bindings", "no-std"]
+rust-version = "1.64"
 
 links = "SDL2"
 build = "build.rs"
