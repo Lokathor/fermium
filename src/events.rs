@@ -686,7 +686,7 @@ pub struct SDL_DollarGestureEvent {
 
 /// An event used to request a file open by the system (event.drop.*)
 ///
-/// This event is enabled by default, you can disable it with
+/// This event is *disabled* by default, you can enable it with
 /// [`SDL_EventState`].
 ///
 /// **Note:** If this event is enabled, you **must free the filename in the
