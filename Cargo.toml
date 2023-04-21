@@ -14,7 +14,7 @@ links = "SDL2"
 build = "build.rs"
 
 [features]
-default = ["vulkan"]
+default = []
 vulkan = ["raw_vulkan_handle"]
 # Enabling this will completely skip the build/link of SDL2 itself. This makes
 # `cargo check` and similar much faster (including rust-analyzer), but you'll
