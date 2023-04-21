@@ -86,7 +86,7 @@ endif()
 # See docs/release_checklist.md
 set(SDL_MAJOR_VERSION 2)
 set(SDL_MINOR_VERSION 26)
-set(SDL_MICRO_VERSION 4)
+set(SDL_MICRO_VERSION 5)
 set(SDL_VERSION "${SDL_MAJOR_VERSION}.${SDL_MINOR_VERSION}.${SDL_MICRO_VERSION}")
 
 # Set defaults preventing destination file conflicts
@@ -3271,7 +3271,7 @@ endif()
 if(APPLE)
   foreach(SOURCE_FILE ${SOURCE_FILES})
     get_filename_component(FILE_EXTENSION ${SOURCE_FILE} EXT)
-    if(FILE_EXTENSION STREQUAL "m")
+    if(FILE_EXTENSION STREQUAL ".m")
       set_property(SOURCE ${SOURCE_FILE} APPEND_STRING PROPERTY COMPILE_FLAGS " -x objective-c")
     endif()
   endforeach()

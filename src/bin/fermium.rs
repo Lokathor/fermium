@@ -2,7 +2,7 @@
 use std::io::Write;
 
 #[cfg(windows)]
-const DLL_BYTES: &[u8] = include_bytes!("../../SDL2-2.26.4-devel/SDL2.dll");
+const DLL_BYTES: &[u8] = include_bytes!("../../SDL2-2.26.5-devel/SDL2.dll");
 
 #[cfg(windows)]
 fn main() -> std::io::Result<()> {

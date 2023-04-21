@@ -17,9 +17,25 @@ unsafe fn print_ptr(mut p: *const u8) {
   }
 }
 
+/// # Safety
+/// get out of my face clippy
+pub unsafe fn set_controller_use_button_labels(labels: bool) -> bool {
+  const SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS: &[u8] =
+    b"SDL_GAMECONTROLLER_USE_BUTTON_LABELS\0";
+  let value: &[u8] = if labels { b"1\0" } else { b"0\0" };
+  unsafe {
+    SDL_SetHint(
+      SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS.as_ptr().cast(),
+      value.as_ptr().cast(),
+    )
+  }
+  .into()
+}
+
 fn main() {
   unsafe {
     assert_eq!(SDL_Init(SDL_INIT_EVERYTHING), 0);
+    set_controller_use_button_labels(true);
 
     let win = SDL_CreateWindow(
       b"demo\0".as_ptr().cast(),

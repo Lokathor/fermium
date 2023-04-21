@@ -50,7 +50,7 @@ fn do_static_bundled() {
   println!("target_vendor:{}", target_vendor);
 
   let mut cm = cmake::Config::new(
-    std::path::Path::new(&cargo_manifest_dir).join("SDL2-2.26.4"),
+    std::path::Path::new(&cargo_manifest_dir).join("SDL2-2.26.5"),
   );
   cm.profile("Release");
   cm.static_crt(true);
@@ -149,7 +149,7 @@ fn do_dynamic_system() {
   if target_os.contains("windows") {
     if target == "x86_64-pc-windows-msvc" {
       let devel_path =
-        std::path::Path::new(&cargo_manifest_dir).join("SDL2-2.26.4-devel");
+        std::path::Path::new(&cargo_manifest_dir).join("SDL2-2.26.5-devel");
 
       // Copy the DLL file into the executable out directory. When distributing
       // your executable, you might need to provide the SDL2 DLL as well, unless
