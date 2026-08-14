@@ -1,5 +1,9 @@
 # Changelog
 
+## 20022.0.1 (2026-08-14)
+
+* This crate is still basically abanadoned, but some Debug impls were removed to fix a crater error.
+
 ## 20022 (2022-07-17)
 
 * Updated the bundled SDL2 version to be 2.0.22 Unfortunately, I haven't really
