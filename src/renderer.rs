@@ -128,12 +128,10 @@ pub const SDL_FLIP_HORIZONTAL: SDL_RendererFlip = SDL_RendererFlip(0x00000001);
 pub const SDL_FLIP_VERTICAL: SDL_RendererFlip = SDL_RendererFlip(0x00000002);
 
 /// An opaque structure representing rendering state.
-#[derive(Debug)]
 #[repr(transparent)]
 pub struct SDL_Renderer(c_void);
 
 /// An opaque, efficient, driver-specific representation of pixel data.
-#[derive(Debug)]
 #[repr(transparent)]
 pub struct SDL_Texture(c_void);
 
